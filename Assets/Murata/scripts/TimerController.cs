@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TimerController : MonoBehaviour {
 
@@ -13,7 +14,11 @@ public class TimerController : MonoBehaviour {
 
     public int Timer_Min = 0;//最小値
 
+    public float Clear_interval = 0;//スターt表示間隔
+
     public bool Controller_On = true;//カウントアップかダウン
+
+    public static string Next_Scene;//シーン名
 
 	void Start ()
     {
@@ -56,9 +61,13 @@ public class TimerController : MonoBehaviour {
         {
             //最小値にする
             TotalTime = Timer_Min;
+            Clear_interval += Time.deltaTime;
             //最小値になったらスタート文字に変わる
             TimerText.text = "スタート";
-
+            if (Clear_interval>=3)
+            {
+                TimerText.text="　";
+            }
         }
     }
 
@@ -85,5 +94,14 @@ public class TimerController : MonoBehaviour {
             TimerText.text = "ゲームオーバー";
 
         }
+    }
+
+    /// <summary>
+    /// シーン遷移
+    /// </summary>
+    /// <param name="NextSceneName"></param>
+    public void stageSelect(string NextSceneName)
+    {
+        Next_Scene = NextSceneName;//Next_Sceneで記入したシーンがあれば移動
     }
 }
