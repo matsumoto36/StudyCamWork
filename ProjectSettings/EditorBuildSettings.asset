@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Murata/Scenes/Tes.unity
     guid: 5ced87d128863a14db3484679719bf69
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Murata/Scenes/TEST.unity
-    guid: b8a7a2e5b965f974a94a77182bcc8f07
+    path: Assets/Murata/Scenes/T.unity
+    guid: 457727fab903c5542973dbd23480dedd

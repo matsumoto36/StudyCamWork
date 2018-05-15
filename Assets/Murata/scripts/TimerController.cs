@@ -20,6 +20,8 @@ public class TimerController : MonoBehaviour {
 
     public static string Next_Scene;//シーン名
 
+    public bool Scene_go = true;
+
 	void Start ()
     {
 		
@@ -29,13 +31,13 @@ public class TimerController : MonoBehaviour {
 	void Update ()
     {
         //trueなら
-        if (Controller_On==true)
+        if (Controller_On==true &Scene_go==false)
         {
             //カウントダウン
             Count_Down();
         }
         //falseなら
-        if (Controller_On==false)
+        if (Controller_On==false&Scene_go==false)
         {
             //カウントアップ
             Count_Up();
@@ -102,6 +104,7 @@ public class TimerController : MonoBehaviour {
     /// <param name="NextSceneName"></param>
     public void stageSelect(string NextSceneName)
     {
-        Next_Scene = NextSceneName;//Next_Sceneで記入したシーンがあれば移動
+        Next_Scene = NextSceneName;//Next_Sceneに名前を入れる
+        SceneManager.LoadScene(Next_Scene);//飛びますよ。
     }
 }
