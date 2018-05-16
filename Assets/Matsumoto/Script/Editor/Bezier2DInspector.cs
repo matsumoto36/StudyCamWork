@@ -27,7 +27,8 @@ public class Bezier2DInspector : Editor {
 	State state = State.Move;
 
 	Bezier2D bezier;
-	List<Vector2> points;
+
+	SerializedProperty points;
 
 	ReorderableList reorderableList;
 	bool listUpdateFlg = false;
@@ -40,7 +41,7 @@ public class Bezier2DInspector : Editor {
 	void OnEnable() {
 
 		bezier = target as Bezier2D;
-		points = bezier.points;
+		points = serializedObject.FindProperty("points");
 
 		reorderableList = 
 			new ReorderableList(GetBezierPointsIndexOnLine(), typeof(int), true, true, false, true);
@@ -58,7 +59,7 @@ public class Bezier2DInspector : Editor {
 				listUpdateFlg = false;
 			}
 
-			EditorGUI.LabelField(rect, index + " " + points[(int)reorderableList.list[index]].ToString());
+			EditorGUI.LabelField(rect, points.GetArrayElementAtIndex((int)reorderableList.list[index]).vector2Value.ToString());
 		};
 
 		//背景の描画
@@ -91,9 +92,11 @@ public class Bezier2DInspector : Editor {
 		reorderableList.onReorderCallback += (list) => {
 
 			Undo.RecordObject(bezier, "Replacement BezierPoint");
+			serializedObject.Update();
 
 			var poslist = (List<int>)list.list;
-			var nPoints = new Vector2[points.Count];
+			var arraySize = points.arraySize;
+			var nPoints = new Vector2[arraySize];
 
 			for(int i = 0;i < poslist.Count;i++) {
 
@@ -101,17 +104,18 @@ public class Bezier2DInspector : Editor {
 				var destIndex = poslist[i] - 1;
 				Debug.Log(srcIndex + " " + destIndex);
 				for(int j = 0;j < 3;j++) {
-					nPoints[destIndex + j] = points[srcIndex + j];
+					nPoints[destIndex + j] = points.GetArrayElementAtIndex(srcIndex + j).vector2Value;
 
 				}
 
 			}
 
-			for(int i = 0;i < points.Count;i++) {
-				points[i] = nPoints[i];
+			for(int i = 0;i < arraySize;i++) {
+				points.GetArrayElementAtIndex(i).vector2Value = nPoints[i];
 			}
 
 			poslist = GetBezierPointsIndexOnLine();
+			serializedObject.ApplyModifiedProperties();
 			Repaint();
 		};
 	}
@@ -123,8 +127,9 @@ public class Bezier2DInspector : Editor {
 	List<int> GetBezierPointsIndexOnLine() {
 
 		var list = new List<int>();
+		var arraySize = points.arraySize;
 
-		for(int i = 1;i < points.Count;i++) {
+		for(int i = 1;i < arraySize;i++) {
 			if((i - 1) % 3 != 0) continue;
 			list.Add(i);
 		}
@@ -133,8 +138,9 @@ public class Bezier2DInspector : Editor {
 
 	void OnSceneGUI() {
 
-		DrawGUI();
+		serializedObject.Update();
 
+		DrawGUI();
 		Tools.current = Tool.None;
 
 		switch(state) {
@@ -164,12 +170,15 @@ public class Bezier2DInspector : Editor {
 		}
 
 		reorderableList.list = GetBezierPointsIndexOnLine();
+
+		serializedObject.ApplyModifiedProperties();
 	}
 
 	void AddPointState(Bezier2D bezier) {
 
 		var e = Event.current;
 		var controlID = GUIUtility.GetControlID(FocusType.Passive);
+		var arraySize = points.arraySize;
 
 		if(e.GetTypeForControl(controlID) == EventType.MouseDown) {
 
@@ -180,8 +189,7 @@ public class Bezier2DInspector : Editor {
 			Undo.RecordObject(bezier, "Add BezierPoint");
 
 			bezier.AddPoint(HandleUtility.GUIPointToWorldRay(e.mousePosition).origin);
-			focusControl = bezier.points.Count - 2;
-			Debug.Log(focusControl);
+			focusControl = bezier.Points.Count - 2;
 			isClick = true;
 
 			e.Use();
@@ -193,9 +201,9 @@ public class Bezier2DInspector : Editor {
 
 			GUIUtility.hotControl = controlID;
 
-			var mousePoint = HandleUtility.GUIPointToWorldRay(e.mousePosition).origin;
-			points[points.Count - 3] = mousePoint;
-			points[points.Count - 1] = points[points.Count - 2] * 2 - points[points.Count - 3];
+			var mousePoint = (Vector2)HandleUtility.GUIPointToWorldRay(e.mousePosition).origin;
+			points.GetArrayElementAtIndex(arraySize - 3).vector2Value = mousePoint;
+			points.GetArrayElementAtIndex(arraySize - 1).vector2Value = points.GetArrayElementAtIndex(arraySize - 2).vector2Value * 2 - mousePoint;
 
 			e.Use();
 
@@ -208,44 +216,59 @@ public class Bezier2DInspector : Editor {
 			isClick = false;
 		}
 
-		if(points.Count > 1)
-			DrawTangentLine(points.Count - 2, points);
+		if(arraySize > 1)
+			DrawTangentLine(
+				points.GetArrayElementAtIndex(arraySize - 3).vector2Value,
+				points.GetArrayElementAtIndex(arraySize - 2).vector2Value,
+				points.GetArrayElementAtIndex(arraySize - 1).vector2Value);
 
-		if(isClick && points.Count > 4) {
-			DrawTangentLine(points.Count - 5, points);
+
+		if(isClick && arraySize > 4) {
+			DrawTangentLine(
+				points.GetArrayElementAtIndex(arraySize - 6).vector2Value,
+				points.GetArrayElementAtIndex(arraySize - 5).vector2Value,
+				points.GetArrayElementAtIndex(arraySize - 4).vector2Value);
 		}
 	}
 
 	void MovePointState(Bezier2D bezier) {
 
-		if(points.Count == 0) return;
+		var arraySize = points.arraySize;
+
+		if(arraySize == 0) return;
 
 		Undo.RecordObject(bezier, "Edit BezierLine");
 
 		for(int i = 1;i <= bezier.GetLastBezierPoint();i+=3) {
 
-			Vector2 newPoint = points[i];
+			Vector2 newPoint = points.GetArrayElementAtIndex(i).vector2Value;
 
 			if(i == focusControl) {
-				DrawTangentLine(i, points);
-				newPoint = HandlePosition(points[i], activeHandleColor);
+
+				DrawTangentLine(
+					points.GetArrayElementAtIndex(i + 1).vector2Value,
+					points.GetArrayElementAtIndex(i).vector2Value,
+					points.GetArrayElementAtIndex(i - 1).vector2Value);
+
+				newPoint = HandlePosition(newPoint, activeHandleColor);
 
 			}
 			else {
-				if(HandleButton(points[i], bezierColor)) {
+				if(HandleButton(newPoint, bezierColor)) {
 					focusControl = i;
 					Repaint();
 				}
 			}
 
-			if(i + 1 < points.Count) {
-				points[i + 1] += newPoint - points[i];
+			var diff = newPoint - points.GetArrayElementAtIndex(i).vector2Value;
+			if(i + 1 < arraySize) {
+				points.GetArrayElementAtIndex(i + 1).vector2Value += diff;
 			}
 			if(i > 0) {
-				points[i - 1] += newPoint - points[i];
+				points.GetArrayElementAtIndex(i - 1).vector2Value += diff;
 			}
 
-			points[i] = newPoint;
+			points.GetArrayElementAtIndex(i).vector2Value = newPoint;
 		}
 
 		if(focusControl < 0) return;
@@ -254,29 +277,35 @@ public class Bezier2DInspector : Editor {
 		var right = focusControl + 1;
 
 		var hasLeft = left >= 0;
-		var hasRight = right < points.Count;
+		var hasRight = right < arraySize;
 
 		if(hasLeft) {
-			points[left] = HandlePosition(points[left], tangentColor);
+			points.GetArrayElementAtIndex(left).vector2Value 
+				= HandlePosition(points.GetArrayElementAtIndex(left).vector2Value, tangentColor);
 
 			if(Event.current.alt && hasRight) {
-				points[right] = points[focusControl] * 2 - points[left];
+				points.GetArrayElementAtIndex(right).vector2Value
+					= points.GetArrayElementAtIndex(focusControl).vector2Value * 2 - points.GetArrayElementAtIndex(left).vector2Value;
 			}
 
 		}
 		if(hasRight) {
-			points[right] = HandlePosition(points[right], tangentColor);
+			points.GetArrayElementAtIndex(right).vector2Value
+				= HandlePosition(points.GetArrayElementAtIndex(right).vector2Value, tangentColor);
 
 			if(Event.current.alt && hasLeft) {
-				points[left] = points[focusControl] * 2 - points[right];
+				points.GetArrayElementAtIndex(left).vector2Value
+					= points.GetArrayElementAtIndex(focusControl).vector2Value * 2 - points.GetArrayElementAtIndex(right).vector2Value;
 			}
 		}
 	}
 
 	void RemovePointState(Bezier2D bezier) {
 
-		for(int i = 1;i < points.Count;i+=3) {
-			if(HandleButton(points[i], bezierColor)) {
+		var arraySize = points.arraySize;
+
+		for(int i = 1;i < arraySize;i+=3) {
+			if(HandleButton(points.GetArrayElementAtIndex(i).vector2Value, bezierColor)) {
 				RemovePoint(i);
 			}
 		}
@@ -289,16 +318,11 @@ public class Bezier2DInspector : Editor {
 		Repaint();
 	}
 
-	void DrawTangentLine(int i, List<Vector2> points) {
+	void DrawTangentLine(Vector2 p0, Vector2 p1, Vector2 p2) {
 
 		Handles.color = tangentColor;
-
-		if(i > 0)
-			Handles.DrawLine(points[i - 1], points[i]);
-
-		if(i + 1 < points.Count)
-			Handles.DrawLine(points[i], points[i + 1]);
-
+		Handles.DrawLine(p0, p1);
+		Handles.DrawLine(p1, p2);
 	}
 
 	Vector2 HandlePosition(Vector2 center, Color col) {
@@ -338,7 +362,7 @@ public class Bezier2DInspector : Editor {
 			}
 
 			var bezier = target as Bezier2D;
-			var points = bezier.points;
+			var points = bezier.Points;
 			EditorGUI.BeginDisabledGroup(points.Count <= 0);
 			if(GUILayout.Button("Clear")) {
 				Undo.RecordObject(bezier, "Clear BezierLine");
@@ -372,7 +396,7 @@ public class Bezier2DInspector : Editor {
 	static void DrawGizmos(Bezier2D bezier, GizmoType gizmoType) {
 
 		var pertition = 32;
-		var points = bezier.points;
+		var points = bezier.Points;
 		Gizmos.color = bezierColor;
 
 		for(int i = 4;i < points.Count;i += 3) {
