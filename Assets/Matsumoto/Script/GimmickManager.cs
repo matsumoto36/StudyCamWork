@@ -11,6 +11,7 @@ public class GimmickManager : MonoBehaviour {
 
 	GimmickInfo[] gimmicks;
 	Player player;
+	float startTime;
 
 	void Awake() {
 
@@ -25,6 +26,7 @@ public class GimmickManager : MonoBehaviour {
 		}
 
 		SetStartTime();
+		startTime = Time.time;
 	}
 
 	// Update is called once per frame
@@ -38,16 +40,16 @@ public class GimmickManager : MonoBehaviour {
 
 			if(item.isUsed) continue;
 
-			var length = player.MovedLength / player.speed;
+			var gimmickTime = Time.time - startTime;
 
 			//発動前
-			if(!item.isActive && item.waitTime > length) {
+			if(!item.isActive && item.waitTime > gimmickTime) {
 
-				item.gimmick.OnRemainingTime(player, item.waitTime - length);
+				item.gimmick.OnRemainingTime(player, item.waitTime - gimmickTime);
 			}
 
 			//発動した瞬間
-			if(!item.isActive && item.waitTime < length) {
+			if(!item.isActive && item.waitTime < gimmickTime) {
 
 				item.isActive = true;
 				item.gimmick.OnAttach(player);
@@ -56,11 +58,11 @@ public class GimmickManager : MonoBehaviour {
 			//発動中
 			if(item.isActive) {
 
-				item.gimmick.OnApplyUpdate(player, length - item.waitTime);
+				item.gimmick.OnApplyUpdate(player, gimmickTime - item.waitTime);
 			}
 
 			//発動が終了した瞬間
-			if(item.isActive && item.waitTime + item.gimmick.GetSectionTime(player.speed) < length) {
+			if(item.isActive && item.waitTime + item.duration < gimmickTime) {
 				item.isActive = false;
 				item.isUsed = true;
 				item.gimmick.OnDetach(player);
@@ -85,15 +87,14 @@ public class GimmickManager : MonoBehaviour {
 			var path = gimmick.targetPath;
 			var pathLength = path.GetLength();
 
-			//通常ゾーン *ここがわからない
-			var t = path.GetPointLength(prevPoint, gimmick.startPoint) / (speed);
+			//通常ゾーン
+			var t = path.GetPointLength(prevPoint, gimmick.startPoint) / speed;
 
 			//ギミックのゾーン
 			sumTime += t;
 			gimmicks[i].waitTime = sumTime;
-			//Debug.Log(gimmicks[i].waitTime);
-
-			sumTime += gimmick.GetSectionTime(speed);
+			gimmicks[i].duration = gimmick.GetSectionTime(speed);
+			sumTime += gimmicks[i].duration;
 			prevPoint = gimmick.endPoint;
 		}
 	}
@@ -108,6 +109,7 @@ class GimmickInfo {
 	public bool isActive;
 	public bool isUsed;
 	public float waitTime;
+	public float duration;
 
 	public GimmickInfo(GimmickBase gimmick) {
 		this.gimmick = gimmick;

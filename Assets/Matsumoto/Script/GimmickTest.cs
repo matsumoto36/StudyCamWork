@@ -21,6 +21,8 @@ public class GimmickTest : GimmickBase {
 		var render = player.GetComponent<Renderer>();
 		playerCol = render.material.color;
 		render.material.color = gimmickColor;
+
+		player.speed *= 5;
 	}
 
 	public override void OnApplyUpdate(Player player, float t) {
@@ -34,11 +36,13 @@ public class GimmickTest : GimmickBase {
 
 		var render = player.GetComponent<Renderer>();
 		render.material.color = playerCol;
+
+		player.speed /= 5;
 	}
 
 
 	public override float GetSectionTime(float speed) {
-		return targetPath.GetPointLength(startPoint, endPoint) / speed;
+		return targetPath.GetPointLength(startPoint, endPoint) / speed / 5;
 	}
 
 	public override Vector2 GetPlayerPosition(float t) {

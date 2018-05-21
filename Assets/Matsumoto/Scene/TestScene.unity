@@ -465,7 +465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gimmickColor: {r: 0, g: 1, b: 0.08965492, a: 1}
-  startPoint: 3.34
+  startPoint: 3.4
   endPoint: 4.1
   targetPath: {fileID: 1888011803}
   startPointModelPre: {fileID: 0}
@@ -514,8 +514,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gimmickColor: {r: 0, g: 0.04827571, b: 1, a: 1}
-  startPoint: 2.34
-  endPoint: 3.07
+  startPoint: 2
+  endPoint: 3
   targetPath: {fileID: 1888011803}
   startPointModelPre: {fileID: 0}
   startPointModelOffset: {x: 0, y: 0, z: 0}
@@ -667,7 +667,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: {fileID: 1888011803}
-  speed: 2
+  speed: 1
 --- !u!23 &1708651553
 MeshRenderer:
   m_ObjectHideFlags: 0
