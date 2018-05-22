@@ -8,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public class GimmickBase : MonoBehaviour {
 
+	public static readonly Vector3 ModelPosition = new Vector3(1, -1);
+
 	#region カスタムインスペクターで表示するプロパティ
 	[HideInInspector]
 	public Color gimmickColor = Color.red;	//ギミックの適用範囲の色
@@ -17,13 +19,35 @@ public class GimmickBase : MonoBehaviour {
 	public float endPoint;					//ギミックを終わらせる終了地点
 	#endregion
 
-	public Bezier2D targetPath;				//ギミックを取り付けるパス
+	public Bezier2D targetPath;             //ギミックを取り付けるパス
+	public GameObject startPointModel;		//生成されたギミックの始点のモデル
+	public GameObject endPointModel;        //生成されたギミックの終点のモデル
 
-	public GameObject startPointModelPre;	//ギミックの始点のモデルのプレハブ
+
+	[SerializeField]
+	GameObject startPointModelPre;			//ギミックの始点のモデルのプレハブ
 	public Vector3 startPointModelOffset;	//モデルの配置のオフセット
 
-	public GameObject endPointModelPre;		//ギミックの終点のモデルのプレハブ
+	[SerializeField]
+	GameObject endPointModelPre;			//ギミックの終点のモデルのプレハブ
 	public Vector3 endPointModelOffset;		//モデルの配置のオフセット
+
+	void Awake() {
+
+		//登録されたモデルのスポーン
+		var offset = ModelPosition + startPointModelOffset;
+		var lineCount = targetPath.LineCount;
+
+		if(startPointModelPre) {
+			var pos = (Vector3)targetPath.GetPoint(startPoint / lineCount) + offset;
+			startPointModel = Instantiate(startPointModelPre, pos, Quaternion.identity);
+		}
+
+		if(endPointModelPre) {
+			var pos = (Vector3)targetPath.GetPoint(endPoint / lineCount) + offset;
+			endPointModel = Instantiate(endPointModelPre, pos, Quaternion.identity);
+		}
+	}
 
 	/// <summary>
 	/// 残り時間があるときに毎フレーム呼ばれる
@@ -69,5 +93,36 @@ public class GimmickBase : MonoBehaviour {
 	/// <returns></returns>
 	public virtual Vector2 GetPlayerPosition(float t) {
 		return new Vector2();
+	}
+
+	void OnDrawGizmos() {
+
+		if(!targetPath) return;
+		if(targetPath.LineCount <= 0) return;
+
+		if(startPoint > endPoint) return;
+
+		//モデルを表示
+		Gizmos.color = Color.white;
+
+		var offset = ModelPosition + startPointModelOffset;
+		var lineCount = targetPath.LineCount;
+
+		if(startPointModelPre) {
+			MeshFilter mfs = startPointModelPre.GetComponent<MeshFilter>();
+			if(mfs) {
+				var pos = (Vector3)targetPath.GetPoint(startPoint / lineCount) + offset;
+				Gizmos.DrawMesh(mfs.sharedMesh, pos);
+			}
+		}
+
+		if(endPointModelPre) {
+			MeshFilter mfe = endPointModelPre.GetComponent<MeshFilter>();
+			if(mfe) {
+				var pos = (Vector3)targetPath.GetPoint(endPoint / lineCount) + offset;
+				Gizmos.DrawMesh(mfe.sharedMesh, pos);
+			}
+		}
+
 	}
 }

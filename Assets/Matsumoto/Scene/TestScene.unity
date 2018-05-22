@@ -465,9 +465,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gimmickColor: {r: 0, g: 1, b: 0.08965492, a: 1}
-  startPoint: 3.4
-  endPoint: 4.1
+  startPoint: 3
+  endPoint: 4
   targetPath: {fileID: 1888011803}
+  startPointModel: {fileID: 0}
+  endPointModel: {fileID: 0}
   startPointModelPre: {fileID: 0}
   startPointModelOffset: {x: 0, y: 0, z: 0}
   endPointModelPre: {fileID: 0}
@@ -514,9 +516,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gimmickColor: {r: 0, g: 0.04827571, b: 1, a: 1}
-  startPoint: 2
-  endPoint: 3
+  startPoint: 2.53
+  endPoint: 2.94
   targetPath: {fileID: 1888011803}
+  startPointModel: {fileID: 0}
+  endPointModel: {fileID: 0}
   startPointModelPre: {fileID: 0}
   startPointModelOffset: {x: 0, y: 0, z: 0}
   endPointModelPre: {fileID: 0}
@@ -628,12 +632,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gimmickColor: {r: 1, g: 0, b: 0, a: 1}
-  startPoint: 1
-  endPoint: 2
+  startPoint: 0.49
+  endPoint: 1.77
   targetPath: {fileID: 1888011803}
+  startPointModel: {fileID: 0}
+  endPointModel: {fileID: 0}
   startPointModelPre: {fileID: 0}
   startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
+  endPointModelPre: {fileID: 1439433777637928, guid: 8a529d90b2bb49247bfc3f627e8cbb2e,
+    type: 2}
   endPointModelOffset: {x: 0, y: 0, z: 0}
   text: {fileID: 223143586}
 --- !u!1 &1708651551
@@ -768,7 +775,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1798090961}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5611489, y: -7.048549, z: 0.03125}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1380102079}
@@ -805,9 +812,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points:
-  - {x: -5.0342956, y: -6.434098}
-  - {x: -4.2720227, y: -7.181891}
-  - {x: -3.509747, y: -7.9296865}
+  - {x: -0.6795246, y: 0.74428415}
+  - {x: 0.082746506, y: -0.0035090446}
+  - {x: 0.84502214, y: -0.75130534}
   - {x: -2.5892222, y: -6.0221834}
   - {x: -3.4171696, y: -4.669981}
   - {x: -4.245116, y: -3.3177786}
