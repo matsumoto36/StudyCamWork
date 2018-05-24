@@ -19,7 +19,7 @@ public class GimmickBase : MonoBehaviour {
 	public float endPoint;					//ギミックを終わらせる終了地点
 	#endregion
 
-	public Bezier2D targetPath;             //ギミックを取り付けるパス
+	//public Bezier2D targetPath;             //ギミックを取り付けるパス
 	public GameObject startPointModel;		//生成されたギミックの始点のモデル
 	public GameObject endPointModel;        //生成されたギミックの終点のモデル
 
@@ -30,21 +30,30 @@ public class GimmickBase : MonoBehaviour {
 
 	[SerializeField]
 	GameObject endPointModelPre;			//ギミックの終点のモデルのプレハブ
-	public Vector3 endPointModelOffset;		//モデルの配置のオフセット
+	public Vector3 endPointModelOffset;     //モデルの配置のオフセット
+
+	protected Bezier2D path;
+
+	GimmickManager manager;
 
 	void Awake() {
 
+		var manager = GetComponentInParent<GimmickManager>();
+		path = manager.path;
+
+		if(!CheckUsableManager()) return;
+
 		//登録されたモデルのスポーン
 		var offset = ModelPosition + startPointModelOffset;
-		var lineCount = targetPath.LineCount;
+		var lineCount = path.LineCount;
 
 		if(startPointModelPre) {
-			var pos = (Vector3)targetPath.GetPoint(startPoint / lineCount) + offset;
+			var pos = (Vector3)path.GetPoint(startPoint / lineCount) + offset;
 			startPointModel = Instantiate(startPointModelPre, pos, Quaternion.identity);
 		}
 
 		if(endPointModelPre) {
-			var pos = (Vector3)targetPath.GetPoint(endPoint / lineCount) + offset;
+			var pos = (Vector3)path.GetPoint(endPoint / lineCount) + offset;
 			endPointModel = Instantiate(endPointModelPre, pos, Quaternion.identity);
 		}
 	}
@@ -87,18 +96,33 @@ public class GimmickBase : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// ギミック中のプレイヤーの位置を比率で取得する(必ず実装すること)
+	/// ギミックの予測線を引く(必ず実装すること)
 	/// </summary>
 	/// <param name="t"></param>
 	/// <returns></returns>
-	public virtual Vector2 GetPlayerPosition(float t) {
-		return new Vector2();
+	public virtual void EditGimmickLine(LineRenderer lineRenderer) {
+
+		if(!CheckUsableManager()) return;
+
+		var path = manager.path;
+		var partition = (int)(32 * (endPoint - startPoint));
+		var dt = (endPoint - startPoint) * (1.0f / partition);
+		var point = new Vector3[partition + 1];
+
+		for(int i = 0;i <= partition;i++) {
+			point[i] = path.GetPoint((startPoint + dt * i) / path.LineCount);
+		}
+
+		lineRenderer.positionCount = point.Length;
+		lineRenderer.SetPositions(point);
 	}
 
 	void OnDrawGizmos() {
 
-		if(!targetPath) return;
-		if(targetPath.LineCount <= 0) return;
+		if(!CheckUsableManager()) return;
+		var path = manager.path;
+
+		if(path.LineCount <= 0) return;
 
 		if(startPoint > endPoint) return;
 
@@ -106,12 +130,12 @@ public class GimmickBase : MonoBehaviour {
 		Gizmos.color = Color.white;
 
 		var offset = ModelPosition + startPointModelOffset;
-		var lineCount = targetPath.LineCount;
+		var lineCount = path.LineCount;
 
 		if(startPointModelPre) {
 			MeshFilter mfs = startPointModelPre.GetComponent<MeshFilter>();
 			if(mfs) {
-				var pos = (Vector3)targetPath.GetPoint(startPoint / lineCount) + offset;
+				var pos = (Vector3)path.GetPoint(startPoint / lineCount) + offset;
 				Gizmos.DrawMesh(mfs.sharedMesh, pos);
 			}
 		}
@@ -119,10 +143,18 @@ public class GimmickBase : MonoBehaviour {
 		if(endPointModelPre) {
 			MeshFilter mfe = endPointModelPre.GetComponent<MeshFilter>();
 			if(mfe) {
-				var pos = (Vector3)targetPath.GetPoint(endPoint / lineCount) + offset;
+				var pos = (Vector3)path.GetPoint(endPoint / lineCount) + offset;
 				Gizmos.DrawMesh(mfe.sharedMesh, pos);
 			}
 		}
 
+	}
+
+	bool CheckUsableManager() {
+
+		if(!manager) return false;
+		if(!manager.path) return false;
+
+		return true;
 	}
 }

@@ -8,7 +8,6 @@ public class GimmickTest : GimmickBase {
 	public Text text;
 	Color playerCol;
 
-
 	public override void OnRemainingTime(Player player, float t) {
 		base.OnRemainingTime(player, t);
 
@@ -40,12 +39,24 @@ public class GimmickTest : GimmickBase {
 		player.speed /= 5;
 	}
 
-
 	public override float GetSectionTime(float speed) {
-		return targetPath.GetPointLength(startPoint, endPoint) / speed / 5;
+		return path.GetPointLength(startPoint, endPoint) / speed / 5;
 	}
 
-	public override Vector2 GetPlayerPosition(float t) {
-		return base.GetPlayerPosition(t);
+	public override void EditGimmickLine(LineRenderer lineRenderer) {
+
+		lineRenderer.startColor = gimmickColor;
+		lineRenderer.endColor = gimmickColor;
+
+		var partition = (int)(32 * (endPoint - startPoint));
+		var dt = (endPoint - startPoint) * (1.0f / partition);
+		var point = new Vector3[partition + 1];
+
+		for(int i = 0;i <= partition;i++) {
+			point[i] = path.GetPoint((startPoint + dt * i) / path.LineCount);
+		}
+
+		lineRenderer.positionCount = point.Length;
+		lineRenderer.SetPositions(point);
 	}
 }

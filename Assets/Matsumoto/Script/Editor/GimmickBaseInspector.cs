@@ -24,6 +24,8 @@ public class GimmickBaseInspector : Editor {
 	GimmickBase component;
 	GimmickBase[] gimmicks;
 
+	Bezier2D path;
+
 	SerializedProperty lineColor;
 	SerializedProperty startPoint;
 	SerializedProperty endPoint;
@@ -36,18 +38,22 @@ public class GimmickBaseInspector : Editor {
 		startPoint = serializedObject.FindProperty("startPoint");
 		endPoint = serializedObject.FindProperty("endPoint");
 
+		if(CheckParentIsManager()) {
+			path = component.GetComponentInParent<GimmickManager>().path;
+		}
 	}
 
 	public override void OnInspectorGUI() {
 
 		var left = 0.0f;
 		var right = 1.0f;
+		var isParentIsManager = CheckParentIsManager();
+
+		if(path) {
+			right = path.LineCount;
+		}
 
 		serializedObject.Update();
-
-		if(component.targetPath) {
-			right = component.targetPath.LineCount;
-		}
 
 		EditorGUILayout.PropertyField(lineColor);
 		EditorGUILayout.Slider(startPoint, left, right);
@@ -70,7 +76,7 @@ public class GimmickBaseInspector : Editor {
 
 	void OnSceneGUI() {
 
-		if(!component.targetPath) return;
+		if(!path) return;
 
 		serializedObject.Update();
 
@@ -140,9 +146,9 @@ public class GimmickBaseInspector : Editor {
 
 	void DrawButton(Action<int> buttonAction) {
 
-		if(!component.targetPath) return;
+		if(!path) return;
 
-		var points = component.targetPath.Points;
+		var points = path.Points;
 
 		for(int i = 1;i < points.Count;i+=3) {
 			var size = HandleUtility.GetHandleSize(points[i]) * HANDLE_SIZE;
@@ -162,7 +168,8 @@ public class GimmickBaseInspector : Editor {
 
 	void DrawPoint() {
 
-		var path = component.targetPath;
+		if(!path) return;
+
 		var lineCount = path.LineCount;
 
 		Handles.color = component.gimmickColor;
@@ -210,18 +217,22 @@ public class GimmickBaseInspector : Editor {
 	[DrawGizmo(GizmoType.NonSelected)]
 	static void DrawGizmos(GimmickBase gimmick, GizmoType gizmoType) {
 
-		if(!gimmick.targetPath) return;
-		if(gimmick.targetPath.LineCount <= 0) return;
+		var manager = gimmick.GetComponentInParent<GimmickManager>();
+
+		if(!manager) return;
+
+		var path = manager.path;
+
+		if(!path) return;
+		if(path.LineCount <= 0) return;
 
 		var startPoint = gimmick.startPoint;
 		var endPoint = gimmick.endPoint;
 
 		if(startPoint > endPoint) return;
 
-		var path = gimmick.targetPath;
-
 		//線を薄く表示
-		var lineCount = gimmick.targetPath.LineCount;
+		var lineCount = path.LineCount;
 		var pertition = 32 * lineCount;
 
 		var diff = endPoint - startPoint;

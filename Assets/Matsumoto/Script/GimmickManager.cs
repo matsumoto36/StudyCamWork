@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,11 +10,16 @@ using UnityEngine;
 /// </summary>
 public class GimmickManager : MonoBehaviour {
 
+	public Bezier2D path;
+	public LineRenderer linePre;
+
 	GimmickInfo[] gimmicks;
 	Player player;
 	float startTime;
 
 	void Awake() {
+
+		if(!path) return;
 
 		player = GameObject.FindGameObjectWithTag("Player")
 			.GetComponent<Player>();
@@ -25,7 +31,14 @@ public class GimmickManager : MonoBehaviour {
 			gimmicks[i] = new GimmickInfo(g[i]);
 		}
 
+		//昇順にソート
+		gimmicks = gimmicks
+			.OrderBy((item) => item.gimmick.startPoint)
+			.ToArray();
+
 		SetStartTime();
+		SetLine();
+
 		startTime = Time.time;
 	}
 
@@ -73,18 +86,11 @@ public class GimmickManager : MonoBehaviour {
 	void SetStartTime() {
 
 		var speed = player.speed;
-
-		//昇順にソート
-		gimmicks = gimmicks
-			.OrderBy((item) => item.gimmick.startPoint)
-			.ToArray();
-
 		var sumTime = 0.0f;
 		var prevPoint = 0.0f;
 		for(int i = 0;i < gimmicks.Length;i++) {
 
 			var gimmick = gimmicks[i].gimmick;
-			var path = gimmick.targetPath;
 			var pathLength = path.GetLength();
 
 			//通常ゾーン
@@ -97,6 +103,49 @@ public class GimmickManager : MonoBehaviour {
 			sumTime += gimmicks[i].duration;
 			prevPoint = gimmick.endPoint;
 		}
+	}
+
+	/// <summary>
+	/// LineRendererを各ポイントに設置
+	/// </summary>
+	void SetLine() {
+
+		Action<Bezier2D, float, float> DrawLine = (path, from, to) => {
+			var diff = to - from;
+			if(diff > 0) {
+
+				var partition = (int)(32 * diff);
+				var dt = diff / partition;
+				var point = new Vector3[partition + 1];
+
+				for(int j = 0;j <= partition;j++) {
+					point[j] = path.GetPoint((from + dt * j) / path.LineCount);
+				}
+
+				var l = Instantiate(linePre);
+				l.positionCount = point.Length;
+				l.SetPositions(point);
+			}
+		};
+
+		var prevPoint = 0.0f;
+		for(int i = 0;i < gimmicks.Length;i++) {
+
+			var gimmick = gimmicks[i].gimmick;
+
+			//通常ゾーン
+			DrawLine(path, prevPoint, gimmick.startPoint);
+
+			//ギミックゾーン
+			var gimmickLine = Instantiate(linePre);
+			gimmick.EditGimmickLine(gimmickLine);
+
+			prevPoint = gimmick.endPoint;
+		}
+
+		//最後の線を引く
+		DrawLine(path, prevPoint, path.LineCount);
+
 	}
 }
 
