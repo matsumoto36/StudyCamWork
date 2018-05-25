@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// ゲームスタート
+/// ゲームスタートスクリプト
 /// </summary>
 public class Count : MonoBehaviour
 {
@@ -36,6 +36,19 @@ public class Count : MonoBehaviour
     //数字
     public GameObject ST_Number;
 
+    //クリア表示
+    public GameObject Clea_Object;
+
+    //オーバー表示
+    public GameObject Over_Object;
+
+    //表示クリア（仮）
+    public bool Judgment_CL = false;
+
+    //表示オーバー（仮）
+    public bool Judgment_OV = false;
+
+
     /// <summary>
     /// 時間を画像で表示
     /// </summary>
@@ -65,7 +78,6 @@ public class Count : MonoBehaviour
     /// <summary>
     /// コルーチン分秒
     /// </summary>
-
     IEnumerator TimerStart()
     {
         //TimeCountが0以上なら
@@ -137,7 +149,6 @@ public class Count : MonoBehaviour
         }
     }
 
-
 	/// <summary>
     /// スタートしたら
     /// </summary>
@@ -146,9 +157,67 @@ public class Count : MonoBehaviour
         //コルーチンでカウントダウン
         StartCoroutine(TimerStart());
     }
-	
-	void Update ()
+
+    /// <summary>
+    /// クリアUI
+    /// </summary>
+    void Clea()
     {
-        
-	}
+        //Judgment_CLがtrueなら
+        if (Judgment_CL == true)
+        {
+            //クリアを表示
+            Clea_Object.SetActive(true);
+
+            //オーバー非表示
+            Over_Object.SetActive(false);
+
+            //非表示
+            Judgment_OV = false;
+        }
+
+        //Judgment_CLがfalseなら
+        if (Judgment_CL == false)
+        {
+            //クリア非表示
+            Clea_Object.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// オーバーUI
+    /// </summary>
+    void Over()
+    {
+        //Judgment_OVがtrueなら
+        if (Judgment_OV == true)
+        {
+            //オーバーを表示
+            Over_Object.SetActive(true);
+
+            //クリア非表示
+            Clea_Object.SetActive(false);
+
+            //非表示
+            Judgment_CL = false;
+        }
+        //Judgment_OVがfalseなら
+        if (Judgment_OV == false)
+        {
+            //オーバー非表示
+            Over_Object.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// アップデート
+    /// </summary>
+    void Update ()
+    {
+        //クリア表示
+        Clea();
+
+        //オーバー表示
+        Over();
+    }
 }

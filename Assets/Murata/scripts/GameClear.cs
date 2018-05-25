@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 当たったらクリア文字を表示（いらない子になる多分）
+/// </summary>
+
 public class GameClear : MonoBehaviour {
 
     public GameObject Clear_Text;//クリア表示

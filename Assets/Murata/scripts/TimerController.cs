@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+
+/// <summary>
+/// いらないスクリプト
+/// </summary>
+
 public class TimerController : MonoBehaviour {
 
     public Text TimerText;//UI文字テキスト
