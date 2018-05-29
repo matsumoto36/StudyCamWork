@@ -8,7 +8,7 @@ public class Player : MonoBehaviour {
 	public float speed;
 
 	public float MovedLength {
-		get; private set;
+		get; set;
 	}
 
 	// Use this for initialization

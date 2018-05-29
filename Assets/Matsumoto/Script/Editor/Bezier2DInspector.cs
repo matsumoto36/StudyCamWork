@@ -15,7 +15,6 @@ public class Bezier2DInspector : Editor {
 
 	static Color bezierColor = Color.white;
 	static Color tangentColor = Color.blue;
-	static Color normalHandleColor = Color.white;
 	static Color activeHandleColor = Color.red;
 
 	static bool isLock = false;

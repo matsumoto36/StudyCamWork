@@ -121,6 +121,26 @@ public class Bezier2D : MonoBehaviour {
 	}
 
 	/// <summary>
+	/// 2点間の距離を返す
+	/// </summary>
+	/// <param name="startPoint"></param>
+	/// <param name="endPoint"></param>
+	/// <param name="partition"></param>
+	/// <returns></returns>
+	public float GetPointNormalizeLength(float startPoint, float endPoint, int partition = 32) {
+
+		var diff = (endPoint - startPoint) / partition;
+		var prevLinePoint = GetPoint(startPoint / LineCount);
+		var l = 0.0f;
+		for(int i = 0;i <= partition;i++) {
+			var p = GetPointNormalize((startPoint + diff * i) / LineCount);
+			l += (prevLinePoint - p).magnitude;
+			prevLinePoint = p;
+		}
+		return l;
+	}
+
+	/// <summary>
 	/// 割合を指定して曲線内の点を取得する
 	/// </summary>
 	/// <param name="t"></param>

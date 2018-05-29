@@ -123,7 +123,7 @@ LineRenderer:
       m_NumAlphaKeys: 2
     numCornerVertices: 20
     numCapVertices: 20
-    alignment: 0
+    alignment: 1
     textureMode: 3
     generateLightingData: 0
   m_UseWorldSpace: 1

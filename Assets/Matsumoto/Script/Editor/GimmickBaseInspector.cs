@@ -47,7 +47,6 @@ public class GimmickBaseInspector : Editor {
 
 		var left = 0.0f;
 		var right = 1.0f;
-		var isParentIsManager = CheckParentIsManager();
 
 		if(path) {
 			right = path.LineCount;

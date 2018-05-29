@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GimmickTest : GimmickBase {
+//プレイヤーを奥や手前に移動させる
+public class GimmickFocusIO : GimmickBase {
+
+	const float moveZ = 18;
+	public float duration = 1;
+
+	public bool isToFar = true;
 
 	public Text text;
-	Color playerCol;
+
+	float playerSpeed;
 
 	public override void OnRemainingTime(Player player, float t) {
 		base.OnRemainingTime(player, t);
@@ -18,15 +25,20 @@ public class GimmickTest : GimmickBase {
 	public override void OnAttach(Player player) {
 		base.OnAttach(player);
 
-		var render = player.GetComponentInChildren<Renderer>();
-		playerCol = render.material.color;
-		render.material.color = gimmickColor;
+		playerSpeed = player.speed;
 
-		player.speed *= 5;
+		var baseLength = path.GetPointLength(startPoint, endPoint);
+		var hypotenuseLength = Mathf.Sqrt(moveZ * moveZ + baseLength * baseLength);
+
+		player.speed = baseLength / duration;
 	}
 
 	public override void OnApplyUpdate(Player player, float t) {
 		base.OnApplyUpdate(player, t);
+
+		var ratio = t / duration;
+		if(!isToFar) ratio = 1 - ratio;
+		player.transform.GetChild(0).localPosition = new Vector3(0, 0, ratio * moveZ);
 
 		if(text)
 			text.text = "Using. " + t;
@@ -35,14 +47,11 @@ public class GimmickTest : GimmickBase {
 	public override void OnDetach(Player player) {
 		base.OnDetach(player);
 
-		var render = player.GetComponentInChildren<Renderer>();
-		render.material.color = playerCol;
-
-		player.speed /= 5;
+		player.speed = playerSpeed;
 	}
 
 	public override float GetSectionTime(float speed) {
-		return path.GetPointLength(startPoint, endPoint) / speed / 5;
+		return duration;
 	}
 
 	public override void EditGimmickLine(LineRenderer lineRenderer, ref float z) {
@@ -51,15 +60,27 @@ public class GimmickTest : GimmickBase {
 		lineRenderer.endColor = gimmickColor;
 
 		var partition = (int)(32 * (endPoint - startPoint));
-		var dt = (endPoint - startPoint) * (1.0f / partition);
+		var diff = endPoint - startPoint;
+		var dt =  partition == 0 ? 0 : 1.0f / partition;
 		var point = new Vector3[partition + 1];
 
 		for(int i = 0;i <= partition;i++) {
-			point[i] = path.GetPoint((startPoint + dt * i) / path.LineCount);
-			point[i].z = z;
+			point[i] = path.GetPoint((startPoint + diff * dt * i) / path.LineCount);
+			point[i].z = moveZ * dt * i;
+
+			if(!isToFar) {
+				point[i].z = moveZ - point[i].z;
+			}
 		}
 
 		lineRenderer.positionCount = point.Length;
 		lineRenderer.SetPositions(point);
+
+		if(isToFar) {
+			z = moveZ;
+		}
+		else {
+			z = 0;
+		}
 	}
 }

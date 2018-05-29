@@ -91,7 +91,6 @@ public class GimmickManager : MonoBehaviour {
 		for(int i = 0;i < gimmicks.Length;i++) {
 
 			var gimmick = gimmicks[i].gimmick;
-			var pathLength = path.GetLength();
 
 			//通常ゾーン
 			var t = path.GetPointLength(prevPoint, gimmick.startPoint) / speed;
@@ -110,7 +109,7 @@ public class GimmickManager : MonoBehaviour {
 	/// </summary>
 	void SetLine() {
 
-		Action<Bezier2D, float, float> DrawLine = (path, from, to) => {
+		Action<Bezier2D, float, float, float> DrawLine = (path, from, to, lineZ) => {
 			var diff = to - from;
 			if(diff > 0) {
 
@@ -118,8 +117,9 @@ public class GimmickManager : MonoBehaviour {
 				var dt = diff / partition;
 				var point = new Vector3[partition + 1];
 
-				for(int j = 0;j <= partition;j++) {
-					point[j] = path.GetPoint((from + dt * j) / path.LineCount);
+				for(int i = 0;i <= partition;i++) {
+					point[i] = path.GetPoint((from + dt * i) / path.LineCount);
+					point[i].z = lineZ;
 				}
 
 				var l = Instantiate(linePre);
@@ -129,22 +129,23 @@ public class GimmickManager : MonoBehaviour {
 		};
 
 		var prevPoint = 0.0f;
+		var z = 0.0f;
 		for(int i = 0;i < gimmicks.Length;i++) {
 
 			var gimmick = gimmicks[i].gimmick;
 
 			//通常ゾーン
-			DrawLine(path, prevPoint, gimmick.startPoint);
+			DrawLine(path, prevPoint, gimmick.startPoint, z);
 
 			//ギミックゾーン
 			var gimmickLine = Instantiate(linePre);
-			gimmick.EditGimmickLine(gimmickLine);
+			gimmick.EditGimmickLine(gimmickLine, ref z);
 
 			prevPoint = gimmick.endPoint;
 		}
 
 		//最後の線を引く
-		DrawLine(path, prevPoint, path.LineCount);
+		DrawLine(path, prevPoint, path.LineCount, z);
 
 	}
 }

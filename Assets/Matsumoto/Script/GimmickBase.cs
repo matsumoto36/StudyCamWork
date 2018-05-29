@@ -16,13 +16,12 @@ public class GimmickBase : MonoBehaviour {
 	[HideInInspector]
 	public float startPoint;				//ギミックを適用する開始地点
 	[HideInInspector]
-	public float endPoint;					//ギミックを終わらせる終了地点
-	#endregion
-
-	//public Bezier2D targetPath;             //ギミックを取り付けるパス
-	public GameObject startPointModel;		//生成されたギミックの始点のモデル
+	public float endPoint;                  //ギミックを終わらせる終了地点
+	[HideInInspector]
+	public GameObject startPointModel;      //生成されたギミックの始点のモデル
+	[HideInInspector]
 	public GameObject endPointModel;        //生成されたギミックの終点のモデル
-
+	#endregion
 
 	[SerializeField]
 	GameObject startPointModelPre;			//ギミックの始点のモデルのプレハブ
@@ -38,7 +37,7 @@ public class GimmickBase : MonoBehaviour {
 
 	void Awake() {
 
-		var manager = GetComponentInParent<GimmickManager>();
+		manager = GetComponentInParent<GimmickManager>();
 		path = manager.path;
 
 		if(!CheckUsableManager()) return;
@@ -100,7 +99,7 @@ public class GimmickBase : MonoBehaviour {
 	/// </summary>
 	/// <param name="t"></param>
 	/// <returns></returns>
-	public virtual void EditGimmickLine(LineRenderer lineRenderer) {
+	public virtual void EditGimmickLine(LineRenderer lineRenderer, ref float z) {
 
 		if(!CheckUsableManager()) return;
 
@@ -111,6 +110,7 @@ public class GimmickBase : MonoBehaviour {
 
 		for(int i = 0;i <= partition;i++) {
 			point[i] = path.GetPoint((startPoint + dt * i) / path.LineCount);
+			point[i].z = z;
 		}
 
 		lineRenderer.positionCount = point.Length;
