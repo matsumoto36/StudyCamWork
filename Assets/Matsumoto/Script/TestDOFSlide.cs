@@ -16,7 +16,7 @@ public class TestDOFSlide : MonoBehaviour {
 
 	float minDistance = 0.45f;
 	float distance = 0.3f;
-	float maxDistance = 4f;
+	float maxDistance = 3.4f;
 
 	float t = 0.0f;
 

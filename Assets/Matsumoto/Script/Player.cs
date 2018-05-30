@@ -7,16 +7,23 @@ public class Player : MonoBehaviour {
 	public Bezier2D path;
 	public float speed;
 
+	public bool IsFreeze {
+		get; set;
+	}
+
 	public float MovedLength {
 		get; set;
 	}
 
-	// Use this for initialization
-	void Start () {
+	void Start() {
+		IsFreeze = true;
+		GameMaster.gameMaster.OnGameStart += () => IsFreeze = false;
 	}
 
 	// Update is called once per frame
 	void Update () {
+
+		if(IsFreeze) return;
 
 		MovedLength += speed * Time.deltaTime;
 		MovedLength = Mathf.Clamp(MovedLength, 0, path.GetLength());

@@ -29,6 +29,7 @@ public class GimmickManager : MonoBehaviour {
 
 		for(int i = 0;i < g.Length;i++) {
 			gimmicks[i] = new GimmickInfo(g[i]);
+			g[i].Init();
 		}
 
 		//昇順にソート
@@ -39,11 +40,17 @@ public class GimmickManager : MonoBehaviour {
 		SetStartTime();
 		SetLine();
 
-		startTime = Time.time;
+	}
+
+	void Start() {
+		GameMaster.gameMaster.OnGameStart += () => startTime = Time.time;
 	}
 
 	// Update is called once per frame
 	void Update () {
+
+		if(player.IsFreeze) return;
+
 		GimmickUpdate();
 	}
 

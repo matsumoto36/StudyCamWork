@@ -59,12 +59,16 @@ public class GimmickFocusIO : GimmickBase {
 		lineRenderer.startColor = gimmickColor;
 		lineRenderer.endColor = gimmickColor;
 
+
 		var partition = (int)(32 * (endPoint - startPoint));
 		var diff = endPoint - startPoint;
 		var dt =  partition == 0 ? 0 : 1.0f / partition;
 		var point = new Vector3[partition + 1];
 
 		for(int i = 0;i <= partition;i++) {
+
+			if(path) Debug.Log("aa");
+
 			point[i] = path.GetPoint((startPoint + diff * dt * i) / path.LineCount);
 			point[i].z = moveZ * dt * i;
 

@@ -35,7 +35,7 @@ public class GimmickBase : MonoBehaviour {
 
 	GimmickManager manager;
 
-	void Awake() {
+	public void Init() {
 
 		manager = GetComponentInParent<GimmickManager>();
 		path = manager.path;
@@ -103,7 +103,6 @@ public class GimmickBase : MonoBehaviour {
 
 		if(!CheckUsableManager()) return;
 
-		var path = manager.path;
 		var partition = (int)(32 * (endPoint - startPoint));
 		var dt = (endPoint - startPoint) * (1.0f / partition);
 		var point = new Vector3[partition + 1];
@@ -119,8 +118,11 @@ public class GimmickBase : MonoBehaviour {
 
 	void OnDrawGizmos() {
 
+		manager = GetComponentInParent<GimmickManager>();
+
 		if(!CheckUsableManager()) return;
-		var path = manager.path;
+
+		path = manager.path;
 
 		if(path.LineCount <= 0) return;
 
