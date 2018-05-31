@@ -8,11 +8,23 @@ public class GimmickTest : GimmickBase {
 	public Text text;
 	Color playerCol;
 
+	GimmickGauge startGauge;
+
+	float duration;
+
 	public override void OnRemainingTime(Player player, float t) {
 		base.OnRemainingTime(player, t);
 
 		if(text)
 			text.text = "At. " + t;
+
+		if(!startPointModel) return;
+		if(!startGauge) {
+			startGauge = startPointModel.GetComponent<GimmickGauge>();
+			if(!startGauge) return;
+		}
+
+		startGauge.Value = t;
 	}
 
 	public override void OnAttach(Player player) {
@@ -30,6 +42,14 @@ public class GimmickTest : GimmickBase {
 
 		if(text)
 			text.text = "Using. " + t;
+
+		if(!startPointModel) return;
+		if(!startGauge) {
+			startGauge = startPointModel.GetComponent<GimmickGauge>();
+			if(!startGauge) return;
+		}
+
+		startGauge.Value = t / duration;
 	}
 
 	public override void OnDetach(Player player) {
@@ -42,7 +62,7 @@ public class GimmickTest : GimmickBase {
 	}
 
 	public override float GetSectionTime(float speed) {
-		return path.GetPointLength(startPoint, endPoint) / speed / 5;
+		return duration = path.GetPointLength(startPoint, endPoint) / speed / 5;
 	}
 
 	public override void EditGimmickLine(LineRenderer lineRenderer, ref float z) {

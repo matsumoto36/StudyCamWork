@@ -575,7 +575,8 @@ MonoBehaviour:
   endPoint: 1.77
   startPointModel: {fileID: 0}
   endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
+  startPointModelPre: {fileID: 1097530807615636, guid: 762effd5a2425a7428380472c4556114,
+    type: 2}
   startPointModelOffset: {x: 0, y: 0, z: 0}
   endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
