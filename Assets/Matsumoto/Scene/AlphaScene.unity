@@ -577,8 +577,7 @@ MonoBehaviour:
   endPointModel: {fileID: 0}
   startPointModelPre: {fileID: 0}
   startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 1439433777637928, guid: 8a529d90b2bb49247bfc3f627e8cbb2e,
-    type: 2}
+  endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
   text: {fileID: 1371344092}
 --- !u!1 &892226367

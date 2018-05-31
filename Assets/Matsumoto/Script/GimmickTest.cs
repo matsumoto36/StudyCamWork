@@ -61,5 +61,8 @@ public class GimmickTest : GimmickBase {
 
 		lineRenderer.positionCount = point.Length;
 		lineRenderer.SetPositions(point);
+
+		endPointModelSpawnZ = startPointModelSpawnZ = z;
+
 	}
 }

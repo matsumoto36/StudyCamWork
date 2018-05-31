@@ -40,6 +40,9 @@ public class GimmickManager : MonoBehaviour {
 		SetStartTime();
 		SetLine();
 
+		foreach(var item in gimmicks) {
+			item.gimmick.SpawnModel();
+		}
 	}
 
 	void Start() {

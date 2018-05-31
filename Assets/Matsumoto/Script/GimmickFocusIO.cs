@@ -59,6 +59,8 @@ public class GimmickFocusIO : GimmickBase {
 		lineRenderer.startColor = gimmickColor;
 		lineRenderer.endColor = gimmickColor;
 
+		startPointModelSpawnZ = z;
+		Debug.Log(z);
 
 		var partition = (int)(32 * (endPoint - startPoint));
 		var diff = endPoint - startPoint;
@@ -86,5 +88,10 @@ public class GimmickFocusIO : GimmickBase {
 		else {
 			z = 0;
 		}
+
+		endPointModelSpawnZ = z;
+		Debug.Log(z);
+
+
 	}
 }

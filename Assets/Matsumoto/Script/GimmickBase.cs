@@ -32,6 +32,8 @@ public class GimmickBase : MonoBehaviour {
 	public Vector3 endPointModelOffset;     //モデルの配置のオフセット
 
 	protected Bezier2D path;
+	protected float startPointModelSpawnZ;
+	protected float endPointModelSpawnZ;
 
 	GimmickManager manager;
 
@@ -39,8 +41,9 @@ public class GimmickBase : MonoBehaviour {
 
 		manager = GetComponentInParent<GimmickManager>();
 		path = manager.path;
+	}
 
-		if(!CheckUsableManager()) return;
+	public void SpawnModel() {
 
 		//登録されたモデルのスポーン
 		var offset = ModelPosition + startPointModelOffset;
@@ -48,11 +51,13 @@ public class GimmickBase : MonoBehaviour {
 
 		if(startPointModelPre) {
 			var pos = (Vector3)path.GetPoint(startPoint / lineCount) + offset;
+			pos.z += startPointModelSpawnZ;
 			startPointModel = Instantiate(startPointModelPre, pos, Quaternion.identity);
 		}
 
 		if(endPointModelPre) {
 			var pos = (Vector3)path.GetPoint(endPoint / lineCount) + offset;
+			pos.z += endPointModelSpawnZ;
 			endPointModel = Instantiate(endPointModelPre, pos, Quaternion.identity);
 		}
 	}
@@ -114,6 +119,8 @@ public class GimmickBase : MonoBehaviour {
 
 		lineRenderer.positionCount = point.Length;
 		lineRenderer.SetPositions(point);
+
+		endPointModelSpawnZ = startPointModelSpawnZ = z;
 	}
 
 	void OnDrawGizmos() {
