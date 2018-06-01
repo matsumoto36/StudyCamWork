@@ -240,8 +240,8 @@ MonoBehaviour:
   endPoint: 4.5
   startPointModel: {fileID: 0}
   endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 1097530807615636, guid: 762effd5a2425a7428380472c4556114,
-    type: 2}
+  ringPre: {fileID: 1460442278578200, guid: 18ee753649517e449a63a6d153dcdaa0, type: 2}
+  startPointModelPre: {fileID: 0}
   startPointModelOffset: {x: 0, y: 0, z: 0}
   endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
@@ -524,8 +524,8 @@ MonoBehaviour:
   endPoint: 4
   startPointModel: {fileID: 0}
   endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 1097530807615636, guid: 762effd5a2425a7428380472c4556114,
-    type: 2}
+  ringPre: {fileID: 1460442278578200, guid: 18ee753649517e449a63a6d153dcdaa0, type: 2}
+  startPointModelPre: {fileID: 0}
   startPointModelOffset: {x: 0, y: 0, z: 0}
   endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
@@ -575,8 +575,8 @@ MonoBehaviour:
   endPoint: 1.77
   startPointModel: {fileID: 0}
   endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 1097530807615636, guid: 762effd5a2425a7428380472c4556114,
-    type: 2}
+  ringPre: {fileID: 1460442278578200, guid: 18ee753649517e449a63a6d153dcdaa0, type: 2}
+  startPointModelPre: {fileID: 0}
   startPointModelOffset: {x: 0, y: 0, z: 0}
   endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
@@ -1277,8 +1277,8 @@ MonoBehaviour:
   endPoint: 2.09
   startPointModel: {fileID: 0}
   endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 1097530807615636, guid: 762effd5a2425a7428380472c4556114,
-    type: 2}
+  ringPre: {fileID: 1460442278578200, guid: 18ee753649517e449a63a6d153dcdaa0, type: 2}
+  startPointModelPre: {fileID: 0}
   startPointModelOffset: {x: 0, y: 0, z: 0}
   endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
