@@ -52,6 +52,7 @@ public class MouseCamera : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		Cursor.visible = false;
        
 		cameraImage.rectTransform.sizeDelta = wideCameraSize;
 
