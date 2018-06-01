@@ -14,20 +14,22 @@ public class MouseCamera : MonoBehaviour {
 	public Vector2 wideCameraSize = new Vector2(300f, 200f);
     public Vector2 smallCameraSize = new Vector2(150f, 100f);
 
-    public bool isCapture = false;
+	public bool isCapture = false;
+	public bool isPlayerFocus;
 
-    public int life;  　　　　　 　　//体力
-    public int lifeDamage;        　//ダメージの数値
-    public int Combo;     　　  　　//コンボ
-    public int baseScore;　　　　　//ベースのスコア
-    public int Score;      　　　　//最終的に入るスコア
-    public int BonusScore;        //中心地点で獲得するスコア
+    public int life;				//体力
+    public int lifeDamage;			//ダメージの数値
+    public int Combo;				//コンボ
+    public int baseScore;			//ベースのスコア
+    public int Score;				//最終的に入るスコア
+    public int BonusScore;			//中心地点で獲得するスコア
     int plus; //プラスのスコアをスコアに入れるためのもの
 
     Color baseCameraColor = Color.white;
 	Color captureCameraColor = Color.cyan;
 	Color filterCameraColor = Color.yellow;
 	Color failCameraColor = Color.red;
+
 	bool isGameStart;　　　　//ゲームスタート
 	bool isFilterOn;
     bool ComboPlus;
@@ -39,6 +41,9 @@ public class MouseCamera : MonoBehaviour {
 
 	float gaugeAmount = 1;
 	float gauge = 1;
+
+	GimmickManager gimmickManager;
+	DOFSlide dofSlide;
 
 	public float CaptureRate {
 		get { return captureTime / playTime; }
@@ -76,6 +81,9 @@ public class MouseCamera : MonoBehaviour {
 		};
         Combo = 0;
         ComboPlus = false;
+
+		dofSlide = FindObjectOfType<DOFSlide>();
+		gimmickManager = FindObjectOfType<GimmickManager>();
 	}
 
 	// Update is called once per frame
@@ -132,12 +140,19 @@ public class MouseCamera : MonoBehaviour {
 
     }
 
-    bool IsPlayerCapture() {　　　　　　　　　　　　　　　　//主なあたり判定
+    bool IsPlayerCapture() {					//主なあたり判定
 
 		if(!targetPlayer) return false;
 
+		//フォーカスできているか調べる
+		var playerZRate = targetPlayer.transform.GetChild(0).localPosition.z / gimmickManager.moveZ;
+		var focusRate = dofSlide.Value;
+		var focusGrace = GameMaster.gameMaster.gameBalanceData.FocusGrace;
+		if(Mathf.Abs(playerZRate - focusRate) > focusGrace) return false;
+
+		//枠に入っているか調べる
 		var sizeOffset = new Vector2(0, 0);
-		var rect = new Rect(                                                               
+		var rect = new Rect(
 			(Vector2)cameraImage.rectTransform.position - (wideCameraSize / 2),
 			wideCameraSize + sizeOffset);
 

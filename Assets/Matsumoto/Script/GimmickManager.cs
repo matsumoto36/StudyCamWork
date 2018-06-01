@@ -12,12 +12,13 @@ public class GimmickManager : MonoBehaviour {
 
 	public Bezier2D path;
 	public LineRenderer linePre;
+	public float moveZ;
 
 	GimmickInfo[] gimmicks;
 	Player player;
 	float startTime;
 
-	void Awake() {
+	void Start() {
 
 		if(!path) return;
 
@@ -43,9 +44,7 @@ public class GimmickManager : MonoBehaviour {
 		foreach(var item in gimmicks) {
 			item.gimmick.SpawnModel();
 		}
-	}
 
-	void Start() {
 		GameMaster.gameMaster.OnGameStart += () => startTime = Time.time;
 	}
 

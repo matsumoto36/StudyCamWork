@@ -6,20 +6,30 @@ using UnityEngine.UI;
 //プレイヤーを奥や手前に移動させる
 public class GimmickFocusIO : GimmickBase {
 
-	const float moveZ = 18;
-	public float duration = 1;
-
+	float moveZ;
 	public bool isToFar = true;
-
 	public Text text;
 
+	GimmickGauge startGauge;
 	float playerSpeed;
+
+	void Start() {
+
+	}
 
 	public override void OnRemainingTime(Player player, float t) {
 		base.OnRemainingTime(player, t);
 
 		if(text)
 			text.text = "At. " + t;
+
+		if(!startPointModel) return;
+		if(!startGauge) {
+			startGauge = startPointModel.GetComponent<GimmickGauge>();
+			if(!startGauge) return;
+		}
+
+		startGauge.Value = t;
 	}
 
 	public override void OnAttach(Player player) {
@@ -28,20 +38,30 @@ public class GimmickFocusIO : GimmickBase {
 		playerSpeed = player.speed;
 
 		var baseLength = path.GetPointLength(startPoint, endPoint);
-		var hypotenuseLength = Mathf.Sqrt(moveZ * moveZ + baseLength * baseLength);
-
+		var duration = GameMaster.gameMaster.gameBalanceData.FocusDuration;
 		player.speed = baseLength / duration;
 	}
 
 	public override void OnApplyUpdate(Player player, float t) {
 		base.OnApplyUpdate(player, t);
 
+		//プレイヤーのbodyのZを変更
+		var duration = GameMaster.gameMaster.gameBalanceData.FocusDuration;
 		var ratio = t / duration;
 		if(!isToFar) ratio = 1 - ratio;
-		player.transform.GetChild(0).localPosition = new Vector3(0, 0, ratio * moveZ);
+		var body = player.transform.GetChild(0);
+		body.localPosition = new Vector3(0, 0, ratio * moveZ);
 
 		if(text)
 			text.text = "Using. " + t;
+
+		//ゲージに反映
+		if(!startPointModel) return;
+		if(!startGauge) {
+			startGauge = startPointModel.GetComponent<GimmickGauge>();
+			if(!startGauge) return;
+		}
+		startGauge.Value = t / duration;
 	}
 
 	public override void OnDetach(Player player) {
@@ -51,7 +71,7 @@ public class GimmickFocusIO : GimmickBase {
 	}
 
 	public override float GetSectionTime(float speed) {
-		return duration;
+		return GameMaster.gameMaster.gameBalanceData.FocusDuration;
 	}
 
 	public override void EditGimmickLine(LineRenderer lineRenderer, ref float z) {
@@ -59,6 +79,7 @@ public class GimmickFocusIO : GimmickBase {
 		lineRenderer.startColor = gimmickColor;
 		lineRenderer.endColor = gimmickColor;
 
+		moveZ = manager.moveZ;
 		startPointModelSpawnZ = z;
 		Debug.Log(z);
 

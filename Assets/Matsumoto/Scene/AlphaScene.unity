@@ -142,7 +142,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volume: {fileID: 303159758}
-  duration: 1
   FocusCurve:
     serializedVersion: 2
     m_Curve:
@@ -245,7 +244,6 @@ MonoBehaviour:
   startPointModelOffset: {x: 0, y: 0, z: 0}
   endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
-  duration: 1
   isToFar: 0
   text: {fileID: 0}
 --- !u!1 &580047937
@@ -994,6 +992,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: {fileID: 965985653}
   linePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
+  moveZ: 18
 --- !u!4 &1273233310
 Transform:
   m_ObjectHideFlags: 0
@@ -1211,6 +1210,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a38ba1d36bc0cc1438ae0137698fde0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameBalanceData:
+    focusGrace: 0.1
+    focusDuration: 1
   countDownText: {fileID: 580047939}
   ComboText: {fileID: 981081409}
   ScoreText: {fileID: 622516443}
@@ -1273,13 +1275,11 @@ MonoBehaviour:
   endPoint: 2.09
   startPointModel: {fileID: 0}
   endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 1092398781916088, guid: 710653ac3e6c13048836df36d5ee7762,
+  startPointModelPre: {fileID: 1097530807615636, guid: 762effd5a2425a7428380472c4556114,
     type: 2}
   startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 1439433777637928, guid: 8a529d90b2bb49247bfc3f627e8cbb2e,
-    type: 2}
+  endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
-  duration: 1
   isToFar: 1
   text: {fileID: 0}
 --- !u!1 &1698450590
@@ -1732,6 +1732,7 @@ MonoBehaviour:
   wideCameraSize: {x: 300, y: 200}
   smallCameraSize: {x: 150, y: 100}
   isCapture: 1
+  isPlayerFocus: 0
   life: 100
   lifeDamage: 10
   Combo: 0

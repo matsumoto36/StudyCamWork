@@ -8,6 +8,8 @@ public class GameMaster : MonoBehaviour {
 
 	public static GameMaster gameMaster;
 
+	public GameBalanceData gameBalanceData;
+
 	public Text countDownText;
     public Text ComboText;
     public Text ScoreText;

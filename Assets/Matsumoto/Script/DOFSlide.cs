@@ -4,12 +4,9 @@ using UnityEngine;
 
 using UnityEngine.Rendering.PostProcessing;
 
-public class TestDOFSlide : MonoBehaviour {
+public class DOFSlide : MonoBehaviour {
 
 	public PostProcessVolume volume;
-
-	public float duration;
-
 	public AnimationCurve FocusCurve;
 
 	DepthOfField dof;
@@ -18,7 +15,13 @@ public class TestDOFSlide : MonoBehaviour {
 	float distance = 0.3f;
 	float maxDistance = 3.4f;
 
-	float t = 0.0f;
+	public float Value {
+		get; set;
+	}
+
+	public bool IsFocus {
+		get; private set;
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -28,12 +31,13 @@ public class TestDOFSlide : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		var focusAngle = Input.GetMouseButton(0) ? 1 : -1;
-		t += focusAngle * Time.deltaTime / duration;
-		t = Mathf.Clamp(t, 0, 1);
+		IsFocus = Input.GetMouseButton(0);
 
-		//distance += Mathf.Pow(1, focusAngle * speed * Time.deltaTime);
-		distance = Mathf.Lerp(minDistance, maxDistance, FocusCurve.Evaluate(t));
+		var focusAngle = IsFocus ? 1 : -1;
+		Value += focusAngle * Time.deltaTime / GameMaster.gameMaster.gameBalanceData.FocusDuration;
+		Value = Mathf.Clamp(Value, 0, 1);
+
+		distance = Mathf.Lerp(minDistance, maxDistance, FocusCurve.Evaluate(Value));
 
 		dof.focusDistance.value = distance;
 	}

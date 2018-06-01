@@ -34,10 +34,9 @@ public class GimmickBase : MonoBehaviour {
 	protected Bezier2D path;
 	protected float startPointModelSpawnZ;
 	protected float endPointModelSpawnZ;
+	protected GimmickManager manager;
 
-	GimmickManager manager;
-
-	public void Init() {
+	public virtual void Init() {
 
 		manager = GetComponentInParent<GimmickManager>();
 		path = manager.path;
