@@ -8,7 +8,10 @@ public class GameMaster : MonoBehaviour {
 
 	public static GameMaster gameMaster;
 
-	public GameBalanceData gameBalanceData;
+	public GameBalanceData gameBalanceData = new GameBalanceData(
+		0.1f,
+		1.0f
+		);
 
 	public Text countDownText;
     public Text ComboText;

@@ -32,8 +32,8 @@ public class GimmickGauge : MonoBehaviour {
 	}
 
 	public Color GaugeColor {
-		get { return gaugeRenderer.material.GetColor("_Emission"); }
-		set { gaugeRenderer.material.SetColor("_Emission", value); }
+		get { return gaugeRenderer.material.GetColor("_EmissionColor"); }
+		set { gaugeRenderer.material.SetColor("_EmissionColor", value); }
 	}
 
 	void Awake() {

@@ -13,8 +13,17 @@ public class GimmickFocusIO : GimmickBase {
 	GimmickGauge startGauge;
 	float playerSpeed;
 
-	void Start() {
+	public override void SpawnModel() {
+		base.SpawnModel();
 
+		if(!startPointModel) return;
+		if(!startGauge) {
+			startGauge = startPointModel.GetComponent<GimmickGauge>();
+			if(!startGauge) return;
+		}
+
+		Debug.Log("wwww");
+		startGauge.GaugeColor = gimmickColor;
 	}
 
 	public override void OnRemainingTime(Player player, float t) {
@@ -23,12 +32,7 @@ public class GimmickFocusIO : GimmickBase {
 		if(text)
 			text.text = "At. " + t;
 
-		if(!startPointModel) return;
-		if(!startGauge) {
-			startGauge = startPointModel.GetComponent<GimmickGauge>();
-			if(!startGauge) return;
-		}
-
+		if(!startGauge) return;
 		startGauge.Value = t;
 	}
 
@@ -55,12 +59,7 @@ public class GimmickFocusIO : GimmickBase {
 		if(text)
 			text.text = "Using. " + t;
 
-		//ゲージに反映
-		if(!startPointModel) return;
-		if(!startGauge) {
-			startGauge = startPointModel.GetComponent<GimmickGauge>();
-			if(!startGauge) return;
-		}
+		if(!startGauge) return;
 		startGauge.Value = t / duration;
 	}
 
@@ -76,12 +75,10 @@ public class GimmickFocusIO : GimmickBase {
 
 	public override void EditGimmickLine(LineRenderer lineRenderer, ref float z) {
 
-		lineRenderer.startColor = gimmickColor;
-		lineRenderer.endColor = gimmickColor;
+		lineRenderer.material.SetColor("_Color", gimmickColor);
 
 		moveZ = manager.moveZ;
 		startPointModelSpawnZ = z;
-		Debug.Log(z);
 
 		var partition = (int)(32 * (endPoint - startPoint));
 		var diff = endPoint - startPoint;
@@ -89,8 +86,6 @@ public class GimmickFocusIO : GimmickBase {
 		var point = new Vector3[partition + 1];
 
 		for(int i = 0;i <= partition;i++) {
-
-			if(path) Debug.Log("aa");
 
 			point[i] = path.GetPoint((startPoint + diff * dt * i) / path.LineCount);
 			point[i].z = moveZ * dt * i;
@@ -111,8 +106,5 @@ public class GimmickFocusIO : GimmickBase {
 		}
 
 		endPointModelSpawnZ = z;
-		Debug.Log(z);
-
-
 	}
 }

@@ -12,11 +12,9 @@ public class GimmickTest : GimmickBase {
 
 	float duration;
 
-	public override void OnRemainingTime(Player player, float t) {
-		base.OnRemainingTime(player, t);
+	public override void SpawnModel() {
+		base.SpawnModel();
 
-		if(text)
-			text.text = "At. " + t;
 
 		if(!startPointModel) return;
 		if(!startGauge) {
@@ -24,6 +22,16 @@ public class GimmickTest : GimmickBase {
 			if(!startGauge) return;
 		}
 
+		startGauge.GaugeColor = gimmickColor;
+	}
+
+	public override void OnRemainingTime(Player player, float t) {
+		base.OnRemainingTime(player, t);
+
+		if(text)
+			text.text = "At. " + t;
+
+		if(!startGauge) return;
 		startGauge.Value = t;
 	}
 
@@ -43,12 +51,7 @@ public class GimmickTest : GimmickBase {
 		if(text)
 			text.text = "Using. " + t;
 
-		if(!startPointModel) return;
-		if(!startGauge) {
-			startGauge = startPointModel.GetComponent<GimmickGauge>();
-			if(!startGauge) return;
-		}
-
+		if(!startGauge) return;
 		startGauge.Value = t / duration;
 	}
 
@@ -67,8 +70,7 @@ public class GimmickTest : GimmickBase {
 
 	public override void EditGimmickLine(LineRenderer lineRenderer, ref float z) {
 
-		lineRenderer.startColor = gimmickColor;
-		lineRenderer.endColor = gimmickColor;
+		lineRenderer.material.SetColor("_Color", gimmickColor);
 
 		var partition = (int)(32 * (endPoint - startPoint));
 		var dt = (endPoint - startPoint) * (1.0f / partition);

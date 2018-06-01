@@ -12,7 +12,7 @@ public class GimmickManager : MonoBehaviour {
 
 	public Bezier2D path;
 	public LineRenderer linePre;
-	public float moveZ;
+	public float moveZ = 18;
 
 	GimmickInfo[] gimmicks;
 	Player player;
@@ -148,6 +148,7 @@ public class GimmickManager : MonoBehaviour {
 
 			//ギミックゾーン
 			var gimmickLine = Instantiate(linePre);
+			gimmickLine.material = new Material(gimmickLine.material);
 			gimmick.EditGimmickLine(gimmickLine, ref z);
 
 			prevPoint = gimmick.endPoint;

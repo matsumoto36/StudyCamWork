@@ -16,5 +16,9 @@ public class GameBalanceData {
 	float focusDuration;
 	public float FocusDuration { get { return focusDuration; }}
 
+	public GameBalanceData(float focusGrace, float focusDuration) {
+		this.focusGrace = focusGrace;
+		this.focusDuration = focusDuration;
+	}
 
 }

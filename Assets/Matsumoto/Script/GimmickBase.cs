@@ -42,7 +42,7 @@ public class GimmickBase : MonoBehaviour {
 		path = manager.path;
 	}
 
-	public void SpawnModel() {
+	public virtual void SpawnModel() {
 
 		//登録されたモデルのスポーン
 		var offset = ModelPosition + startPointModelOffset;
