@@ -32,7 +32,7 @@ public class GimmickTest : GimmickBase {
 			text.text = "At. " + t;
 
 		if(!startGauge) return;
-		startGauge.Value = t;
+		startGauge.Value = 1 - Mathf.Min(t, 1);
 	}
 
 	public override void OnAttach(Player player) {
@@ -52,7 +52,7 @@ public class GimmickTest : GimmickBase {
 			text.text = "Using. " + t;
 
 		if(!startGauge) return;
-		startGauge.Value = t / duration;
+		startGauge.Value = 1 - (t / duration);
 	}
 
 	public override void OnDetach(Player player) {
