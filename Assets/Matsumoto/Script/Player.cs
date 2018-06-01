@@ -18,6 +18,8 @@ public class Player : MonoBehaviour {
 	void Start() {
 		IsFreeze = true;
 		GameMaster.gameMaster.OnGameStart += () => IsFreeze = false;
+		GameMaster.gameMaster.OnGameClear += () => IsFreeze = true;
+		GameMaster.gameMaster.OnGameOver += () => IsFreeze = true;
 	}
 
 	// Update is called once per frame
@@ -29,5 +31,10 @@ public class Player : MonoBehaviour {
 		MovedLength = Mathf.Clamp(MovedLength, 0, path.GetLength());
 		var t = MovedLength / path.GetLength();
 		transform.position = path.GetPointNormalize(t);
+
+		if(t >= 1.0f) {
+			GameMaster.gameMaster.GameClear();
+		}
+
 	}
 }

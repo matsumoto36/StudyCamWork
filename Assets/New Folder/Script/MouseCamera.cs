@@ -75,11 +75,17 @@ public class MouseCamera : MonoBehaviour {
 			captureTime = 0;
 		};
 
-		GameMaster.gameMaster.OnGameEnd += () => {
+		GameMaster.gameMaster.OnGameClear += () => {
 			isGameStart = false;
 			cameraImage.color = baseCameraColor;
 		};
-        Combo = 0;
+
+		GameMaster.gameMaster.OnGameOver += () => {
+			isGameStart = false;
+			cameraImage.color = baseCameraColor;
+		};
+
+		Combo = 0;
         ComboPlus = false;
 
 		dofSlide = FindObjectOfType<DOFSlide>();
@@ -217,6 +223,7 @@ public class MouseCamera : MonoBehaviour {
             {
                 lifeTimeCount++;
                 life-=lifeDamage;
+				if(life <= 0.0f) GameMaster.gameMaster.GameOver();
             }
             
         }

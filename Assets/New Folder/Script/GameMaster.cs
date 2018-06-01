@@ -17,7 +17,8 @@ public class GameMaster : MonoBehaviour {
     public MouseCamera mouseCamera;
 
 	public event Action OnGameStart;
-	public event Action OnGameEnd;
+	public event Action OnGameOver;
+	public event Action OnGameClear;
 
 	bool isGameStart;
     Slider _slider;
@@ -45,8 +46,15 @@ public class GameMaster : MonoBehaviour {
     }
     
 	public void GameClear() {
-		//OnGameEnd?.Invoke();
+		if(OnGameClear != null) OnGameClear();
 		isGameStart = false;
+		countDownText.text = "GameClear";
+	}
+
+	public void GameOver() {
+		if(OnGameOver != null) OnGameOver();
+		isGameStart = false;
+		countDownText.text = "GameOver";
 	}
 
 	IEnumerator CountDown() {
