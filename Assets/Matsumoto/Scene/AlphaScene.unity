@@ -240,7 +240,6 @@ MonoBehaviour:
   endPoint: 4.5
   startPointModel: {fileID: 0}
   endPointModel: {fileID: 0}
-  ringPre: {fileID: 1460442278578200, guid: 18ee753649517e449a63a6d153dcdaa0, type: 2}
   startPointModelPre: {fileID: 0}
   startPointModelOffset: {x: 0, y: 0, z: 0}
   endPointModelPre: {fileID: 0}
@@ -516,19 +515,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 674013192}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ca9714357babcc419a5742d38b80a07, type: 3}
+  m_Script: {fileID: 11500000, guid: cada555ace83047499dd9a0f2e5ac2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0, g: 1, b: 0.08965492, a: 1}
-  startPoint: 3.31
+  gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
+  startPoint: 3
   endPoint: 4
   startPointModel: {fileID: 0}
   endPointModel: {fileID: 0}
-  ringPre: {fileID: 1460442278578200, guid: 18ee753649517e449a63a6d153dcdaa0, type: 2}
   startPointModelPre: {fileID: 0}
   startPointModelOffset: {x: 0, y: 0, z: 0}
   endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
+  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
+  waitTime: 2
   text: {fileID: 0}
 --- !u!1 &879739768
 GameObject:
@@ -575,7 +575,6 @@ MonoBehaviour:
   endPoint: 1.77
   startPointModel: {fileID: 0}
   endPointModel: {fileID: 0}
-  ringPre: {fileID: 1460442278578200, guid: 18ee753649517e449a63a6d153dcdaa0, type: 2}
   startPointModelPre: {fileID: 0}
   startPointModelOffset: {x: 0, y: 0, z: 0}
   endPointModelPre: {fileID: 0}
@@ -1277,7 +1276,6 @@ MonoBehaviour:
   endPoint: 2.09
   startPointModel: {fileID: 0}
   endPointModel: {fileID: 0}
-  ringPre: {fileID: 1460442278578200, guid: 18ee753649517e449a63a6d153dcdaa0, type: 2}
   startPointModelPre: {fileID: 0}
   startPointModelOffset: {x: 0, y: 0, z: 0}
   endPointModelPre: {fileID: 0}

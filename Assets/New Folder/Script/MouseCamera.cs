@@ -16,6 +16,7 @@ public class MouseCamera : MonoBehaviour {
 
 	public bool isCapture = false;
 	public bool isPlayerFocus;
+	public bool isTeleport;			//テレポート中かどうか
 
     public int life;				//体力
     public int lifeDamage;			//ダメージの数値
@@ -218,15 +219,16 @@ public class MouseCamera : MonoBehaviour {
         }
         else
         {
-            ComboPlus = false;
-            Combo = 0;
-            if (lifeTimeCount < playTime)
-            {
-                lifeTimeCount++;
-                life-=lifeDamage;
-				if(life <= 0.0f) GameMaster.gameMaster.GameOver();
-            }
-            
+			if(!isTeleport) {
+
+				ComboPlus = false;
+				Combo = 0;
+				if(lifeTimeCount < playTime) {
+					lifeTimeCount++;
+					life -= lifeDamage;
+					if(life <= 0.0f) GameMaster.gameMaster.GameOver();
+				}
+			}            
         }
     }
         void SmallCap()
