@@ -23,6 +23,8 @@ public class GimmickBase : MonoBehaviour {
 	public GameObject endPointModel;        //生成されたギミックの終点のモデル
 	#endregion
 
+	GameObject ringObj;
+
 	[SerializeField]
 	GameObject startPointModelPre;			//ギミックの始点のモデルのプレハブ
 	public Vector3 startPointModelOffset;	//モデルの配置のオフセット
@@ -59,6 +61,12 @@ public class GimmickBase : MonoBehaviour {
 			pos.z += endPointModelSpawnZ;
 			endPointModel = Instantiate(endPointModelPre, pos, Quaternion.identity);
 		}
+
+		Vector3 ringPos = path.GetPoint(startPoint / lineCount);
+		ringPos.z = startPointModelSpawnZ;
+		ringObj = Instantiate(Resources.Load<GameObject>("Prefab/Ring"), ringPos, Quaternion.identity);
+		ringObj.transform.localScale = new Vector3();
+		ringObj.GetComponent<Renderer>().material.SetColor("_Color", gimmickColor);
 	}
 
 	/// <summary>
@@ -67,6 +75,13 @@ public class GimmickBase : MonoBehaviour {
 	/// <param name="t"></param>
 	public virtual void OnRemainingTime(Player player, float t) {
 
+		if(t < 1.0f) {
+			float scale = Mathf.Lerp(1.1f, 4, t);
+			ringObj.transform.localScale = new Vector3(scale, scale, 1);
+		}
+		else {
+			ringObj.transform.localScale = new Vector3();
+		}
 	}
 
 	/// <summary>
@@ -80,7 +95,7 @@ public class GimmickBase : MonoBehaviour {
 	/// ギミックが開始するとき呼ばれる
 	/// </summary>
 	public virtual void OnAttach(Player player) {
-
+		ringObj.transform.localScale = new Vector3();
 	}
 
 	/// <summary>
