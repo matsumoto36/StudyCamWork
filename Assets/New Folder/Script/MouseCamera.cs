@@ -16,7 +16,15 @@ public class MouseCamera : MonoBehaviour {
 
 	public bool isCapture = false;
 	public bool isPlayerFocus;
-	public bool isTeleport;			//テレポート中かどうか
+
+	bool isTeleport;
+	public bool IsTeleport {		//テレポート中かどうか
+		get { return isTeleport; }
+		set {
+			isTeleport = value;
+			if(!isTeleport) CameraUpdate();
+		}
+	}
 
     public int life;				//体力
     public int lifeDamage;			//ダメージの数値
@@ -51,7 +59,7 @@ public class MouseCamera : MonoBehaviour {
 	} 
 
 	// Use this for initialization
-	void Start () {
+	public void Init () {
 
 		Cursor.visible = false;
        
@@ -95,16 +103,13 @@ public class MouseCamera : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	public void CameraUpdate () {
 
         cameraImage.rectTransform.position = Input.mousePosition;
 
 		var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		pos.z = lineMaskCube.transform.position.z;
 		lineMaskCube.transform.position = pos;
-
-        ComboChain();
-        SmallCap();
 
 		if(isGameStart) {
         
@@ -143,6 +148,9 @@ public class MouseCamera : MonoBehaviour {
 			else {
 				cameraImage.color = failCameraColor;
 			}
+
+			SmallCap();
+			ComboChain();
 		}
         
 
@@ -165,6 +173,9 @@ public class MouseCamera : MonoBehaviour {
 			wideCameraSize + sizeOffset);
 
 		var checkPoint = Camera.main.WorldToScreenPoint(targetPlayer.transform.position);  //スクリーン座標に置き換える
+
+		Debug.Log(rect);
+		Debug.Log(checkPoint);
 
 		return rect.Contains(checkPoint);
         
@@ -219,7 +230,7 @@ public class MouseCamera : MonoBehaviour {
         }
         else
         {
-			if(!isTeleport) {
+			if(!IsTeleport) {
 
 				ComboPlus = false;
 				Combo = 0;
@@ -228,7 +239,7 @@ public class MouseCamera : MonoBehaviour {
 					life -= lifeDamage;
 					if(life <= 0.0f) GameMaster.gameMaster.GameOver();
 				}
-			}            
+			}
         }
     }
         void SmallCap()
