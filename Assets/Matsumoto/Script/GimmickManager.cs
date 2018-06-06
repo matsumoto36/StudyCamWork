@@ -18,7 +18,7 @@ public class GimmickManager : MonoBehaviour {
 	Player player;
 	float startTime;
 
-	void Start() {
+	public void Init() {
 
 		if(!path) return;
 
@@ -48,15 +48,7 @@ public class GimmickManager : MonoBehaviour {
 		GameMaster.gameMaster.OnGameStart += () => startTime = Time.time;
 	}
 
-	// Update is called once per frame
-	void Update () {
-
-		if(player.IsFreeze) return;
-
-		GimmickUpdate();
-	}
-
-	void GimmickUpdate() {
+	public void GimmickUpdate() {
 
 		foreach(var item in gimmicks) {
 
@@ -85,6 +77,7 @@ public class GimmickManager : MonoBehaviour {
 
 			//発動が終了した瞬間
 			if(item.isActive && item.waitTime + item.duration < gimmickTime) {
+
 				item.isActive = false;
 				item.isUsed = true;
 				item.gimmick.OnDetach(player);

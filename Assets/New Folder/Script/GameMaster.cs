@@ -17,6 +17,7 @@ public class GameMaster : MonoBehaviour {
     public Text ComboText;
     public Text ScoreText;
    
+    public StageController stageController;
     public MouseCamera mouseCamera;
 
 	public event Action OnGameStart;
@@ -38,12 +39,16 @@ public class GameMaster : MonoBehaviour {
 		StartCoroutine(CountDown());
         _slider = GameObject.Find("Slider").GetComponent<Slider>();
 
+		stageController.InitStage();
 
-    }
+	}
 
     // Update is called once per frame
     void Update () {
-       _slider.value =mouseCamera.life ;
+
+		stageController.StageUpdate();
+
+	   _slider.value = mouseCamera.life ;
         ScoreText.text = mouseCamera.Score.ToString("");
         ComboText.text = mouseCamera.Combo.ToString("");
     }
