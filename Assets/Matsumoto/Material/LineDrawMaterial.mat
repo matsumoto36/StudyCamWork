@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: LineMaskMaterial
-  m_Shader: {fileID: 4800000, guid: bdfedb7a374527b439ac24e0b06ec470, type: 3}
+  m_Name: LineDrawMaterial
+  m_Shader: {fileID: 4800000, guid: 4058c987585c35a4dbe7e27d4ba038b0, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0

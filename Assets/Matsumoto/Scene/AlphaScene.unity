@@ -1927,6 +1927,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: {fileID: 965985653}
   speed: 2
+  lineMaskDistance: 0.1
+  lineMaskLinerenderer: {fileID: 120721702278591962, guid: 2e636a2f6a8597a49bb5d90d3daeee0c,
+    type: 2}
 --- !u!4 &1918222968
 Transform:
   m_ObjectHideFlags: 0
@@ -2113,7 +2116,6 @@ MonoBehaviour:
   smallCameraSize: {x: 150, y: 100}
   isCapture: 1
   isPlayerFocus: 0
-  isTeleport: 0
   life: 100
   lifeDamage: 10
   Combo: 0

@@ -174,9 +174,6 @@ public class MouseCamera : MonoBehaviour {
 
 		var checkPoint = Camera.main.WorldToScreenPoint(targetPlayer.transform.position);  //スクリーン座標に置き換える
 
-		Debug.Log(rect);
-		Debug.Log(checkPoint);
-
 		return rect.Contains(checkPoint);
         
 	}
