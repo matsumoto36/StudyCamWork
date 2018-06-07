@@ -36,6 +36,7 @@ public class PostEffect : MonoBehaviour
             gm = t;
             yield return null;
         }
+        gm = 2;
     }
     public IEnumerator FadeOut()
     {
@@ -46,6 +47,7 @@ public class PostEffect : MonoBehaviour
             gm = t;
             yield return null;
         }
+        gm = 0;
     }
 
 }
