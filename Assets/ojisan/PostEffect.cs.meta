@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 88545d996dfa3ad49a45dd35aed34c2c
+timeCreated: 1526260351
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - wipeCircle: {fileID: 2100000, guid: d7364200e2511624885c9ad1afbf4c58, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
