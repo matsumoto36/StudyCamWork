@@ -1,6 +1,6 @@
 ﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "Custom/LineMaskShader"{
+Shader "Custom/LineDrawShader"{
 	Properties
 	{
 		_MainTex("Main (RGB)", 2D) = "white" {}
@@ -8,13 +8,13 @@ Shader "Custom/LineMaskShader"{
 
 		SubShader
 	{
-		Tags{ "Queue" = "Geometry+1" "IgnoreProjector" = "True" }
+		Tags{ "Queue" = "Geometry" "IgnoreProjector" = "True" }
 		ZWrite Off
 		AlphaTest Greater 0.5
 		ColorMask 0
 
 		Stencil{
-		Ref 2
+		Ref 1
 		Comp always
 		Pass replace
 	}
