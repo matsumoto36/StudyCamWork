@@ -17,6 +17,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Init() {
+		MovedLength = 0;
 	}
 
 	// Update is called once per frame

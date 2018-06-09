@@ -8,7 +8,7 @@ public class MouseCamera : MonoBehaviour {
 	public Player targetPlayer;
 	public GameObject nonCaptureContent;
 	public Image cameraImage;
-	public GameObject lineMaskCube;
+	public MouseCameraObject cameraObject;
 
 	//public Image cameraGauge;
 	public Vector2 wideCameraSize = new Vector2(300f, 200f);
@@ -65,15 +65,9 @@ public class MouseCamera : MonoBehaviour {
        
 		cameraImage.rectTransform.sizeDelta = wideCameraSize;
 
-		var startPoint = Camera.main.ScreenToWorldPoint(new Vector3());
-		var worldSize = Camera.main.ScreenToWorldPoint(wideCameraSize);
-
-		//マスク範囲を計算
-		lineMaskCube.transform.localScale = new Vector3(
-			(worldSize - startPoint).x,
-			(worldSize - startPoint).y,
-			lineMaskCube.transform.localScale.z
-			);
+		//カメラ用のオブジェクトの設定
+		cameraObject.Init();
+		cameraObject.SetCameraSize(wideCameraSize);
 
 		targetPlayer = GameObject.FindGameObjectWithTag("Player")
 			.GetComponent<Player>();
@@ -106,10 +100,7 @@ public class MouseCamera : MonoBehaviour {
 	public void CameraUpdate () {
 
         cameraImage.rectTransform.position = Input.mousePosition;
-
-		var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		pos.z = lineMaskCube.transform.position.z;
-		lineMaskCube.transform.position = pos;
+		cameraObject.UpdateCameraPosition(Input.mousePosition);
 
 		if(isGameStart) {
         
