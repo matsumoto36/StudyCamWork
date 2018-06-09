@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -662,7 +662,7 @@ RectTransform:
   - {fileID: 981081408}
   - {fileID: 622516442}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -975,7 +975,7 @@ Transform:
   m_Children:
   - {fileID: 929204212}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1079136726
 GameObject:
@@ -1059,7 +1059,7 @@ Transform:
   m_LocalScale: {x: 33.52938, y: 18.116138, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1125556217
 GameObject:
@@ -1186,7 +1186,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1273233308
 GameObject:
@@ -1357,6 +1357,7 @@ GameObject:
   - component: {fileID: 1430958180}
   - component: {fileID: 1430958178}
   - component: {fileID: 1430958179}
+  - component: {fileID: 1430958183}
   m_Layer: 0
   m_Name: MouseCamera
   m_TagString: Untagged
@@ -1375,10 +1376,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeTrigger: {fileID: 303159759}
+  volumeTrigger: {fileID: 1430958182}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 768
   stopNaNPropagation: 1
   antialiasingMode: 0
   temporalAntialiasing:
@@ -1493,6 +1494,31 @@ Transform:
   m_Father: {fileID: 1915949003}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1430958183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1430958177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9c7dd18272f47048805214b40de033, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FlipRendering: 1
+  m_TimeMultiplier: 1
+  m_TextureLODBias: -0.5
+  m_DepthRT: {fileID: 0}
+  m_EnableSoftParticles: 0
+  m_EnableDistortion: 0
+  m_UseDepthGrabToZTest: 0
+  m_DepthGrabFormat: 16
+  m_EnableBlur: 0
+  m_BlurFactor: 0.2
+  m_ShowAdvancedSettings: 0
+  m_UseSceneMesh: 0
+  m_SceneMeshPkmmPath: Meshes/UnityScene.pkmm
+  m_BoundShaders: []
 --- !u!1 &1525887918
 GameObject:
   m_ObjectHideFlags: 0
@@ -1604,7 +1630,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1554797902
 GameObject:
@@ -1632,7 +1658,95 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1606681191
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1606681193}
+  - component: {fileID: 1606681192}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1606681192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1606681191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a5c02dd42880460b914f6e0206b8c28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FxAttributesList:
+  - m_Descriptor:
+      Type: 28
+      MinMaxFlag: 1
+      Name: Power
+      Description: 
+      DefaultValue0: 1.1881189
+      DefaultValue1: 0
+      DefaultValue2: 0
+      DefaultValue3: 0
+      MinValue0: 0
+      MinValue1: 0
+      MinValue2: 0
+      MinValue3: 0
+      MaxValue0: 0
+      MaxValue1: 0
+      MaxValue2: 0
+      MaxValue3: 0
+    m_Value0: 1.1881189
+    m_Value1: 0
+    m_Value2: 0
+    m_Value3: 0
+  - m_Descriptor:
+      Type: 28
+      MinMaxFlag: 1
+      Name: EmitSize
+      Description: 
+      DefaultValue0: 0.0891089
+      DefaultValue1: 0
+      DefaultValue2: 0
+      DefaultValue3: 0
+      MinValue0: 0
+      MinValue1: 0
+      MinValue2: 0
+      MinValue3: 0
+      MaxValue0: 0
+      MaxValue1: 0
+      MaxValue2: 0
+      MaxValue3: 0
+    m_Value0: 0.0891089
+    m_Value1: 0
+    m_Value2: 0
+    m_Value3: 0
+  m_FxSamplersList: []
+  m_PlayOnStart: 1
+  m_IsPlaying: 0
+  m_BoundFx: {fileID: 102900000, guid: 5b4a57327fa56cf40acdbadf5d4236b2, type: 3}
+  m_FxName: Particles/TestEffect.pkfx
+--- !u!4 &1606681193
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1606681191}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1918222968}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1621415286
 GameObject:
@@ -1767,7 +1881,7 @@ Transform:
   m_LocalScale: {x: 17.356197, y: 14.772415, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1705118841
 GameObject:
@@ -1837,6 +1951,51 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1705118841}
+--- !u!1 &1706042015
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1706042018}
+  - component: {fileID: 1706042017}
+  m_Layer: 9
+  m_Name: Bloom
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1706042017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1706042015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: d43caf9ae00bedd40b03c48b6c4bcf28, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 0
+--- !u!4 &1706042018
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1706042015}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1778045465
 GameObject:
   m_ObjectHideFlags: 0
@@ -1950,7 +2109,7 @@ Transform:
   - {fileID: 1430958182}
   - {fileID: 580573774}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1915949004
 MonoBehaviour:
@@ -2003,8 +2162,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1778045466}
+  - {fileID: 1606681193}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1962024622
 GameObject:
@@ -2020,6 +2180,7 @@ GameObject:
   - component: {fileID: 1962024624}
   - component: {fileID: 1962024623}
   - component: {fileID: 1962024629}
+  - component: {fileID: 1962024630}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2045,7 +2206,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1962024622}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
   m_Name: 
@@ -2053,7 +2214,7 @@ MonoBehaviour:
   volumeTrigger: {fileID: 1962024628}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 512
   stopNaNPropagation: 1
   antialiasingMode: 0
   temporalAntialiasing:
@@ -2140,7 +2301,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
-  m_AllowMSAA: 0
+  m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 1
   m_OcclusionCulling: 1
@@ -2184,6 +2345,31 @@ MonoBehaviour:
   baseScore: 10
   Score: 0
   BonusScore: 1
+--- !u!114 &1962024630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1962024622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9c7dd18272f47048805214b40de033, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FlipRendering: 1
+  m_TimeMultiplier: 1
+  m_TextureLODBias: -0.5
+  m_DepthRT: {fileID: 0}
+  m_EnableSoftParticles: 0
+  m_EnableDistortion: 0
+  m_UseDepthGrabToZTest: 0
+  m_DepthGrabFormat: 16
+  m_EnableBlur: 0
+  m_BlurFactor: 0.2
+  m_ShowAdvancedSettings: 0
+  m_UseSceneMesh: 0
+  m_SceneMeshPkmmPath: Meshes/UnityScene.pkmm
+  m_BoundShaders: []
 --- !u!1 &2054457265
 GameObject:
   m_ObjectHideFlags: 0
