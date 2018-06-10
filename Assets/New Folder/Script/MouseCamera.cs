@@ -7,7 +7,6 @@ public class MouseCamera : MonoBehaviour {
 
 	public Player targetPlayer;
 	public GameObject nonCaptureContent;
-	public Image cameraImage;
 	public MouseCameraObject cameraObject;
 
 	//public Image cameraGauge;
@@ -34,11 +33,6 @@ public class MouseCamera : MonoBehaviour {
     public int BonusScore;			//中心地点で獲得するスコア
     int plus; //プラスのスコアをスコアに入れるためのもの
 
-    Color baseCameraColor = Color.white;
-	Color captureCameraColor = Color.cyan;
-	Color filterCameraColor = Color.yellow;
-	Color failCameraColor = Color.red;
-
 	bool isGameStart;　　　　//ゲームスタート
 	bool isFilterOn;
     bool ComboPlus;
@@ -61,32 +55,32 @@ public class MouseCamera : MonoBehaviour {
 	// Use this for initialization
 	public void Init () {
 
-		Cursor.visible = false;
-       
-		cameraImage.rectTransform.sizeDelta = wideCameraSize;
+		targetPlayer = GameObject.FindGameObjectWithTag("Player")
+			.GetComponent<Player>();
 
 		//カメラ用のオブジェクトの設定
 		cameraObject.Init();
 		cameraObject.SetCameraSize(wideCameraSize);
-
-		targetPlayer = GameObject.FindGameObjectWithTag("Player")
-			.GetComponent<Player>();
+		cameraObject.UpdateCameraPosition(Camera.main.WorldToScreenPoint(targetPlayer.transform.position));
 
 		GameMaster.gameMaster.OnGameStart += () => {
             Debug.Log("a");
+			Cursor.visible = false;
 			isGameStart = true;
 			playTime = 0;
 			captureTime = 0;
 		};
 
 		GameMaster.gameMaster.OnGameClear += () => {
+			Cursor.visible = true;
 			isGameStart = false;
-			cameraImage.color = baseCameraColor;
+			cameraObject.CameraColorType = CameraColorType.Normal;
 		};
 
 		GameMaster.gameMaster.OnGameOver += () => {
+			Cursor.visible = true;
 			isGameStart = false;
-			cameraImage.color = baseCameraColor;
+			cameraObject.CameraColorType = CameraColorType.Normal;
 		};
 
 		Combo = 0;
@@ -99,7 +93,6 @@ public class MouseCamera : MonoBehaviour {
 	// Update is called once per frame
 	public void CameraUpdate () {
 
-        cameraImage.rectTransform.position = Input.mousePosition;
 		cameraObject.UpdateCameraPosition(Input.mousePosition);
 
 		if(isGameStart) {
@@ -117,27 +110,11 @@ public class MouseCamera : MonoBehaviour {
 			//cameraGauge.fillAmount = gauge;
 			if(isCapture = IsPlayerCapture())
             {
-            
                 IsPSmallCapture();
-                if (IsCaputureNonCaptureContent()) {
-
-					if(isFilterOn) {
-						captureTime += Time.deltaTime;
-						cameraImage.color = filterCameraColor;
-					}
-					else {
-						cameraImage.color = failCameraColor;
-					}
-				}
-				else {
-					captureTime += Time.deltaTime;
-					cameraImage.color = captureCameraColor;
-				}
-
-         
+				captureTime += Time.deltaTime;
             }
 			else {
-				cameraImage.color = failCameraColor;
+				cameraObject.CameraColorType = CameraColorType.Fail;
 			}
 
 			SmallCap();
@@ -160,7 +137,7 @@ public class MouseCamera : MonoBehaviour {
 		//枠に入っているか調べる
 		var sizeOffset = new Vector2(0, 0);
 		var rect = new Rect(
-			(Vector2)cameraImage.rectTransform.position - (wideCameraSize / 2),
+			(Vector2)Input.mousePosition - (wideCameraSize / 2),
 			wideCameraSize + sizeOffset);
 
 		var checkPoint = Camera.main.WorldToScreenPoint(targetPlayer.transform.position);  //スクリーン座標に置き換える
@@ -175,27 +152,15 @@ public class MouseCamera : MonoBehaviour {
 
         var sizeOffset = new Vector2(0, 0);
         var rect = new Rect(
-            (Vector2)cameraImage.rectTransform.position - (smallCameraSize / 2),
-           smallCameraSize + sizeOffset);
+			(Vector2)Input.mousePosition - (smallCameraSize / 2),
+			smallCameraSize + sizeOffset);
         
         var checkPoint = Camera.main.WorldToScreenPoint(targetPlayer.transform.position);
         return rect.Contains(checkPoint);
 
 
     }
-    bool IsCaputureNonCaptureContent() {
 
-		if(!nonCaptureContent) return false;
-
-		var sizeOffset = new Vector2(0, 0);
-		var rect = new Rect(
-			(Vector2)cameraImage.rectTransform.position - (wideCameraSize / 2),
-			wideCameraSize + sizeOffset);
-
-		var checkPoint = Camera.main.WorldToScreenPoint(nonCaptureContent.transform.position);
-
-		return rect.Contains(checkPoint);
-	}
     void ComboChain()
     {
         if (isCapture)

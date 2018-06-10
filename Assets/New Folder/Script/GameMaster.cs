@@ -21,6 +21,7 @@ public class GameMaster : MonoBehaviour {
     public MouseCamera mouseCamera;
 
 	public event Action OnGameStart;
+	public event Action OnGameStartCountDown;
 	public event Action OnGameOver;
 	public event Action OnGameClear;
 
@@ -36,15 +37,15 @@ public class GameMaster : MonoBehaviour {
 
 	void Start() {
 
-		StartCoroutine(CountDown());
         _slider = GameObject.Find("Slider").GetComponent<Slider>();
-
 		stageController.InitStage();
 
 	}
 
-    // Update is called once per frame
-    void FixedUpdate () {
+	// Update is called once per frame
+	void Update () {
+
+		if(!isGameStart) return;
 
 		stageController.StageUpdate();
 
@@ -53,6 +54,12 @@ public class GameMaster : MonoBehaviour {
         ComboText.text = mouseCamera.Combo.ToString("");
     }
     
+	public void GameStart() {
+
+		StartCoroutine(CountDown());
+
+	}
+
 	public void GameClear() {
 		if(OnGameClear != null) OnGameClear();
 		isGameStart = false;
@@ -66,6 +73,9 @@ public class GameMaster : MonoBehaviour {
 	}
 
 	IEnumerator CountDown() {
+
+		if(OnGameStartCountDown != null)
+			OnGameStartCountDown();
 
 		yield return new WaitForSeconds(1);
 		countDownText.text = "3";
