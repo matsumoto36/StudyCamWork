@@ -8,14 +8,10 @@ public class GameMaster : MonoBehaviour {
 
 	public static GameMaster gameMaster;
 
-	public GameBalanceData gameBalanceData = new GameBalanceData(
-		0.1f,
-		1.0f
-		);
+	public GameBalanceData gameBalanceData = new GameBalanceData();
 
+	public Button startButton;
 	public Text countDownText;
-    public Text ComboText;
-    public Text ScoreText;
    
     public StageController stageController;
     public MouseCamera mouseCamera;
@@ -26,8 +22,6 @@ public class GameMaster : MonoBehaviour {
 	public event Action OnGameClear;
 
 	bool isGameStart;
-    Slider _slider;
-
 
     // Use this for initialization
     void Awake () {
@@ -37,9 +31,11 @@ public class GameMaster : MonoBehaviour {
 
 	void Start() {
 
-        _slider = GameObject.Find("Slider").GetComponent<Slider>();
 		stageController.InitStage();
 
+		startButton.onClick.AddListener(GameStart);
+
+		OnGameStartCountDown += () => startButton.gameObject.SetActive(false);
 	}
 
 	// Update is called once per frame
@@ -48,10 +44,6 @@ public class GameMaster : MonoBehaviour {
 		if(!isGameStart) return;
 
 		stageController.StageUpdate();
-
-	   _slider.value = mouseCamera.life ;
-        ScoreText.text = mouseCamera.Score.ToString("");
-        ComboText.text = mouseCamera.Combo.ToString("");
     }
     
 	public void GameStart() {
@@ -86,7 +78,6 @@ public class GameMaster : MonoBehaviour {
 		yield return new WaitForSeconds(1);
 		countDownText.text = "Queue";
 		yield return new WaitForSeconds(1);
-
 
 		countDownText.text = "";
 		if(OnGameStart != null)

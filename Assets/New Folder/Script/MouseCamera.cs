@@ -6,41 +6,36 @@ using UnityEngine.UI;
 public class MouseCamera : MonoBehaviour {
 
 	public Player targetPlayer;
-	public GameObject nonCaptureContent;
 	public MouseCameraObject cameraObject;
 
-	//public Image cameraGauge;
-	public Vector2 wideCameraSize = new Vector2(300f, 200f);
-    public Vector2 smallCameraSize = new Vector2(150f, 100f);
+	public Text scoreText;
+	public Text accText;
+	public Text comboText;
+	public Slider hpBar;
 
 	public bool isCapture = false;
 	public bool isPlayerFocus;
 
-	bool isTeleport;
-	public bool IsTeleport {		//テレポート中かどうか
-		get { return isTeleport; }
-		set {
-			isTeleport = value;
-			if(!isTeleport) CameraUpdate();
-		}
-	}
-
     public int life;				//体力
     public int lifeDamage;			//ダメージの数値
     public int Combo;				//コンボ
-    public int baseScore;			//ベースのスコア
-    public int Score;				//最終的に入るスコア
-    public int BonusScore;			//中心地点で獲得するスコア
-    int plus; //プラスのスコアをスコアに入れるためのもの
+
+    public int Score;               //最終的に入るスコア
+	int scoreWithoutCombo;			//現時点でコンボ抜きにしたスコア
+	int scoreMax;					//現時点でのスコアの最大値
+
+	GameBalanceData gameBalance;	//ゲームのバランスを決めるクラス
+	Vector2 wideCameraSize;
+	Vector2 smallCameraSize;
+
+
+	int plus; //プラスのスコアをスコアに入れるためのもの
 
 	bool isGameStart;　　　　//ゲームスタート
-	bool isFilterOn;
-    bool ComboPlus;
 
     float playTime;
     int comboTimeCount;
     int lifeTimeCount;
-	float captureTime;　　　
 
 	float gaugeAmount = 1;
 	float gauge = 1;
@@ -48,8 +43,17 @@ public class MouseCamera : MonoBehaviour {
 	GimmickManager gimmickManager;
 	DOFSlide dofSlide;
 
-	public float CaptureRate {
-		get { return captureTime / playTime; }
+	bool isTeleport;
+	public bool IsTeleport {        //テレポート中かどうか
+		get { return isTeleport; }
+		set {
+			isTeleport = value;
+			if(!isTeleport) CameraUpdate();
+		}
+	}
+
+	public float Accuracy {
+		get { return (float)scoreWithoutCombo / scoreMax; }
 	} 
 
 	// Use this for initialization
@@ -57,6 +61,12 @@ public class MouseCamera : MonoBehaviour {
 
 		targetPlayer = GameObject.FindGameObjectWithTag("Player")
 			.GetComponent<Player>();
+
+		gameBalance = GameMaster.gameMaster.gameBalanceData;
+
+		//カメラのサイズを設定
+		wideCameraSize = new Vector2(Screen.width, Screen.height) * gameBalance.CameraWideSizeRatio;
+		smallCameraSize = wideCameraSize * gameBalance.CameraSmallSizeRatio;
 
 		//カメラ用のオブジェクトの設定
 		cameraObject.Init();
@@ -68,7 +78,9 @@ public class MouseCamera : MonoBehaviour {
 			Cursor.visible = false;
 			isGameStart = true;
 			playTime = 0;
-			captureTime = 0;
+			Score = 0;
+			scoreWithoutCombo = 0;
+			scoreMax = 0;
 		};
 
 		GameMaster.gameMaster.OnGameClear += () => {
@@ -84,7 +96,6 @@ public class MouseCamera : MonoBehaviour {
 		};
 
 		Combo = 0;
-        ComboPlus = false;
 
 		dofSlide = FindObjectOfType<DOFSlide>();
 		gimmickManager = FindObjectOfType<GimmickManager>();
@@ -106,12 +117,9 @@ public class MouseCamera : MonoBehaviour {
 				gauge = Mathf.Min(gauge + Time.deltaTime / gaugeAmount, 1);
 			}
 
-			isFilterOn = gauge > 0;
-			//cameraGauge.fillAmount = gauge;
 			if(isCapture = IsPlayerCapture())
             {
                 IsPSmallCapture();
-				captureTime += Time.deltaTime;
             }
 			else {
 				cameraObject.CameraColorType = CameraColorType.Fail;
@@ -119,6 +127,12 @@ public class MouseCamera : MonoBehaviour {
 
 			SmallCap();
 			ComboChain();
+
+			hpBar.value = life;
+			scoreText.text = Score.ToString("000000");
+			if(Accuracy == 1.0f) accText.text = "100%";
+			else accText.text = Accuracy.ToString("P");
+			comboText.text = "x" + Combo.ToString("");
 		}
         
 
@@ -165,27 +179,31 @@ public class MouseCamera : MonoBehaviour {
     {
         if (isCapture)
         {
-            ComboPlus = true;
             if (playTime>comboTimeCount)
             {
                 comboTimeCount++;
-                if (Combo>=1 )
+
+				var point = plus + gameBalance.BaseScore;
+
+				if (Combo>=1 )
                 {
-                     Score += (int)(plus + baseScore * Combo * 1.05);
+                     Score += (int)(point * Combo * 1.05);
                 }
                 else if(Combo >= 0)
                 {
-                   Score+=(baseScore+plus);
+                   Score += point;
                 }
-                
-                Combo++;
+
+				scoreWithoutCombo += point;
+				scoreMax += gameBalance.BaseScore + gameBalance.CameraInsideScore;
+
+				Combo++;
             }
         }
         else
         {
 			if(!IsTeleport) {
 
-				ComboPlus = false;
 				Combo = 0;
 				if(lifeTimeCount < playTime) {
 					lifeTimeCount++;
@@ -199,7 +217,7 @@ public class MouseCamera : MonoBehaviour {
         {
         if (IsPSmallCapture())
         {
-            plus = BonusScore;
+            plus = gameBalance.CameraInsideScore;
         }
         else
         {

@@ -19,7 +19,6 @@ public class MouseCameraObject : MonoBehaviour {
 
 	Camera drawCamera;
 	Transform maskCube;
-	Vector2 cameraSize;
 	Vector2 startCameraSize = new Vector3(35.5f, 20.0f, 0.1f);
 	Vector3 maskCubeScale;
 
@@ -83,9 +82,6 @@ public class MouseCameraObject : MonoBehaviour {
 			(worldSize - startPoint).y,
 			maskCube.localScale.z
 			);
-
-		//表示サイズを更新
-		this.cameraSize = cameraSize;
 	}
 
 	/// <summary>
