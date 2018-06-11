@@ -5,12 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/ojisan/Title.unity
     guid: b98c2d48cecaa6c4e95fae79b54b2ac4
-  - enabled: 1
-    path: Assets/Scene/Main.unity
+  - enabled: 0
+    path: Assets/New Folder/Scene/Main.unity
     guid: 5daa46659fd11f94182f2b397dfd1c0b
-  - enabled: 1
+  - enabled: 0
     path: Assets/ojisan/gmkz.unity
     guid: 0934a318f70f53e4081c4dd2b68dfab5
+  - enabled: 1
+    path: Assets/alfa/Title.unity
+    guid: ac8102d69bd61c844a8eab9b2ded069f
+  - enabled: 1
+    path: Assets/alfa/StageSelect.unity
+    guid: 053dc0e4c5ace0245a0049675e9084ed
