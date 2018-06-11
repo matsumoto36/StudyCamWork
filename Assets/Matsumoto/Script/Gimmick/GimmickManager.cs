@@ -15,8 +15,14 @@ public class GimmickManager : MonoBehaviour {
 	public float moveZ = 18;
 
 	GimmickInfo[] gimmicks;
+	public List<LineInfo> lines;
+
 	Player player;
 	float startTime;
+
+
+	//debug
+	public float _playerPoint;
 
 	public void Init() {
 
@@ -83,8 +89,44 @@ public class GimmickManager : MonoBehaviour {
 				item.gimmick.OnDetach(player);
 			}
 		}
+
+		//線の可視状態を設定
+		SetLineVisible();
 	}
 
+	/// <summary>
+	/// プレイヤーの位置で線の可視状態を設定
+	/// </summary>
+	void SetLineVisible() {
+
+		var playerRatio = player.MovedLength / path.Length;
+		_playerPoint = playerRatio;
+
+		foreach(var item in lines) {
+			if(!item.renderer) continue;
+
+			var fillValue = 1.0f;
+			var startRatio = path.GetPointLength(0, item.pathStartPoint) / path.Length;
+			var endRatio = path.GetPointLength(0, item.pathEndPoint) / path.Length;
+
+			//通り過ぎた線の場合
+			if(playerRatio >= endRatio) {
+				fillValue = 0.0f;
+			}
+			//通っている途中の線の場合
+			else if(playerRatio > startRatio) {
+				var t = playerRatio - startRatio;
+				fillValue = 1 - t / (endRatio - startRatio);
+			}
+			//可視範囲を設定
+			item.renderer.material.SetFloat("_Fill", fillValue);
+		}
+
+	}
+
+	/// <summary>
+	/// 開始時間をあらかじめ計算する
+	/// </summary>
 	void SetStartTime() {
 
 		var speed = player.speed;
@@ -111,7 +153,8 @@ public class GimmickManager : MonoBehaviour {
 	/// </summary>
 	void SetLine() {
 
-		Action<Bezier2D, float, float, float> DrawLine = (path, from, to, lineZ) => {
+		//普通に引く線はあらかじめメソッドを作っておく
+		Func<Bezier2D, float, float, float, LineRenderer> DrawLine = (path, from, to, lineZ) => {
 			var diff = to - from;
 			if(diff > 0) {
 
@@ -125,11 +168,16 @@ public class GimmickManager : MonoBehaviour {
 				}
 
 				var l = Instantiate(linePre);
+				l.material = new Material(l.material);
 				l.positionCount = point.Length;
 				l.SetPositions(point);
+				return l;
 			}
+
+			return null;
 		};
 
+		lines = new List<LineInfo>();
 		var prevPoint = 0.0f;
 		var z = 0.0f;
 		for(int i = 0;i < gimmicks.Length;i++) {
@@ -137,19 +185,50 @@ public class GimmickManager : MonoBehaviour {
 			var gimmick = gimmicks[i].gimmick;
 
 			//通常ゾーン
-			DrawLine(path, prevPoint, gimmick.startPoint, z);
+			lines.Add(new LineInfo(
+				DrawLine(path, prevPoint, gimmick.startPoint, z),
+				prevPoint,
+				gimmick.startPoint
+			 ));
 
 			//ギミックゾーン
 			var gimmickLine = Instantiate(linePre);
 			gimmickLine.material = new Material(gimmickLine.material);
 			gimmick.EditGimmickLine(gimmickLine, ref z);
 
+			lines.Add(new LineInfo(
+				gimmickLine,
+				gimmick.startPoint,
+				gimmick.endPoint
+			));
+
 			prevPoint = gimmick.endPoint;
 		}
 
 		//最後の線を引く
-		DrawLine(path, prevPoint, path.LineCount, z);
+		lines.Add(new LineInfo(
+			DrawLine(path, prevPoint, path.LineCount, z),
+			prevPoint,
+			path.LineCount
+		));
 
+	}
+}
+
+/// <summary>
+/// 線の情報をまとめておくクラス
+/// </summary>
+[Serializable]
+public class LineInfo {
+
+	public LineRenderer renderer;
+	public float pathStartPoint;
+	public float pathEndPoint;
+
+	public LineInfo(LineRenderer renderer, float pathStartPoint, float pathEndPoint) {
+		this.renderer = renderer;
+		this.pathStartPoint = pathStartPoint;
+		this.pathEndPoint = pathEndPoint;
 	}
 }
 

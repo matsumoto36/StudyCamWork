@@ -28,13 +28,13 @@
 		half4 c = tex2D(_MainTex, IN.uv_MainTex);
 		o.Albedo = fixed3(0, 0, 0);
 
-		if (IN.uv_MainTex.x < _Fill) {
+		if (IN.uv_MainTex.x > 1.0f - _Fill) {
 			o.Alpha = c.a;
 			o.Emission = _Color;
-
 		}
 		else {
-			o.Alpha = 0;
+			clip(-1);
+			o.Alpha = 1;
 			o.Emission = half3(0, 0, 0);
 		}
 	}
