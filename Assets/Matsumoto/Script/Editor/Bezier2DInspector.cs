@@ -21,7 +21,7 @@ public class Bezier2DInspector : Editor {
 
 
 	enum State {
-		Move, Add, Remove
+		Move, Pan, Add, Remove
 	}
 	State state = State.Move;
 
@@ -146,6 +146,9 @@ public class Bezier2DInspector : Editor {
 			case State.Move:
 				MovePointState(bezier);
 				break;
+			case State.Pan:
+				PanState(bezier);
+				break;
 			case State.Add:
 				AddPointState(bezier);
 				break;
@@ -171,63 +174,6 @@ public class Bezier2DInspector : Editor {
 		reorderableList.list = GetBezierPointsIndexOnLine();
 
 		serializedObject.ApplyModifiedProperties();
-	}
-
-	void AddPointState(Bezier2D bezier) {
-
-		var e = Event.current;
-		var controlID = GUIUtility.GetControlID(FocusType.Passive);
-		var arraySize = points.arraySize;
-
-		if(e.GetTypeForControl(controlID) == EventType.MouseDown) {
-
-			if(e.button != 0) return;
-
-			GUIUtility.hotControl = controlID;
-
-			Undo.RecordObject(bezier, "Add BezierPoint");
-
-			bezier.AddPoint(HandleUtility.GUIPointToWorldRay(e.mousePosition).origin);
-			focusControl = bezier.Points.Count - 2;
-			isClick = true;
-
-			e.Use();
-		}
-
-		if(e.GetTypeForControl(controlID) == EventType.MouseDrag) {
-
-			if(e.button != 0) return;
-
-			GUIUtility.hotControl = controlID;
-
-			var mousePoint = (Vector2)HandleUtility.GUIPointToWorldRay(e.mousePosition).origin;
-			points.GetArrayElementAtIndex(arraySize - 3).vector2Value = mousePoint;
-			points.GetArrayElementAtIndex(arraySize - 1).vector2Value = points.GetArrayElementAtIndex(arraySize - 2).vector2Value * 2 - mousePoint;
-
-			e.Use();
-
-		}
-
-		if(e.GetTypeForControl(controlID) == EventType.MouseUp) {
-
-			if(e.button != 0) return;
-
-			isClick = false;
-		}
-
-		if(arraySize > 1)
-			DrawTangentLine(
-				points.GetArrayElementAtIndex(arraySize - 3).vector2Value,
-				points.GetArrayElementAtIndex(arraySize - 2).vector2Value,
-				points.GetArrayElementAtIndex(arraySize - 1).vector2Value);
-
-
-		if(isClick && arraySize > 4) {
-			DrawTangentLine(
-				points.GetArrayElementAtIndex(arraySize - 6).vector2Value,
-				points.GetArrayElementAtIndex(arraySize - 5).vector2Value,
-				points.GetArrayElementAtIndex(arraySize - 4).vector2Value);
-		}
 	}
 
 	void MovePointState(Bezier2D bezier) {
@@ -299,6 +245,82 @@ public class Bezier2DInspector : Editor {
 		}
 	}
 
+	void PanState(Bezier2D bezier) {
+
+		var centerPos = new Vector2();
+		for(int i = 0;i < bezier.Points.Count;i++) {
+			centerPos += points.GetArrayElementAtIndex(i).vector2Value;
+		}
+		centerPos /= bezier.Points.Count();
+
+		Undo.RecordObject(bezier, "Pan Bezier");
+
+		var newCenterPos = (Vector2)Handles.PositionHandle(centerPos, Quaternion.identity);
+
+		var diff = newCenterPos - centerPos;
+		for(int i = 0;i < bezier.Points.Count;i++) {
+			points.GetArrayElementAtIndex(i).vector2Value += diff;
+		}
+
+	}
+
+	void AddPointState(Bezier2D bezier) {
+
+		var e = Event.current;
+		var controlID = GUIUtility.GetControlID(FocusType.Passive);
+		var arraySize = points.arraySize;
+
+		if(e.GetTypeForControl(controlID) == EventType.MouseDown) {
+
+			if(e.button != 0) return;
+
+			GUIUtility.hotControl = controlID;
+
+			Undo.RecordObject(bezier, "Add BezierPoint");
+
+			bezier.AddPoint(HandleUtility.GUIPointToWorldRay(e.mousePosition).origin);
+			focusControl = bezier.Points.Count - 2;
+			isClick = true;
+
+			e.Use();
+		}
+
+		if(e.GetTypeForControl(controlID) == EventType.MouseDrag) {
+
+			if(e.button != 0) return;
+
+			GUIUtility.hotControl = controlID;
+
+			var mousePoint = (Vector2)HandleUtility.GUIPointToWorldRay(e.mousePosition).origin;
+			points.GetArrayElementAtIndex(arraySize - 3).vector2Value = mousePoint;
+			points.GetArrayElementAtIndex(arraySize - 1).vector2Value = points.GetArrayElementAtIndex(arraySize - 2).vector2Value * 2 - mousePoint;
+
+			e.Use();
+
+		}
+
+		if(e.GetTypeForControl(controlID) == EventType.MouseUp) {
+
+			if(e.button != 0) return;
+
+			isClick = false;
+		}
+
+		if(arraySize > 1)
+			DrawTangentLine(
+				points.GetArrayElementAtIndex(arraySize - 3).vector2Value,
+				points.GetArrayElementAtIndex(arraySize - 2).vector2Value,
+				points.GetArrayElementAtIndex(arraySize - 1).vector2Value);
+
+
+		if(isClick && arraySize > 4) {
+			DrawTangentLine(
+				points.GetArrayElementAtIndex(arraySize - 6).vector2Value,
+				points.GetArrayElementAtIndex(arraySize - 5).vector2Value,
+				points.GetArrayElementAtIndex(arraySize - 4).vector2Value);
+		}
+	}
+
 	void RemovePointState(Bezier2D bezier) {
 
 		var arraySize = points.arraySize;
@@ -344,10 +366,10 @@ public class Bezier2DInspector : Editor {
 		windowRect = GUILayout.Window(windowID, windowRect, (id) => {
 
 			var buttonName = new string[] {
-				"MovePoint", "AddPoint", "RemovePoint"
+				"MovePoint", "Pan", "AddPoint", "RemovePoint"
 			};
 
-			for(int i = 0;i < 3;i++) {
+			for(int i = 0;i < 4;i++) {
 				EditorGUI.BeginDisabledGroup(i == (int)state);
 
 				var isClick = GUILayout.Button(buttonName[i]);
