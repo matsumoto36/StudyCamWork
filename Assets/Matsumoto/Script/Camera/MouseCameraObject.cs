@@ -15,6 +15,8 @@ public enum CameraColorType {
 /// </summary>
 public class MouseCameraObject : MonoBehaviour {
 
+	public RectTransform cameraUI;
+	public RectTransform startMessage;
 	public Image cameraImage;
 
 	Camera drawCamera;
@@ -60,7 +62,7 @@ public class MouseCameraObject : MonoBehaviour {
 	public void SetCameraSize(Vector2 cameraSize) {
 
 		//Imageのサイズを合わせる
-		cameraImage.rectTransform.sizeDelta = cameraSize;
+		cameraUI.sizeDelta = cameraSize;
 
 		//カメラの表示サイズに合わせる
 		drawCamera.rect = new Rect(
@@ -90,7 +92,7 @@ public class MouseCameraObject : MonoBehaviour {
 	public void UpdateCameraPosition(Vector2 mousePosition) {
 
 		//スクリーン位置を更新
-		cameraImage.rectTransform.position = mousePosition;
+		cameraUI.position = mousePosition;
 
 		//ワールド位置の更新
 		var pos = Camera.main.ScreenToWorldPoint(mousePosition);
@@ -118,16 +120,17 @@ public class MouseCameraObject : MonoBehaviour {
 	/// <returns></returns>
 	IEnumerator MaskScaleAnim() {
 
-		var startPosition = new Vector3();
-		var endPosition = transform.position;
-
+		startMessage.gameObject.SetActive(false);
 		maskCube.SetParent(transform);
+
+		var startPosition = maskCube.localPosition;
+		var endPosition = new Vector3();
 
 		float t = 0.0f;
 		while(t < 1.0f) {
 			t += Time.deltaTime / 3;
 
-			maskCube.position =
+			maskCube.localPosition =
 				Vector3.Lerp(startPosition, endPosition, t);
 
 			maskCube.localScale =
@@ -136,7 +139,7 @@ public class MouseCameraObject : MonoBehaviour {
 			yield return null;
 		}
 
-		maskCube.position = endPosition;
+		maskCube.localPosition = endPosition;
 		maskCube.localScale = maskCubeScale;
 	}
 

@@ -10,7 +10,6 @@ public class GameMaster : MonoBehaviour {
 
 	public GameBalanceData gameBalanceData = new GameBalanceData();
 
-	public Button startButton;
 	public Text countDownText;
    
     public StageController stageController;
@@ -32,35 +31,32 @@ public class GameMaster : MonoBehaviour {
 	void Start() {
 
 		stageController.InitStage();
-
-		startButton.onClick.AddListener(GameStart);
-
-		OnGameStartCountDown += () => startButton.gameObject.SetActive(false);
 	}
 
 	// Update is called once per frame
 	void Update () {
 
-		if(!isGameStart) return;
+		if(!isGameStart) {
+			if(Input.GetMouseButtonDown(0)) GameStart();
+		}
 
 		stageController.StageUpdate();
     }
     
 	public void GameStart() {
 
+		isGameStart = true;
 		StartCoroutine(CountDown());
 
 	}
 
 	public void GameClear() {
 		if(OnGameClear != null) OnGameClear();
-		isGameStart = false;
 		countDownText.text = "GameClear";
 	}
 
 	public void GameOver() {
 		if(OnGameOver != null) OnGameOver();
-		isGameStart = false;
 		countDownText.text = "GameOver";
 	}
 
@@ -86,6 +82,5 @@ public class GameMaster : MonoBehaviour {
             OnGameStart();
             //Debug.Log("a");
         }
-        isGameStart = true;
 	}
 }
