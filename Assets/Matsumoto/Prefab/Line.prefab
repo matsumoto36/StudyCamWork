@@ -124,7 +124,7 @@ LineRenderer:
     numCornerVertices: 20
     numCapVertices: 20
     alignment: 1
-    textureMode: 3
+    textureMode: 0
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0

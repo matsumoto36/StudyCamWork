@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GimmickTest : GimmickBase {
+public class GimmickTeleport : GimmickBase {
 
+	public GameObject effectPre;
+	GameObject effect;
+
+	public float waitTime;
 	public Text text;
 	Color playerCol;
 
 	GimmickGauge startGauge;
 
-	float duration;
+	float playerSpeed;
 
 	public override void SpawnModel() {
 		base.SpawnModel();
@@ -42,17 +46,17 @@ public class GimmickTest : GimmickBase {
 		playerCol = render.material.color;
 		render.material.color = gimmickColor;
 
-		player.speed *= 5;
+		playerSpeed = player.speed;
+		player.speed = 0;
+
+		var pos = path.GetPoint(endPoint / path.LineCount);
+		effect = Instantiate(effectPre, pos, Quaternion.identity);
+
+		FindObjectOfType<MouseCamera>().IsTeleport = true;
 	}
 
 	public override void OnApplyUpdate(Player player, float t) {
 		base.OnApplyUpdate(player, t);
-
-		if(text)
-			text.text = "Using. " + t;
-
-		if(!startGauge) return;
-		startGauge.Value = 1 - (t / duration);
 	}
 
 	public override void OnDetach(Player player) {
@@ -61,11 +65,18 @@ public class GimmickTest : GimmickBase {
 		var render = player.GetComponentInChildren<Renderer>();
 		render.material.color = playerCol;
 
-		player.speed /= 5;
+
+		player.MovedLength += path.GetPointLength(startPoint, endPoint);
+		player.speed = playerSpeed;
+
+		effect.GetComponent<ParticleSystem>().Stop();
+		Destroy(effect, 1);
+
+		FindObjectOfType<MouseCamera>().IsTeleport = false;
 	}
 
 	public override float GetSectionTime(float speed) {
-		return duration = path.GetPointLength(startPoint, endPoint) / speed / 5;
+		return waitTime;
 	}
 
 	public override void EditGimmickLine(LineRenderer lineRenderer, ref float z) {

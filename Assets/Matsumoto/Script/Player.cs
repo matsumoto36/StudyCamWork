@@ -7,34 +7,33 @@ public class Player : MonoBehaviour {
 	public Bezier2D path;
 	public float speed;
 
-	public bool IsFreeze {
-		get; set;
-	}
-
+	float movedLength;
 	public float MovedLength {
-		get; set;
+		get { return movedLength; }
+		set {
+			movedLength = value;
+			ApplyMove();
+		}
 	}
 
-	void Start() {
-		IsFreeze = true;
-		GameMaster.gameMaster.OnGameStart += () => IsFreeze = false;
-		GameMaster.gameMaster.OnGameClear += () => IsFreeze = true;
-		GameMaster.gameMaster.OnGameOver += () => IsFreeze = true;
+	public void Init() {
+		MovedLength = 0;
 	}
 
 	// Update is called once per frame
-	void Update () {
-
-		if(IsFreeze) return;
+	public void Move () {
 
 		MovedLength += speed * Time.deltaTime;
-		MovedLength = Mathf.Clamp(MovedLength, 0, path.GetLength());
-		var t = MovedLength / path.GetLength();
+	}
+
+	void ApplyMove() {
+
+		movedLength = Mathf.Clamp(movedLength, 0, path.Length);
+		var t = movedLength / path.Length;
 		transform.position = path.GetPointNormalize(t);
 
 		if(t >= 1.0f) {
 			GameMaster.gameMaster.GameClear();
 		}
-
 	}
 }

@@ -6,39 +6,36 @@ using UnityEngine.UI;
 public class MouseCamera : MonoBehaviour {
 
 	public Player targetPlayer;
-	public GameObject nonCaptureContent;
-	public Image cameraImage;
-	public GameObject lineMaskCube;
+	public MouseCameraObject cameraObject;
 
-	//public Image cameraGauge;
-	public Vector2 wideCameraSize = new Vector2(300f, 200f);
-    public Vector2 smallCameraSize = new Vector2(150f, 100f);
+	public Text scoreText;
+	public Text accText;
+	public Text comboText;
+	public Slider hpBar;
 
 	public bool isCapture = false;
 	public bool isPlayerFocus;
-	public bool isTeleport;			//テレポート中かどうか
 
     public int life;				//体力
     public int lifeDamage;			//ダメージの数値
     public int Combo;				//コンボ
-    public int baseScore;			//ベースのスコア
-    public int Score;				//最終的に入るスコア
-    public int BonusScore;			//中心地点で獲得するスコア
-    int plus; //プラスのスコアをスコアに入れるためのもの
 
-    Color baseCameraColor = Color.white;
-	Color captureCameraColor = Color.cyan;
-	Color filterCameraColor = Color.yellow;
-	Color failCameraColor = Color.red;
+    public int Score;               //最終的に入るスコア
+	int scoreWithoutCombo;			//現時点でコンボ抜きにしたスコア
+	int scoreMax;					//現時点でのスコアの最大値
+
+	GameBalanceData gameBalance;	//ゲームのバランスを決めるクラス
+	Vector2 wideCameraSize;
+	Vector2 smallCameraSize;
+
+
+	int plus; //プラスのスコアをスコアに入れるためのもの
 
 	bool isGameStart;　　　　//ゲームスタート
-	bool isFilterOn;
-    bool ComboPlus;
 
     float playTime;
     int comboTimeCount;
     int lifeTimeCount;
-	float captureTime;　　　
 
 	float gaugeAmount = 1;
 	float gauge = 1;
@@ -46,65 +43,68 @@ public class MouseCamera : MonoBehaviour {
 	GimmickManager gimmickManager;
 	DOFSlide dofSlide;
 
-	public float CaptureRate {
-		get { return captureTime / playTime; }
+	bool isTeleport;
+	public bool IsTeleport {        //テレポート中かどうか
+		get { return isTeleport; }
+		set {
+			isTeleport = value;
+			if(!isTeleport) CameraUpdate();
+		}
+	}
+
+	public float Accuracy {
+		get { return (float)scoreWithoutCombo / scoreMax; }
 	} 
 
 	// Use this for initialization
-	void Start () {
-
-		Cursor.visible = false;
-       
-		cameraImage.rectTransform.sizeDelta = wideCameraSize;
-
-		var startPoint = Camera.main.ScreenToWorldPoint(new Vector3());
-		var worldSize = Camera.main.ScreenToWorldPoint(wideCameraSize);
-
-		//マスク範囲を計算
-		lineMaskCube.transform.localScale = new Vector3(
-			(worldSize - startPoint).x,
-			(worldSize - startPoint).y,
-			lineMaskCube.transform.localScale.z
-			);
+	public void Init () {
 
 		targetPlayer = GameObject.FindGameObjectWithTag("Player")
 			.GetComponent<Player>();
 
+		gameBalance = GameMaster.gameMaster.gameBalanceData;
+
+		//カメラのサイズを設定
+		wideCameraSize = new Vector2(Screen.width, Screen.height) * gameBalance.CameraWideSizeRatio;
+		smallCameraSize = wideCameraSize * gameBalance.CameraSmallSizeRatio;
+
+		//カメラ用のオブジェクトの設定
+		cameraObject.Init();
+		cameraObject.SetCameraSize(wideCameraSize);
+		cameraObject.UpdateCameraPosition(Camera.main.WorldToScreenPoint(targetPlayer.transform.position));
+
 		GameMaster.gameMaster.OnGameStart += () => {
             Debug.Log("a");
+			Cursor.visible = false;
 			isGameStart = true;
 			playTime = 0;
-			captureTime = 0;
+			Score = 0;
+			scoreWithoutCombo = 0;
+			scoreMax = 0;
 		};
 
 		GameMaster.gameMaster.OnGameClear += () => {
+			Cursor.visible = true;
 			isGameStart = false;
-			cameraImage.color = baseCameraColor;
+			cameraObject.CameraColorType = CameraColorType.Normal;
 		};
 
 		GameMaster.gameMaster.OnGameOver += () => {
+			Cursor.visible = true;
 			isGameStart = false;
-			cameraImage.color = baseCameraColor;
+			cameraObject.CameraColorType = CameraColorType.Normal;
 		};
 
 		Combo = 0;
-        ComboPlus = false;
 
 		dofSlide = FindObjectOfType<DOFSlide>();
 		gimmickManager = FindObjectOfType<GimmickManager>();
 	}
 
 	// Update is called once per frame
-	void Update () {
+	public void CameraUpdate () {
 
-        cameraImage.rectTransform.position = Input.mousePosition;
-
-		var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		pos.z = lineMaskCube.transform.position.z;
-		lineMaskCube.transform.position = pos;
-
-        ComboChain();
-        SmallCap();
+		cameraObject.UpdateCameraPosition(Input.mousePosition);
 
 		if(isGameStart) {
         
@@ -117,32 +117,22 @@ public class MouseCamera : MonoBehaviour {
 				gauge = Mathf.Min(gauge + Time.deltaTime / gaugeAmount, 1);
 			}
 
-			isFilterOn = gauge > 0;
-			//cameraGauge.fillAmount = gauge;
 			if(isCapture = IsPlayerCapture())
             {
-            
                 IsPSmallCapture();
-                if (IsCaputureNonCaptureContent()) {
-
-					if(isFilterOn) {
-						captureTime += Time.deltaTime;
-						cameraImage.color = filterCameraColor;
-					}
-					else {
-						cameraImage.color = failCameraColor;
-					}
-				}
-				else {
-					captureTime += Time.deltaTime;
-					cameraImage.color = captureCameraColor;
-				}
-
-         
             }
 			else {
-				cameraImage.color = failCameraColor;
+				cameraObject.CameraColorType = CameraColorType.Fail;
 			}
+
+			SmallCap();
+			ComboChain();
+
+			hpBar.value = life;
+			scoreText.text = Score.ToString("000000");
+			if(Accuracy == 1.0f) accText.text = "100%";
+			else accText.text = Accuracy.ToString("P");
+			comboText.text = "x" + Combo.ToString("");
 		}
         
 
@@ -161,7 +151,7 @@ public class MouseCamera : MonoBehaviour {
 		//枠に入っているか調べる
 		var sizeOffset = new Vector2(0, 0);
 		var rect = new Rect(
-			(Vector2)cameraImage.rectTransform.position - (wideCameraSize / 2),
+			(Vector2)Input.mousePosition - (wideCameraSize / 2),
 			wideCameraSize + sizeOffset);
 
 		var checkPoint = Camera.main.WorldToScreenPoint(targetPlayer.transform.position);  //スクリーン座標に置き換える
@@ -176,66 +166,58 @@ public class MouseCamera : MonoBehaviour {
 
         var sizeOffset = new Vector2(0, 0);
         var rect = new Rect(
-            (Vector2)cameraImage.rectTransform.position - (smallCameraSize / 2),
-           smallCameraSize + sizeOffset);
+			(Vector2)Input.mousePosition - (smallCameraSize / 2),
+			smallCameraSize + sizeOffset);
         
         var checkPoint = Camera.main.WorldToScreenPoint(targetPlayer.transform.position);
         return rect.Contains(checkPoint);
 
 
     }
-    bool IsCaputureNonCaptureContent() {
 
-		if(!nonCaptureContent) return false;
-
-		var sizeOffset = new Vector2(0, 0);
-		var rect = new Rect(
-			(Vector2)cameraImage.rectTransform.position - (wideCameraSize / 2),
-			wideCameraSize + sizeOffset);
-
-		var checkPoint = Camera.main.WorldToScreenPoint(nonCaptureContent.transform.position);
-
-		return rect.Contains(checkPoint);
-	}
     void ComboChain()
     {
         if (isCapture)
         {
-            ComboPlus = true;
             if (playTime>comboTimeCount)
             {
                 comboTimeCount++;
-                if (Combo>=1 )
+
+				var point = plus + gameBalance.BaseScore;
+
+				if (Combo>=1 )
                 {
-                     Score += (int)(plus + baseScore * Combo * 1.05);
+                     Score += (int)(point * Combo * 1.05);
                 }
                 else if(Combo >= 0)
                 {
-                   Score+=(baseScore+plus);
+                   Score += point;
                 }
-                
-                Combo++;
+
+				scoreWithoutCombo += point;
+				scoreMax += gameBalance.BaseScore + gameBalance.CameraInsideScore;
+
+				Combo++;
             }
         }
         else
         {
-			if(!isTeleport) {
+			if(!IsTeleport) {
 
-				ComboPlus = false;
 				Combo = 0;
 				if(lifeTimeCount < playTime) {
 					lifeTimeCount++;
 					life -= lifeDamage;
 					if(life <= 0.0f) GameMaster.gameMaster.GameOver();
 				}
-			}            
+			}
         }
     }
         void SmallCap()
         {
         if (IsPSmallCapture())
         {
-            plus = BonusScore;
+            plus = gameBalance.CameraInsideScore;
         }
         else
         {
