@@ -154,8 +154,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gimmickColor: {r: 0, g: 0.8758622, b: 1, a: 1}
-  startPoint: 2.01
-  endPoint: 2.96
+  startPoint: 2
+  endPoint: 3
   startPointModel: {fileID: 0}
   endPointModel: {fileID: 0}
   startPointModelPre: {fileID: 0}
@@ -163,7 +163,7 @@ MonoBehaviour:
   endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
   effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
-  waitTime: 3
+  waitTime: 1
   text: {fileID: 0}
 --- !u!1 &103996405
 GameObject:
@@ -340,8 +340,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gimmickColor: {r: 0, g: 0.8758622, b: 1, a: 1}
-  startPoint: 3.98
-  endPoint: 4.94
+  startPoint: 4
+  endPoint: 5
   startPointModel: {fileID: 0}
   endPointModel: {fileID: 0}
   startPointModelPre: {fileID: 0}
@@ -349,7 +349,7 @@ MonoBehaviour:
   endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
   effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
-  waitTime: 3
+  waitTime: 1
   text: {fileID: 0}
 --- !u!1 &436333225
 GameObject:
@@ -624,7 +624,7 @@ MonoBehaviour:
   endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
   effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
-  waitTime: 3
+  waitTime: 0.1
   text: {fileID: 0}
 --- !u!1 &647987592
 GameObject:
@@ -883,8 +883,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gimmickColor: {r: 0, g: 0.8758622, b: 1, a: 1}
-  startPoint: 5.05
-  endPoint: 5.96
+  startPoint: 5
+  endPoint: 6
   startPointModel: {fileID: 0}
   endPointModel: {fileID: 0}
   startPointModelPre: {fileID: 0}
@@ -892,7 +892,7 @@ MonoBehaviour:
   endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
   effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
-  waitTime: 3
+  waitTime: 1
   text: {fileID: 0}
 --- !u!1 &903357637
 GameObject:
@@ -1271,8 +1271,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gimmickColor: {r: 0, g: 0.8758622, b: 1, a: 1}
-  startPoint: 3.02
-  endPoint: 3.93
+  startPoint: 3
+  endPoint: 4
   startPointModel: {fileID: 0}
   endPointModel: {fileID: 0}
   startPointModelPre: {fileID: 0}
@@ -1280,7 +1280,7 @@ MonoBehaviour:
   endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
   effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
-  waitTime: 3
+  waitTime: 1
   text: {fileID: 0}
 --- !u!1 &1393789477
 GameObject:
@@ -1619,7 +1619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gimmickColor: {r: 0, g: 0.8758622, b: 1, a: 1}
   startPoint: 1
-  endPoint: 1.89
+  endPoint: 2
   startPointModel: {fileID: 0}
   endPointModel: {fileID: 0}
   startPointModelPre: {fileID: 0}
@@ -1627,7 +1627,7 @@ MonoBehaviour:
   endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
   effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
-  waitTime: 3
+  waitTime: 1
   text: {fileID: 0}
 --- !u!1 &1769445929
 GameObject:
@@ -1679,7 +1679,7 @@ MonoBehaviour:
   endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
   effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
-  waitTime: 3
+  waitTime: 1
   text: {fileID: 0}
 --- !u!1 &1811840145
 GameObject:
