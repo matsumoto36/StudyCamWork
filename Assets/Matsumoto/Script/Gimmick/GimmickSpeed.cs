@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GimmickTest : GimmickBase {
+public class GimmickSpeed : GimmickBase {
 
 	public Text text;
-	Color playerCol;
+	public float speedMul;
 
+	Color playerCol;
 	GimmickGauge startGauge;
 
 	float duration;
@@ -42,7 +43,7 @@ public class GimmickTest : GimmickBase {
 		playerCol = render.material.color;
 		render.material.color = gimmickColor;
 
-		player.speed *= 5;
+		player.speed *= speedMul;
 	}
 
 	public override void OnApplyUpdate(Player player, float t) {
@@ -61,11 +62,11 @@ public class GimmickTest : GimmickBase {
 		var render = player.GetComponentInChildren<Renderer>();
 		render.material.color = playerCol;
 
-		player.speed /= 5;
+		player.speed /= speedMul;
 	}
 
 	public override float GetSectionTime(float speed) {
-		return duration = path.GetPointLength(startPoint, endPoint) / speed / 5;
+		return duration = path.GetPointLength(startPoint, endPoint) / speed / speedMul;
 	}
 
 	public override void EditGimmickLine(LineRenderer lineRenderer, ref float z) {

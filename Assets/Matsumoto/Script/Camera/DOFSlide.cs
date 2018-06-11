@@ -11,9 +11,9 @@ public class DOFSlide : MonoBehaviour {
 
 	DepthOfField dof;
 
-	float minDistance = 0.45f;
-	float distance = 0.3f;
-	float maxDistance = 3.4f;
+	public float minDistance = 0.45f;
+	public float maxDistance = 3.4f;
+	float distance;
 
 	public float Value {
 		get; set;

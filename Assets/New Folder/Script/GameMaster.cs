@@ -8,25 +8,19 @@ public class GameMaster : MonoBehaviour {
 
 	public static GameMaster gameMaster;
 
-	public GameBalanceData gameBalanceData = new GameBalanceData(
-		0.1f,
-		1.0f
-		);
+	public GameBalanceData gameBalanceData = new GameBalanceData();
 
 	public Text countDownText;
-    public Text ComboText;
-    public Text ScoreText;
    
     public StageController stageController;
     public MouseCamera mouseCamera;
 
 	public event Action OnGameStart;
+	public event Action OnGameStartCountDown;
 	public event Action OnGameOver;
 	public event Action OnGameClear;
 
 	bool isGameStart;
-    Slider _slider;
-
 
     // Use this for initialization
     void Awake () {
@@ -36,36 +30,40 @@ public class GameMaster : MonoBehaviour {
 
 	void Start() {
 
-		StartCoroutine(CountDown());
-        _slider = GameObject.Find("Slider").GetComponent<Slider>();
-
 		stageController.InitStage();
+	}
+
+	// Update is called once per frame
+	void Update () {
+
+		if(!isGameStart) {
+			if(Input.GetMouseButtonDown(0)) GameStart();
+		}
+
+		stageController.StageUpdate();
+    }
+    
+	public void GameStart() {
+
+		isGameStart = true;
+		StartCoroutine(CountDown());
 
 	}
 
-    // Update is called once per frame
-    void Update () {
-
-		stageController.StageUpdate();
-
-	   _slider.value = mouseCamera.life ;
-        ScoreText.text = mouseCamera.Score.ToString("");
-        ComboText.text = mouseCamera.Combo.ToString("");
-    }
-    
 	public void GameClear() {
 		if(OnGameClear != null) OnGameClear();
-		isGameStart = false;
 		countDownText.text = "GameClear";
 	}
 
 	public void GameOver() {
 		if(OnGameOver != null) OnGameOver();
-		isGameStart = false;
 		countDownText.text = "GameOver";
 	}
 
 	IEnumerator CountDown() {
+
+		if(OnGameStartCountDown != null)
+			OnGameStartCountDown();
 
 		yield return new WaitForSeconds(1);
 		countDownText.text = "3";
@@ -77,7 +75,6 @@ public class GameMaster : MonoBehaviour {
 		countDownText.text = "Queue";
 		yield return new WaitForSeconds(1);
 
-
 		countDownText.text = "";
 		if(OnGameStart != null)
         {
@@ -85,6 +82,5 @@ public class GameMaster : MonoBehaviour {
             OnGameStart();
             //Debug.Log("a");
         }
-        isGameStart = true;
 	}
 }
