@@ -65,7 +65,6 @@ public class GimmickTeleport : GimmickBase {
 		var render = player.GetComponentInChildren<Renderer>();
 		render.material.color = playerCol;
 
-
 		player.MovedLength += path.GetPointLength(startPoint, endPoint);
 		player.speed = playerSpeed;
 
