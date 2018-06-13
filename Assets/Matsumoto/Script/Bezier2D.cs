@@ -134,11 +134,16 @@ public class Bezier2D : MonoBehaviour {
 	/// <returns></returns>
 	public float GetPointNormalizeLength(float startPoint, float endPoint, int partition = 32) {
 
-		var diff = (endPoint - startPoint) / partition;
+		var diff = endPoint - startPoint;
+		var part = (int)(partition * diff);
+		if(part <= 0) return diff;
+
+		var dt = diff / part;
 		var prevLinePoint = GetPoint(startPoint / LineCount);
+
 		var l = 0.0f;
-		for(int i = 0;i <= partition;i++) {
-			var p = GetPointNormalize((startPoint + diff * i) / LineCount);
+		for(int i = 0;i <= part;i++) {
+			var p = GetPointNormalize((startPoint + dt * i) / LineCount);
 			l += (prevLinePoint - p).magnitude;
 			prevLinePoint = p;
 		}
