@@ -539,8 +539,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
-  startPoint: 3.22
-  endPoint: 3.9
+  startPoint: 3.02
+  endPoint: 3.98
   startPointModel: {fileID: 0}
   endPointModel: {fileID: 0}
   startPointModelPre: {fileID: 0}
@@ -1608,7 +1608,7 @@ MonoBehaviour:
   endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
   text: {fileID: 0}
-  speedMul: 2
+  speedMul: 4
 --- !u!1 &1256836756
 GameObject:
   m_ObjectHideFlags: 0
@@ -1724,8 +1724,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
-  startPoint: 2.49
-  endPoint: 2.91
+  startPoint: 2.13
+  endPoint: 2.94
   startPointModel: {fileID: 0}
   endPointModel: {fileID: 0}
   startPointModelPre: {fileID: 0}
@@ -2198,7 +2198,7 @@ MonoBehaviour:
   endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
   text: {fileID: 0}
-  speedMul: 2
+  speedMul: 3
 --- !u!1 &1739656246
 GameObject:
   m_ObjectHideFlags: 0
