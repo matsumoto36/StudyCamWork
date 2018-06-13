@@ -19,7 +19,9 @@ public class MouseCameraObject : MonoBehaviour {
 	public RectTransform startMessage;
 	public Image cameraImage;
 
-	Camera drawCamera;
+
+
+    Camera drawCamera;
 	Transform maskCube;
 	Vector2 startCameraSize = new Vector3(35.5f, 20.0f, 0.1f);
 	Vector3 maskCubeScale;
