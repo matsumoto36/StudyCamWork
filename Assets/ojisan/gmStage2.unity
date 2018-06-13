@@ -418,7 +418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cada555ace83047499dd9a0f2e5ac2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0, g: 0.6666667, b: 0.21568628, a: 1}
+  gimmickColor: {r: 0, g: 1, b: 0.32156864, a: 1}
   startPoint: 2
   endPoint: 3
   startPointModel: {fileID: 0}
@@ -649,7 +649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cada555ace83047499dd9a0f2e5ac2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0, g: 0.6666667, b: 0.21568628, a: 1}
+  gimmickColor: {r: 0, g: 1, b: 0.32156864, a: 1}
   startPoint: 4
   endPoint: 5
   startPointModel: {fileID: 0}
@@ -1065,7 +1065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cada555ace83047499dd9a0f2e5ac2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0, g: 0.666, b: 0.21379304, a: 1}
+  gimmickColor: {r: 0, g: 1, b: 0.32101056, a: 1}
   startPoint: 0
   endPoint: 1
   startPointModel: {fileID: 0}
@@ -1210,9 +1210,9 @@ MonoBehaviour:
   - {x: -11.592886, y: -8.26963}
   - {x: -11.592886, y: -8.26963}
   - {x: -11.592886, y: -8.26963}
-  - {x: -11.5201435, y: -0.073803425}
-  - {x: -11.410508, y: 2.8863063}
-  - {x: -11.629775, y: 0.035830498}
+  - {x: -11.5201435, y: 1.2417998}
+  - {x: -11.410508, y: 4.2019095}
+  - {x: -11.629775, y: 1.3514338}
 --- !u!4 &828121634
 Transform:
   m_ObjectHideFlags: 0
@@ -1427,7 +1427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cada555ace83047499dd9a0f2e5ac2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0, g: 0.6666667, b: 0.21568628, a: 1}
+  gimmickColor: {r: 0, g: 1, b: 0.32156864, a: 1}
   startPoint: 5
   endPoint: 6
   startPointModel: {fileID: 0}
@@ -2055,7 +2055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cada555ace83047499dd9a0f2e5ac2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0, g: 0.6666667, b: 0.21568628, a: 1}
+  gimmickColor: {r: 0, g: 1, b: 0.32156864, a: 1}
   startPoint: 3
   endPoint: 4
   startPointModel: {fileID: 0}
@@ -2366,7 +2366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cada555ace83047499dd9a0f2e5ac2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0, g: 0.6666667, b: 0.21568628, a: 1}
+  gimmickColor: {r: 0, g: 1, b: 0.32156873, a: 1}
   startPoint: 1
   endPoint: 2
   startPointModel: {fileID: 0}
@@ -2502,7 +2502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cada555ace83047499dd9a0f2e5ac2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0, g: 0.6666667, b: 0.21568628, a: 1}
+  gimmickColor: {r: 0, g: 1, b: 0.32156864, a: 1}
   startPoint: 6
   endPoint: 7
   startPointModel: {fileID: 0}
@@ -2701,7 +2701,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 90bf871af688b8545b5afb65a663e6cd, type: 2}
+  - {fileID: 2100000, guid: 84d6909324690764f9e99722d0fbe8fe, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
