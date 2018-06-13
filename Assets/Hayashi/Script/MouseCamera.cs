@@ -45,6 +45,7 @@ public class MouseCamera : MonoBehaviour
     DOFSlide dofSlide;
 
     bool isTeleport;
+    bool DamagOn = false;
     public bool IsTeleport
     {        //テレポート中かどうか
         get { return isTeleport; }
@@ -52,6 +53,7 @@ public class MouseCamera : MonoBehaviour
         {
             isTeleport = value;
             if (!isTeleport) CameraUpdate();
+            Debug.Log("bbbb");
         }
     }
 
@@ -185,7 +187,6 @@ public class MouseCamera : MonoBehaviour
 
 
     }
-
     void ComboChain()
     {
         if (playTime > comboTimeCount)
@@ -211,15 +212,21 @@ public class MouseCamera : MonoBehaviour
             }
             else
             {
-                life -= lifeDamage;
+                DamagOn = true;
+                if (DamagOn = true&&!IsTeleport)
+                {
+                    life -= lifeDamage;
+                }
+                if (IsTeleport)
+                {
+                    DamagOn = false;
+                }
                 Debug.Log("damage");
                 if (!IsTeleport)
                 {
-
                     Combo = 0;
                     if (lifeTimeCount < playTime)
                     {
-                        lifeTimeCount++;
                         if (life <= 0.0f) GameMaster.gameMaster.GameOver();
                     }
                 }
