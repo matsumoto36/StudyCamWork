@@ -123,6 +123,8 @@ public class GimmickBase : MonoBehaviour {
 		if(!CheckUsableManager()) return;
 
 		var partition = (int)(32 * (endPoint - startPoint));
+		if(partition == 0) partition = 1;
+
 		var dt = (endPoint - startPoint) * (1.0f / partition);
 		var point = new Vector3[partition + 1];
 

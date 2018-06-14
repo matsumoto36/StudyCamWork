@@ -159,6 +159,8 @@ public class GimmickManager : MonoBehaviour {
 			if(diff > 0) {
 
 				var partition = (int)(32 * diff);
+				if(partition == 0) partition = 1;
+
 				var dt = diff / partition;
 				var point = new Vector3[partition + 1];
 

@@ -85,6 +85,8 @@ public class GimmickFocusIO : GimmickBase {
 		startPointModelSpawnZ = z;
 
 		var partition = (int)(32 * (endPoint - startPoint));
+		if(partition == 0) partition = 1;
+
 		var diff = endPoint - startPoint;
 		var dt =  partition == 0 ? 0 : 1.0f / partition;
 		var point = new Vector3[partition + 1];
