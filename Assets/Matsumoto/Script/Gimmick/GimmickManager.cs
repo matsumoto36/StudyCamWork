@@ -99,24 +99,24 @@ public class GimmickManager : MonoBehaviour {
 	/// </summary>
 	void SetLineVisible() {
 
-		var playerRatio = player.MovedLength / path.Length;
-		_playerPoint = playerRatio;
+		var moveLength = player.MovedLength;
+		_playerPoint = moveLength;
 
 		foreach(var item in lines) {
 			if(!item.renderer) continue;
 
 			var fillValue = 1.0f;
-			var startRatio = path.GetPointLength(0, item.pathStartPoint) / path.Length;
-			var endRatio = path.GetPointLength(0, item.pathEndPoint) / path.Length;
+			var startLength = path.GetPointLength(0, item.pathStartPoint);
+			var endLength = path.GetPointLength(0, item.pathEndPoint);
 
 			//通り過ぎた線の場合
-			if(playerRatio >= endRatio) {
+			if(moveLength >= endLength) {
 				fillValue = 0.0f;
 			}
 			//通っている途中の線の場合
-			else if(playerRatio > startRatio) {
-				var t = playerRatio - startRatio;
-				fillValue = 1 - t / (endRatio - startRatio);
+			else if(moveLength > startLength) {
+				var t = moveLength - startLength;
+				fillValue = 1 - (t / (endLength - startLength));
 			}
 			//可視範囲を設定
 			item.renderer.material.SetFloat("_Fill", fillValue);

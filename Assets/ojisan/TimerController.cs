@@ -39,9 +39,11 @@ public class TimerController : MonoBehaviour
     {
  
         yield return StartCoroutine(effect.FadeOut());
-
+        
         Next_Scene = NextSceneName;
         SceneManager.LoadScene(Next_Scene);
+
+        yield return new WaitForSeconds(1);
 
         yield return StartCoroutine(effect.FadeIn());
     }

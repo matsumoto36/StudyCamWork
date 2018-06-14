@@ -66,6 +66,10 @@ public class GimmickFocusIO : GimmickBase {
 	public override void OnDetach(Player player) {
 		base.OnDetach(player);
 
+		var z = isToFar ? moveZ : 0;
+		player.transform.GetChild(0)
+			.localPosition = new Vector3(0, 0, z);
+
 		player.speed = playerSpeed;
 	}
 
