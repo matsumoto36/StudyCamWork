@@ -13,6 +13,7 @@ public class GimmickTeleport : GimmickBase {
 	Color playerCol;
 
 	GimmickGauge startGauge;
+	MouseCamera mouseCamera;
 
 	float playerSpeed;
 
@@ -52,7 +53,8 @@ public class GimmickTeleport : GimmickBase {
 		var pos = path.GetPoint(endPoint / path.LineCount);
 		effect = Instantiate(effectPre, pos, Quaternion.identity);
 
-		FindObjectOfType<MouseCamera>().IsTeleport = true;
+		mouseCamera = FindObjectOfType<MouseCamera>();
+		mouseCamera.IsTeleport = true;
 	}
 
 	public override void OnApplyUpdate(Player player, float t) {
@@ -71,7 +73,9 @@ public class GimmickTeleport : GimmickBase {
 		effect.GetComponent<ParticleSystem>().Stop();
 		Destroy(effect, 1);
 
-		FindObjectOfType<MouseCamera>().IsTeleport = false;
+		mouseCamera.IsTeleport = false;
+		mouseCamera.CameraUpdate();
+
 	}
 
 	public override float GetSectionTime(float speed) {

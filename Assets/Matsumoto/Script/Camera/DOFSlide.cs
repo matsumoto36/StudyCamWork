@@ -11,8 +11,29 @@ public class DOFSlide : MonoBehaviour {
 
 	DepthOfField dof;
 
-	public float minDistance = 0.45f;
-	public float maxDistance = 3.4f;
+	public float[] distanceList = new float[] {
+		0.433f,
+		0.455f,
+		0.479f,
+		0.506f,
+		0.536f,
+		0.570f,
+		0.609f,
+		0.653f,
+		0.704f,
+		0.765f,
+		0.835f,
+		0.915f,
+		1.030f,
+		1.160f,
+		1.325f,
+		1.550f,
+		1.890f,
+		2.380f,
+		3.190f,
+		4.950f,
+	};
+
 	float distance;
 
 	public float Value {
@@ -37,7 +58,12 @@ public class DOFSlide : MonoBehaviour {
 		Value += focusAngle * Time.deltaTime / GameMaster.gameMaster.gameBalanceData.FocusDuration;
 		Value = Mathf.Clamp(Value, 0, 1);
 
-		distance = Mathf.Lerp(minDistance, maxDistance, FocusCurve.Evaluate(Value));
+		var position = Value * (distanceList.Length - 1);
+
+		distance = distanceList[(int)position];
+
+		if(position != distanceList.Length - 1)
+			distance += (distanceList[(int)position + 1] - distanceList[(int)position]) * (position - (int)position);
 
 		dof.focusDistance.value = distance;
 	}
