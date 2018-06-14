@@ -74,6 +74,8 @@ public class GimmickSpeed : GimmickBase {
 		lineRenderer.material.SetColor("_Color", gimmickColor);
 
 		var partition = (int)(32 * (endPoint - startPoint));
+		if(partition == 0) partition = 1;
+
 		var dt = (endPoint - startPoint) * (1.0f / partition);
 		var point = new Vector3[partition + 1];
 
