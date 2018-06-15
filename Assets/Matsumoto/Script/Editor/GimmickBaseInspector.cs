@@ -39,7 +39,7 @@ public class GimmickBaseInspector : Editor {
 		endPoint = serializedObject.FindProperty("endPoint");
 
 		if(CheckParentIsManager()) {
-			path = component.GetComponentInParent<GimmickManager>().Path;
+			path = component.GetComponentInParent<Bezier2D>();
 		}
 	}
 
@@ -220,7 +220,7 @@ public class GimmickBaseInspector : Editor {
 
 		if(!manager) return;
 
-		var path = manager.Path;
+		var path = manager.GetComponent<Bezier2D>();
 
 		if(!path) return;
 		if(path.LineCount <= 0) return;

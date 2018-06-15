@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum PlayerCaptureStatus {
 	None,
@@ -73,6 +74,13 @@ public class Player : MonoBehaviour {
 			ring1.material.SetColor("_EmissionColor", CaptureLightColor);
 		else
 			ring1.material.SetColor("_EmissionColor", FailLightColor);
+	}
+
+	void Update() {
+		//デバッグ機能
+		//リトライ
+		if(Input.GetKeyDown(KeyCode.R))
+			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
 	// Update is called once per frame

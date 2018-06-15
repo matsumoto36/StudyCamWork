@@ -6,13 +6,16 @@ using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour {
 
+	public const string STUDIO_PREFAB_BASE_PATH = "Prefab/Stage/StudioSet/";
+	public const string PATH_PREFAB_BASE_PATH = "Prefab/Stage/Path/";
 	const string PLAYER_PREFAB_PATH = "Prefab/Player";
-	const string STUDIO_PREFAB_BASE_PATH = "Prefab/Stage/StudioSet/";
-	const string PATH_PREFAB_BASE_PATH = "Prefab/Stage/Path/";
+
 
 	public GameBalanceData GameBalanceData { get; private set; }
 
+	public static string LoadStudioName;
 	public string loadStudioName;
+	public static string LoadPathName;
 	public string loadPathName;
 
 	public Text countDownText;
@@ -45,6 +48,9 @@ public class GameMaster : MonoBehaviour {
 	}
 
 	void Start() {
+
+		if(LoadStudioName != "") loadStudioName = LoadStudioName;
+		if(LoadPathName != "") loadPathName = LoadPathName;
 
 		//スタジオの生成
 		Instantiate(Resources.Load<GameObject>(STUDIO_PREFAB_BASE_PATH + loadStudioName));
