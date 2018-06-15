@@ -204,10 +204,9 @@ public class MouseCamera : MonoBehaviour
         if (playTime > comboTimeCount)
         {
             comboTimeCount++;
-            if (isCapture)
+            if (isCapture&&IsTeleport)
             {
                 var point = plus + gameBalance.BaseScore;
-
                 if (Combo >= 1)
                 {
                     Score += (int)(point * Combo * 1.05);
