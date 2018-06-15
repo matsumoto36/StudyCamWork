@@ -22,6 +22,8 @@ public class GameEnd : MonoBehaviour
     //正確さ　右
     public Text AccuracyNumber;
 
+    public Canvas canvas;
+
     //リトライボタン
     public Text Retry;
     public Text ClearRetry;
@@ -70,6 +72,10 @@ public class GameEnd : MonoBehaviour
 
         //α値を変更する時間
         float time = 0;
+
+        yield return new WaitForSeconds(2);
+
+        canvas.enabled = false;
 
         while (time < 1.0f)
         {
