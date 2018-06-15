@@ -10,8 +10,7 @@ public enum PlayerCaptureState {
 }
 
 public class Player : MonoBehaviour {
-	
-	public Bezier2D path;
+
 	public float speed;
 
 	public Renderer centerLight;
@@ -23,8 +22,9 @@ public class Player : MonoBehaviour {
 	[ColorUsage(false, true, 0, 10, 0, 10)]
 	public Color FailLightColor;
 
-	public PlayerCaptureState state = PlayerCaptureState.All;
-	PlayerCaptureState _state = PlayerCaptureState.All;
+	PlayerCaptureState state = PlayerCaptureState.None;
+
+	Bezier2D path;
 
 	float movedLength;
 	public float MovedLength {
@@ -35,7 +35,11 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	public void Init() {
+	public void Init(Bezier2D path) {
+
+		this.path = path;
+		speed = GameMaster.Instance.GameBalanceData.PlayerSpeed;
+
 		MovedLength = 0;
 
 		centerLight.material = new Material(centerLight.material);
@@ -45,41 +49,37 @@ public class Player : MonoBehaviour {
 		ring2.material = new Material(ring2.material);
 		ring2.material.EnableKeyword("_EMISSION");
 
-		SetLight(state);
+		SetLight(PlayerCaptureState.All);
 	}
 
 	public void SetLight(PlayerCaptureState state) {
+
+		if(this.state == state) return;
+		this.state = state;
+
 		switch(state) {
 			case PlayerCaptureState.All:
 				centerLight.material.SetColor("_EmissionColor", CaptureLightColor);
 				ring1.material.SetColor("_EmissionColor", CaptureLightColor);
 				ring2.material.SetColor("_EmissionColor", CaptureLightColor);
-				break;
+				return;
 			case PlayerCaptureState.Focus:
 				centerLight.material.SetColor("_EmissionColor", FailLightColor);
 				ring1.material.SetColor("_EmissionColor", CaptureLightColor);
 				ring2.material.SetColor("_EmissionColor", FailLightColor);
-				break;
+				return;
 			case PlayerCaptureState.Contain:
 				centerLight.material.SetColor("_EmissionColor", FailLightColor);
 				ring1.material.SetColor("_EmissionColor", FailLightColor);
 				ring2.material.SetColor("_EmissionColor", CaptureLightColor);
-				break;
+				return;
 			case PlayerCaptureState.None:
 				centerLight.material.SetColor("_EmissionColor", FailLightColor);
 				ring1.material.SetColor("_EmissionColor", FailLightColor);
 				ring2.material.SetColor("_EmissionColor", FailLightColor);
-				break;
+				return;
 			default:
-				break;
-		}
-	}
-	
-	void Update() {
-
-		if(state != _state) {
-			_state = state;
-			SetLight(state);
+				return;
 		}
 	}
 
@@ -96,7 +96,7 @@ public class Player : MonoBehaviour {
 		transform.position = path.GetPointNormalize(t);
 
 		if(t >= 1.0f) {
-			GameMaster.gameMaster.GameClear();
+			GameMaster.Instance.GameClear();
 		}
 	}
 }

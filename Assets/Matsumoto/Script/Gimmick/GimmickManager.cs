@@ -10,26 +10,22 @@ using UnityEngine;
 /// </summary>
 public class GimmickManager : MonoBehaviour {
 
-	public Bezier2D path;
 	public LineRenderer linePre;
 	public float moveZ = 18;
 
-	GimmickInfo[] gimmicks;
 	public List<LineInfo> lines;
 
 	Player player;
+	GimmickInfo[] gimmicks;
+
 	float startTime;
 
+	public Bezier2D Path { get; private set; }
 
-	//debug
-	public float _playerPoint;
+	public void Init(Bezier2D path, Player player) {
 
-	public void Init() {
-
-		if(!path) return;
-
-		player = GameObject.FindGameObjectWithTag("Player")
-			.GetComponent<Player>();
+		Path = path;
+		this.player = player;
 
 		var g = GetComponentsInChildren<GimmickBase>();
 		gimmicks = new GimmickInfo[g.Length];
@@ -51,7 +47,7 @@ public class GimmickManager : MonoBehaviour {
 			item.gimmick.SpawnModel();
 		}
 
-		GameMaster.gameMaster.OnGameStart += () => startTime = Time.time;
+		GameMaster.Instance.OnGameStart += () => startTime = Time.time;
 	}
 
 	public void GimmickUpdate() {
@@ -100,14 +96,13 @@ public class GimmickManager : MonoBehaviour {
 	void SetLineVisible() {
 
 		var moveLength = player.MovedLength;
-		_playerPoint = moveLength;
 
 		foreach(var item in lines) {
 			if(!item.renderer) continue;
 
 			var fillValue = 1.0f;
-			var startLength = path.GetPointLength(0, item.pathStartPoint);
-			var endLength = path.GetPointLength(0, item.pathEndPoint);
+			var startLength = Path.GetPointLength(0, item.pathStartPoint);
+			var endLength = Path.GetPointLength(0, item.pathEndPoint);
 
 			//通り過ぎた線の場合
 			if(moveLength >= endLength) {
@@ -137,7 +132,7 @@ public class GimmickManager : MonoBehaviour {
 			var gimmick = gimmicks[i].gimmick;
 
 			//通常ゾーン
-			var t = path.GetPointLength(prevPoint, gimmick.startPoint) / speed;
+			var t = Path.GetPointLength(prevPoint, gimmick.startPoint) / speed;
 
 			//ギミックのゾーン
 			sumTime += t;
@@ -188,7 +183,7 @@ public class GimmickManager : MonoBehaviour {
 
 			//通常ゾーン
 			lines.Add(new LineInfo(
-				DrawLine(path, prevPoint, gimmick.startPoint, z),
+				DrawLine(Path, prevPoint, gimmick.startPoint, z),
 				prevPoint,
 				gimmick.startPoint
 			 ));
@@ -209,9 +204,9 @@ public class GimmickManager : MonoBehaviour {
 
 		//最後の線を引く
 		lines.Add(new LineInfo(
-			DrawLine(path, prevPoint, path.LineCount, z),
+			DrawLine(Path, prevPoint, Path.LineCount, z),
 			prevPoint,
-			path.LineCount
+			Path.LineCount
 		));
 
 	}

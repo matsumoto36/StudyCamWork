@@ -5,8 +5,11 @@ using UnityEngine;
 /// <summary>
 /// ステージごとのゲームバランスを定義
 /// </summary>
-[System.Serializable]
-public class GameBalanceData {
+public class GameBalanceData : MonoBehaviour{
+
+	[SerializeField]
+	float playerSpeed = 3f;					//プレイヤーのスピード
+	public float PlayerSpeed { get { return playerSpeed; } }
 
 	[SerializeField]
 	float focusGrace = 0.1f;				//フォーカスの猶予時間

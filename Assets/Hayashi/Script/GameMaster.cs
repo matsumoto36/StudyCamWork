@@ -6,9 +6,14 @@ using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour {
 
-	public static GameMaster gameMaster;
+	const string PLAYER_PREFAB_PATH = "Prefab/Player";
+	const string STUDIO_PREFAB_BASE_PATH = "Prefab/Stage/StudioSet/";
+	const string PATH_PREFAB_BASE_PATH = "Prefab/Stage/Path/";
 
-	public GameBalanceData gameBalanceData = new GameBalanceData();
+	public GameBalanceData GameBalanceData { get; private set; }
+
+	public string loadStudioName;
+	public string loadPathName;
 
 	public Text countDownText;
    
@@ -22,15 +27,39 @@ public class GameMaster : MonoBehaviour {
 
 	bool isGameStart;
 
-    // Use this for initialization
-    void Awake () {
-		gameMaster = this;
+	static GameMaster instance;
+	public static GameMaster Instance {
+		get {
+			if(!instance) {
+				instance = FindObjectOfType<GameMaster>();
+			}
+			return instance;
+		}
+	}
+
+	// Use this for initialization
+	void Awake () {
+		if(Instance != this) Destroy(gameObject);
+		instance = this;
 		countDownText.text = "";
 	}
 
 	void Start() {
 
-		stageController.InitStage();
+		//スタジオの生成
+		Instantiate(Resources.Load<GameObject>(STUDIO_PREFAB_BASE_PATH + loadStudioName));
+
+		//ステージの生成
+		var stage = Instantiate(Resources.Load<GameObject>(PATH_PREFAB_BASE_PATH + loadPathName));
+		var path = stage.GetComponent<Bezier2D>();
+		var gimmickManager = stage.GetComponent<GimmickManager>();
+
+		GameBalanceData = stage.GetComponent<GameBalanceData>();
+
+		//プレイヤーの生成
+		var player = Instantiate(Resources.Load<Player>(PLAYER_PREFAB_PATH));
+
+		stageController.InitStage(player, path, gimmickManager);
 	}
 
 	// Update is called once per frame

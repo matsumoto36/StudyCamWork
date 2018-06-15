@@ -69,7 +69,7 @@ public class MouseCamera : MonoBehaviour
         targetPlayer = GameObject.FindGameObjectWithTag("Player")
             .GetComponent<Player>();
 
-        gameBalance = GameMaster.gameMaster.gameBalanceData;
+        gameBalance = GameMaster.Instance.GameBalanceData;
 
         //カメラのサイズを設定
         wideCameraSize = new Vector2(Screen.width, Screen.height) * gameBalance.CameraWideSizeRatio;
@@ -80,7 +80,7 @@ public class MouseCamera : MonoBehaviour
         cameraObject.SetCameraSize(wideCameraSize);
         cameraObject.UpdateCameraPosition(Camera.main.WorldToScreenPoint(targetPlayer.transform.position));
 
-        GameMaster.gameMaster.OnGameStart += () => {
+        GameMaster.Instance.OnGameStart += () => {
             Debug.Log("a");
             Cursor.visible = false;
             isGameStart = true;
@@ -90,13 +90,13 @@ public class MouseCamera : MonoBehaviour
             scoreMax = 0;
         };
 
-        GameMaster.gameMaster.OnGameClear += () => {
+        GameMaster.Instance.OnGameClear += () => {
             Cursor.visible = true;
             isGameStart = false;
             cameraObject.CameraColorType = CameraColorType.Normal;
         };
 
-        GameMaster.gameMaster.OnGameOver += () => {
+        GameMaster.Instance.OnGameOver += () => {
             Cursor.visible = true;
             isGameStart = false;
             cameraObject.CameraColorType = CameraColorType.Normal;
@@ -158,7 +158,7 @@ public class MouseCamera : MonoBehaviour
         //フォーカスできているか調べる
         var playerZRate = targetPlayer.transform.GetChild(0).localPosition.z / gimmickManager.moveZ;
         var focusRate = dofSlide.Value;
-        var focusGrace = GameMaster.gameMaster.gameBalanceData.FocusGrace;
+        var focusGrace = GameMaster.Instance.GameBalanceData.FocusGrace;
         if (Mathf.Abs(playerZRate - focusRate) > focusGrace) return false;
 
         //枠に入っているか調べる
@@ -228,7 +228,7 @@ public class MouseCamera : MonoBehaviour
                     Combo = 0;
                     if (lifeTimeCount < playTime)
                     {
-                        if (life <= 0.0f) GameMaster.gameMaster.GameOver();
+                        if (life <= 0.0f) GameMaster.Instance.GameOver();
                     }
                 }
             }

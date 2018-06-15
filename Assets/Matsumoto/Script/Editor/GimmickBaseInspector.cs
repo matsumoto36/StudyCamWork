@@ -39,7 +39,7 @@ public class GimmickBaseInspector : Editor {
 		endPoint = serializedObject.FindProperty("endPoint");
 
 		if(CheckParentIsManager()) {
-			path = component.GetComponentInParent<GimmickManager>().path;
+			path = component.GetComponentInParent<GimmickManager>().Path;
 		}
 	}
 
@@ -220,7 +220,7 @@ public class GimmickBaseInspector : Editor {
 
 		if(!manager) return;
 
-		var path = manager.path;
+		var path = manager.Path;
 
 		if(!path) return;
 		if(path.LineCount <= 0) return;

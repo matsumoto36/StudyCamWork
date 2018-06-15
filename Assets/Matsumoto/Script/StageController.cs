@@ -7,21 +7,24 @@ using UnityEngine;
 /// </summary>
 public class StageController : MonoBehaviour {
 
-	public GimmickManager gimmickManager;
 	public MouseCamera mouseCamera;
-	public Player player;
+	Player player;
+	GimmickManager gimmickManager;
 
 	bool isGameStart;
 
-	public void InitStage() {
+	public void InitStage(Player player, Bezier2D path, GimmickManager manager) {
 
-		player.Init();
-		gimmickManager.Init();
+		this.player = player;
+		gimmickManager = manager;
+
+		player.Init(path);
+		gimmickManager.Init(path, player);
 		mouseCamera.Init();
 
-		GameMaster.gameMaster.OnGameStart += () => isGameStart = true;
-		GameMaster.gameMaster.OnGameOver += () => isGameStart = false;
-		GameMaster.gameMaster.OnGameClear += () => isGameStart = false;
+		GameMaster.Instance.OnGameStart += () => isGameStart = true;
+		GameMaster.Instance.OnGameOver += () => isGameStart = false;
+		GameMaster.Instance.OnGameClear += () => isGameStart = false;
 	}
 
 	// Update is called once per frame

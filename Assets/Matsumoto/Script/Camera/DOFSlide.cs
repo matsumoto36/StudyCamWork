@@ -55,7 +55,7 @@ public class DOFSlide : MonoBehaviour {
 		IsFocus = Input.GetMouseButton(0);
 
 		var focusAngle = IsFocus ? 1 : -1;
-		Value += focusAngle * Time.deltaTime / GameMaster.gameMaster.gameBalanceData.FocusDuration;
+		Value += focusAngle * Time.deltaTime / GameMaster.Instance.GameBalanceData.FocusDuration;
 		Value = Mathf.Clamp(Value, 0, 1);
 
 		var position = Value * (distanceList.Length - 1);
