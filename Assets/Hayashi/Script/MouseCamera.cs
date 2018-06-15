@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class MouseCamera : MonoBehaviour
 {
 
-    public Player targetPlayer;
     public MouseCameraObject cameraObject;
 
     public Text scoreText;
@@ -25,7 +24,8 @@ public class MouseCamera : MonoBehaviour
     int scoreWithoutCombo;          //現時点でコンボ抜きにしたスコア
     int scoreMax;                   //現時点でのスコアの最大値
 
-    GameBalanceData gameBalance;    //ゲームのバランスを決めるクラス
+	Player targetPlayer;
+	GameBalanceData gameBalance;    //ゲームのバランスを決めるクラス
     Vector2 wideCameraSize;
     Vector2 smallCameraSize;
 
@@ -65,12 +65,10 @@ public class MouseCamera : MonoBehaviour
     }
 
     // Use this for initialization
-    public void Init()
+    public void Init(Player player)
     {
 
-        targetPlayer = GameObject.FindGameObjectWithTag("Player")
-            .GetComponent<Player>();
-
+        targetPlayer = player;
         gameBalance = GameMaster.Instance.GameBalanceData;
 
         //カメラのサイズを設定
@@ -130,7 +128,11 @@ public class MouseCamera : MonoBehaviour
                 gauge = Mathf.Min(gauge + Time.deltaTime / gaugeAmount, 1);
             }
 
-            if (isCapture = IsPlayerCapture())
+			//プレイヤーにステータスを伝える
+			var status = IsPlayerCapture();
+			targetPlayer.SetLight(status);
+
+			if (isCapture = (status == PlayerCaptureStatus.All))
             {
                 IsPSmallCapture();
             }
@@ -152,16 +154,20 @@ public class MouseCamera : MonoBehaviour
 
     }
 
-    bool IsPlayerCapture()
+	/// <summary>
+	/// プレイヤーがいい感じにキャプチャーされているか判定する
+	/// </summary>
+	/// <returns></returns>
+    PlayerCaptureStatus IsPlayerCapture()
     {                   //主なあたり判定
 
-        if (!targetPlayer) return false;
+        if (!targetPlayer) return PlayerCaptureStatus.None;
 
         //フォーカスできているか調べる
         var playerZRate = targetPlayer.transform.GetChild(0).localPosition.z / gimmickManager.moveZ;
         var focusRate = dofSlide.Value;
         var focusGrace = GameMaster.Instance.GameBalanceData.FocusGrace;
-        if (Mathf.Abs(playerZRate - focusRate) > focusGrace) return false;
+        var isFocus = Mathf.Abs(playerZRate - focusRate) <= focusGrace ? 1 : 0;
 
         //枠に入っているか調べる
         var sizeOffset = new Vector2(0, 0);
@@ -170,8 +176,9 @@ public class MouseCamera : MonoBehaviour
             wideCameraSize + sizeOffset);
 
         var checkPoint = Camera.main.WorldToScreenPoint(targetPlayer.transform.position);  //スクリーン座標に置き換える
+		var isInside = rect.Contains(checkPoint) ? 2 : 0;
 
-        return rect.Contains(checkPoint);
+		return (PlayerCaptureStatus)(isFocus | isInside);
 
     }
     bool IsPSmallCapture()

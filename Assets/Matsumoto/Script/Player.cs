@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlayerCaptureState {
-	All,
+public enum PlayerCaptureStatus {
+	None,
 	Focus,
 	Contain,
-	None,
+	All,
+
 }
 
 public class Player : MonoBehaviour {
@@ -22,7 +23,7 @@ public class Player : MonoBehaviour {
 	[ColorUsage(false, true, 0, 10, 0, 10)]
 	public Color FailLightColor;
 
-	PlayerCaptureState state = PlayerCaptureState.None;
+	PlayerCaptureStatus status = PlayerCaptureStatus.None;
 
 	Bezier2D path;
 
@@ -49,38 +50,29 @@ public class Player : MonoBehaviour {
 		ring2.material = new Material(ring2.material);
 		ring2.material.EnableKeyword("_EMISSION");
 
-		SetLight(PlayerCaptureState.All);
+		SetLight(PlayerCaptureStatus.All);
 	}
 
-	public void SetLight(PlayerCaptureState state) {
+	public void SetLight(PlayerCaptureStatus status) {
 
-		if(this.state == state) return;
-		this.state = state;
+		if(this.status == status) return;
+		this.status = status;
 
-		switch(state) {
-			case PlayerCaptureState.All:
-				centerLight.material.SetColor("_EmissionColor", CaptureLightColor);
-				ring1.material.SetColor("_EmissionColor", CaptureLightColor);
-				ring2.material.SetColor("_EmissionColor", CaptureLightColor);
-				return;
-			case PlayerCaptureState.Focus:
-				centerLight.material.SetColor("_EmissionColor", FailLightColor);
-				ring1.material.SetColor("_EmissionColor", CaptureLightColor);
-				ring2.material.SetColor("_EmissionColor", FailLightColor);
-				return;
-			case PlayerCaptureState.Contain:
-				centerLight.material.SetColor("_EmissionColor", FailLightColor);
-				ring1.material.SetColor("_EmissionColor", FailLightColor);
-				ring2.material.SetColor("_EmissionColor", CaptureLightColor);
-				return;
-			case PlayerCaptureState.None:
-				centerLight.material.SetColor("_EmissionColor", FailLightColor);
-				ring1.material.SetColor("_EmissionColor", FailLightColor);
-				ring2.material.SetColor("_EmissionColor", FailLightColor);
-				return;
-			default:
-				return;
-		}
+		if(status == PlayerCaptureStatus.All) 
+			centerLight.material.SetColor("_EmissionColor", CaptureLightColor);
+		else
+			centerLight.material.SetColor("_EmissionColor", FailLightColor);
+
+		var bit = (int)status;
+		if((bit & (int)PlayerCaptureStatus.Contain) != 0) 
+			ring2.material.SetColor("_EmissionColor", CaptureLightColor);
+		else 
+			ring2.material.SetColor("_EmissionColor", FailLightColor);
+
+		if((bit & (int)PlayerCaptureStatus.Focus) != 0)
+			ring1.material.SetColor("_EmissionColor", CaptureLightColor);
+		else
+			ring1.material.SetColor("_EmissionColor", FailLightColor);
 	}
 
 	// Update is called once per frame

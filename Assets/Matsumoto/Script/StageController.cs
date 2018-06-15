@@ -20,7 +20,7 @@ public class StageController : MonoBehaviour {
 
 		player.Init(path);
 		gimmickManager.Init(path, player);
-		mouseCamera.Init();
+		mouseCamera.Init(player);
 
 		GameMaster.Instance.OnGameStart += () => isGameStart = true;
 		GameMaster.Instance.OnGameOver += () => isGameStart = false;
