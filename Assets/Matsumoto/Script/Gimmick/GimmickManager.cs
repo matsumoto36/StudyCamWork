@@ -13,10 +13,9 @@ public class GimmickManager : MonoBehaviour {
 	public LineRenderer linePre;
 	public float moveZ = 18;
 
-	public List<LineInfo> lines;
-
 	Player player;
 	GimmickInfo[] gimmicks;
+	List<LineInfo> lines;
 
 	float startTime;
 
