@@ -1,17 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public enum PlayerCaptureState {
-	All,
+public enum PlayerCaptureStatus {
+	None,
 	Focus,
 	Contain,
-	None,
+	All,
+
 }
 
 public class Player : MonoBehaviour {
-	
-	public Bezier2D path;
+
 	public float speed;
 
 	public Renderer centerLight;
@@ -23,8 +24,9 @@ public class Player : MonoBehaviour {
 	[ColorUsage(false, true, 0, 10, 0, 10)]
 	public Color FailLightColor;
 
-	public PlayerCaptureState state = PlayerCaptureState.All;
-	PlayerCaptureState _state = PlayerCaptureState.All;
+	PlayerCaptureStatus status = PlayerCaptureStatus.None;
+
+	Bezier2D path;
 
 	float movedLength;
 	public float MovedLength {
@@ -35,7 +37,11 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	public void Init() {
+	public void Init(Bezier2D path) {
+
+		this.path = path;
+		speed = GameMaster.Instance.GameBalanceData.PlayerSpeed;
+
 		MovedLength = 0;
 
 		centerLight.material = new Material(centerLight.material);
@@ -45,42 +51,36 @@ public class Player : MonoBehaviour {
 		ring2.material = new Material(ring2.material);
 		ring2.material.EnableKeyword("_EMISSION");
 
-		SetLight(state);
+		SetLight(PlayerCaptureStatus.All);
 	}
 
-	public void SetLight(PlayerCaptureState state) {
-		switch(state) {
-			case PlayerCaptureState.All:
-				centerLight.material.SetColor("_EmissionColor", CaptureLightColor);
-				ring1.material.SetColor("_EmissionColor", CaptureLightColor);
-				ring2.material.SetColor("_EmissionColor", CaptureLightColor);
-				break;
-			case PlayerCaptureState.Focus:
-				centerLight.material.SetColor("_EmissionColor", FailLightColor);
-				ring1.material.SetColor("_EmissionColor", CaptureLightColor);
-				ring2.material.SetColor("_EmissionColor", FailLightColor);
-				break;
-			case PlayerCaptureState.Contain:
-				centerLight.material.SetColor("_EmissionColor", FailLightColor);
-				ring1.material.SetColor("_EmissionColor", FailLightColor);
-				ring2.material.SetColor("_EmissionColor", CaptureLightColor);
-				break;
-			case PlayerCaptureState.None:
-				centerLight.material.SetColor("_EmissionColor", FailLightColor);
-				ring1.material.SetColor("_EmissionColor", FailLightColor);
-				ring2.material.SetColor("_EmissionColor", FailLightColor);
-				break;
-			default:
-				break;
-		}
+	public void SetLight(PlayerCaptureStatus status) {
+
+		if(this.status == status) return;
+		this.status = status;
+
+		if(status == PlayerCaptureStatus.All) 
+			centerLight.material.SetColor("_EmissionColor", CaptureLightColor);
+		else
+			centerLight.material.SetColor("_EmissionColor", FailLightColor);
+
+		var bit = (int)status;
+		if((bit & (int)PlayerCaptureStatus.Contain) != 0) 
+			ring2.material.SetColor("_EmissionColor", CaptureLightColor);
+		else 
+			ring2.material.SetColor("_EmissionColor", FailLightColor);
+
+		if((bit & (int)PlayerCaptureStatus.Focus) != 0)
+			ring1.material.SetColor("_EmissionColor", CaptureLightColor);
+		else
+			ring1.material.SetColor("_EmissionColor", FailLightColor);
 	}
-	
+
 	void Update() {
-
-		if(state != _state) {
-			_state = state;
-			SetLight(state);
-		}
+		//デバッグ機能
+		//リトライ
+		if(Input.GetKeyDown(KeyCode.R))
+			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
 	// Update is called once per frame
@@ -96,7 +96,7 @@ public class Player : MonoBehaviour {
 		transform.position = path.GetPointNormalize(t);
 
 		if(t >= 1.0f) {
-			GameMaster.gameMaster.GameClear();
+			GameMaster.Instance.GameClear();
 		}
 	}
 }

@@ -41,7 +41,7 @@ public class GimmickBase : MonoBehaviour {
 	public virtual void Init() {
 
 		manager = GetComponentInParent<GimmickManager>();
-		path = manager.path;
+		path = manager.Path;
 	}
 
 	public virtual void SpawnModel() {
@@ -145,7 +145,7 @@ public class GimmickBase : MonoBehaviour {
 
 		if(!CheckUsableManager()) return;
 
-		path = manager.path;
+		path = manager.Path;
 
 		if(path.LineCount <= 0) return;
 
@@ -178,7 +178,7 @@ public class GimmickBase : MonoBehaviour {
 	bool CheckUsableManager() {
 
 		if(!manager) return false;
-		if(!manager.path) return false;
+		if(!manager.Path) return false;
 
 		return true;
 	}

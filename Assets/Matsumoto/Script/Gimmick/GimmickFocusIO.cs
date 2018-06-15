@@ -42,7 +42,7 @@ public class GimmickFocusIO : GimmickBase {
 		playerSpeed = player.speed;
 
 		var baseLength = path.GetPointLength(startPoint, endPoint);
-		var duration = GameMaster.gameMaster.gameBalanceData.FocusDuration;
+		var duration = GameMaster.Instance.GameBalanceData.FocusDuration;
 		player.speed = baseLength / duration;
 	}
 
@@ -50,7 +50,7 @@ public class GimmickFocusIO : GimmickBase {
 		base.OnApplyUpdate(player, t);
 
 		//プレイヤーのbodyのZを変更
-		var duration = GameMaster.gameMaster.gameBalanceData.FocusDuration;
+		var duration = GameMaster.Instance.GameBalanceData.FocusDuration;
 		var ratio = t / duration;
 		if(!isToFar) ratio = 1 - ratio;
 		var body = player.transform.GetChild(0);
@@ -74,7 +74,7 @@ public class GimmickFocusIO : GimmickBase {
 	}
 
 	public override float GetSectionTime(float speed) {
-		return GameMaster.gameMaster.gameBalanceData.FocusDuration;
+		return GameMaster.Instance.GameBalanceData.FocusDuration;
 	}
 
 	public override void EditGimmickLine(LineRenderer lineRenderer, ref float z) {

@@ -111,7 +111,7 @@ public class Bezier2D : MonoBehaviour {
 
 		var diff = endPoint - startPoint;
 		var part = (int)(partition * diff);
-		if(part <= 0) return diff;
+		if(part <= 0) part = 1;
 
 		var dt = diff / part;
 		var prevLinePoint = GetPoint(startPoint / LineCount);
@@ -136,7 +136,7 @@ public class Bezier2D : MonoBehaviour {
 
 		var diff = endPoint - startPoint;
 		var part = (int)(partition * diff);
-		if(part <= 0) return diff;
+		if(part <= 0) part = 1;
 
 		var dt = diff / part;
 		var prevLinePoint = GetPoint(startPoint / LineCount);

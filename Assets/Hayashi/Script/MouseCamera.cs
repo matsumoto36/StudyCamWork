@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class MouseCamera : MonoBehaviour
 {
 
-    public Player targetPlayer;
     public MouseCameraObject cameraObject;
 
     public Text scoreText;
@@ -17,15 +16,16 @@ public class MouseCamera : MonoBehaviour
     public bool isCapture = false;
     public bool isPlayerFocus;
 
-    public int life;				//体力
-    public int lifeDamage;			//ダメージの数値
+    int life = 100;				//体力
+    int lifeDamage;			//ダメージの数値
     public int Combo;				//コンボ
 
     public int Score;               //最終的に入るスコア
     int scoreWithoutCombo;          //現時点でコンボ抜きにしたスコア
     int scoreMax;                   //現時点でのスコアの最大値
 
-    GameBalanceData gameBalance;    //ゲームのバランスを決めるクラス
+	Player targetPlayer;
+	GameBalanceData gameBalance;    //ゲームのバランスを決めるクラス
     Vector2 wideCameraSize;
     Vector2 smallCameraSize;
 
@@ -37,6 +37,7 @@ public class MouseCamera : MonoBehaviour
     float playTime;
     int comboTimeCount;
     int lifeTimeCount;
+    public int ComboData;
 
     float gaugeAmount = 1;
     float gauge = 1;
@@ -46,6 +47,7 @@ public class MouseCamera : MonoBehaviour
 
     bool isTeleport;
     bool DamagOn = false;
+
     public bool IsTeleport
     {        //テレポート中かどうか
         get { return isTeleport; }
@@ -63,13 +65,14 @@ public class MouseCamera : MonoBehaviour
     }
 
     // Use this for initialization
-    public void Init()
+    public void Init(Player player)
     {
 
-        targetPlayer = GameObject.FindGameObjectWithTag("Player")
-            .GetComponent<Player>();
+        targetPlayer = player;
+        gameBalance = GameMaster.Instance.GameBalanceData;
 
-        gameBalance = GameMaster.gameMaster.gameBalanceData;
+		//受けるダメージを設定
+		lifeDamage = gameBalance.Damage;
 
         //カメラのサイズを設定
         wideCameraSize = new Vector2(Screen.width, Screen.height) * gameBalance.CameraWideSizeRatio;
@@ -80,7 +83,7 @@ public class MouseCamera : MonoBehaviour
         cameraObject.SetCameraSize(wideCameraSize);
         cameraObject.UpdateCameraPosition(Camera.main.WorldToScreenPoint(targetPlayer.transform.position));
 
-        GameMaster.gameMaster.OnGameStart += () => {
+        GameMaster.Instance.OnGameStart += () => {
             Debug.Log("a");
             Cursor.visible = false;
             isGameStart = true;
@@ -90,13 +93,13 @@ public class MouseCamera : MonoBehaviour
             scoreMax = 0;
         };
 
-        GameMaster.gameMaster.OnGameClear += () => {
+        GameMaster.Instance.OnGameClear += () => {
             Cursor.visible = true;
             isGameStart = false;
             cameraObject.CameraColorType = CameraColorType.Normal;
         };
 
-        GameMaster.gameMaster.OnGameOver += () => {
+        GameMaster.Instance.OnGameOver += () => {
             Cursor.visible = true;
             isGameStart = false;
             cameraObject.CameraColorType = CameraColorType.Normal;
@@ -128,7 +131,11 @@ public class MouseCamera : MonoBehaviour
                 gauge = Mathf.Min(gauge + Time.deltaTime / gaugeAmount, 1);
             }
 
-            if (isCapture = IsPlayerCapture())
+			//プレイヤーにステータスを伝える
+			var status = IsPlayerCapture();
+			targetPlayer.SetLight(status);
+
+			if (isCapture = (status == PlayerCaptureStatus.All))
             {
                 IsPSmallCapture();
             }
@@ -150,16 +157,20 @@ public class MouseCamera : MonoBehaviour
 
     }
 
-    bool IsPlayerCapture()
+	/// <summary>
+	/// プレイヤーがいい感じにキャプチャーされているか判定する
+	/// </summary>
+	/// <returns></returns>
+    PlayerCaptureStatus IsPlayerCapture()
     {                   //主なあたり判定
 
-        if (!targetPlayer) return false;
+        if (!targetPlayer) return PlayerCaptureStatus.None;
 
         //フォーカスできているか調べる
         var playerZRate = targetPlayer.transform.GetChild(0).localPosition.z / gimmickManager.moveZ;
         var focusRate = dofSlide.Value;
-        var focusGrace = GameMaster.gameMaster.gameBalanceData.FocusGrace;
-        if (Mathf.Abs(playerZRate - focusRate) > focusGrace) return false;
+        var focusGrace = GameMaster.Instance.GameBalanceData.FocusGrace;
+        var isFocus = Mathf.Abs(playerZRate - focusRate) <= focusGrace ? 1 : 0;
 
         //枠に入っているか調べる
         var sizeOffset = new Vector2(0, 0);
@@ -168,8 +179,9 @@ public class MouseCamera : MonoBehaviour
             wideCameraSize + sizeOffset);
 
         var checkPoint = Camera.main.WorldToScreenPoint(targetPlayer.transform.position);  //スクリーン座標に置き換える
+		var isInside = rect.Contains(checkPoint) ? 2 : 0;
 
-        return rect.Contains(checkPoint);
+		return (PlayerCaptureStatus)(isFocus | isInside);
 
     }
     bool IsPSmallCapture()
@@ -225,10 +237,14 @@ public class MouseCamera : MonoBehaviour
                 Debug.Log("damage");
                 if (!IsTeleport)
                 {
+                    if (ComboData <= Combo)
+                    {
+                        ComboData =Combo;
+                    }
                     Combo = 0;
                     if (lifeTimeCount < playTime)
                     {
-                        if (life <= 0.0f) GameMaster.gameMaster.GameOver();
+                        if (life <= 0.0f) GameMaster.Instance.GameOver();
                     }
                 }
             }
