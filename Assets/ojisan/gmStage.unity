@@ -237,7 +237,7 @@ MonoBehaviour:
   endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
   text: {fileID: 0}
-  speedMul: 5
+  speedMul: 3
 --- !u!1 &47719966
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,7 +851,7 @@ MonoBehaviour:
   endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
   text: {fileID: 0}
-  speedMul: 5
+  speedMul: 3
 --- !u!1 &471542242
 GameObject:
   m_ObjectHideFlags: 0
@@ -2287,7 +2287,7 @@ MonoBehaviour:
   isCapture: 1
   isPlayerFocus: 0
   life: 100
-  lifeDamage: 100
+  lifeDamage: 20
   Combo: 0
   Score: 0
 --- !u!20 &1790034744
@@ -2679,7 +2679,7 @@ MonoBehaviour:
   endPointModelPre: {fileID: 0}
   endPointModelOffset: {x: 0, y: 0, z: 0}
   text: {fileID: 0}
-  speedMul: 5
+  speedMul: 3
 --- !u!1 &2117670708
 GameObject:
   m_ObjectHideFlags: 0
