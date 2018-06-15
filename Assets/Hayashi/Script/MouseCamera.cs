@@ -37,6 +37,7 @@ public class MouseCamera : MonoBehaviour
     float playTime;
     int comboTimeCount;
     int lifeTimeCount;
+    public int ComboData;
 
     float gaugeAmount = 1;
     float gauge = 1;
@@ -46,6 +47,7 @@ public class MouseCamera : MonoBehaviour
 
     bool isTeleport;
     bool DamagOn = false;
+
     public bool IsTeleport
     {        //テレポート中かどうか
         get { return isTeleport; }
@@ -225,6 +227,10 @@ public class MouseCamera : MonoBehaviour
                 Debug.Log("damage");
                 if (!IsTeleport)
                 {
+                    if (ComboData <= Combo)
+                    {
+                        ComboData =Combo;
+                    }
                     Combo = 0;
                     if (lifeTimeCount < playTime)
                     {
