@@ -16,8 +16,8 @@ public class MouseCamera : MonoBehaviour
     public bool isCapture = false;
     public bool isPlayerFocus;
 
-    public int life;				//体力
-    public int lifeDamage;			//ダメージの数値
+    int life = 100;				//体力
+    int lifeDamage;			//ダメージの数値
     public int Combo;				//コンボ
 
     public int Score;               //最終的に入るスコア
@@ -70,6 +70,9 @@ public class MouseCamera : MonoBehaviour
 
         targetPlayer = player;
         gameBalance = GameMaster.Instance.GameBalanceData;
+
+		//受けるダメージを設定
+		lifeDamage = gameBalance.Damage;
 
         //カメラのサイズを設定
         wideCameraSize = new Vector2(Screen.width, Screen.height) * gameBalance.CameraWideSizeRatio;

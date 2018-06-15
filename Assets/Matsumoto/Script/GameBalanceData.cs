@@ -12,6 +12,10 @@ public class GameBalanceData : MonoBehaviour{
 	public float PlayerSpeed { get { return playerSpeed; } }
 
 	[SerializeField]
+	int damage = 10;						//失敗したときのダメージ
+	public int Damage { get { return damage; } }
+
+	[SerializeField]
 	float focusGrace = 0.1f;				//フォーカスの猶予時間
 	public float FocusGrace { get { return focusGrace; }}
 
