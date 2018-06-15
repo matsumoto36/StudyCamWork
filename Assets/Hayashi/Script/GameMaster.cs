@@ -13,9 +13,9 @@ public class GameMaster : MonoBehaviour {
 
 	public GameBalanceData GameBalanceData { get; private set; }
 
-	public static string LoadStudioName;
+	public static string LoadStudioName = "";
 	public string loadStudioName;
-	public static string LoadPathName;
+	public static string LoadPathName = "";
 	public string loadPathName;
 
 	public Text countDownText;
