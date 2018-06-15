@@ -212,8 +212,9 @@ public class MouseCamera : MonoBehaviour
             }
             else
             {
+
                 DamagOn = true;
-                if (DamagOn = true&&!IsTeleport)
+                if (DamagOn)
                 {
                     life -= lifeDamage;
                 }
