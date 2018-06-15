@@ -53,7 +53,7 @@ public class MouseCameraObject : MonoBehaviour {
 		maskCube.localScale = startCameraSize;
 		maskCube.SetParent(null);
 
-		GameMaster.gameMaster.OnGameStartCountDown
+		GameMaster.Instance.OnGameStartCountDown
 			+= () => StartCoroutine(MaskScaleAnim());
 	}
 

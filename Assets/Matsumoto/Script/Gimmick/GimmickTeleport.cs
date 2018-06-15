@@ -74,8 +74,6 @@ public class GimmickTeleport : GimmickBase {
 		Destroy(effect, 1);
 
 		mouseCamera.IsTeleport = false;
-		mouseCamera.CameraUpdate();
-
 	}
 
 	public override float GetSectionTime(float speed) {

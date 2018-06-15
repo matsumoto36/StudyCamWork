@@ -474,7 +474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gimmickManager: {fileID: 220231641}
   mouseCamera: {fileID: 1230339014}
-  player: {fileID: 0}
+  player: {fileID: 2127955965}
 --- !u!4 &198661875
 Transform:
   m_ObjectHideFlags: 0
@@ -1047,6 +1047,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114077760912728110, guid: 69f737feffe1c664d8d3992d11db89bb,
+        type: 2}
+      propertyPath: path
+      value: 
+      objectReference: {fileID: 828121633}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 69f737feffe1c664d8d3992d11db89bb, type: 2}
   m_IsPrefabParent: 0
@@ -2773,3 +2778,9 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2089406677}
+--- !u!114 &2127955965 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114077760912728110, guid: 69f737feffe1c664d8d3992d11db89bb,
+    type: 2}
+  m_PrefabInternal: {fileID: 686756477}
+  m_Script: {fileID: 11500000, guid: 18c5ef9a1db3d8f4a8bb11a90244786f, type: 3}
