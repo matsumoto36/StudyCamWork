@@ -43,7 +43,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -89,7 +89,8 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000002, guid: 501df2ecb62d3184fbe934036c6d88f4,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -2181,7 +2182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80994d5045769b94c8da7e4b9b685651, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPlayer: {fileID: 0}
   cameraObject: {fileID: 1915949004}
   scoreText: {fileID: 622516443}
   accText: {fileID: 1371344092}
@@ -2193,6 +2193,7 @@ MonoBehaviour:
   lifeDamage: 10
   Combo: 0
   Score: 0
+  ComboData: 0
 --- !u!1 &2054457265
 GameObject:
   m_ObjectHideFlags: 0
