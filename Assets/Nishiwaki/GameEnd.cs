@@ -31,11 +31,20 @@ public class GameEnd : MonoBehaviour
 
     // Use this for initialization
     void Start () {
-        
+        GameMaster.Instance.OnGameClear += () =>
+        {
+            StartCoroutine(GameClearResult());
+        };
+
+        GameMaster.Instance.OnGameOver += () =>
+        {
+            StartCoroutine(GameOverResult());
+        };
     }
 	
 	// Update is called once per frame
 	void Update () {
+        /*
         //ゲームクリア時
         if (Input.GetKeyDown(KeyCode.Z))//判定を変更しておくこと
         {
@@ -45,7 +54,7 @@ public class GameEnd : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.X))//判定を変更しておくこと
         {
             StartCoroutine(GameOverResult());
-        }
+        }*/
     }
 
     IEnumerator GameClearResult()
