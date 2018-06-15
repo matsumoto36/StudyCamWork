@@ -9,14 +9,17 @@ EditorBuildSettings:
     path: Assets/ojisan/Title.unity
     guid: b98c2d48cecaa6c4e95fae79b54b2ac4
   - enabled: 0
-    path: Assets/New Folder/Scene/Main.unity
+    path: Assets/Hayashi/Scene/Main.unity
     guid: 5daa46659fd11f94182f2b397dfd1c0b
   - enabled: 0
     path: Assets/ojisan/gmkz.unity
     guid: 0934a318f70f53e4081c4dd2b68dfab5
   - enabled: 1
-    path: Assets/alfa/Title.unity
+    path: Assets/Nishiwaki/alpha/Title.unity
     guid: ac8102d69bd61c844a8eab9b2ded069f
-  - enabled: 1
-    path: Assets/alfa/StageSelect.unity
+  - enabled: 0
+    path: Assets/Nishiwaki/alpha/StageSelect.unity
     guid: 053dc0e4c5ace0245a0049675e9084ed
+  - enabled: 1
+    path: Assets/Nishiwaki/alphascene.unity
+    guid: 311882e7b8eaa8f4cbf3abebc4ab14e1
