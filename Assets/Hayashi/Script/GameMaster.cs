@@ -44,7 +44,16 @@ public class GameMaster : MonoBehaviour {
 	void Awake () {
 		if(Instance != this) Destroy(gameObject);
 		instance = this;
+
+		//サウンドの読み込み
+		AudioManager.Load();
+		//パーティクルの読み込み
+		ParticleManager.Load();
+
 		countDownText.text = "";
+
+		//Debug BGM再生
+		AudioManager.PlayBGM("bgm_maoudamashii_cyber45");
 	}
 
 	void Start() {

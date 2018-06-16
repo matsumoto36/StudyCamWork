@@ -51,6 +51,10 @@ public class Player : MonoBehaviour {
 		ring2.material = new Material(ring2.material);
 		ring2.material.EnableKeyword("_EMISSION");
 
+		var p = ParticleManager.Spawn("TestParticle", new Vector3(), Quaternion.identity, 0);
+		p.transform.SetParent(transform);
+		p.transform.localPosition = new Vector3();
+
 		SetLight(PlayerCaptureStatus.All);
 	}
 
@@ -81,6 +85,9 @@ public class Player : MonoBehaviour {
 		//リトライ
 		if(Input.GetKeyDown(KeyCode.R))
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+		if(Input.GetKeyDown(KeyCode.P))
+			AudioManager.PlaySE("decision1");
 	}
 
 	// Update is called once per frame

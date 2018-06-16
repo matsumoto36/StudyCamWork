@@ -2189,8 +2189,6 @@ MonoBehaviour:
   hpBar: {fileID: 1125556219}
   isCapture: 1
   isPlayerFocus: 0
-  life: 100
-  lifeDamage: 10
   Combo: 0
   Score: 0
   ComboData: 0
