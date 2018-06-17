@@ -100,8 +100,8 @@ public class GimmickManager : MonoBehaviour {
 			if(!item.renderer) continue;
 
 			var fillValue = 1.0f;
-			var startLength = Path.GetPointLength(0, item.pathStartPoint);
-			var endLength = Path.GetPointLength(0, item.pathEndPoint);
+			var startLength = item.pathStartLength;
+			var endLength = item.pathEndLength;
 
 			//通り過ぎた線の場合
 			if(moveLength >= endLength) {
@@ -183,8 +183,8 @@ public class GimmickManager : MonoBehaviour {
 			//通常ゾーン
 			lines.Add(new LineInfo(
 				DrawLine(Path, prevPoint, gimmick.startPoint, z),
-				prevPoint,
-				gimmick.startPoint
+				Path.GetPointLength(0, prevPoint),
+				Path.GetPointLength(0, gimmick.startPoint)
 			 ));
 
 			//ギミックゾーン
@@ -194,8 +194,8 @@ public class GimmickManager : MonoBehaviour {
 
 			lines.Add(new LineInfo(
 				gimmickLine,
-				gimmick.startPoint,
-				gimmick.endPoint
+				Path.GetPointLength(0, gimmick.startPoint),
+				Path.GetPointLength(0, gimmick.endPoint)
 			));
 
 			prevPoint = gimmick.endPoint;
@@ -204,8 +204,8 @@ public class GimmickManager : MonoBehaviour {
 		//最後の線を引く
 		lines.Add(new LineInfo(
 			DrawLine(Path, prevPoint, Path.LineCount, z),
-			prevPoint,
-			Path.LineCount
+				Path.GetPointLength(0, prevPoint),
+				Path.Length
 		));
 
 	}
@@ -218,13 +218,13 @@ public class GimmickManager : MonoBehaviour {
 public class LineInfo {
 
 	public LineRenderer renderer;
-	public float pathStartPoint;
-	public float pathEndPoint;
+	public float pathStartLength;
+	public float pathEndLength;
 
-	public LineInfo(LineRenderer renderer, float pathStartPoint, float pathEndPoint) {
+	public LineInfo(LineRenderer renderer, float pathStartLength, float pathEndLength) {
 		this.renderer = renderer;
-		this.pathStartPoint = pathStartPoint;
-		this.pathEndPoint = pathEndPoint;
+		this.pathStartLength = pathStartLength;
+		this.pathEndLength = pathEndLength;
 	}
 }
 
