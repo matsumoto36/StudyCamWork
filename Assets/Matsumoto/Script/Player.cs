@@ -13,8 +13,6 @@ public enum PlayerCaptureStatus {
 
 public class Player : MonoBehaviour {
 
-	public float speed;
-
 	public Renderer centerLight;
 	public Renderer ring1;
 	public Renderer ring2;
@@ -28,6 +26,20 @@ public class Player : MonoBehaviour {
 
 	Bezier2D path;
 
+	[SerializeField]
+	float speed;
+	public float Speed {
+		get { return speed; }
+		set { speed = value; }
+	}
+
+	[SerializeField]
+	float scale;
+	public float Scale {
+		get { return scale; }
+		set { scale = value; }
+	}
+
 	float movedLength;
 	public float MovedLength {
 		get { return movedLength; }
@@ -40,9 +52,10 @@ public class Player : MonoBehaviour {
 	public void Init(Bezier2D path) {
 
 		this.path = path;
-		speed = GameMaster.Instance.GameBalanceData.PlayerSpeed;
+		Speed = GameMaster.Instance.GameBalanceData.PlayerSpeed;
 
 		MovedLength = 0;
+		transform.localScale = Vector3.one * Scale;
 
 		centerLight.material = new Material(centerLight.material);
 		centerLight.material.EnableKeyword("_EMISSION");
@@ -93,7 +106,7 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	public void Move () {
 
-		MovedLength += speed * Time.deltaTime;
+		MovedLength += Speed * Time.deltaTime;
 	}
 
 	void ApplyMove() {

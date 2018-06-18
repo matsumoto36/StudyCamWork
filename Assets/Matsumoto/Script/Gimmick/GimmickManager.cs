@@ -43,7 +43,7 @@ public class GimmickManager : MonoBehaviour {
 		SetLine();
 
 		foreach(var item in gimmicks) {
-			item.gimmick.SpawnModel();
+			item.gimmick.SpawnModel(player);
 		}
 
 		GameMaster.Instance.OnGameStart += () => startTime = Time.time;
@@ -123,7 +123,7 @@ public class GimmickManager : MonoBehaviour {
 	/// </summary>
 	void SetStartTime() {
 
-		var speed = player.speed;
+		var speed = player.Speed;
 		var sumTime = 0.0f;
 		var prevPoint = 0.0f;
 		for(int i = 0;i < gimmicks.Length;i++) {

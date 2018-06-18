@@ -9,21 +9,14 @@ public class GimmickSpeed : GimmickBase {
 	public float speedMul;
 
 	Color playerCol;
-	GimmickGauge startGauge;
 
 	float duration;
 
-	public override void SpawnModel() {
-		base.SpawnModel();
+	public override void SpawnModel(Player player) {
 
+		markModelName = "MarkChangeSpeed";
 
-		if(!startPointModel) return;
-		if(!startGauge) {
-			startGauge = startPointModel.GetComponent<GimmickGauge>();
-			if(!startGauge) return;
-		}
-
-		startGauge.GaugeColor = gimmickColor;
+		base.SpawnModel(player);
 	}
 
 	public override void OnRemainingTime(Player player, float t) {
@@ -31,9 +24,6 @@ public class GimmickSpeed : GimmickBase {
 
 		if(text)
 			text.text = "At. " + t;
-
-		if(!startGauge) return;
-		startGauge.Value = 1 - Mathf.Min(t, 1);
 	}
 
 	public override void OnAttach(Player player) {
@@ -43,7 +33,7 @@ public class GimmickSpeed : GimmickBase {
 		playerCol = render.material.color;
 		render.material.color = gimmickColor;
 
-		player.speed *= speedMul;
+		player.Speed *= speedMul;
 	}
 
 	public override void OnApplyUpdate(Player player, float t) {
@@ -51,9 +41,6 @@ public class GimmickSpeed : GimmickBase {
 
 		if(text)
 			text.text = "Using. " + t;
-
-		if(!startGauge) return;
-		startGauge.Value = 1 - (t / duration);
 	}
 
 	public override void OnDetach(Player player) {
@@ -62,7 +49,7 @@ public class GimmickSpeed : GimmickBase {
 		var render = player.GetComponentInChildren<Renderer>();
 		render.material.color = playerCol;
 
-		player.speed /= speedMul;
+		player.Speed /= speedMul;
 	}
 
 	public override float GetSectionTime(float speed) {
@@ -87,7 +74,6 @@ public class GimmickSpeed : GimmickBase {
 		lineRenderer.positionCount = point.Length;
 		lineRenderer.SetPositions(point);
 
-		endPointModelSpawnZ = startPointModelSpawnZ = z;
-
+		markModelSpawnZ = z;
 	}
 }
