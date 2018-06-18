@@ -9,6 +9,8 @@ public class TimerController : MonoBehaviour
     public static string Next_Scene;//シーン名
 
     PostEffect effect;
+    
+
 
     void Start()
     {
@@ -46,6 +48,8 @@ public class TimerController : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         yield return StartCoroutine(effect.FadeIn());
+
+        Destroy(this.gameObject);
     }
     public void SceneMove(string SceneName)
     {

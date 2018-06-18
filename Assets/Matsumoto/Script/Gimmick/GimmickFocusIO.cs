@@ -10,20 +10,13 @@ public class GimmickFocusIO : GimmickBase {
 	public bool isToFar = true;
 	public Text text;
 
-	GimmickGauge startGauge;
-
 	float playerSpeed;
 
-	public override void SpawnModel() {
-		base.SpawnModel();
+	public override void SpawnModel(Player player) {
 
-		if(!startPointModel) return;
-		if(!startGauge) {
-			startGauge = startPointModel.GetComponent<GimmickGauge>();
-			if(!startGauge) return;
-		}
+		markModelName = "MarkFocusIO";
 
-		startGauge.GaugeColor = gimmickColor;
+		base.SpawnModel(player);
 	}
 
 	public override void OnRemainingTime(Player player, float t) {
@@ -32,18 +25,16 @@ public class GimmickFocusIO : GimmickBase {
 		if(text)
 			text.text = "At. " + t;
 
-		if(!startGauge) return;
-		startGauge.Value = 1 - Mathf.Min(t, 1);
 	}
 
 	public override void OnAttach(Player player) {
 		base.OnAttach(player);
 
-		playerSpeed = player.speed;
+		playerSpeed = player.Speed;
 
 		var baseLength = path.GetPointLength(startPoint, endPoint);
 		var duration = GameMaster.Instance.GameBalanceData.FocusDuration;
-		player.speed = baseLength / duration;
+		player.Speed = baseLength / duration;
 	}
 
 	public override void OnApplyUpdate(Player player, float t) {
@@ -58,9 +49,6 @@ public class GimmickFocusIO : GimmickBase {
 
 		if(text)
 			text.text = "Using. " + t;
-
-		if(!startGauge) return;
-		startGauge.Value = 1 - (t / duration);
 	}
 
 	public override void OnDetach(Player player) {
@@ -70,7 +58,7 @@ public class GimmickFocusIO : GimmickBase {
 		player.transform.GetChild(0)
 			.localPosition = new Vector3(0, 0, z);
 
-		player.speed = playerSpeed;
+		player.Speed = playerSpeed;
 	}
 
 	public override float GetSectionTime(float speed) {
@@ -82,7 +70,7 @@ public class GimmickFocusIO : GimmickBase {
 		lineRenderer.material.SetColor("_Color", gimmickColor);
 
 		moveZ = manager.moveZ;
-		startPointModelSpawnZ = z;
+		markModelSpawnZ = z;
 
 		var partition = (int)(32 * (endPoint - startPoint));
 		if(partition == 0) partition = 1;
@@ -110,7 +98,5 @@ public class GimmickFocusIO : GimmickBase {
 		else {
 			z = 0;
 		}
-
-		endPointModelSpawnZ = z;
 	}
 }

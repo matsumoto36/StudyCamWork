@@ -380,7 +380,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   linePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
   moveZ: 18
-  lines: []
 --- !u!114 &114848035187893750
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -393,6 +392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 3
+  damage: 50
   focusGrace: 0.1
   focusDuration: 1
   cameraWideSizeRatio: 0.2
