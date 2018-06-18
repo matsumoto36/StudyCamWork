@@ -4,6 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum GameState {
+	BeforeStart,
+	Starting,
+	Playing,
+	Ending,
+	AfterEnd,
+}
+
 public class GameMaster : MonoBehaviour {
 
 	public const string STUDIO_PREFAB_BASE_PATH = "Prefab/Stage/StudioSet/";
@@ -28,7 +36,7 @@ public class GameMaster : MonoBehaviour {
 	public event Action OnGameOver;
 	public event Action OnGameClear;
 
-	bool isGameStart;
+	public GameState State { get; private set; }
 
 	static GameMaster instance;
 	public static GameMaster Instance {
@@ -44,7 +52,16 @@ public class GameMaster : MonoBehaviour {
 	void Awake () {
 		if(Instance != this) Destroy(gameObject);
 		instance = this;
+
+		//サウンドの読み込み
+		AudioManager.Load();
+		//パーティクルの読み込み
+		ParticleManager.Load();
+
 		countDownText.text = "";
+
+		//Debug BGM再生
+		AudioManager.PlayBGM("bgm_maoudamashii_cyber45");
 	}
 
 	void Start() {
@@ -71,7 +88,7 @@ public class GameMaster : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if(!isGameStart) {
+		if(State == GameState.BeforeStart) {
 			if(Input.GetMouseButtonDown(0)) GameStart();
 		}
 
@@ -80,19 +97,29 @@ public class GameMaster : MonoBehaviour {
     
 	public void GameStart() {
 
-		isGameStart = true;
+		State = GameState.Starting;
 		StartCoroutine(CountDown());
 
 	}
 
 	public void GameClear() {
+
+		State = GameState.Ending;
+
 		if(OnGameClear != null) OnGameClear();
 		countDownText.text = "GameClear";
+
+		State = GameState.AfterEnd;
 	}
 
 	public void GameOver() {
+
+		State = GameState.Ending;
+
 		if(OnGameOver != null) OnGameOver();
 		countDownText.text = "GameOver";
+
+		State = GameState.AfterEnd;
 	}
 
 	IEnumerator CountDown() {
@@ -117,5 +144,7 @@ public class GameMaster : MonoBehaviour {
             OnGameStart();
             //Debug.Log("a");
         }
+
+		State = GameState.Playing;
 	}
 }

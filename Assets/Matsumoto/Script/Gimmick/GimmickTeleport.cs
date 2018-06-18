@@ -12,22 +12,16 @@ public class GimmickTeleport : GimmickBase {
 	public Text text;
 	Color playerCol;
 
-	GimmickGauge startGauge;
 	MouseCamera mouseCamera;
 
 	float playerSpeed;
 
-	public override void SpawnModel() {
-		base.SpawnModel();
+	public override void SpawnModel(Player player) {
 
+		markModelName = "MarkTeleport";
 
-		if(!startPointModel) return;
-		if(!startGauge) {
-			startGauge = startPointModel.GetComponent<GimmickGauge>();
-			if(!startGauge) return;
-		}
+		base.SpawnModel(player);
 
-		startGauge.GaugeColor = gimmickColor;
 	}
 
 	public override void OnRemainingTime(Player player, float t) {
@@ -35,9 +29,6 @@ public class GimmickTeleport : GimmickBase {
 
 		if(text)
 			text.text = "At. " + t;
-
-		if(!startGauge) return;
-		startGauge.Value = 1 - Mathf.Min(t, 1);
 	}
 
 	public override void OnAttach(Player player) {
@@ -47,8 +38,8 @@ public class GimmickTeleport : GimmickBase {
 		playerCol = render.material.color;
 		render.material.color = gimmickColor;
 
-		playerSpeed = player.speed;
-		player.speed = 0;
+		playerSpeed = player.Speed;
+		player.Speed = 0;
 
 		var pos = path.GetPoint(endPoint / path.LineCount);
 		effect = Instantiate(effectPre, pos, Quaternion.identity);
@@ -68,7 +59,7 @@ public class GimmickTeleport : GimmickBase {
 		render.material.color = playerCol;
 
 		player.MovedLength += path.GetPointLength(startPoint, endPoint);
-		player.speed = playerSpeed;
+		player.Speed = playerSpeed;
 
 		effect.GetComponent<ParticleSystem>().Stop();
 		Destroy(effect, 1);
@@ -98,7 +89,6 @@ public class GimmickTeleport : GimmickBase {
 		lineRenderer.positionCount = point.Length;
 		lineRenderer.SetPositions(point);
 
-		endPointModelSpawnZ = startPointModelSpawnZ = z;
-
+		markModelSpawnZ = z;
 	}
 }

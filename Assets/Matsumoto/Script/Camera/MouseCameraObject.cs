@@ -18,13 +18,17 @@ public class MouseCameraObject : MonoBehaviour {
 	public RectTransform cameraUI;
 	public RectTransform startMessage;
 	public Image cameraImage;
+	public RawImage cameraRenderImage;
+	public RawImage debugRenderImage;
+	public RenderTexture renderTexture;
 
-
-
-    Camera drawCamera;
+	Camera drawCamera;
 	Transform maskCube;
 	Vector2 startCameraSize = new Vector3(35.5f, 20.0f, 0.1f);
 	Vector3 maskCubeScale;
+
+	List<RenderTexture> recordData;
+	bool isRecording = false;
 
 	CameraColorType cameraColorType;
 	public CameraColorType CameraColorType {
@@ -55,6 +59,8 @@ public class MouseCameraObject : MonoBehaviour {
 
 		GameMaster.Instance.OnGameStartCountDown
 			+= () => StartCoroutine(MaskScaleAnim());
+
+		recordData = new List<RenderTexture>();
 	}
 
 	/// <summary>
@@ -73,7 +79,7 @@ public class MouseCameraObject : MonoBehaviour {
 			cameraSize.y / Screen.height
 		);
 
-		//サイズを決める
+		//カメラのサイズを決める
 		drawCamera.orthographicSize =
 			Camera.main.orthographicSize * drawCamera.rect.height;
 
@@ -114,6 +120,88 @@ public class MouseCameraObject : MonoBehaviour {
 			cameraPosition,
 			drawCamera.rect.size
 		);
+
+		//if(GameMaster.Instance.State == GameState.Playing) RecordFrame();
+	}
+
+	/// <summary>
+	/// 画像で録画する
+	/// </summary>
+	IEnumerator RecordLoop() {
+
+		while(true) {
+
+			yield return new WaitForEndOfFrame();
+
+			if(GameMaster.Instance.State != GameState.Playing) continue;
+
+			var currentRenderTexture = RenderTexture.active;
+			var renderTexture = drawCamera.targetTexture;
+
+			//アクティブを一時的に変更
+			RenderTexture.active = drawCamera.targetTexture;
+			drawCamera.Render();
+
+			//テクスチャを作成
+			var texture = new Texture2D(
+				renderTexture.width,
+				renderTexture.height,
+				TextureFormat.ARGB32,
+				false
+			);
+			//var texture = (Texture)renderTexture;
+
+			//ピクセルを読む 激重
+			texture.ReadPixels(new Rect(0, 0, texture.width, texture.height), 0, 0);
+			texture.Apply();
+
+			//yield return null;
+
+			//アクティブを元に戻す
+			RenderTexture.active = currentRenderTexture;
+
+			//debug
+			debugRenderImage.texture = texture;
+
+			//記録
+			//recordData.Add((Texture2D)texture);
+
+		}
+
+	}
+
+	void RecordFrame() {
+
+		var currentRenderTexture = RenderTexture.active;
+		//var renderTexture = drawCamera.targetTexture;
+
+		//アクティブを一時的に変更
+		RenderTexture.active = drawCamera.targetTexture = new RenderTexture(renderTexture);
+		drawCamera.Render();
+
+		//アクティブを元に戻す
+		RenderTexture.active = currentRenderTexture;
+
+		//登録
+		recordData.Add(drawCamera.targetTexture);
+
+		//再生成
+		drawCamera.targetTexture = null;
+	}
+
+	void Update() {
+		if(Input.GetKeyDown(KeyCode.P)) {
+			StartCoroutine(PlayMovie());
+		}
+	}
+
+	IEnumerator PlayMovie() {
+
+		for(int i = 0;i < recordData.Count;i++) {
+			debugRenderImage.texture = recordData[i];
+			yield return null;
+		}
+
 	}
 
 	/// <summary>

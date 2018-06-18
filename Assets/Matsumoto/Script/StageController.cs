@@ -11,9 +11,6 @@ public class StageController : MonoBehaviour {
 	Player player;
 	GimmickManager gimmickManager;
 
-	bool isGameStart;
-	bool isGameEnd;
-
 	public void InitStage(Player player, Bezier2D path, GimmickManager manager) {
 
 		this.player = player;
@@ -22,24 +19,16 @@ public class StageController : MonoBehaviour {
 		player.Init(path);
 		gimmickManager.Init(path, player);
 		mouseCamera.Init(player);
-
-		GameMaster.Instance.OnGameStart += () => isGameStart = true;
-		GameMaster.Instance.OnGameOver += () => {
-			isGameStart = false;
-			isGameEnd = true;
-		};
-		GameMaster.Instance.OnGameClear += () => {
-			isGameStart = false;
-			isGameEnd = true;
-		};
 	}
 
 	// Update is called once per frame
 	public void StageUpdate () {
 
-		if(isGameEnd) return;
+		var state = GameMaster.Instance.State;
 
-		if(isGameStart) {
+		if(state == GameState.AfterEnd) return;
+
+		if(state == GameState.Playing) {
 			player.Move();
 			gimmickManager.GimmickUpdate();
 		}
