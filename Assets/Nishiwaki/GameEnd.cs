@@ -24,6 +24,10 @@ public class GameEnd : MonoBehaviour
 
     public Canvas canvas;
 
+    public Image oto;
+
+    Text[] text = new Text[6];
+
     //リトライボタン
     public Text Retry;
     public Text ClearRetry;
@@ -32,7 +36,15 @@ public class GameEnd : MonoBehaviour
     public Text ClearStageSelect;
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
+        text[0] = ScoreFont;
+        text[1] = ScoreNumber;
+        text[2] = ComboFont;
+        text[3] = ComboNumber;
+        text[4] = AccuracyFont;
+        text[5] = AccuracyNumber;
+
         GameMaster.Instance.OnGameClear += () =>
         {
             StartCoroutine(GameClearResult());
@@ -81,19 +93,38 @@ public class GameEnd : MonoBehaviour
         {
             time += Time.deltaTime;
             ResultBack.color = Color.Lerp(startColor, endColor, time);
-
             Result.color = Color.Lerp(TextstartColor, TextendColor, time);
-            ScoreFont.color = Color.Lerp(TextstartColor, TextendColor, time);
-            ScoreNumber.color = Color.Lerp(TextstartColor, TextendColor, time);
-            ComboFont.color = Color.Lerp(TextstartColor, TextendColor, time);
-            ComboNumber.color = Color.Lerp(TextstartColor, TextendColor, time);
-            AccuracyFont.color = Color.Lerp(TextstartColor, TextendColor, time);
-            AccuracyNumber.color = Color.Lerp(TextstartColor, TextendColor, time);
-
-            ClearRetry.color = Color.Lerp(TextstartColor, TextendColor, time);
-            ClearStageSelect.color = Color.Lerp(TextstartColor, TextendColor, time);
 
             yield return null;
+        }
+
+        time = 0;
+
+        for (int i = 0; i < 6; i++)
+        {
+            while (time < 1.0f)
+            {
+                //ScoreFont.color = Color.Lerp(TextstartColor, TextendColor, time);
+                //ScoreNumber.color = Color.Lerp(TextstartColor, TextendColor, time);
+                //ComboFont.color = Color.Lerp(TextstartColor, TextendColor, time);
+                //ComboNumber.color = Color.Lerp(TextstartColor, TextendColor, time);
+                //AccuracyFont.color = Color.Lerp(TextstartColor, TextendColor, time);
+                //AccuracyNumber.color = Color.Lerp(TextstartColor, TextendColor, time);
+
+                //ClearRetry.color = Color.Lerp(TextstartColor, TextendColor, time);
+                //ClearStageSelect.color = Color.Lerp(TextstartColor, TextendColor, time);
+
+                time += Time.deltaTime;
+
+                text[i].color = Color.Lerp(TextstartColor, TextendColor, time);
+
+                yield return null;
+            }
+        }
+
+        while(time < 1.0)
+        {
+
         }
         //yield return new WaitForSeconds(1);
     }
@@ -112,6 +143,8 @@ public class GameEnd : MonoBehaviour
         //α値を変更する時間
         float time = 0;
 
+        yield return new WaitForSeconds(2);
+
         while (time < 1.0f)
         {
             time += Time.deltaTime * 3;
@@ -122,5 +155,9 @@ public class GameEnd : MonoBehaviour
 
             yield return null;
         }
+
+        yield return new WaitForSeconds(1);
+
+        oto.color = new Color(1, 1, 1, 1);
     }
 }
