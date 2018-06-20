@@ -791,7 +791,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 130
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 1
     m_MaxSize: 200
     m_Alignment: 2
@@ -2295,20 +2295,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1313617606}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80994d5045769b94c8da7e4b9b685651, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e57902d1cdc369409c77fdf65d83c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraObject: {fileID: 0}
-  hpBar: {fileID: 0}
-  isCapture: 0
-  isPlayerFocus: 0
-  scoreText: {fileID: 0}
-  ResultScoreText: {fileID: 0}
-  accText: {fileID: 0}
-  ResultaccText: {fileID: 0}
-  comboText: {fileID: 0}
-  ResultcomboText: {fileID: 0}
-  ComboData: 0
+  ResultScoreText: {fileID: 885843088}
+  ResultaccText: {fileID: 362432082}
+  ResultcomboText: {fileID: 925052604}
+  ResultScore: 0
+  ResultAccuracy: 0
+  ResultCombo: 0
 --- !u!1 &1359062200
 GameObject:
   m_ObjectHideFlags: 0
@@ -2959,12 +2954,10 @@ MonoBehaviour:
   isCapture: 1
   isPlayerFocus: 0
   scoreText: {fileID: 757579960}
-  ResultScoreText: {fileID: 885843088}
   accText: {fileID: 1700453302}
-  ResultaccText: {fileID: 362432082}
   comboText: {fileID: 291474033}
-  ResultcomboText: {fileID: 925052604}
   ComboData: 0
+  AccuaryTex: 0
 --- !u!114 &1786565431
 MonoBehaviour:
   m_ObjectHideFlags: 0
