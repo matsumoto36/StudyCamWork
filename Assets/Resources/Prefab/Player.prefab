@@ -2069,14 +2069,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18c5ef9a1db3d8f4a8bb11a90244786f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  path: {fileID: 0}
-  speed: 6
   centerLight: {fileID: 23433322405348594}
   ring1: {fileID: 23151536806522686}
   ring2: {fileID: 23134741967198736}
   CaptureLightColor: {r: 0.6176471, g: 2.8028395, b: 3, a: 0}
   FailLightColor: {r: 3, g: 0.30882347, b: 0.30882347, a: 0}
-  state: 0
+  speed: 6
+  scale: 1
 --- !u!114 &114176600794141852
 MonoBehaviour:
   m_ObjectHideFlags: 1
