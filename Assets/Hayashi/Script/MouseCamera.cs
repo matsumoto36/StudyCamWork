@@ -131,20 +131,22 @@ public class MouseCamera : MonoBehaviour
                 gauge = Mathf.Min(gauge + Time.deltaTime / gaugeAmount, 1);
             }
 
-			//プレイヤーにステータスを伝える
 			var status = IsPlayerCapture();
-			targetPlayer.SetLight(status);
 
 			if (isCapture = (status == PlayerCaptureStatus.All))
             {
-                IsPSmallCapture();
+				status = IsPSmallCapture() ? PlayerCaptureStatus.All : PlayerCaptureStatus.Near;
             }
             else
             {
                 cameraObject.CameraColorType = CameraColorType.Fail;
             }
+			
+			//プレイヤーにステータスを伝える
+			targetPlayer.SetLight(status);
 
-            SmallCap();
+
+			SmallCap();
             ComboChain();
 
             hpBar.value = life;
@@ -170,7 +172,7 @@ public class MouseCamera : MonoBehaviour
         var playerZRate = targetPlayer.transform.GetChild(0).localPosition.z / gimmickManager.moveZ;
         var focusRate = dofSlide.Value;
         var focusGrace = GameMaster.Instance.GameBalanceData.FocusGrace;
-        var isFocus = Mathf.Abs(playerZRate - focusRate) <= focusGrace ? 1 : 0;
+        var isFocus = Mathf.Abs(playerZRate - focusRate) <= focusGrace;
 
         //枠に入っているか調べる
         var sizeOffset = new Vector2(0, 0);
@@ -179,9 +181,15 @@ public class MouseCamera : MonoBehaviour
             wideCameraSize + sizeOffset);
 
         var checkPoint = Camera.main.WorldToScreenPoint(targetPlayer.transform.position);  //スクリーン座標に置き換える
-		var isInside = rect.Contains(checkPoint) ? 2 : 0;
+		var isInside = rect.Contains(checkPoint);
 
-		return (PlayerCaptureStatus)(isFocus | isInside);
+		if(isFocus && isInside)
+			return PlayerCaptureStatus.All;
+		if(isFocus && !isInside)
+			return PlayerCaptureStatus.FocusOnly;
+		if(!isFocus && isInside)
+			return PlayerCaptureStatus.ContainOnly;
+		return PlayerCaptureStatus.None;
 
     }
     bool IsPSmallCapture()
