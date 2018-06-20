@@ -8,9 +8,6 @@ public class MouseCamera : MonoBehaviour
 
     public MouseCameraObject cameraObject;
 
-    public Text scoreText;
-    public Text accText;
-    public Text comboText;
     public Slider hpBar;
 
     public bool isCapture = false;
@@ -18,17 +15,19 @@ public class MouseCamera : MonoBehaviour
 
     int life = 100;				//体力
     int lifeDamage;			//ダメージの数値
-    public int Combo;				//コンボ
-
-    public int Score;               //最終的に入るスコア
-    int scoreWithoutCombo;          //現時点でコンボ抜きにしたスコア
-    int scoreMax;                   //現時点でのスコアの最大値
+    public static int Combo;				//コンボ
+    public static int act;
+    public static int Score;               //最終的に入るスコア
+    static int scoreWithoutCombo;          //現時点でコンボ抜きにしたスコア
+    static int scoreMax;                   //現時点でのスコアの最大値
 
 	Player targetPlayer;
 	GameBalanceData gameBalance;    //ゲームのバランスを決めるクラス
     Vector2 wideCameraSize;
     Vector2 smallCameraSize;
-
+    public Text scoreText;
+    public Text accText;
+    public Text comboText;
 
     int plus; //プラスのスコアをスコアに入れるためのもの
 
@@ -38,7 +37,7 @@ public class MouseCamera : MonoBehaviour
     int comboTimeCount;
     int lifeTimeCount;
     public int ComboData;
-
+    public int AccuaryTex;
     float gaugeAmount = 1;
     float gauge = 1;
 
@@ -59,7 +58,7 @@ public class MouseCamera : MonoBehaviour
         }
     }
 
-    public float Accuracy
+    public static float Accuracy
     {
         get { return (float)scoreWithoutCombo / scoreMax; }
     }
@@ -67,7 +66,7 @@ public class MouseCamera : MonoBehaviour
     // Use this for initialization
     public void Init(Player player)
     {
-
+        
         targetPlayer = player;
         gameBalance = GameMaster.Instance.GameBalanceData;
 
@@ -131,11 +130,11 @@ public class MouseCamera : MonoBehaviour
                 gauge = Mathf.Min(gauge + Time.deltaTime / gaugeAmount, 1);
             }
 
-			//プレイヤーにステータスを伝える
-			var status = IsPlayerCapture();
-			targetPlayer.SetLight(status);
+            //プレイヤーにステータスを伝える
+            var status = IsPlayerCapture();
+            targetPlayer.SetLight(status);
 
-			if (isCapture = (status == PlayerCaptureStatus.All))
+            if (isCapture = (status == PlayerCaptureStatus.All))
             {
                 IsPSmallCapture();
             }
@@ -143,19 +142,17 @@ public class MouseCamera : MonoBehaviour
             {
                 cameraObject.CameraColorType = CameraColorType.Fail;
             }
-
+            
             SmallCap();
             ComboChain();
-
             hpBar.value = life;
             scoreText.text = Score.ToString("000000");
-            if (Accuracy == 1.0f) accText.text = "100%";
+            if (Accuracy == 1.0f) accText.text = ("100%");
             else accText.text = Accuracy.ToString("P");
             comboText.text = "x" + Combo.ToString("");
         }
-
-
     }
+
 
 	/// <summary>
 	/// プレイヤーがいい感じにキャプチャーされているか判定する
@@ -196,7 +193,7 @@ public class MouseCamera : MonoBehaviour
 
         var checkPoint = Camera.main.WorldToScreenPoint(targetPlayer.transform.position);
         return rect.Contains(checkPoint);
-
+        
 
     }
     void ComboChain()
