@@ -10,8 +10,8 @@ public class MouseCamera : MonoBehaviour
 
     public Slider hpBar;
 
-    public bool isCapture = false;
-    public bool isPlayerFocus;
+    //public bool isCapture = false;
+    //public bool isPlayerFocus;
 
     int life = 100;				//体力
     int lifeDamage;			//ダメージの数値
@@ -46,6 +46,10 @@ public class MouseCamera : MonoBehaviour
 
     bool isTeleport;
     bool DamagOn = false;
+
+	public PlayerCaptureStatus CaptureStatus {
+		get; private set;
+	}
 
     public bool IsTeleport
     {        //テレポート中かどうか
@@ -130,20 +134,15 @@ public class MouseCamera : MonoBehaviour
                 gauge = Mathf.Min(gauge + Time.deltaTime / gaugeAmount, 1);
             }
 
-            //プレイヤーにステータスを伝える
-            var status = IsPlayerCapture();
-            targetPlayer.SetLight(status);
+			CaptureStatus = IsPlayerCapture();
+			//プレイヤーにステータスを伝える
+            targetPlayer.SetLight(CaptureStatus);
 
-            if (isCapture = (status == PlayerCaptureStatus.All))
-            {
-                IsPSmallCapture();
-            }
-            else
+            if (CaptureStatus != PlayerCaptureStatus.All)
             {
                 cameraObject.CameraColorType = CameraColorType.Fail;
             }
             
-            SmallCap();
             ComboChain();
             hpBar.value = life;
             scoreText.text = Score.ToString("000000");
@@ -167,19 +166,30 @@ public class MouseCamera : MonoBehaviour
         var playerZRate = targetPlayer.transform.GetChild(0).localPosition.z / gimmickManager.moveZ;
         var focusRate = dofSlide.Value;
         var focusGrace = GameMaster.Instance.GameBalanceData.FocusGrace;
-        var isFocus = Mathf.Abs(playerZRate - focusRate) <= focusGrace ? 1 : 0;
+		var isFocus = Mathf.Abs(playerZRate - focusRate) <= focusGrace;
 
         //枠に入っているか調べる
         var sizeOffset = new Vector2(0, 0);
+		var checkPoint = Camera.main.WorldToScreenPoint(targetPlayer.transform.position);  //スクリーン座標に置き換える
         var rect = new Rect(
-            (Vector2)Input.mousePosition - (wideCameraSize / 2),
+			(Vector2)Input.mousePosition - (wideCameraSize / 2),
             wideCameraSize + sizeOffset);
 
-        var checkPoint = Camera.main.WorldToScreenPoint(targetPlayer.transform.position);  //スクリーン座標に置き換える
-		var isInside = rect.Contains(checkPoint) ? 2 : 0;
+		var isInside = rect.Contains(checkPoint);
 
-		return (PlayerCaptureStatus)(isFocus | isInside);
+		if(!isFocus && !isInside) return PlayerCaptureStatus.None;
+		if(!isFocus && isInside) return PlayerCaptureStatus.ContainOnly;
+		if(isFocus && !isInside) return PlayerCaptureStatus.FocusOnly;
 
+		rect = new Rect(
+			(Vector2)Input.mousePosition - (smallCameraSize / 2),
+			smallCameraSize + sizeOffset);
+
+		var isInsideSmall = rect.Contains(checkPoint);
+
+		if(isFocus && !isInsideSmall) return PlayerCaptureStatus.Near;
+
+		return PlayerCaptureStatus.All;
     }
     bool IsPSmallCapture()
     {
@@ -201,9 +211,17 @@ public class MouseCamera : MonoBehaviour
         if (playTime > comboTimeCount)
         {
             comboTimeCount++;
-            if (isCapture)
+            if (CaptureStatus == PlayerCaptureStatus.Near ||
+				CaptureStatus == PlayerCaptureStatus.All)
             {
-                var point = plus + gameBalance.BaseScore;
+				if(CaptureStatus == PlayerCaptureStatus.All) {
+					plus = gameBalance.CameraInsideScore;
+				}
+				else {
+					plus = 0;
+				}
+
+				var point = plus + gameBalance.BaseScore;
                 if (Combo >= 1)
                 {
                     Score += (int)(point * Combo * 1.05);
@@ -215,7 +233,7 @@ public class MouseCamera : MonoBehaviour
 
                 scoreWithoutCombo += point;
                 scoreMax += gameBalance.BaseScore + gameBalance.CameraInsideScore;
-                if (isTeleport)
+                if (!isTeleport)
                 {
                     Combo++;
                 }
@@ -247,17 +265,6 @@ public class MouseCamera : MonoBehaviour
                     }
                 }
             }
-        }
-    }
-    void SmallCap()
-    {
-        if (IsPSmallCapture())
-        {
-            plus = gameBalance.CameraInsideScore;
-        }
-        else
-        {
-            plus = 0;
         }
     }
 }
