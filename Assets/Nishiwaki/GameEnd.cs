@@ -98,10 +98,10 @@ public class GameEnd : MonoBehaviour
             yield return null;
         }
 
-        time = 0;
-
         for (int i = 0; i < 6; i++)
         {
+            time = 0;
+
             while (time < 1.0f)
             {
                 //ScoreFont.color = Color.Lerp(TextstartColor, TextendColor, time);
@@ -122,9 +122,16 @@ public class GameEnd : MonoBehaviour
             }
         }
 
+        time = 0;
+
         while(time < 1.0)
         {
+            time += Time.deltaTime;
 
+            ClearRetry.color = Color.Lerp(TextstartColor, TextendColor, time);
+            ClearStageSelect.color = Color.Lerp(TextstartColor, TextendColor, time);
+
+            yield return null;
         }
         //yield return new WaitForSeconds(1);
     }
