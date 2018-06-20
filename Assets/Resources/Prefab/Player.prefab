@@ -2073,9 +2073,8 @@ MonoBehaviour:
   ring1: {fileID: 23151536806522686}
   ring2: {fileID: 23134741967198736}
   CaptureLightColor: {r: 0.6176471, g: 2.8028395, b: 3, a: 0}
-  NearLightColor: {r: 3, g: 1.8924948, b: 0.7058823, a: 0}
   FailLightColor: {r: 3, g: 0.30882347, b: 0.30882347, a: 0}
-  speed: 3
+  speed: 6
   scale: 1
 --- !u!114 &114176600794141852
 MonoBehaviour:
