@@ -1765,7 +1765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a38ba1d36bc0cc1438ae0137698fde0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadStudioName: TestStudio
+  loadStudioName: SFStage
   loadPathName: TestStage
   countDownText: {fileID: 580047939}
   stageController: {fileID: 1154809497}
@@ -2318,15 +2318,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraObject: {fileID: 1915949004}
+  hpBar: {fileID: 1125556219}
   scoreText: {fileID: 622516443}
   accText: {fileID: 1371344092}
   comboText: {fileID: 981081409}
-  hpBar: {fileID: 1125556219}
-  isCapture: 1
-  isPlayerFocus: 0
-  Combo: 0
-  Score: 0
   ComboData: 0
+  AccuaryTex: 0
 --- !u!1 &2054457265
 GameObject:
   m_ObjectHideFlags: 0

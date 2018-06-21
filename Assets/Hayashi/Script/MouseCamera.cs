@@ -241,17 +241,12 @@ public class MouseCamera : MonoBehaviour
             }
             else
             {
-
-                DamagOn = true;
-                if (DamagOn)
+                if (!IsTeleport)
                 {
                     life -= lifeDamage;
                 }
-                if (IsTeleport)
-                {
-                    DamagOn = false;
-                }
-                Debug.Log("damage");
+
+				Debug.Log("damage");
                 if (!IsTeleport)
                 {
                     if (ComboData <= Combo)
