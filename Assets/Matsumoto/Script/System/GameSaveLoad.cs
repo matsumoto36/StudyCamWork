@@ -206,7 +206,7 @@ public static class GameSaveLoad {
 
 		FileInfo info = new FileInfo(path + "/" + name);
 
-		if(!File.Exists(fileName)) return data;
+		if(!File.Exists(path + "/" + name)) return data;
 
 		using(StreamReader sr = new StreamReader(info.OpenRead(), Encoding.UTF8)) {
 

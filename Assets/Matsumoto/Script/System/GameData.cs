@@ -40,6 +40,7 @@ public static class GameData {
 		}
 
 		GameSaveLoad.SaveGameFile(SAVE_DATA_KEY, 0, saveData);
+		Load(pathNames);
 	}
 }
 
