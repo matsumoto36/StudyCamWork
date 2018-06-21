@@ -10,8 +10,19 @@
 		// No culling or depth
 		Cull Off ZWrite Off ZTest Always
 
+		Tags
+		{
+			"Queue" = "Transparent"
+			"IgnoreProjector" = "True"
+			"RenderType" = "Transparent"
+			"PreviewType" = "Plane"
+			"CanUseSpriteAtlas" = "True"
+		}
+
 		Pass
 		{
+			Blend SrcAlpha OneMinusSrcAlpha
+
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
@@ -47,7 +58,8 @@
 				i.uv -= fixed2(0.5, 0.5);
 				i.uv.x *= 16.0 / 9.0;
 				if (distance(i.uv, fixed2(0, 0)) < _Radius) {
-					return col;
+					//return col;
+					return fixed4(0.0, 0.0, 0.0, 0.0);
 				}
 				// just invert the colors
 				

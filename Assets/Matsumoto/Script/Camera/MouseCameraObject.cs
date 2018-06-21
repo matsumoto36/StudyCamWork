@@ -231,6 +231,8 @@ public class MouseCameraObject : MonoBehaviour {
 
 		maskCube.localPosition = endPosition;
 		maskCube.localScale = maskCubeScale;
+
+		Camera.main.cullingMask ^= LayerMask.GetMask("Line");
 	}
 
 }

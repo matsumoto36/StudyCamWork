@@ -30,7 +30,7 @@ public class StageWindow : MonoBehaviour {
 	void MoveStage() {
 		GameMaster.LoadPathName = loadPathName;
 		GameMaster.LoadStudioName = loadStudioName;
-		FindObjectOfType<TimerController>().SceneMove("DefaultStage");
+		FindObjectOfType<TimerController>().SceneMove("GameScene");
 	}
 
 	public void Show(StageMoveButton button) {

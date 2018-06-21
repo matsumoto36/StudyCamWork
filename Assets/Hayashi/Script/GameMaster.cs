@@ -106,6 +106,16 @@ public class GameMaster : MonoBehaviour {
 
 		State = GameState.Ending;
 
+		//データのセーブ
+		var data = GameData.stageData[loadPathName];
+		if(data.score < MouseCamera.Score) {
+			data.score = MouseCamera.Score;
+			data.accuracy = MouseCamera.Accuracy;
+			data.maxCombo = MouseCamera.Combo;
+			GameData.stageData[loadPathName] = data;
+			GameData.Save();
+		}
+
 		if(OnGameClear != null) OnGameClear();
 		countDownText.text = "GameClear";
 
