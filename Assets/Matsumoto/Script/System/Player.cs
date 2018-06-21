@@ -5,8 +5,9 @@ using UnityEngine.SceneManagement;
 
 public enum PlayerCaptureStatus {
 	None,
-	Focus,
-	Contain,
+	FocusOnly,
+	ContainOnly,
+	Near,
 	All,
 
 }
@@ -19,6 +20,8 @@ public class Player : MonoBehaviour {
 
 	[ColorUsage(false, true, 0, 10, 0, 10)]
 	public Color CaptureLightColor;
+	[ColorUsage(false, true, 0, 10, 0, 10)]
+	public Color NearLightColor;
 	[ColorUsage(false, true, 0, 10, 0, 10)]
 	public Color FailLightColor;
 
@@ -76,21 +79,35 @@ public class Player : MonoBehaviour {
 		if(this.status == status) return;
 		this.status = status;
 
-		if(status == PlayerCaptureStatus.All) 
-			centerLight.material.SetColor("_EmissionColor", CaptureLightColor);
-		else
-			centerLight.material.SetColor("_EmissionColor", FailLightColor);
-
-		var bit = (int)status;
-		if((bit & (int)PlayerCaptureStatus.Contain) != 0) 
-			ring2.material.SetColor("_EmissionColor", CaptureLightColor);
-		else 
-			ring2.material.SetColor("_EmissionColor", FailLightColor);
-
-		if((bit & (int)PlayerCaptureStatus.Focus) != 0)
-			ring1.material.SetColor("_EmissionColor", CaptureLightColor);
-		else
-			ring1.material.SetColor("_EmissionColor", FailLightColor);
+		switch(status) {
+			case PlayerCaptureStatus.None:
+				centerLight.material.SetColor("_EmissionColor", FailLightColor);
+				ring2.material.SetColor("_EmissionColor", FailLightColor);
+				ring1.material.SetColor("_EmissionColor", FailLightColor);
+				break;
+			case PlayerCaptureStatus.FocusOnly:
+				centerLight.material.SetColor("_EmissionColor", FailLightColor);
+				ring2.material.SetColor("_EmissionColor", FailLightColor);
+				ring1.material.SetColor("_EmissionColor", CaptureLightColor);
+				break;
+			case PlayerCaptureStatus.ContainOnly:
+				centerLight.material.SetColor("_EmissionColor", FailLightColor);
+				ring2.material.SetColor("_EmissionColor", CaptureLightColor);
+				ring1.material.SetColor("_EmissionColor", FailLightColor);
+				break;
+			case PlayerCaptureStatus.Near:
+				centerLight.material.SetColor("_EmissionColor", NearLightColor);
+				ring2.material.SetColor("_EmissionColor", CaptureLightColor);
+				ring1.material.SetColor("_EmissionColor", CaptureLightColor);
+				break;
+			case PlayerCaptureStatus.All:
+				centerLight.material.SetColor("_EmissionColor", CaptureLightColor);
+				ring2.material.SetColor("_EmissionColor", CaptureLightColor);
+				ring1.material.SetColor("_EmissionColor", CaptureLightColor);
+				break;
+			default:
+				break;
+		}
 	}
 
 	void Update() {

@@ -83,6 +83,7 @@ public class GimmickBase : MonoBehaviour {
 	/// </summary>
 	public virtual void OnAttach(Player player) {
 		ringObj.transform.localScale = new Vector3();
+		markModel.SetActive(false);
 	}
 
 	/// <summary>
