@@ -1,32 +1,37 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PostEffect : MonoBehaviour
 {
     //マテリアル
-    public Material wipeCircle;
+    //public Material wipeCircle;
     //操作キーの表示
     [SerializeField, Range(0, 2)]
     public float gm; //マテリアルのRange値を取得
     public float fadeSpeed; //フェードの速さ
 
+	Image effectImage;
+
     void Start()
     {
-        StartCoroutine(FadeIn());
+		effectImage = GetComponentInChildren<Image>();
+
+		StartCoroutine(FadeIn());
         
     }
-    void OnRenderImage(RenderTexture src, RenderTexture dest)
-    {
-        //シェーダーの値を取得
-        wipeCircle.SetFloat("_Radius", gm);
-        //マテリアル
-        Graphics.Blit(src, dest, wipeCircle);
-    }
-    //開始時にフェードイン
-    void Awake()
-    {
-       GetComponent<PostEffect>().FadeIn();
-    }
+    //void OnRenderImage(RenderTexture src, RenderTexture dest)
+    //{
+    //    //シェーダーの値を取得
+    //    wipeCircle.SetFloat("_Radius", gm);
+    //    //マテリアル
+    //    Graphics.Blit(src, dest, wipeCircle);
+    //}
+
+	void LateUpdate() {
+		effectImage.material.SetFloat("_Radius", gm);
+	}
+
     public IEnumerator FadeIn()
     {
         var t = 0.0f;

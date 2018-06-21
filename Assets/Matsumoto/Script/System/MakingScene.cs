@@ -22,7 +22,7 @@ public class MakingScene : MonoBehaviour {
 		GameMaster.LoadStudioName = loadStudioSet;
 		GameMaster.LoadPathName = FindObjectOfType<GimmickManager>().name;
 
-		SceneManager.LoadScene("DefaultStage");
+		SceneManager.LoadScene("GameScene");
 		Destroy(gameObject);
 	}
 	

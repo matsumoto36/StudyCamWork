@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SelectWindowActive : MonoBehaviour {
 
 	public RectTransform[] stageWindows;
+	public Button[] stageSelectButtons;
 
 	public Color activeColor;
 	public Color inActiveColor;
@@ -17,11 +18,11 @@ public class SelectWindowActive : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		buttonImages = new Image[stageWindows.Length];
+		buttonImages = new Image[stageSelectButtons.Length];
 
 		for(int i = 0;i < stageWindows.Length;i++) {
 
-			var button = stageWindows[i].GetComponentInChildren<Button>();
+			var button = stageSelectButtons[i];
 			var capture_i = i;
 
 			button.onClick.AddListener(() => {

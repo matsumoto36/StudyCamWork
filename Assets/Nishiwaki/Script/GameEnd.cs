@@ -22,7 +22,7 @@ public class GameEnd : MonoBehaviour
     //正確さ　右
     public Text AccuracyNumber;
 
-    public Canvas canvas;
+    public GameObject canvas;
 
     public Image oto;
 
@@ -87,7 +87,7 @@ public class GameEnd : MonoBehaviour
 
         yield return new WaitForSeconds(2);
 
-        canvas.enabled = false;
+        canvas.SetActive(false);
 
         while (time < 1.0f)
         {
@@ -167,4 +167,17 @@ public class GameEnd : MonoBehaviour
 
         oto.color = new Color(1, 1, 1, 1);
     }
+
+	public void OnRetryClick() {
+		FindObjectOfType<TimerController>()
+			.SceneMove("GameScene");
+	}
+
+	public void OnStageSelectClick() {
+
+		StageSelectController.movieSkip = true;
+
+		FindObjectOfType<TimerController>()
+			.SceneMove("TitleScene");
+	}
 }
