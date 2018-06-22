@@ -28,7 +28,7 @@ public class StageSelectController : MonoBehaviour {
 		if(movieSkip) {
 			var cam = Camera.main;
 			monitorEffect.color = new Color(0, 0, 0, 0);
-			cam.transform.position = new Vector3(100, 0, 0);
+			cam.transform.position = new Vector3(0, 0, 20);
 			cam.transform.rotation = Quaternion.identity;
 			cam.orthographic = true;
 			state = StageSelectState.ListView;

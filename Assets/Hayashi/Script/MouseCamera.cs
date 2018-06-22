@@ -232,7 +232,6 @@ public class MouseCamera : MonoBehaviour
                 }
 
                 scoreWithoutCombo += point;
-                scoreMax += gameBalance.BaseScore + gameBalance.CameraInsideScore;
                 if (!isTeleport)
                 {
                     Combo++;
@@ -260,6 +259,8 @@ public class MouseCamera : MonoBehaviour
                     }
                 }
             }
-        }
-    }
+
+			scoreMax += gameBalance.BaseScore + gameBalance.CameraInsideScore;
+		}
+	}
 }
