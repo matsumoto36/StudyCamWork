@@ -2555,7 +2555,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &1525887919
 Light:
   m_ObjectHideFlags: 0
@@ -2633,7 +2633,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadStudioName: SFStage
-  loadPathName: TestStage
+  loadPathName: TestStage4
   countDownText: {fileID: 580047939}
   stageController: {fileID: 1154809497}
   mouseCamera: {fileID: 1962024629}

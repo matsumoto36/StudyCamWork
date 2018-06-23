@@ -2376,8 +2376,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadPathName: TestStage
-  loadStudioName: TestStudio
-  title: Testooooo1
+  loadStudioName: SFStage
+  title: Test
   nextStage: {fileID: 0}
   stageImage: {fileID: 14639113}
   frameImage: {fileID: 1871918674}

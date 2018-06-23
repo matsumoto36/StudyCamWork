@@ -28,6 +28,8 @@ public class Player : MonoBehaviour {
 	PlayerCaptureStatus status = PlayerCaptureStatus.None;
 
 	Bezier2D path;
+	float startTime;
+	float sumSpeed;
 
 	[SerializeField]
 	float speed;
@@ -72,6 +74,8 @@ public class Player : MonoBehaviour {
 		p.transform.localPosition = new Vector3();
 
 		SetLight(PlayerCaptureStatus.All);
+
+		GameMaster.Instance.OnGameStart += () => startTime = Time.time;
 	}
 
 	public void SetLight(PlayerCaptureStatus status) {

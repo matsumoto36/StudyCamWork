@@ -37,7 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4294749867254980}
   m_Layer: 0
-  m_Name: MarkTeleport
+  m_Name: MarkFocusIN
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,7 +84,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 15677c4b883ac45439b4c2b2726fa484, type: 2}
+  - {fileID: 2100000, guid: 46577496105528b47a5386ff00053ab7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

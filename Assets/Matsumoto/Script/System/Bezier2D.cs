@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Bezier2D : MonoBehaviour {
 
+	const int PARTIRION = 64;
+
 	//ベジエ曲線を構成する頂点群
 	[SerializeField] List<Vector2> points = new List<Vector2>();
 	public List<Vector2> Points {
@@ -75,7 +77,7 @@ public class Bezier2D : MonoBehaviour {
 	/// </summary>
 	/// <param name="partition">分割(精度)</param>
 	/// <returns></returns>
-	public float GetLength(int partition = 32) {
+	public float GetLength(int partition = PARTIRION) {
 
 		var length = 0.0f;
 		var tempLength = 0.0f;
@@ -107,7 +109,7 @@ public class Bezier2D : MonoBehaviour {
 	/// <param name="endPoint"></param>
 	/// <param name="partition"></param>
 	/// <returns></returns>
-	public float GetPointLength(float startPoint, float endPoint, int partition = 32) {
+	public float GetPointLength(float startPoint, float endPoint, int partition = PARTIRION) {
 
 		var diff = endPoint - startPoint;
 		var part = (int)(partition * diff);
@@ -132,7 +134,7 @@ public class Bezier2D : MonoBehaviour {
 	/// <param name="endPoint"></param>
 	/// <param name="partition"></param>
 	/// <returns></returns>
-	public float GetPointNormalizeLength(float startPoint, float endPoint, int partition = 32) {
+	public float GetPointNormalizeLength(float startPoint, float endPoint, int partition = PARTIRION) {
 
 		var diff = endPoint - startPoint;
 		var part = (int)(partition * diff);
@@ -215,7 +217,7 @@ public class Bezier2D : MonoBehaviour {
 	/// <param name="t"></param>
 	/// <param name="partition"></param>
 	/// <returns></returns>
-	public static Vector2 GetPointNormalize(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3, float t, int partition = 32) {
+	public static Vector2 GetPointNormalize(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3, float t, int partition = PARTIRION) {
 
 		if(t <= 0.0f) return p0;
 		if(t >= 1.0f) return p3;

@@ -14,7 +14,12 @@ public class GimmickSpeed : GimmickBase {
 
 	public override void SpawnModel(Player player) {
 
-		markModelName = "MarkChangeSpeed";
+		if(speedMul >= 1) {
+			markModelName = "MarkSpeedUp";
+		}
+		else {
+			markModelName = "MarkSpeedDown";
+		}
 
 		base.SpawnModel(player);
 	}
