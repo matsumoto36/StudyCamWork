@@ -16,6 +16,8 @@ public class GimmickTeleport : GimmickBase {
 
 	float playerSpeed;
 
+	PKFxFX fromEffect;
+
 	public override void SpawnModel(Player player) {
 
 		markModelName = "MarkTeleport";
@@ -29,6 +31,10 @@ public class GimmickTeleport : GimmickBase {
 
 		if(text)
 			text.text = "At. " + t;
+
+		if(t + waitTime < 0.5f && !fromEffect) {
+			fromEffect = ParticleManager.Spawn("GimmickTeleportFromEffect", markModel.transform.position, Quaternion.identity, 2);
+		}
 	}
 
 	public override void OnAttach(Player player) {
@@ -46,10 +52,22 @@ public class GimmickTeleport : GimmickBase {
 
 		mouseCamera = FindObjectOfType<MouseCamera>();
 		mouseCamera.IsTeleport = true;
+
+		var p = ParticleManager.Spawn(
+			"GimmickTeleportToEffect", 
+			path.GetPoint(endPoint / path.LineCount),
+			Quaternion.identity,
+			waitTime + 2);
+
+		p.GetAttribute("WaitTime").ValueFloat = waitTime;
 	}
 
 	public override void OnApplyUpdate(Player player, float t) {
 		base.OnApplyUpdate(player, t);
+
+		if(t > waitTime - 0.5f && !fromEffect) {
+			fromEffect = ParticleManager.Spawn("GimmickTeleportFromEffect", markModel.transform.position, Quaternion.identity, 2);
+		}
 	}
 
 	public override void OnDetach(Player player) {

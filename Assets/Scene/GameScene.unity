@@ -2633,7 +2633,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadStudioName: SFStage
-  loadPathName: TestStage4
+  loadPathName: TestStage
   countDownText: {fileID: 580047939}
   stageController: {fileID: 1154809497}
   mouseCamera: {fileID: 1962024629}
