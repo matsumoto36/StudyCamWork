@@ -63,6 +63,8 @@ public class StageSelectController : MonoBehaviour {
 
 	void BackButton() {
 
+		AudioManager.PlaySE("Button3");
+
 		switch(state) {
 			case StageSelectState.ListView:
 				//ゲームを終了するかきく

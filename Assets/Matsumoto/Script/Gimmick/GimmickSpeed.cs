@@ -43,11 +43,17 @@ public class GimmickSpeed : GimmickBase {
 
 		player.Speed *= speedMul;
 
+		//加速のとき
 		if(speedMul > 1) {
 			particle = ParticleManager.Spawn("GimmickSpeedUpEffect", new Vector3(), Quaternion.identity, 0);
 			particle.transform.SetParent(player.transform.GetChild(0));
 			particle.transform.localPosition = new Vector3();
 			prevPlayerPos = player.transform.position;
+
+			AudioManager.PlaySE("SpeedUP");
+		}
+		else {
+
 		}
 	}
 

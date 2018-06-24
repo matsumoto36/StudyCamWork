@@ -125,8 +125,6 @@ public class Player : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.R))
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
-		if(Input.GetKeyDown(KeyCode.P))
-			AudioManager.PlaySE("decision1");
 	}
 
 	// Update is called once per frame

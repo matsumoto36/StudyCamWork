@@ -26,6 +26,7 @@ public class SelectWindowActive : MonoBehaviour {
 			var capture_i = i;
 
 			button.onClick.AddListener(() => {
+				AudioManager.PlaySE("Button3");
 				SetActiveWindow(capture_i);
 			});
 

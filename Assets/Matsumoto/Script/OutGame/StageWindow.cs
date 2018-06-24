@@ -28,6 +28,7 @@ public class StageWindow : MonoBehaviour {
 	}
 
 	void MoveStage() {
+		AudioManager.PlaySE("Button3");
 		GameMaster.LoadPathName = loadPathName;
 		GameMaster.LoadStudioName = loadStudioName;
 		FindObjectOfType<TimerController>().SceneMove("GameScene");
