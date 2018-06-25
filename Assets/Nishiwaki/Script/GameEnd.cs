@@ -169,11 +169,16 @@ public class GameEnd : MonoBehaviour
     }
 
 	public void OnRetryClick() {
+
+		AudioManager.PlaySE("Button3");
+
 		FindObjectOfType<TimerController>()
 			.SceneMove("GameScene");
 	}
 
 	public void OnStageSelectClick() {
+
+		AudioManager.PlaySE("Button3");
 
 		StageSelectController.movieSkip = true;
 

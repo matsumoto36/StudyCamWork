@@ -11,6 +11,8 @@ public class DOFSlide : MonoBehaviour {
 
 	DepthOfField dof;
 
+	bool buttonPrev = false;
+
 	public float[] distanceList = new float[] {
 		0.433f,
 		0.455f,
@@ -66,5 +68,11 @@ public class DOFSlide : MonoBehaviour {
 			distance += (distanceList[(int)position + 1] - distanceList[(int)position]) * (position - (int)position);
 
 		dof.focusDistance.value = distance;
+
+		if(IsFocus != buttonPrev) {
+			AudioManager.PlaySE("Focus2");
+		}
+
+		buttonPrev = IsFocus;
 	}
 }

@@ -14,7 +14,12 @@ public class GimmickFocusIO : GimmickBase {
 
 	public override void SpawnModel(Player player) {
 
-		markModelName = "MarkFocusIO";
+		if(isToFar) {
+			markModelName = "MarkFocusIN";
+		}
+		else {
+			markModelName = "MarkFocusOUT";
+		}
 
 		base.SpawnModel(player);
 	}

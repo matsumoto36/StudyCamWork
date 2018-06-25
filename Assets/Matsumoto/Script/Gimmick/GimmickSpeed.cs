@@ -10,11 +10,19 @@ public class GimmickSpeed : GimmickBase {
 
 	Color playerCol;
 
+	PKFxFX particle;
+	Vector3 prevPlayerPos;
+
 	float duration;
 
 	public override void SpawnModel(Player player) {
 
-		markModelName = "MarkChangeSpeed";
+		if(speedMul >= 1) {
+			markModelName = "MarkSpeedUp";
+		}
+		else {
+			markModelName = "MarkSpeedDown";
+		}
 
 		base.SpawnModel(player);
 	}
@@ -34,6 +42,19 @@ public class GimmickSpeed : GimmickBase {
 		render.material.color = gimmickColor;
 
 		player.Speed *= speedMul;
+
+		//加速のとき
+		if(speedMul > 1) {
+			particle = ParticleManager.Spawn("GimmickSpeedUpEffect", new Vector3(), Quaternion.identity, 0);
+			particle.transform.SetParent(player.transform.GetChild(0));
+			particle.transform.localPosition = new Vector3();
+			prevPlayerPos = player.transform.position;
+
+			AudioManager.PlaySE("SpeedUP");
+		}
+		else {
+
+		}
 	}
 
 	public override void OnApplyUpdate(Player player, float t) {
@@ -41,6 +62,20 @@ public class GimmickSpeed : GimmickBase {
 
 		if(text)
 			text.text = "Using. " + t;
+
+		if(particle) {
+
+			var pos = player.transform.position;
+			var vec = (pos - prevPlayerPos).normalized;
+
+			particle.GetAttribute("AccelDirection").ValueFloat3
+				= -vec;
+
+			particle.transform.localPosition = vec / 2;
+
+			prevPlayerPos = pos;
+
+		}
 	}
 
 	public override void OnDetach(Player player) {
@@ -50,6 +85,8 @@ public class GimmickSpeed : GimmickBase {
 		render.material.color = playerCol;
 
 		player.Speed /= speedMul;
+
+		if(particle) ParticleManager.StopParticle(particle);
 	}
 
 	public override float GetSectionTime(float speed) {

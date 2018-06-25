@@ -19,6 +19,8 @@ public static class GameData {
 		GameData.pathNames = pathNames;
 		foreach(var item in pathNames) {
 
+			if(stageData.ContainsKey(item)) continue;
+
 			var data = new StageData();
 			data.score = saveData.GetIntData(item + "_Score", 0);
 			data.accuracy = saveData.GetFloatData(item + "_Accuracy", 0.0f);

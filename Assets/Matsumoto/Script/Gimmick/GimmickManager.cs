@@ -17,6 +17,8 @@ public class GimmickManager : MonoBehaviour {
 	GimmickInfo[] gimmicks;
 	List<LineInfo> lines;
 
+	LineInfo currentLine;
+
 	float startTime;
 
 	public Bezier2D Path { get; private set; }
@@ -87,6 +89,10 @@ public class GimmickManager : MonoBehaviour {
 
 		//線の可視状態を設定
 		SetLineVisible();
+	}
+
+	public void PlayerMove() {
+
 	}
 
 	/// <summary>
@@ -192,11 +198,13 @@ public class GimmickManager : MonoBehaviour {
 			gimmickLine.material = new Material(gimmickLine.material);
 			gimmick.EditGimmickLine(gimmickLine, ref z);
 
-			lines.Add(new LineInfo(
+			var line = new LineInfo(
 				gimmickLine,
 				Path.GetPointLength(0, gimmick.startPoint),
 				Path.GetPointLength(0, gimmick.endPoint)
-			));
+			);
+			line.gimmickInfo = gimmicks[i];
+			lines.Add(line);
 
 			prevPoint = gimmick.endPoint;
 		}
@@ -221,6 +229,8 @@ public class LineInfo {
 	public float pathStartLength;
 	public float pathEndLength;
 
+	public GimmickInfo gimmickInfo;
+
 	public LineInfo(LineRenderer renderer, float pathStartLength, float pathEndLength) {
 		this.renderer = renderer;
 		this.pathStartLength = pathStartLength;
@@ -231,7 +241,7 @@ public class LineInfo {
 /// <summary>
 /// ギミックの情報をまとめておくクラス
 /// </summary>
-class GimmickInfo {
+public class GimmickInfo {
 
 	public GimmickBase gimmick;
 	public bool isActive;

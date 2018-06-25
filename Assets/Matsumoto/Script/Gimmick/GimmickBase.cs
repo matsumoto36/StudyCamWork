@@ -53,7 +53,12 @@ public class GimmickBase : MonoBehaviour {
 		//タイミングとるためのリングの生成
 		ringObj = Instantiate(Resources.Load<GameObject>("Prefab/Ring"), spawnPos, Quaternion.identity);
 		ringObj.transform.localScale = new Vector3();
-		ringObj.GetComponent<Renderer>().material.SetColor("_Color", gimmickColor);
+
+		var rRender = ringObj.GetComponent<Renderer>();
+		rRender.material = new Material(rRender.material);
+		rRender.material.EnableKeyword("_EMISSION");
+		rRender.material.SetColor("_EmissionColor", gimmickColor);
+
 	}
 
 	/// <summary>
@@ -84,6 +89,9 @@ public class GimmickBase : MonoBehaviour {
 	public virtual void OnAttach(Player player) {
 		ringObj.transform.localScale = new Vector3();
 		markModel.SetActive(false);
+
+		var p = ParticleManager.Spawn("GimmickApplyEffect", markModel.transform.position, Quaternion.identity, 2);
+		p.GetAttribute("MainColor").ValueFloat4 = gimmickColor;
 	}
 
 	/// <summary>

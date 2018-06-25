@@ -18,7 +18,7 @@ public sealed class ParticleManager : SingletonMonoBehaviour<ParticleManager> {
 		get {
 			if(!Instance._renderer)
 				Instance._renderer = Camera.main.GetComponent<PKFxRenderingPlugin>();
-			
+
 			return Instance._renderer.enabled;
 		}
 		set {

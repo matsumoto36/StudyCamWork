@@ -18,16 +18,18 @@ public class Player : MonoBehaviour {
 	public Renderer ring1;
 	public Renderer ring2;
 
-	[ColorUsage(false, true, 0, 10, 0, 10)]
 	public Color CaptureLightColor;
-	[ColorUsage(false, true, 0, 10, 0, 10)]
 	public Color NearLightColor;
-	[ColorUsage(false, true, 0, 10, 0, 10)]
 	public Color FailLightColor;
+
+	public float intencity;
 
 	PlayerCaptureStatus status = PlayerCaptureStatus.None;
 
 	Bezier2D path;
+	PKFxFX particle;
+	float startTime;
+	float sumSpeed;
 
 	[SerializeField]
 	float speed;
@@ -67,11 +69,13 @@ public class Player : MonoBehaviour {
 		ring2.material = new Material(ring2.material);
 		ring2.material.EnableKeyword("_EMISSION");
 
-		var p = ParticleManager.Spawn("TestParticle", new Vector3(), Quaternion.identity, 0);
-		p.transform.SetParent(transform);
-		p.transform.localPosition = new Vector3();
+		//パーティクルのスポーン
+		particle = ParticleManager.Spawn("ActorMoveEffect", transform.position, Quaternion.identity, 0);
+		particle.transform.SetParent(transform);
 
 		SetLight(PlayerCaptureStatus.All);
+
+		GameMaster.Instance.OnGameStart += () => startTime = Time.time;
 	}
 
 	public void SetLight(PlayerCaptureStatus status) {
@@ -81,29 +85,34 @@ public class Player : MonoBehaviour {
 
 		switch(status) {
 			case PlayerCaptureStatus.None:
+				particle.GetAttribute("MainColor").ValueFloat4 = FailLightColor;
 				centerLight.material.SetColor("_EmissionColor", FailLightColor);
 				ring2.material.SetColor("_EmissionColor", FailLightColor);
 				ring1.material.SetColor("_EmissionColor", FailLightColor);
 				break;
 			case PlayerCaptureStatus.FocusOnly:
-				centerLight.material.SetColor("_EmissionColor", FailLightColor);
-				ring2.material.SetColor("_EmissionColor", FailLightColor);
-				ring1.material.SetColor("_EmissionColor", CaptureLightColor);
+				particle.GetAttribute("MainColor").ValueFloat4 = FailLightColor;
+				centerLight.material.SetColor("_EmissionColor", FailLightColor * intencity);
+				ring2.material.SetColor("_EmissionColor", FailLightColor * intencity);
+				ring1.material.SetColor("_EmissionColor", CaptureLightColor * intencity);
 				break;
 			case PlayerCaptureStatus.ContainOnly:
-				centerLight.material.SetColor("_EmissionColor", FailLightColor);
-				ring2.material.SetColor("_EmissionColor", CaptureLightColor);
-				ring1.material.SetColor("_EmissionColor", FailLightColor);
+				particle.GetAttribute("MainColor").ValueFloat4 = FailLightColor;
+				centerLight.material.SetColor("_EmissionColor", FailLightColor * intencity);
+				ring2.material.SetColor("_EmissionColor", CaptureLightColor * intencity);
+				ring1.material.SetColor("_EmissionColor", FailLightColor * intencity);
 				break;
 			case PlayerCaptureStatus.Near:
-				centerLight.material.SetColor("_EmissionColor", NearLightColor);
-				ring2.material.SetColor("_EmissionColor", CaptureLightColor);
-				ring1.material.SetColor("_EmissionColor", CaptureLightColor);
+				particle.GetAttribute("MainColor").ValueFloat4 = NearLightColor;
+				centerLight.material.SetColor("_EmissionColor", NearLightColor * intencity);
+				ring2.material.SetColor("_EmissionColor", CaptureLightColor * intencity);
+				ring1.material.SetColor("_EmissionColor", CaptureLightColor * intencity);
 				break;
 			case PlayerCaptureStatus.All:
-				centerLight.material.SetColor("_EmissionColor", CaptureLightColor);
-				ring2.material.SetColor("_EmissionColor", CaptureLightColor);
-				ring1.material.SetColor("_EmissionColor", CaptureLightColor);
+				particle.GetAttribute("MainColor").ValueFloat4 = CaptureLightColor;
+				centerLight.material.SetColor("_EmissionColor", CaptureLightColor * intencity);
+				ring2.material.SetColor("_EmissionColor", CaptureLightColor * intencity);
+				ring1.material.SetColor("_EmissionColor", CaptureLightColor * intencity);
 				break;
 			default:
 				break;
@@ -116,8 +125,6 @@ public class Player : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.R))
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
-		if(Input.GetKeyDown(KeyCode.P))
-			AudioManager.PlaySE("decision1");
 	}
 
 	// Update is called once per frame
