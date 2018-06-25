@@ -36,9 +36,9 @@ public static class GameData {
 		foreach(var item in pathNames) {
 
 			var data = stageData[item];
-			saveData.AddData(item + "_Score", data.score);
-			saveData.AddData(item + "_Accuracy", data.accuracy);
-			saveData.AddData(item + "_MaxCombo", data.maxCombo);
+			saveData.SetData(item + "_Score", data.score);
+			saveData.SetData(item + "_Accuracy", data.accuracy);
+			saveData.SetData(item + "_MaxCombo", data.maxCombo);
 		}
 
 		GameSaveLoad.SaveGameFile(SAVE_DATA_KEY, 0, saveData);

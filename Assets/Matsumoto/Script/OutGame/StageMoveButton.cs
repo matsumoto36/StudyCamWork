@@ -31,11 +31,11 @@ public class StageMoveButton : MonoBehaviour {
 		}
 		//とりあえずクリア
 		else if(data.accuracy < 1.0f) {
-			frameImage.color = new Color(0.7f, 0.7f, 0.7f, 1);
+			frameImage.sprite = Resources.Load<Sprite>("Texture/ClearFrame");
 		}
 		//パーフェクト
 		else {
-			frameImage.color = new Color(1.0f, 1.0f, 0.0f, 1);
+			frameImage.sprite = Resources.Load<Sprite>("Texture/ClearParfectFrame");
 		}
 	}
 	

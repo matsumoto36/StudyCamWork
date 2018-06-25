@@ -39,19 +39,35 @@ public static class GameSaveLoad {
 		Dictionary<string, string> dataS = new Dictionary<string, string>();
 
 		//SetData-Start--------------------------------------
-		public int AddData(string key, int data) {
-			dataI.Add(key, data);
-			return ++count[0];
+		public int SetData(string key, int data) {
+			if(dataI.ContainsKey(key)) {
+				dataI[key] = data;
+			}
+			else {
+				dataI.Add(key, data);
+				count[0]++;
+			}
+			return count[0];
 		}
-		public int AddData(string key, float data) {
-
-			dataF.Add(key, data);
-			return ++count[1];
+		public int SetData(string key, float data) {
+			if(dataF.ContainsKey(key)) {
+				dataF[key] = data;
+			}
+			else {
+				dataF.Add(key, data);
+				count[1]++;
+			}
+			return count[1];
 		}
-		public int AddData(string key, string data) {
-
-			dataS.Add(key, data);
-			return ++count[2];
+		public int SetData(string key, string data) {
+			if(dataS.ContainsKey(key)) {
+				dataS[key] = data;
+			}
+			else {
+				dataS.Add(key, data);
+				count[2]++;
+			}
+			return count[2];
 		}
 
 		public void AddDataAll(Dictionary<string, int> dI, Dictionary<string, float> dF, Dictionary<string, string> dS) {
@@ -221,7 +237,7 @@ public static class GameSaveLoad {
 			for(c[target] = 0;c[target] < spBaff.Length - 1;c[target]++) {
 
 				string[] dataInt = spBaff[c[target]].Split('|');
-				data.AddData(dataInt[0], int.Parse(dataInt[1]));
+				data.SetData(dataInt[0], int.Parse(dataInt[1]));
 			}
 			target++;
 
@@ -232,7 +248,7 @@ public static class GameSaveLoad {
 			for(c[target] = 0;c[target] < spBaff.Length - 1;c[target]++) {
 
 					string[] dataFloat = spBaff[c[target]].Split('|');
-					data.AddData(dataFloat[0], float.Parse(dataFloat[1]));
+					data.SetData(dataFloat[0], float.Parse(dataFloat[1]));
 			}
 			target++;
 
@@ -243,7 +259,7 @@ public static class GameSaveLoad {
 			for(c[target] = 0;c[target] < spBaff.Length - 1;c[target]++) {
 
 				string[] dataString = spBaff[c[target]].Split('|');
-				data.AddData(dataString[0], dataString[1]);
+				data.SetData(dataString[0], dataString[1]);
 			}
 			data.SetCount(c);
 		}
