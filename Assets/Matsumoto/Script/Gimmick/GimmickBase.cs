@@ -123,14 +123,18 @@ public class GimmickBase : MonoBehaviour {
 
 		var dt = (endPoint - startPoint) * (1.0f / partition);
 		var point = new Vector3[partition + 1];
+		var keyframe = new Keyframe[partition + 1];
 
 		for(int i = 0;i <= partition;i++) {
 			point[i] = path.GetPoint((startPoint + dt * i) / path.LineCount);
 			point[i].z = z;
+
+			keyframe[i] = new Keyframe(i / (float)partition, Mathf.Lerp(GimmickManager.LINE_WIDTH_MIN, GimmickManager.LINE_WIDTH_MAX, 1 - z / GimmickManager.MOVE_Z));
 		}
 
 		lineRenderer.positionCount = point.Length;
 		lineRenderer.SetPositions(point);
+		lineRenderer.widthCurve = new AnimationCurve(keyframe);
 
 		markModelSpawnZ = z;
 	}

@@ -15,7 +15,6 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 
 	const int MAX_PLAYING_SE_COUNT = 10;					//同時再生できるSEの数
 
-
 	AudioMixerGroup[] mixerGroups = new AudioMixerGroup[2]; //ミキサーのグループ [0]SE [1]BGM
 
 	ObjectPooler poolSE;
@@ -23,13 +22,20 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	Dictionary<string, AudioClipInfo> SEclips;				//SE再生用リスト
 	Dictionary<string, AudioClip> BGMclips;					//BGM再生用リスト
 
-	AudioSource nowPlayingBGM;								//現在再生されているBGM
-	string latestPlayBGM = "";								//再生されているBGMの種類
+	AudioSource nowPlayingBGM;                              //現在再生されているBGM
+	string latestPlayBGM;									//再生されているBGMの種類
 
 	Coroutine fadeInCol;									//BGMフェードインのコルーチン
 	AudioSource fadeInAudio;                                //BGMフェードイン用のAudioSource
 
 	public AudioMixer Mixer { get; private set; }           //ミキサー
+
+	public static string CurrentBGMName {
+		get {
+			if(!Instance.nowPlayingBGM) return "";
+			return Instance.latestPlayBGM;
+		}
+	}
 
 	protected override void Init() {
 		base.Init();
@@ -226,6 +232,8 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 		fadeInAudio.volume = 0;
 		fadeInAudio.outputAudioMixerGroup = mixerGroups[1];
 		fadeInAudio.Play();
+
+		latestPlayBGM = BGMName;
 
 		//フェードイン
 		var t = 0.0f;

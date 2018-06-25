@@ -96,21 +96,6 @@ public class GimmickSpeed : GimmickBase {
 	public override void EditGimmickLine(LineRenderer lineRenderer, ref float z) {
 
 		lineRenderer.material.SetColor("_Color", gimmickColor);
-
-		var partition = (int)(32 * (endPoint - startPoint));
-		if(partition == 0) partition = 1;
-
-		var dt = (endPoint - startPoint) * (1.0f / partition);
-		var point = new Vector3[partition + 1];
-
-		for(int i = 0;i <= partition;i++) {
-			point[i] = path.GetPoint((startPoint + dt * i) / path.LineCount);
-			point[i].z = z;
-		}
-
-		lineRenderer.positionCount = point.Length;
-		lineRenderer.SetPositions(point);
-
-		markModelSpawnZ = z;
+		base.EditGimmickLine(lineRenderer, ref z);
 	}
 }

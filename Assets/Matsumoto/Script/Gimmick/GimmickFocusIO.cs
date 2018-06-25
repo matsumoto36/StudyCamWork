@@ -74,7 +74,7 @@ public class GimmickFocusIO : GimmickBase {
 
 		lineRenderer.material.SetColor("_Color", gimmickColor);
 
-		moveZ = manager.moveZ;
+		moveZ = GimmickManager.MOVE_Z;
 		markModelSpawnZ = z;
 
 		var partition = (int)(32 * (endPoint - startPoint));
@@ -83,6 +83,7 @@ public class GimmickFocusIO : GimmickBase {
 		var diff = endPoint - startPoint;
 		var dt =  partition == 0 ? 0 : 1.0f / partition;
 		var point = new Vector3[partition + 1];
+		var keyframe = new Keyframe[partition + 1];
 
 		for(int i = 0;i <= partition;i++) {
 
@@ -92,10 +93,13 @@ public class GimmickFocusIO : GimmickBase {
 			if(!isToFar) {
 				point[i].z = moveZ - point[i].z;
 			}
+
+			keyframe[i] = new Keyframe(i / (float)partition, Mathf.Lerp(GimmickManager.LINE_WIDTH_MIN, GimmickManager.LINE_WIDTH_MAX, 1 - point[i].z / GimmickManager.MOVE_Z));
 		}
 
 		lineRenderer.positionCount = point.Length;
 		lineRenderer.SetPositions(point);
+		lineRenderer.widthCurve = new AnimationCurve(keyframe);
 
 		if(isToFar) {
 			z = moveZ;
