@@ -81,6 +81,8 @@ public class MouseCamera : MonoBehaviour
         wideCameraSize = new Vector2(Screen.width, Screen.height) * gameBalance.CameraWideSizeRatio;
         smallCameraSize = wideCameraSize * gameBalance.CameraSmallSizeRatio;
 
+        
+
         //カメラ用のオブジェクトの設定
         cameraObject.Init();
         cameraObject.SetCameraSize(wideCameraSize);
