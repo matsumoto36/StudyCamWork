@@ -18,10 +18,10 @@ public class MouseCameraObject : MonoBehaviour {
 	public RectTransform cameraUI;
 	public RectTransform startMessage;
 	public Image cameraImage;
+    public Image SmalCameraImage;
 	public RawImage cameraRenderImage;
 	public RawImage debugRenderImage;
 	public RenderTexture renderTexture;
-
 	Camera drawCamera;
 	Transform maskCube;
 	Vector2 startCameraSize = new Vector3(35.5f, 20.0f, 0.1f);
@@ -59,7 +59,7 @@ public class MouseCameraObject : MonoBehaviour {
 
 		GameMaster.Instance.OnGameStartCountDown
 			+= () => StartCoroutine(MaskScaleAnim());
-
+        
 		recordData = new List<RenderTexture>();
 	}
 
@@ -78,7 +78,8 @@ public class MouseCameraObject : MonoBehaviour {
 			cameraSize.x / Screen.width,
 			cameraSize.y / Screen.height
 		);
-
+        float CameraSize = GameMaster.Instance.GameBalanceData.CameraSmallSizeRatio;
+        SmalCameraImage.rectTransform.sizeDelta = cameraSize * CameraSize*2;
 		//カメラのサイズを決める
 		drawCamera.orthographicSize =
 			Camera.main.orthographicSize * drawCamera.rect.height;
