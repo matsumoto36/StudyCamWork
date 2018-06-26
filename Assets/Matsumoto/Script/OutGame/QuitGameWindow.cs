@@ -10,7 +10,7 @@ public class QuitGameWindow : MonoBehaviour {
 
 	void Start() {
 		quitButton.onClick.AddListener(() => {
-			AudioManager.PlaySE("Button3");
+			AudioManager.PlaySE("click03");
 			Application.Quit();
 			});
 

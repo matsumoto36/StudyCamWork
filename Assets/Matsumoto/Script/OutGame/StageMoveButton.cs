@@ -45,7 +45,7 @@ public class StageMoveButton : MonoBehaviour {
 	}
 
 	void OnClick() {
-		AudioManager.PlaySE("Button3");
+		AudioManager.PlaySE("click03");
 		owner.ShowStageWindow(this);
 	}
 }

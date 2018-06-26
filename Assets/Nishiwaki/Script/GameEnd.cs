@@ -170,7 +170,7 @@ public class GameEnd : MonoBehaviour
 
 	public void OnRetryClick() {
 
-		AudioManager.PlaySE("Button3");
+		AudioManager.PlaySE("click03");
 
 		FindObjectOfType<TimerController>()
 			.SceneMove("GameScene");
@@ -178,7 +178,7 @@ public class GameEnd : MonoBehaviour
 
 	public void OnStageSelectClick() {
 
-		AudioManager.PlaySE("Button3");
+		AudioManager.PlaySE("click03");
 
 		StageSelectController.movieSkip = true;
 

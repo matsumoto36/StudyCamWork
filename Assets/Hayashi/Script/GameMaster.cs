@@ -143,12 +143,16 @@ public class GameMaster : MonoBehaviour {
 			OnGameStartCountDown();
 
 		yield return new WaitForSeconds(1);
+		AudioManager.PlaySE("decision1");
 		countDownText.text = "3";
 		yield return new WaitForSeconds(1);
+		AudioManager.PlaySE("decision1");
 		countDownText.text = "2";
 		yield return new WaitForSeconds(1);
+		AudioManager.PlaySE("decision1");
 		countDownText.text = "1";
 		yield return new WaitForSeconds(1);
+		AudioManager.PlaySE("decision1");
 		countDownText.text = "Queue";
 		yield return new WaitForSeconds(1);
 
