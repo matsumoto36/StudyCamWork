@@ -74,7 +74,7 @@ public class StageSelectController : MonoBehaviour {
 		}
 
 		if(movieSkip) {
-			AudioManager.FadeIn(1.0f, "StageBGM2");
+			AudioManager.FadeIn(1.0f, "bgm_maoudamashii_cyber29");
 		}
 		else {
 			AudioManager.FadeIn(1.0f, "town1");
@@ -93,7 +93,7 @@ public class StageSelectController : MonoBehaviour {
 		if(setPlaySelectStageBGM && !changeSsetPlaySelectStageBGM) {
 			changeSsetPlaySelectStageBGM = true;
 			Debug.Log("FadeStageSelectBGM");
-			AudioManager.FadeIn(3.0f, "StageBGM2");
+			AudioManager.FadeIn(3.0f, "bgm_maoudamashii_cyber29");
 		}
 
 
@@ -109,21 +109,23 @@ public class StageSelectController : MonoBehaviour {
 
 	void BackButton() {
 
-		AudioManager.PlaySE("click03");
 
 		switch(state) {
 			case StageSelectState.ListView:
 				//ゲームを終了するかきく
+				AudioManager.PlaySE("cancel5");
 				quitWindow.IsActive(true);
 				state = StageSelectState.QuitGameView;
 				break;
 			case StageSelectState.StageContentView:
 				//一覧に戻る
+				AudioManager.PlaySE("click03");
 				stageContentView.Hide();
 				state = StageSelectState.ListView;
 				break;
 			case StageSelectState.QuitGameView:
 				//ゲームを終了するのをやめる
+				AudioManager.PlaySE("click03");
 				quitWindow.IsActive(false);
 				state = StageSelectState.ListView;
 				break;
