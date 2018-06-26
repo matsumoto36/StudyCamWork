@@ -32,7 +32,6 @@ public class Player : MonoBehaviour {
 
 	Bezier2D path;
 	PKFxFX particle;
-	float startTime;
 	float sumSpeed;
 
 	public Transform Body {
@@ -81,8 +80,6 @@ public class Player : MonoBehaviour {
 		particle.transform.SetParent(transform);
 
 		SetLight(PlayerCaptureStatus.All);
-
-		GameMaster.Instance.OnGameStart += () => startTime = Time.time;
 
 		StartCoroutine(MoveAudioUpdate());
 	}

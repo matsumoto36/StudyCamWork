@@ -30,7 +30,6 @@ public class MouseCameraObject : MonoBehaviour {
 	Vector3 maskCubeScale;
 
 	List<RenderTexture> recordData;
-	bool isRecording = false;
 
 	CameraColorType cameraColorType;
 	public CameraColorType CameraColorType {

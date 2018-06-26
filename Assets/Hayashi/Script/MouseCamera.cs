@@ -26,32 +26,37 @@ public class MouseCamera : MonoBehaviour
 	GameBalanceData gameBalance;    //ゲームのバランスを決めるクラス
     Vector2 wideCameraSize;
     Vector2 smallCameraSize;
-    public Text scoreText;
-    public Text accText;
-    public Text comboText;
 
-    int plus; //プラスのスコアをスコアに入れるためのもの
+    public Text scoreText;
+	int scoreUpRate;
+	int scoreTextView;
+
+	public Text accText;
+	float accDownRate;
+	float accTextView = 1;
+
+    public Text comboText;
+	int comboTextView;
+
+	int plus; //プラスのスコアをスコアに入れるためのもの
 
     bool isGameStart;　　　　//ゲームスタート
 
     float playTime;
     int comboTimeCount;
-    int lifeTimeCount;
     public int ComboData;
     public int AccuaryTex;
     float gaugeAmount = 1;
     float gauge = 1;
 
-    GimmickManager gimmickManager;
     DOFSlide dofSlide;
 
-    bool isTeleport;
-    bool DamagOn = false;
 
 	public PlayerCaptureStatus CaptureStatus {
 		get; private set;
 	}
 
+    bool isTeleport;
     public bool IsTeleport
     {        //テレポート中かどうか
         get { return isTeleport; }
@@ -114,7 +119,6 @@ public class MouseCamera : MonoBehaviour
         Combo = 0;
 
         dofSlide = FindObjectOfType<DOFSlide>();
-        gimmickManager = FindObjectOfType<GimmickManager>();
     }
 
     // Update is called once per frame
@@ -166,19 +170,29 @@ public class MouseCamera : MonoBehaviour
             hpBar.value = life;
 			inCamhpBar.value = life;
 
-			scoreText.text = Score.ToString("000000");
-            if (Accuracy == 1.0f) accText.text = ("100%");
-            else accText.text = Accuracy.ToString("P");
+			scoreTextView = Mathf.Min(scoreTextView + scoreUpRate, Score);
+			scoreText.text = scoreTextView.ToString("000000");
+
+			accTextView = Mathf.MoveTowards(accTextView, Accuracy, accDownRate);
+			if(accTextView == 1.0f) accText.text = ("100%");
+            else accText.text = accTextView.ToString("P");
+
             comboText.text = "x" + Combo.ToString("");
         }
     }
 
+	void CalcScoreUpRate() {
+		scoreUpRate = (int)((Score - scoreTextView) * Time.deltaTime);
+	}
+	void CalcAccDownRate() {
+		accDownRate = Mathf.Abs((Accuracy - accTextView) * Time.deltaTime);
+	}
 
 	/// <summary>
 	/// プレイヤーがいい感じにキャプチャーされているか判定する
 	/// </summary>
 	/// <returns></returns>
-    PlayerCaptureStatus IsPlayerCapture()
+	PlayerCaptureStatus IsPlayerCapture()
     {                   //主なあたり判定
 
         if (!targetPlayer) return PlayerCaptureStatus.None;
@@ -231,31 +245,33 @@ public class MouseCamera : MonoBehaviour
     {
         if (playTime > comboTimeCount)
         {
-            comboTimeCount++;
-            if (CaptureStatus == PlayerCaptureStatus.Near ||
+			scoreMax += gameBalance.BaseScore + gameBalance.CameraInsideScore;
+			comboTimeCount++;
+
+			if (CaptureStatus == PlayerCaptureStatus.Near ||
 				CaptureStatus == PlayerCaptureStatus.All)
             {
-				if(CaptureStatus == PlayerCaptureStatus.All) {
-					plus = gameBalance.CameraInsideScore;
-				}
-				else {
-					plus = 0;
-				}
-
-				var point = plus + gameBalance.BaseScore;
-                if (Combo >= 1)
-                {
-                    Score += (int)(point * Combo * 1.05);
-                }
-                else if (Combo >= 0)
-                {
-                    Score += point;
-                }
-
-                scoreWithoutCombo += point;
                 if (!isTeleport)
                 {
-                    Combo++;
+					if(CaptureStatus == PlayerCaptureStatus.All) {
+						plus = gameBalance.CameraInsideScore;
+					}
+					else {
+						plus = 0;
+					}
+
+					var point = plus + gameBalance.BaseScore;
+					if(Combo >= 1) {
+						Score += (int)(point * Combo * 1.05);
+					}
+					else if(Combo >= 0) {
+						Score += point;
+					}
+					CalcScoreUpRate();
+					scoreWithoutCombo += point;
+
+					Combo++;
+					//FlashComboText();
                 }
                
             }
@@ -263,9 +279,13 @@ public class MouseCamera : MonoBehaviour
             {
                 if (!IsTeleport)
                 {
-                    life -= lifeDamage;
+					CalcAccDownRate();
+
 					//ダメージ演出
 					StartCoroutine(cameraObject.DamageFlash());
+
+					life -= lifeDamage;
+					if(life <= 0.0f) GameMaster.Instance.GameOver();
 				}
 
 				Debug.Log("damage");
@@ -276,14 +296,19 @@ public class MouseCamera : MonoBehaviour
                         ComboData =Combo;
                     }
                     Combo = 0;
-                    if (lifeTimeCount < playTime)
-                    {
-                        if (life <= 0.0f) GameMaster.Instance.GameOver();
-                    }
                 }
             }
 
-			scoreMax += gameBalance.BaseScore + gameBalance.CameraInsideScore;
 		}
+	}
+
+	IEnumerator FlashComboText() {
+
+		var cText = Instantiate(comboText);
+		cText.transform.SetParent(comboText.transform.parent);
+
+		//Todo
+
+		yield return null;
 	}
 }

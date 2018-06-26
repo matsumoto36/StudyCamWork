@@ -293,6 +293,7 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 		//フェードイン中にフェードアウトが呼ばれた場合
 		if (!src) {
 			//フェードイン処理停止
+			if(fadeInCol == null) yield break;
 			Instance.StopCoroutine(fadeInCol);
 			src = fadeInAudio;
 
