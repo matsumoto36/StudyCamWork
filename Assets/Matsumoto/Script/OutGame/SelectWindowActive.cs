@@ -26,7 +26,7 @@ public class SelectWindowActive : MonoBehaviour {
 			var capture_i = i;
 
 			button.onClick.AddListener(() => {
-				AudioManager.PlaySE("Button3");
+				AudioManager.PlaySE("click03");
 				SetActiveWindow(capture_i);
 			});
 
@@ -55,10 +55,5 @@ public class SelectWindowActive : MonoBehaviour {
 			buttonImages[i].color = col;
 
 		}
-	}
-
-	// Update is called once per frame
-	void Update () {
-		
 	}
 }
