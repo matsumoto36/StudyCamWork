@@ -34,6 +34,7 @@ public class GimmickTeleport : GimmickBase {
 
 		if(t + waitTime < 0.5f && !fromEffect) {
 			fromEffect = ParticleManager.Spawn("GimmickTeleportFromEffect", markModel.transform.position, Quaternion.identity, 2);
+			fromEffect.GetAttribute("Radius").ValueFloat = player.Body.localScale.x / 2;
 		}
 	}
 
@@ -60,6 +61,7 @@ public class GimmickTeleport : GimmickBase {
 			waitTime + 2);
 
 		p.GetAttribute("WaitTime").ValueFloat = waitTime;
+		p.GetAttribute("Radius").ValueFloat = player.Body.localScale.x / 2;
 	}
 
 	public override void OnApplyUpdate(Player player, float t) {
@@ -67,6 +69,7 @@ public class GimmickTeleport : GimmickBase {
 
 		if(t > waitTime - 0.5f && !fromEffect) {
 			fromEffect = ParticleManager.Spawn("GimmickTeleportFromEffect", markModel.transform.position, Quaternion.identity, 2);
+			fromEffect.GetAttribute("Radius").ValueFloat = player.Body.localScale.x / 2;
 		}
 	}
 

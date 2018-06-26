@@ -46,7 +46,7 @@ public class GimmickBase : MonoBehaviour {
 			var model = Resources.Load<GameObject>(MARK_MODEL_BASE_PATH + markModelName);
 			if(model) {
 				markModel = Instantiate(model, spawnPos, Quaternion.identity);
-				markModel.transform.localScale = Vector3.one * player.Scale;
+				markModel.transform.localScale = Vector3.one * player.GetScaleFromRatio(1 - markModelSpawnZ / GimmickManager.MOVE_Z);
 			}
 		}
 
@@ -68,7 +68,8 @@ public class GimmickBase : MonoBehaviour {
 	public virtual void OnRemainingTime(Player player, float t) {
 
 		if(t < 1.0f) {
-			var scale = Mathf.Lerp(player.Scale, player.Scale * 4f, t);
+			var playerScale = player.GetScaleFromRatio(1 - markModelSpawnZ / GimmickManager.MOVE_Z);
+			var scale = playerScale + playerScale * 3 * t;
 			ringObj.transform.localScale = new Vector3(scale, scale, 1);
 		}
 		else {

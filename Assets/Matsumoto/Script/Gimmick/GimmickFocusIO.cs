@@ -49,8 +49,8 @@ public class GimmickFocusIO : GimmickBase {
 		var duration = GameMaster.Instance.GameBalanceData.FocusDuration;
 		var ratio = t / duration;
 		if(!isToFar) ratio = 1 - ratio;
-		var body = player.transform.GetChild(0);
-		body.localPosition = new Vector3(0, 0, ratio * moveZ);
+		player.Body.localPosition = new Vector3(0, 0, ratio * moveZ);
+		player.SetScaleFromRatio(1 - ratio);
 
 		if(text)
 			text.text = "Using. " + t;
@@ -60,8 +60,8 @@ public class GimmickFocusIO : GimmickBase {
 		base.OnDetach(player);
 
 		var z = isToFar ? moveZ : 0;
-		player.transform.GetChild(0)
-			.localPosition = new Vector3(0, 0, z);
+		player.Body.localPosition = new Vector3(0, 0, z);
+		player.SetScaleFromRatio(isToFar ? 0 : 1);
 
 		player.Speed = playerSpeed;
 	}

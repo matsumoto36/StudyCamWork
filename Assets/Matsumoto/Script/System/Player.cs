@@ -14,9 +14,13 @@ public enum PlayerCaptureStatus {
 
 public class Player : MonoBehaviour {
 
+	public const float SCALE_MIN = 1.0f;
+	public const float SCALE_MAX = 1.5f;
+
 	public Renderer centerLight;
 	public Renderer ring1;
 	public Renderer ring2;
+
 
 	public Color CaptureLightColor;
 	public Color NearLightColor;
@@ -31,18 +35,16 @@ public class Player : MonoBehaviour {
 	float startTime;
 	float sumSpeed;
 
+	public Transform Body {
+		get; private set;
+	}
+
+
 	[SerializeField]
 	float speed;
 	public float Speed {
 		get { return speed; }
 		set { speed = value; }
-	}
-
-	[SerializeField]
-	float scale;
-	public float Scale {
-		get { return scale; }
-		set { scale = value; }
 	}
 
 	float movedLength;
@@ -56,11 +58,16 @@ public class Player : MonoBehaviour {
 
 	public void Init(Bezier2D path) {
 
+		//見た目を取得
+		Body = transform.GetChild(0);
+
+		//最初は一番大きくする
+		SetScaleFromRatio(1);
+
 		this.path = path;
 		Speed = GameMaster.Instance.GameBalanceData.PlayerSpeed;
 
 		MovedLength = 0;
-		transform.localScale = Vector3.one * Scale;
 
 		centerLight.material = new Material(centerLight.material);
 		centerLight.material.EnableKeyword("_EMISSION");
@@ -117,6 +124,16 @@ public class Player : MonoBehaviour {
 			default:
 				break;
 		}
+	}
+
+	public float GetScaleFromRatio(float t) {
+		return Mathf.Lerp(SCALE_MIN, SCALE_MAX, t);
+	}
+
+	public void SetScaleFromRatio(float t) {
+		var scale = new Vector3(1, 1, 0) * Mathf.Lerp(SCALE_MIN, SCALE_MAX, t);
+		scale.z = 1;
+		Body.localScale = scale;
 	}
 
 	void Update() {

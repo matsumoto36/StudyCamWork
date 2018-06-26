@@ -46,7 +46,7 @@ public class GimmickSpeed : GimmickBase {
 		//加速のとき
 		if(speedMul > 1) {
 			particle = ParticleManager.Spawn("GimmickSpeedUpEffect", new Vector3(), Quaternion.identity, 0);
-			particle.transform.SetParent(player.transform.GetChild(0));
+			particle.transform.SetParent(player.Body);
 			particle.transform.localPosition = new Vector3();
 			prevPlayerPos = player.transform.position;
 
@@ -71,7 +71,7 @@ public class GimmickSpeed : GimmickBase {
 			particle.GetAttribute("AccelDirection").ValueFloat3
 				= -vec;
 
-			particle.transform.localPosition = vec / 2;
+			particle.transform.localPosition = vec * (player.Body.localScale.x / 2);
 
 			prevPlayerPos = pos;
 
