@@ -9,11 +9,12 @@ public class MouseCamera : MonoBehaviour
     public MouseCameraObject cameraObject;
 
     public Slider hpBar;
+    public Slider inCamhpBar;
 
-    //public bool isCapture = false;
-    //public bool isPlayerFocus;
+	//public bool isCapture = false;
+	//public bool isPlayerFocus;
 
-    int life = 100;				//体力
+	int life = 100;				//体力
     int lifeDamage;			//ダメージの数値
     public static int Combo;				//コンボ
     public static int act;
@@ -137,17 +138,35 @@ public class MouseCamera : MonoBehaviour
             }
 
 			CaptureStatus = IsPlayerCapture();
+
 			//プレイヤーにステータスを伝える
             targetPlayer.SetLight(CaptureStatus);
 
-            if (CaptureStatus != PlayerCaptureStatus.All)
-            {
-                cameraObject.CameraColorType = CameraColorType.Fail;
-            }
+			if(IsTeleport) {
+				cameraObject.CameraColorType = CameraColorType.Normal;
+			}
+			else {
+				switch(CaptureStatus) {
+					case PlayerCaptureStatus.All:
+						cameraObject.CameraColorType = CameraColorType.Normal;
+						break;
+					case PlayerCaptureStatus.Near:
+						cameraObject.CameraColorType = CameraColorType.Normal;
+						break;
+					default:
+						cameraObject.CameraColorType = CameraColorType.Fail;
+						break;
+				}
+			}
+
+
             
             ComboChain();
+
             hpBar.value = life;
-            scoreText.text = Score.ToString("000000");
+			inCamhpBar.value = life;
+
+			scoreText.text = Score.ToString("000000");
             if (Accuracy == 1.0f) accText.text = ("100%");
             else accText.text = Accuracy.ToString("P");
             comboText.text = "x" + Combo.ToString("");
@@ -245,7 +264,9 @@ public class MouseCamera : MonoBehaviour
                 if (!IsTeleport)
                 {
                     life -= lifeDamage;
-                }
+					//ダメージ演出
+					StartCoroutine(cameraObject.DamageFlash());
+				}
 
 				Debug.Log("damage");
                 if (!IsTeleport)

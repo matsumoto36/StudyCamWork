@@ -19,6 +19,8 @@ public class MouseCameraObject : MonoBehaviour {
 	public RectTransform startMessage;
 	public Image cameraImage;
     public Image SmalCameraImage;
+    public Image failImage;
+    public Image damageFlashImage;
 	public RawImage cameraRenderImage;
 	public RawImage debugRenderImage;
 	public RenderTexture renderTexture;
@@ -36,13 +38,13 @@ public class MouseCameraObject : MonoBehaviour {
 		set {
 			switch(cameraColorType = value) {
 				case CameraColorType.Normal:
-					cameraImage.color = Color.white;
+					failImage.color = new Color(1, 0, 0, 0);
 					return;
 				case CameraColorType.Hit:
-					cameraImage.color = Color.cyan;
+					failImage.color = new Color(1, 0, 0, 0);
 					return;
 				case CameraColorType.Fail:
-					cameraImage.color = Color.red;
+					failImage.color = new Color(1, 0, 0, 0.1f);
 					return;
 				default: return;
 			}
@@ -61,6 +63,8 @@ public class MouseCameraObject : MonoBehaviour {
 			+= () => StartCoroutine(MaskScaleAnim());
         
 		recordData = new List<RenderTexture>();
+
+		damageFlashImage.color = new Color(1, 0, 0, 0);
 	}
 
 	/// <summary>
@@ -194,6 +198,28 @@ public class MouseCameraObject : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.P)) {
 			StartCoroutine(PlayMovie());
 		}
+	}
+
+	public IEnumerator DamageFlash() {
+
+		var from = 0.0f;
+		var to = 0.5f;
+		var speed = 3.0f;
+
+		var t = 0.0f;
+		while((t += Time.deltaTime * speed) < 1.0f) {
+
+			var col = new Color(
+				1, 0, 0,
+				Mathf.Lerp(from, to, Mathf.Lerp(from, to, 1 - t))
+				);
+
+			damageFlashImage.color = col;
+			yield return null;
+		}
+
+		damageFlashImage.color = new Color(1, 0, 0, 0);
+
 	}
 
 	IEnumerator PlayMovie() {
