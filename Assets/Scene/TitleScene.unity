@@ -4915,9 +4915,10 @@ AudioSource:
   m_GameObject: {fileID: 740166101}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243063951895242296, guid: f3bc804f33118c34999854d1ea2cc4d6,
+    type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -6595,6 +6596,7 @@ GameObject:
   - component: {fileID: 953140668}
   - component: {fileID: 953140667}
   - component: {fileID: 953140669}
+  - component: {fileID: 953140670}
   m_Layer: 0
   m_Name: '[StageSelectController]'
   m_TagString: Untagged
@@ -6658,6 +6660,25 @@ MonoBehaviour:
   monitorEffect: {fileID: 1621385352}
   directionalLight: {fileID: 1153637309}
   lightMoveSpeed: 1
+  setFadeTitleBGM: 0
+  setPlaySelectStageBGM: 0
+--- !u!95 &953140670
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 953140666}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &976940751
 GameObject:
   m_ObjectHideFlags: 0
@@ -7865,6 +7886,10 @@ PlayableDirector:
     value: {fileID: 1321577126}
   - key: {fileID: 114275995312919838, guid: d023289853ea7604cba81833b5aeb4f6, type: 2}
     value: {fileID: 740166102}
+  - key: {fileID: 0}
+    value: {fileID: 953140666}
+  - key: {fileID: 114300106509028958, guid: d023289853ea7604cba81833b5aeb4f6, type: 2}
+    value: {fileID: 953140666}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &1119455868
@@ -16594,6 +16619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraObject: {fileID: 0}
   hpBar: {fileID: 0}
+  inCamhpBar: {fileID: 0}
   scoreText: {fileID: 0}
   accText: {fileID: 0}
   comboText: {fileID: 0}
