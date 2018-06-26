@@ -62,6 +62,12 @@ public class StageSelectController : MonoBehaviour {
 		//アニメーション再生
 		clickClickAnimationCoroutine = StartCoroutine(ClickAnimation());
 		StartCoroutine(TimeAnimation());
+
+		//BGM再生
+		if(AudioManager.CurrentBGMName != "") {
+			AudioManager.FadeOut(2.0f);
+		}
+		AudioManager.FadeIn(1.0f, "town1");
 	}
 
 	void Update() {

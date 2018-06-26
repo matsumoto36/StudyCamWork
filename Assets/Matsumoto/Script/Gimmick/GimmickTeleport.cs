@@ -34,6 +34,7 @@ public class GimmickTeleport : GimmickBase {
 
 		if(t + waitTime < 0.5f && !fromEffect) {
 			fromEffect = ParticleManager.Spawn("GimmickTeleportFromEffect", markModel.transform.position, Quaternion.identity, 2);
+			fromEffect.GetAttribute("Radius").ValueFloat = player.Body.localScale.x / 2;
 		}
 	}
 
@@ -60,6 +61,7 @@ public class GimmickTeleport : GimmickBase {
 			waitTime + 2);
 
 		p.GetAttribute("WaitTime").ValueFloat = waitTime;
+		p.GetAttribute("Radius").ValueFloat = player.Body.localScale.x / 2;
 	}
 
 	public override void OnApplyUpdate(Player player, float t) {
@@ -67,6 +69,7 @@ public class GimmickTeleport : GimmickBase {
 
 		if(t > waitTime - 0.5f && !fromEffect) {
 			fromEffect = ParticleManager.Spawn("GimmickTeleportFromEffect", markModel.transform.position, Quaternion.identity, 2);
+			fromEffect.GetAttribute("Radius").ValueFloat = player.Body.localScale.x / 2;
 		}
 	}
 
@@ -92,21 +95,6 @@ public class GimmickTeleport : GimmickBase {
 	public override void EditGimmickLine(LineRenderer lineRenderer, ref float z) {
 
 		lineRenderer.material.SetColor("_Color", gimmickColor);
-
-		var partition = (int)(32 * (endPoint - startPoint));
-		if(partition == 0) partition = 1;
-
-		var dt = (endPoint - startPoint) * (1.0f / partition);
-		var point = new Vector3[partition + 1];
-
-		for(int i = 0;i <= partition;i++) {
-			point[i] = path.GetPoint((startPoint + dt * i) / path.LineCount);
-			point[i].z = z;
-		}
-
-		lineRenderer.positionCount = point.Length;
-		lineRenderer.SetPositions(point);
-
-		markModelSpawnZ = z;
+		base.EditGimmickLine(lineRenderer, ref z);
 	}
 }
