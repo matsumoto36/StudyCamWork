@@ -9,21 +9,22 @@ public class GimmickSpeed : GimmickBase {
 	public float speedMul;
 
 	Color playerCol;
-	GimmickGauge startGauge;
+
+	PKFxFX particle;
+	Vector3 prevPlayerPos;
 
 	float duration;
 
-	public override void SpawnModel() {
-		base.SpawnModel();
+	public override void SpawnModel(Player player) {
 
-
-		if(!startPointModel) return;
-		if(!startGauge) {
-			startGauge = startPointModel.GetComponent<GimmickGauge>();
-			if(!startGauge) return;
+		if(speedMul >= 1) {
+			markModelName = "MarkSpeedUp";
+		}
+		else {
+			markModelName = "MarkSpeedDown";
 		}
 
-		startGauge.GaugeColor = gimmickColor;
+		base.SpawnModel(player);
 	}
 
 	public override void OnRemainingTime(Player player, float t) {
@@ -31,9 +32,6 @@ public class GimmickSpeed : GimmickBase {
 
 		if(text)
 			text.text = "At. " + t;
-
-		if(!startGauge) return;
-		startGauge.Value = 1 - Mathf.Min(t, 1);
 	}
 
 	public override void OnAttach(Player player) {
@@ -43,7 +41,20 @@ public class GimmickSpeed : GimmickBase {
 		playerCol = render.material.color;
 		render.material.color = gimmickColor;
 
-		player.speed *= speedMul;
+		player.Speed *= speedMul;
+
+		//加速のとき
+		if(speedMul > 1) {
+			particle = ParticleManager.Spawn("GimmickSpeedUpEffect", new Vector3(), Quaternion.identity, 0);
+			particle.transform.SetParent(player.Body);
+			particle.transform.localPosition = new Vector3();
+			prevPlayerPos = player.transform.position;
+
+			AudioManager.PlaySE("SpeedUP");
+		}
+		else {
+
+		}
 	}
 
 	public override void OnApplyUpdate(Player player, float t) {
@@ -52,8 +63,19 @@ public class GimmickSpeed : GimmickBase {
 		if(text)
 			text.text = "Using. " + t;
 
-		if(!startGauge) return;
-		startGauge.Value = 1 - (t / duration);
+		if(particle) {
+
+			var pos = player.transform.position;
+			var vec = (pos - prevPlayerPos).normalized;
+
+			particle.GetAttribute("AccelDirection").ValueFloat3
+				= -vec;
+
+			particle.transform.localPosition = vec * (player.Body.localScale.x / 2);
+
+			prevPlayerPos = pos;
+
+		}
 	}
 
 	public override void OnDetach(Player player) {
@@ -62,7 +84,9 @@ public class GimmickSpeed : GimmickBase {
 		var render = player.GetComponentInChildren<Renderer>();
 		render.material.color = playerCol;
 
-		player.speed /= speedMul;
+		player.Speed /= speedMul;
+
+		if(particle) ParticleManager.StopParticle(particle);
 	}
 
 	public override float GetSectionTime(float speed) {
@@ -72,22 +96,6 @@ public class GimmickSpeed : GimmickBase {
 	public override void EditGimmickLine(LineRenderer lineRenderer, ref float z) {
 
 		lineRenderer.material.SetColor("_Color", gimmickColor);
-
-		var partition = (int)(32 * (endPoint - startPoint));
-		if(partition == 0) partition = 1;
-
-		var dt = (endPoint - startPoint) * (1.0f / partition);
-		var point = new Vector3[partition + 1];
-
-		for(int i = 0;i <= partition;i++) {
-			point[i] = path.GetPoint((startPoint + dt * i) / path.LineCount);
-			point[i].z = z;
-		}
-
-		lineRenderer.positionCount = point.Length;
-		lineRenderer.SetPositions(point);
-
-		endPointModelSpawnZ = startPointModelSpawnZ = z;
-
+		base.EditGimmickLine(lineRenderer, ref z);
 	}
 }

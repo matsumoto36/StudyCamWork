@@ -5,8 +5,7 @@
 		_Fill("Fill", float) = 1
 	}
 		SubShader{
-		Tags{ "RenderType" = "Opaque" "Queue" = "Geometry+2" }
-
+		Tags{ "RenderType" = "Opaque" "Queue" = "Geometry+1" }
 
 		Stencil{
 			Ref 1

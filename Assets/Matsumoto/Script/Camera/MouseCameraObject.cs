@@ -18,13 +18,19 @@ public class MouseCameraObject : MonoBehaviour {
 	public RectTransform cameraUI;
 	public RectTransform startMessage;
 	public Image cameraImage;
-
-
-
-    Camera drawCamera;
+    public Image SmalCameraImage;
+    public Image failImage;
+    public Image damageFlashImage;
+	public RawImage cameraRenderImage;
+	public RawImage debugRenderImage;
+	public RenderTexture renderTexture;
+	Camera drawCamera;
 	Transform maskCube;
 	Vector2 startCameraSize = new Vector3(35.5f, 20.0f, 0.1f);
 	Vector3 maskCubeScale;
+
+	List<RenderTexture> recordData;
+	bool isRecording = false;
 
 	CameraColorType cameraColorType;
 	public CameraColorType CameraColorType {
@@ -32,13 +38,13 @@ public class MouseCameraObject : MonoBehaviour {
 		set {
 			switch(cameraColorType = value) {
 				case CameraColorType.Normal:
-					cameraImage.color = Color.white;
+					failImage.color = new Color(1, 0, 0, 0);
 					return;
 				case CameraColorType.Hit:
-					cameraImage.color = Color.cyan;
+					failImage.color = new Color(1, 0, 0, 0);
 					return;
 				case CameraColorType.Fail:
-					cameraImage.color = Color.red;
+					failImage.color = new Color(1, 0, 0, 0.1f);
 					return;
 				default: return;
 			}
@@ -55,6 +61,10 @@ public class MouseCameraObject : MonoBehaviour {
 
 		GameMaster.Instance.OnGameStartCountDown
 			+= () => StartCoroutine(MaskScaleAnim());
+        
+		recordData = new List<RenderTexture>();
+
+		damageFlashImage.color = new Color(1, 0, 0, 0);
 	}
 
 	/// <summary>
@@ -72,8 +82,9 @@ public class MouseCameraObject : MonoBehaviour {
 			cameraSize.x / Screen.width,
 			cameraSize.y / Screen.height
 		);
-
-		//サイズを決める
+        float CameraSize = GameMaster.Instance.GameBalanceData.CameraSmallSizeRatio;
+        SmalCameraImage.rectTransform.sizeDelta = cameraSize * CameraSize*2;
+		//カメラのサイズを決める
 		drawCamera.orthographicSize =
 			Camera.main.orthographicSize * drawCamera.rect.height;
 
@@ -114,6 +125,110 @@ public class MouseCameraObject : MonoBehaviour {
 			cameraPosition,
 			drawCamera.rect.size
 		);
+
+		//if(GameMaster.Instance.State == GameState.Playing) RecordFrame();
+	}
+
+	/// <summary>
+	/// 画像で録画する
+	/// </summary>
+	IEnumerator RecordLoop() {
+
+		while(true) {
+
+			yield return new WaitForEndOfFrame();
+
+			if(GameMaster.Instance.State != GameState.Playing) continue;
+
+			var currentRenderTexture = RenderTexture.active;
+			var renderTexture = drawCamera.targetTexture;
+
+			//アクティブを一時的に変更
+			RenderTexture.active = drawCamera.targetTexture;
+			drawCamera.Render();
+
+			//テクスチャを作成
+			var texture = new Texture2D(
+				renderTexture.width,
+				renderTexture.height,
+				TextureFormat.ARGB32,
+				false
+			);
+			//var texture = (Texture)renderTexture;
+
+			//ピクセルを読む 激重
+			texture.ReadPixels(new Rect(0, 0, texture.width, texture.height), 0, 0);
+			texture.Apply();
+
+			//yield return null;
+
+			//アクティブを元に戻す
+			RenderTexture.active = currentRenderTexture;
+
+			//debug
+			debugRenderImage.texture = texture;
+
+			//記録
+			//recordData.Add((Texture2D)texture);
+
+		}
+
+	}
+
+	void RecordFrame() {
+
+		var currentRenderTexture = RenderTexture.active;
+		//var renderTexture = drawCamera.targetTexture;
+
+		//アクティブを一時的に変更
+		RenderTexture.active = drawCamera.targetTexture = new RenderTexture(renderTexture);
+		drawCamera.Render();
+
+		//アクティブを元に戻す
+		RenderTexture.active = currentRenderTexture;
+
+		//登録
+		recordData.Add(drawCamera.targetTexture);
+
+		//再生成
+		drawCamera.targetTexture = null;
+	}
+
+	void Update() {
+		if(Input.GetKeyDown(KeyCode.P)) {
+			StartCoroutine(PlayMovie());
+		}
+	}
+
+	public IEnumerator DamageFlash() {
+
+		var from = 0.0f;
+		var to = 0.5f;
+		var speed = 3.0f;
+
+		var t = 0.0f;
+		while((t += Time.deltaTime * speed) < 1.0f) {
+
+			var col = new Color(
+				1, 0, 0,
+				Mathf.Lerp(from, to, Mathf.Lerp(from, to, 1 - t))
+				);
+
+			damageFlashImage.color = col;
+			yield return null;
+		}
+
+		damageFlashImage.color = new Color(1, 0, 0, 0);
+
+	}
+
+	IEnumerator PlayMovie() {
+
+		for(int i = 0;i < recordData.Count;i++) {
+			debugRenderImage.texture = recordData[i];
+			yield return null;
+		}
+
 	}
 
 	/// <summary>
@@ -143,6 +258,8 @@ public class MouseCameraObject : MonoBehaviour {
 
 		maskCube.localPosition = endPosition;
 		maskCube.localScale = maskCubeScale;
+
+		Camera.main.cullingMask ^= LayerMask.GetMask("Line");
 	}
 
 }

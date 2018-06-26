@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4339471848327928}
   - component: {fileID: 120292460609403510}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,7 +79,7 @@ LineRenderer:
   - {x: 0, y: 5, z: 0}
   m_Parameters:
     serializedVersion: 2
-    widthMultiplier: 0.1
+    widthMultiplier: 1
     widthCurve:
       serializedVersion: 2
       m_Curve:

@@ -10,12 +10,17 @@ using UnityEngine;
 /// </summary>
 public class GimmickManager : MonoBehaviour {
 
+	public const float LINE_WIDTH_MIN = 0.05f;
+	public const float LINE_WIDTH_MAX = 0.2f;
+	public const float MOVE_Z = 18;
+
 	public LineRenderer linePre;
-	public float moveZ = 18;
 
 	Player player;
 	GimmickInfo[] gimmicks;
 	List<LineInfo> lines;
+
+	LineInfo currentLine;
 
 	float startTime;
 
@@ -43,7 +48,7 @@ public class GimmickManager : MonoBehaviour {
 		SetLine();
 
 		foreach(var item in gimmicks) {
-			item.gimmick.SpawnModel();
+			item.gimmick.SpawnModel(player);
 		}
 
 		GameMaster.Instance.OnGameStart += () => startTime = Time.time;
@@ -89,6 +94,10 @@ public class GimmickManager : MonoBehaviour {
 		SetLineVisible();
 	}
 
+	public void PlayerMove() {
+
+	}
+
 	/// <summary>
 	/// プレイヤーの位置で線の可視状態を設定
 	/// </summary>
@@ -100,8 +109,8 @@ public class GimmickManager : MonoBehaviour {
 			if(!item.renderer) continue;
 
 			var fillValue = 1.0f;
-			var startLength = Path.GetPointLength(0, item.pathStartPoint);
-			var endLength = Path.GetPointLength(0, item.pathEndPoint);
+			var startLength = item.pathStartLength;
+			var endLength = item.pathEndLength;
 
 			//通り過ぎた線の場合
 			if(moveLength >= endLength) {
@@ -123,7 +132,7 @@ public class GimmickManager : MonoBehaviour {
 	/// </summary>
 	void SetStartTime() {
 
-		var speed = player.speed;
+		var speed = player.Speed;
 		var sumTime = 0.0f;
 		var prevPoint = 0.0f;
 		for(int i = 0;i < gimmicks.Length;i++) {
@@ -152,21 +161,25 @@ public class GimmickManager : MonoBehaviour {
 			var diff = to - from;
 			if(diff > 0) {
 
-				var partition = (int)(32 * diff);
+				var partition = (int)(64 * diff);
 				if(partition == 0) partition = 1;
 
 				var dt = diff / partition;
 				var point = new Vector3[partition + 1];
+				var keyframe = new Keyframe[partition + 1];
 
 				for(int i = 0;i <= partition;i++) {
 					point[i] = path.GetPoint((from + dt * i) / path.LineCount);
 					point[i].z = lineZ;
+
+					keyframe[i] = new Keyframe(i / (float)partition, Mathf.Lerp(LINE_WIDTH_MIN, LINE_WIDTH_MAX, 1 - lineZ / MOVE_Z));
 				}
 
 				var l = Instantiate(linePre);
 				l.material = new Material(l.material);
 				l.positionCount = point.Length;
 				l.SetPositions(point);
+				l.widthCurve = new AnimationCurve(keyframe);
 				return l;
 			}
 
@@ -183,8 +196,8 @@ public class GimmickManager : MonoBehaviour {
 			//通常ゾーン
 			lines.Add(new LineInfo(
 				DrawLine(Path, prevPoint, gimmick.startPoint, z),
-				prevPoint,
-				gimmick.startPoint
+				Path.GetPointLength(0, prevPoint),
+				Path.GetPointLength(0, gimmick.startPoint)
 			 ));
 
 			//ギミックゾーン
@@ -192,11 +205,13 @@ public class GimmickManager : MonoBehaviour {
 			gimmickLine.material = new Material(gimmickLine.material);
 			gimmick.EditGimmickLine(gimmickLine, ref z);
 
-			lines.Add(new LineInfo(
+			var line = new LineInfo(
 				gimmickLine,
-				gimmick.startPoint,
-				gimmick.endPoint
-			));
+				Path.GetPointLength(0, gimmick.startPoint),
+				Path.GetPointLength(0, gimmick.endPoint)
+			);
+			line.gimmickInfo = gimmicks[i];
+			lines.Add(line);
 
 			prevPoint = gimmick.endPoint;
 		}
@@ -204,8 +219,8 @@ public class GimmickManager : MonoBehaviour {
 		//最後の線を引く
 		lines.Add(new LineInfo(
 			DrawLine(Path, prevPoint, Path.LineCount, z),
-			prevPoint,
-			Path.LineCount
+				Path.GetPointLength(0, prevPoint),
+				Path.Length
 		));
 
 	}
@@ -218,20 +233,22 @@ public class GimmickManager : MonoBehaviour {
 public class LineInfo {
 
 	public LineRenderer renderer;
-	public float pathStartPoint;
-	public float pathEndPoint;
+	public float pathStartLength;
+	public float pathEndLength;
 
-	public LineInfo(LineRenderer renderer, float pathStartPoint, float pathEndPoint) {
+	public GimmickInfo gimmickInfo;
+
+	public LineInfo(LineRenderer renderer, float pathStartLength, float pathEndLength) {
 		this.renderer = renderer;
-		this.pathStartPoint = pathStartPoint;
-		this.pathEndPoint = pathEndPoint;
+		this.pathStartLength = pathStartLength;
+		this.pathEndLength = pathEndLength;
 	}
 }
 
 /// <summary>
 /// ギミックの情報をまとめておくクラス
 /// </summary>
-class GimmickInfo {
+public class GimmickInfo {
 
 	public GimmickBase gimmick;
 	public bool isActive;

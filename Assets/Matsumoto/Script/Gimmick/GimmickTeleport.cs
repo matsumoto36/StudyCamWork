@@ -12,22 +12,18 @@ public class GimmickTeleport : GimmickBase {
 	public Text text;
 	Color playerCol;
 
-	GimmickGauge startGauge;
 	MouseCamera mouseCamera;
 
 	float playerSpeed;
 
-	public override void SpawnModel() {
-		base.SpawnModel();
+	PKFxFX fromEffect;
 
+	public override void SpawnModel(Player player) {
 
-		if(!startPointModel) return;
-		if(!startGauge) {
-			startGauge = startPointModel.GetComponent<GimmickGauge>();
-			if(!startGauge) return;
-		}
+		markModelName = "MarkTeleport";
 
-		startGauge.GaugeColor = gimmickColor;
+		base.SpawnModel(player);
+
 	}
 
 	public override void OnRemainingTime(Player player, float t) {
@@ -36,8 +32,10 @@ public class GimmickTeleport : GimmickBase {
 		if(text)
 			text.text = "At. " + t;
 
-		if(!startGauge) return;
-		startGauge.Value = 1 - Mathf.Min(t, 1);
+		if(t + waitTime < 0.5f && !fromEffect) {
+			fromEffect = ParticleManager.Spawn("GimmickTeleportFromEffect", markModel.transform.position, Quaternion.identity, 2);
+			fromEffect.GetAttribute("Radius").ValueFloat = player.Body.localScale.x / 2;
+		}
 	}
 
 	public override void OnAttach(Player player) {
@@ -47,18 +45,32 @@ public class GimmickTeleport : GimmickBase {
 		playerCol = render.material.color;
 		render.material.color = gimmickColor;
 
-		playerSpeed = player.speed;
-		player.speed = 0;
+		playerSpeed = player.Speed;
+		player.Speed = 0;
 
 		var pos = path.GetPoint(endPoint / path.LineCount);
 		effect = Instantiate(effectPre, pos, Quaternion.identity);
 
 		mouseCamera = FindObjectOfType<MouseCamera>();
 		mouseCamera.IsTeleport = true;
+
+		var p = ParticleManager.Spawn(
+			"GimmickTeleportToEffect", 
+			path.GetPoint(endPoint / path.LineCount),
+			Quaternion.identity,
+			waitTime + 2);
+
+		p.GetAttribute("WaitTime").ValueFloat = waitTime;
+		p.GetAttribute("Radius").ValueFloat = player.Body.localScale.x / 2;
 	}
 
 	public override void OnApplyUpdate(Player player, float t) {
 		base.OnApplyUpdate(player, t);
+
+		if(t > waitTime - 0.5f && !fromEffect) {
+			fromEffect = ParticleManager.Spawn("GimmickTeleportFromEffect", markModel.transform.position, Quaternion.identity, 2);
+			fromEffect.GetAttribute("Radius").ValueFloat = player.Body.localScale.x / 2;
+		}
 	}
 
 	public override void OnDetach(Player player) {
@@ -68,7 +80,7 @@ public class GimmickTeleport : GimmickBase {
 		render.material.color = playerCol;
 
 		player.MovedLength += path.GetPointLength(startPoint, endPoint);
-		player.speed = playerSpeed;
+		player.Speed = playerSpeed;
 
 		effect.GetComponent<ParticleSystem>().Stop();
 		Destroy(effect, 1);
@@ -83,22 +95,6 @@ public class GimmickTeleport : GimmickBase {
 	public override void EditGimmickLine(LineRenderer lineRenderer, ref float z) {
 
 		lineRenderer.material.SetColor("_Color", gimmickColor);
-
-		var partition = (int)(32 * (endPoint - startPoint));
-		if(partition == 0) partition = 1;
-
-		var dt = (endPoint - startPoint) * (1.0f / partition);
-		var point = new Vector3[partition + 1];
-
-		for(int i = 0;i <= partition;i++) {
-			point[i] = path.GetPoint((startPoint + dt * i) / path.LineCount);
-			point[i].z = z;
-		}
-
-		lineRenderer.positionCount = point.Length;
-		lineRenderer.SetPositions(point);
-
-		endPointModelSpawnZ = startPointModelSpawnZ = z;
-
+		base.EditGimmickLine(lineRenderer, ref z);
 	}
 }

@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class GimmickBase : MonoBehaviour {
 
-	public static readonly Vector3 ModelPosition = new Vector3(1, -1);
+	const string MARK_MODEL_BASE_PATH = "Prefab/Mark/";
 
 	#region カスタムインスペクターで表示するプロパティ
 	[HideInInspector]
@@ -18,24 +18,15 @@ public class GimmickBase : MonoBehaviour {
 	[HideInInspector]
 	public float endPoint;                  //ギミックを終わらせる終了地点
 	[HideInInspector]
-	public GameObject startPointModel;      //生成されたギミックの始点のモデル
-	[HideInInspector]
-	public GameObject endPointModel;        //生成されたギミックの終点のモデル
+	public GameObject markModel;			//生成されたマークのモデル
 	#endregion
 
 	GameObject ringObj;
 
-	[SerializeField]
-	GameObject startPointModelPre;			//ギミックの始点のモデルのプレハブ
-	public Vector3 startPointModelOffset;	//モデルの配置のオフセット
-
-	[SerializeField]
-	GameObject endPointModelPre;			//ギミックの終点のモデルのプレハブ
-	public Vector3 endPointModelOffset;     //モデルの配置のオフセット
+	protected string markModelName;         //ギミックのマークの名前
+	protected float markModelSpawnZ;
 
 	protected Bezier2D path;
-	protected float startPointModelSpawnZ;
-	protected float endPointModelSpawnZ;
 	protected GimmickManager manager;
 
 	public virtual void Init() {
@@ -44,29 +35,30 @@ public class GimmickBase : MonoBehaviour {
 		path = manager.Path;
 	}
 
-	public virtual void SpawnModel() {
+	public virtual void SpawnModel(Player player) {
 
 		//登録されたモデルのスポーン
-		var offset = ModelPosition + startPointModelOffset;
 		var lineCount = path.LineCount;
+		var spawnPos = (Vector3)path.GetPoint(startPoint / lineCount);
+		spawnPos.z = markModelSpawnZ;
 
-		if(startPointModelPre) {
-			var pos = (Vector3)path.GetPoint(startPoint / lineCount) + offset;
-			pos.z += startPointModelSpawnZ;
-			startPointModel = Instantiate(startPointModelPre, pos, Quaternion.identity);
+		if(markModelName != "") {
+			var model = Resources.Load<GameObject>(MARK_MODEL_BASE_PATH + markModelName);
+			if(model) {
+				markModel = Instantiate(model, spawnPos, Quaternion.identity);
+				markModel.transform.localScale = Vector3.one * player.GetScaleFromRatio(1 - markModelSpawnZ / GimmickManager.MOVE_Z);
+			}
 		}
 
-		if(endPointModelPre) {
-			var pos = (Vector3)path.GetPoint(endPoint / lineCount) + offset;
-			pos.z += endPointModelSpawnZ;
-			endPointModel = Instantiate(endPointModelPre, pos, Quaternion.identity);
-		}
-
-		Vector3 ringPos = path.GetPoint(startPoint / lineCount);
-		ringPos.z = startPointModelSpawnZ;
-		ringObj = Instantiate(Resources.Load<GameObject>("Prefab/Ring"), ringPos, Quaternion.identity);
+		//タイミングとるためのリングの生成
+		ringObj = Instantiate(Resources.Load<GameObject>("Prefab/Ring"), spawnPos, Quaternion.identity);
 		ringObj.transform.localScale = new Vector3();
-		ringObj.GetComponent<Renderer>().material.SetColor("_Color", gimmickColor);
+
+		var rRender = ringObj.GetComponent<Renderer>();
+		rRender.material = new Material(rRender.material);
+		rRender.material.EnableKeyword("_EMISSION");
+		rRender.material.SetColor("_EmissionColor", gimmickColor);
+
 	}
 
 	/// <summary>
@@ -76,7 +68,8 @@ public class GimmickBase : MonoBehaviour {
 	public virtual void OnRemainingTime(Player player, float t) {
 
 		if(t < 1.0f) {
-			float scale = Mathf.Lerp(1.1f, 4, t);
+			var playerScale = player.GetScaleFromRatio(1 - markModelSpawnZ / GimmickManager.MOVE_Z);
+			var scale = playerScale + playerScale * 3 * t;
 			ringObj.transform.localScale = new Vector3(scale, scale, 1);
 		}
 		else {
@@ -96,6 +89,10 @@ public class GimmickBase : MonoBehaviour {
 	/// </summary>
 	public virtual void OnAttach(Player player) {
 		ringObj.transform.localScale = new Vector3();
+		markModel.SetActive(false);
+
+		var p = ParticleManager.Spawn("GimmickApplyEffect", markModel.transform.position, Quaternion.identity, 2);
+		p.GetAttribute("MainColor").ValueFloat4 = gimmickColor;
 	}
 
 	/// <summary>
@@ -127,52 +124,20 @@ public class GimmickBase : MonoBehaviour {
 
 		var dt = (endPoint - startPoint) * (1.0f / partition);
 		var point = new Vector3[partition + 1];
+		var keyframe = new Keyframe[partition + 1];
 
 		for(int i = 0;i <= partition;i++) {
 			point[i] = path.GetPoint((startPoint + dt * i) / path.LineCount);
 			point[i].z = z;
+
+			keyframe[i] = new Keyframe(i / (float)partition, Mathf.Lerp(GimmickManager.LINE_WIDTH_MIN, GimmickManager.LINE_WIDTH_MAX, 1 - z / GimmickManager.MOVE_Z));
 		}
 
 		lineRenderer.positionCount = point.Length;
 		lineRenderer.SetPositions(point);
+		lineRenderer.widthCurve = new AnimationCurve(keyframe);
 
-		endPointModelSpawnZ = startPointModelSpawnZ = z;
-	}
-
-	void OnDrawGizmos() {
-
-		manager = GetComponentInParent<GimmickManager>();
-
-		if(!CheckUsableManager()) return;
-
-		path = manager.Path;
-
-		if(path.LineCount <= 0) return;
-
-		if(startPoint > endPoint) return;
-
-		//モデルを表示
-		Gizmos.color = Color.white;
-
-		var offset = ModelPosition + startPointModelOffset;
-		var lineCount = path.LineCount;
-
-		if(startPointModelPre) {
-			MeshFilter mfs = startPointModelPre.GetComponent<MeshFilter>();
-			if(mfs) {
-				var pos = (Vector3)path.GetPoint(startPoint / lineCount) + offset;
-				Gizmos.DrawMesh(mfs.sharedMesh, pos);
-			}
-		}
-
-		if(endPointModelPre) {
-			MeshFilter mfe = endPointModelPre.GetComponent<MeshFilter>();
-			if(mfe) {
-				var pos = (Vector3)path.GetPoint(endPoint / lineCount) + offset;
-				Gizmos.DrawMesh(mfe.sharedMesh, pos);
-			}
-		}
-
+		markModelSpawnZ = z;
 	}
 
 	bool CheckUsableManager() {

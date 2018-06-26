@@ -8,27 +8,27 @@ public class MouseCamera : MonoBehaviour
 
     public MouseCameraObject cameraObject;
 
-    public Text scoreText;
-    public Text accText;
-    public Text comboText;
     public Slider hpBar;
+    public Slider inCamhpBar;
 
-    public bool isCapture = false;
-    public bool isPlayerFocus;
+	//public bool isCapture = false;
+	//public bool isPlayerFocus;
 
-    int life = 100;				//体力
+	int life = 100;				//体力
     int lifeDamage;			//ダメージの数値
-    public int Combo;				//コンボ
-
-    public int Score;               //最終的に入るスコア
-    int scoreWithoutCombo;          //現時点でコンボ抜きにしたスコア
-    int scoreMax;                   //現時点でのスコアの最大値
+    public static int Combo;				//コンボ
+    public static int act;
+    public static int Score;               //最終的に入るスコア
+    static int scoreWithoutCombo;          //現時点でコンボ抜きにしたスコア
+    static int scoreMax;                   //現時点でのスコアの最大値
 
 	Player targetPlayer;
 	GameBalanceData gameBalance;    //ゲームのバランスを決めるクラス
     Vector2 wideCameraSize;
     Vector2 smallCameraSize;
-
+    public Text scoreText;
+    public Text accText;
+    public Text comboText;
 
     int plus; //プラスのスコアをスコアに入れるためのもの
 
@@ -38,7 +38,7 @@ public class MouseCamera : MonoBehaviour
     int comboTimeCount;
     int lifeTimeCount;
     public int ComboData;
-
+    public int AccuaryTex;
     float gaugeAmount = 1;
     float gauge = 1;
 
@@ -47,6 +47,10 @@ public class MouseCamera : MonoBehaviour
 
     bool isTeleport;
     bool DamagOn = false;
+
+	public PlayerCaptureStatus CaptureStatus {
+		get; private set;
+	}
 
     public bool IsTeleport
     {        //テレポート中かどうか
@@ -59,7 +63,7 @@ public class MouseCamera : MonoBehaviour
         }
     }
 
-    public float Accuracy
+    public static float Accuracy
     {
         get { return (float)scoreWithoutCombo / scoreMax; }
     }
@@ -67,7 +71,7 @@ public class MouseCamera : MonoBehaviour
     // Use this for initialization
     public void Init(Player player)
     {
-
+        
         targetPlayer = player;
         gameBalance = GameMaster.Instance.GameBalanceData;
 
@@ -77,6 +81,8 @@ public class MouseCamera : MonoBehaviour
         //カメラのサイズを設定
         wideCameraSize = new Vector2(Screen.width, Screen.height) * gameBalance.CameraWideSizeRatio;
         smallCameraSize = wideCameraSize * gameBalance.CameraSmallSizeRatio;
+
+        
 
         //カメラ用のオブジェクトの設定
         cameraObject.Init();
@@ -131,31 +137,42 @@ public class MouseCamera : MonoBehaviour
                 gauge = Mathf.Min(gauge + Time.deltaTime / gaugeAmount, 1);
             }
 
+			CaptureStatus = IsPlayerCapture();
+
 			//プレイヤーにステータスを伝える
-			var status = IsPlayerCapture();
-			targetPlayer.SetLight(status);
+            targetPlayer.SetLight(CaptureStatus);
 
-			if (isCapture = (status == PlayerCaptureStatus.All))
-            {
-                IsPSmallCapture();
-            }
-            else
-            {
-                cameraObject.CameraColorType = CameraColorType.Fail;
-            }
+			if(IsTeleport) {
+				cameraObject.CameraColorType = CameraColorType.Normal;
+			}
+			else {
+				switch(CaptureStatus) {
+					case PlayerCaptureStatus.All:
+						cameraObject.CameraColorType = CameraColorType.Normal;
+						break;
+					case PlayerCaptureStatus.Near:
+						cameraObject.CameraColorType = CameraColorType.Normal;
+						break;
+					default:
+						cameraObject.CameraColorType = CameraColorType.Fail;
+						break;
+				}
+			}
 
-            SmallCap();
+
+            
             ComboChain();
 
             hpBar.value = life;
-            scoreText.text = Score.ToString("000000");
-            if (Accuracy == 1.0f) accText.text = "100%";
+			inCamhpBar.value = life;
+
+			scoreText.text = Score.ToString("000000");
+            if (Accuracy == 1.0f) accText.text = ("100%");
             else accText.text = Accuracy.ToString("P");
             comboText.text = "x" + Combo.ToString("");
         }
-
-
     }
+
 
 	/// <summary>
 	/// プレイヤーがいい感じにキャプチャーされているか判定する
@@ -167,22 +184,33 @@ public class MouseCamera : MonoBehaviour
         if (!targetPlayer) return PlayerCaptureStatus.None;
 
         //フォーカスできているか調べる
-        var playerZRate = targetPlayer.transform.GetChild(0).localPosition.z / gimmickManager.moveZ;
+        var playerZRate = targetPlayer.Body.localPosition.z / GimmickManager.MOVE_Z;
         var focusRate = dofSlide.Value;
         var focusGrace = GameMaster.Instance.GameBalanceData.FocusGrace;
-        var isFocus = Mathf.Abs(playerZRate - focusRate) <= focusGrace ? 1 : 0;
+		var isFocus = Mathf.Abs(playerZRate - focusRate) <= focusGrace;
 
         //枠に入っているか調べる
         var sizeOffset = new Vector2(0, 0);
+		var checkPoint = Camera.main.WorldToScreenPoint(targetPlayer.transform.position);  //スクリーン座標に置き換える
         var rect = new Rect(
-            (Vector2)Input.mousePosition - (wideCameraSize / 2),
+			(Vector2)Input.mousePosition - (wideCameraSize / 2),
             wideCameraSize + sizeOffset);
 
-        var checkPoint = Camera.main.WorldToScreenPoint(targetPlayer.transform.position);  //スクリーン座標に置き換える
-		var isInside = rect.Contains(checkPoint) ? 2 : 0;
+		var isInside = rect.Contains(checkPoint);
 
-		return (PlayerCaptureStatus)(isFocus | isInside);
+		if(!isFocus && !isInside) return PlayerCaptureStatus.None;
+		if(!isFocus && isInside) return PlayerCaptureStatus.ContainOnly;
+		if(isFocus && !isInside) return PlayerCaptureStatus.FocusOnly;
 
+		rect = new Rect(
+			(Vector2)Input.mousePosition - (smallCameraSize / 2),
+			smallCameraSize + sizeOffset);
+
+		var isInsideSmall = rect.Contains(checkPoint);
+
+		if(isFocus && !isInsideSmall) return PlayerCaptureStatus.Near;
+
+		return PlayerCaptureStatus.All;
     }
     bool IsPSmallCapture()
     {
@@ -196,7 +224,7 @@ public class MouseCamera : MonoBehaviour
 
         var checkPoint = Camera.main.WorldToScreenPoint(targetPlayer.transform.position);
         return rect.Contains(checkPoint);
-
+        
 
     }
     void ComboChain()
@@ -204,10 +232,17 @@ public class MouseCamera : MonoBehaviour
         if (playTime > comboTimeCount)
         {
             comboTimeCount++;
-            if (isCapture)
+            if (CaptureStatus == PlayerCaptureStatus.Near ||
+				CaptureStatus == PlayerCaptureStatus.All)
             {
-                var point = plus + gameBalance.BaseScore;
+				if(CaptureStatus == PlayerCaptureStatus.All) {
+					plus = gameBalance.CameraInsideScore;
+				}
+				else {
+					plus = 0;
+				}
 
+				var point = plus + gameBalance.BaseScore;
                 if (Combo >= 1)
                 {
                     Score += (int)(point * Combo * 1.05);
@@ -218,23 +253,22 @@ public class MouseCamera : MonoBehaviour
                 }
 
                 scoreWithoutCombo += point;
-                scoreMax += gameBalance.BaseScore + gameBalance.CameraInsideScore;
-
-                Combo++;
+                if (!isTeleport)
+                {
+                    Combo++;
+                }
+               
             }
             else
             {
-
-                DamagOn = true;
-                if (DamagOn)
+                if (!IsTeleport)
                 {
                     life -= lifeDamage;
-                }
-                if (IsTeleport)
-                {
-                    DamagOn = false;
-                }
-                Debug.Log("damage");
+					//ダメージ演出
+					StartCoroutine(cameraObject.DamageFlash());
+				}
+
+				Debug.Log("damage");
                 if (!IsTeleport)
                 {
                     if (ComboData <= Combo)
@@ -248,17 +282,8 @@ public class MouseCamera : MonoBehaviour
                     }
                 }
             }
-        }
-    }
-    void SmallCap()
-    {
-        if (IsPSmallCapture())
-        {
-            plus = gameBalance.CameraInsideScore;
-        }
-        else
-        {
-            plus = 0;
-        }
-    }
+
+			scoreMax += gameBalance.BaseScore + gameBalance.CameraInsideScore;
+		}
+	}
 }

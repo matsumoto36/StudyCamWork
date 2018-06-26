@@ -206,12 +206,7 @@ MonoBehaviour:
   gimmickColor: {r: 1, g: 0, b: 0, a: 1}
   startPoint: 0.49
   endPoint: 1
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
+  markModel: {fileID: 0}
   text: {fileID: 0}
   speedMul: 2
 --- !u!114 &114330837291413376
@@ -227,7 +222,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   linePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
   moveZ: 18
-  lines: []
 --- !u!114 &114471024487335636
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -242,12 +236,7 @@ MonoBehaviour:
   gimmickColor: {r: 0.986207, g: 0, b: 1, a: 1}
   startPoint: 1.92
   endPoint: 2.09
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
+  markModel: {fileID: 0}
   isToFar: 1
   text: {fileID: 0}
 --- !u!114 &114572496434424172
@@ -264,12 +253,7 @@ MonoBehaviour:
   gimmickColor: {r: 0.986207, g: 0, b: 1, a: 1}
   startPoint: 2.67
   endPoint: 2.86
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
+  markModel: {fileID: 0}
   isToFar: 0
   text: {fileID: 0}
 --- !u!114 &114672954477922072
@@ -286,12 +270,7 @@ MonoBehaviour:
   gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
   startPoint: 4.23
   endPoint: 4.3
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
+  markModel: {fileID: 0}
   effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 1
   text: {fileID: 0}
@@ -309,12 +288,7 @@ MonoBehaviour:
   gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
   startPoint: 1
   endPoint: 1.49
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
+  markModel: {fileID: 0}
   effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 1
   text: {fileID: 0}
@@ -330,6 +304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 3
+  damage: 10
   focusGrace: 0.1
   focusDuration: 1
   cameraWideSizeRatio: 0.2
@@ -348,27 +323,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points:
-  - {x: 6.147487, y: 5.2643337}
-  - {x: 11.67575, y: 4.780612}
-  - {x: 17.204012, y: 4.2968903}
-  - {x: 12.574092, y: -6.2068067}
-  - {x: 8.289689, y: -5.032052}
-  - {x: 4.005286, y: -3.8572974}
-  - {x: -18.949493, y: 3.7898397}
+  - {x: 4.583033, y: 5.505019}
+  - {x: 10.111296, y: 5.0212975}
+  - {x: 15.639557, y: 4.5375757}
+  - {x: 10.668882, y: -5.918138}
+  - {x: 6.3844757, y: -4.7433834}
+  - {x: 2.1000729, y: -3.5686288}
+  - {x: -16.005072, y: 2.4619637}
   - {x: -5.945585, y: -4.3410187}
-  - {x: 7.058324, y: -12.471877}
-  - {x: -14.168873, y: -6.414117}
-  - {x: -14.168873, y: -1.4386817}
-  - {x: -14.168873, y: 3.5367534}
+  - {x: 4.113902, y: -11.144001}
+  - {x: -11.917089, y: -7.330147}
+  - {x: -11.917089, y: -2.354712}
+  - {x: -11.917089, y: 2.6207232}
   - {x: -11.793789, y: 6.259781}
   - {x: -6.1690593, y: 7.2274766}
   - {x: -0.54432964, y: 8.195172}
-  - {x: 1.9623737, y: 0.039271355}
-  - {x: 3.8293262, y: 3.4776564}
-  - {x: 5.6962786, y: 6.9160414}
-  - {x: -5.927135, y: 5.9573755}
+  - {x: 7.3250723, y: 4.040263}
+  - {x: 3.021054, y: 2.9580536}
+  - {x: -1.2829645, y: 1.875844}
+  - {x: 2.3965015, y: 0.7192254}
   - {x: 8.70926, y: -3.1147702}
-  - {x: 23.345655, y: -12.186916}
-  - {x: 9.374551, y: -7.046033}
-  - {x: 2.0563538, y: -6.743628}
-  - {x: -5.261843, y: -6.4412227}
+  - {x: 19.686125, y: -10.321274}
+  - {x: 6.5464945, y: -6.023119}
+  - {x: -0.7717006, y: -5.720714}
+  - {x: -8.089898, y: -5.4183087}
