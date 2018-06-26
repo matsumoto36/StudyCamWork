@@ -9,22 +9,20 @@ public class GameEnd : MonoBehaviour
     public Image ResultBack;
     //リザルトのタイトル
     public Text Result;
-    //スコア　左
+    //スコア　文字
     public Text ScoreFont;
-    //スコア　右
+    //スコア　数字
     public Text ScoreNumber;
-    //コンボ　左
+    //コンボ　文字
     public Text ComboFont;
-    //コンボ　右
+    //コンボ　数字
     public Text ComboNumber;
-    //正確さ　左
+    //正確さ　文字
     public Text AccuracyFont;
-    //正確さ　右
+    //正確さ　数字
     public Text AccuracyNumber;
 
     public GameObject canvas;
-
-    public Image oto;
 
     Text[] text = new Text[6];
 
@@ -34,6 +32,8 @@ public class GameEnd : MonoBehaviour
     //ステージセレクトボタン
     public Text StageSelect;
     public Text ClearStageSelect;
+
+    bool skip;
 
     // Use this for initialization
     void Start ()
@@ -58,17 +58,7 @@ public class GameEnd : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-        /*
-        //ゲームクリア時
-        if (Input.GetKeyDown(KeyCode.Z))//判定を変更しておくこと
-        {
-            StartCoroutine(GameClearResult());
-        }
-        //ゲームオーバー時
-        else if (Input.GetKeyDown(KeyCode.X))//判定を変更しておくこと
-        {
-            StartCoroutine(GameOverResult());
-        }*/
+
     }
 
     IEnumerator GameClearResult()
@@ -91,6 +81,15 @@ public class GameEnd : MonoBehaviour
 
         while (time < 1.0f)
         {
+            if (Input.GetMouseButton(0))
+            {
+                skip = true;
+            }
+            if (skip)
+            {
+                time = 1;
+            }
+
             time += Time.deltaTime;
             ResultBack.color = Color.Lerp(startColor, endColor, time);
             Result.color = Color.Lerp(TextstartColor, TextendColor, time);
@@ -104,20 +103,19 @@ public class GameEnd : MonoBehaviour
 
             while (time < 1.0f)
             {
-                //ScoreFont.color = Color.Lerp(TextstartColor, TextendColor, time);
-                //ScoreNumber.color = Color.Lerp(TextstartColor, TextendColor, time);
-                //ComboFont.color = Color.Lerp(TextstartColor, TextendColor, time);
-                //ComboNumber.color = Color.Lerp(TextstartColor, TextendColor, time);
-                //AccuracyFont.color = Color.Lerp(TextstartColor, TextendColor, time);
-                //AccuracyNumber.color = Color.Lerp(TextstartColor, TextendColor, time);
-
-                //ClearRetry.color = Color.Lerp(TextstartColor, TextendColor, time);
-                //ClearStageSelect.color = Color.Lerp(TextstartColor, TextendColor, time);
+                if (Input.GetMouseButton(0))
+                {
+                    skip = true;
+                }
+                if (skip)
+                {
+                    time = 1;
+                }
 
                 time += Time.deltaTime;
 
                 text[i].color = Color.Lerp(TextstartColor, TextendColor, time);
-
+                
                 yield return null;
             }
         }
@@ -126,6 +124,15 @@ public class GameEnd : MonoBehaviour
 
         while(time < 1.0)
         {
+            if (Input.GetMouseButton(0))
+            {
+                skip = true;
+            }
+            if (skip)
+            {
+                time = 1;
+            }
+
             time += Time.deltaTime;
 
             ClearRetry.color = Color.Lerp(TextstartColor, TextendColor, time);
@@ -154,6 +161,15 @@ public class GameEnd : MonoBehaviour
 
         while (time < 1.0f)
         {
+            if (Input.GetMouseButton(0))
+            {
+                skip = true;
+            }
+            if (skip)
+            {
+                time = 1;
+            }
+
             time += Time.deltaTime * 3;
             ResultBack.color = Color.Lerp(startColor, endColor, time);
 
@@ -164,8 +180,6 @@ public class GameEnd : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1);
-
-        oto.color = new Color(1, 1, 1, 1);
     }
 
 	public void OnRetryClick() {
