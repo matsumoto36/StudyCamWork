@@ -62,6 +62,9 @@ public class GimmickTeleport : GimmickBase {
 
 		p.GetAttribute("WaitTime").ValueFloat = waitTime;
 		p.GetAttribute("Radius").ValueFloat = player.Body.localScale.x / 2;
+
+		AudioManager.PlaySE("magic-drain1");
+		StartCoroutine(PlaySEDelay(waitTime - 0.1f));
 	}
 
 	public override void OnApplyUpdate(Player player, float t) {
@@ -96,5 +99,10 @@ public class GimmickTeleport : GimmickBase {
 
 		lineRenderer.material.SetColor("_Color", gimmickColor);
 		base.EditGimmickLine(lineRenderer, ref z);
+	}
+
+	IEnumerator PlaySEDelay(float t) {
+		yield return new WaitForSeconds(t);
+		AudioManager.PlaySE("magic-gravity1");
 	}
 }

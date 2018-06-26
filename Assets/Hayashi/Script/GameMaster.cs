@@ -109,6 +109,15 @@ public class GameMaster : MonoBehaviour {
 
 		State = GameState.Ending;
 
+		if(MouseCamera.Accuracy < 1.0f) {
+			//通常クリア
+			AudioManager.PlaySE("people-performance-cheer2");
+		}
+		else {
+			//パーフェクト
+			AudioManager.PlaySE("people-performance-cheer1");
+		}
+
 		//データのセーブ
 		if(GameData.stageData != null) {
 			var data = GameData.stageData[loadPathName];
@@ -143,16 +152,13 @@ public class GameMaster : MonoBehaviour {
 			OnGameStartCountDown();
 
 		yield return new WaitForSeconds(1);
-		AudioManager.PlaySE("decision1");
+		AudioManager.PlaySE("CountDown");
 		countDownText.text = "3";
 		yield return new WaitForSeconds(1);
-		AudioManager.PlaySE("decision1");
 		countDownText.text = "2";
 		yield return new WaitForSeconds(1);
-		AudioManager.PlaySE("decision1");
 		countDownText.text = "1";
 		yield return new WaitForSeconds(1);
-		AudioManager.PlaySE("decision1");
 		countDownText.text = "Queue";
 		yield return new WaitForSeconds(1);
 

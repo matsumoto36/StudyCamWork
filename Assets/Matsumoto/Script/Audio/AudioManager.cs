@@ -48,6 +48,12 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 		action();
 	}
 
+	public static void ReleaseRawSE(AudioSource src) {
+		src.name = "[Stopped]";
+		src.Stop();
+		ObjectPooler.ReleaseInstance(src.gameObject);
+	}
+
 	/// <summary>
 	/// 各音情報を読み込み
 	/// </summary>
@@ -127,12 +133,35 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	}
 
 	/// <summary>
+	/// SEを再生する
+	/// </summary>
+	/// <param name="type">SEの名前</param>
+	/// <param name="vol">音量</param>
+	public static AudioSource PlaySERaw(string SEName, float vol = 1.0f) {
+
+		//SE取得
+		var info = GetSEInfo(SEName);
+		if(info == null) return null;
+
+		//情報を取り付ける
+		var src = Instance.poolSE.GetInstance().GetComponent<AudioSource>();
+		src.name = "[Audio SE - " + SEName + "]";
+		src.transform.SetParent(Instance.transform);
+		src.clip = info.clip;
+		src.volume = vol;
+		src.outputAudioMixerGroup = Instance.mixerGroups[0];
+		src.Play();
+
+		return src;
+	}
+
+	/// <summary>
 	/// BGMを再生する
 	/// </summary>
 	/// <param name="BGMName">BGMの名前</param>
 	/// <param name="vol">音量</param>
 	/// <param name="isLoop">ループ再生するか</param>
-	/// <returns>再生しているSE</returns>
+	/// <returns>再生しているBGM</returns>
 	public static AudioSource PlayBGM(string BGMName, float vol = 1.0f, bool isLoop = true) {
 
 		//BGM取得
