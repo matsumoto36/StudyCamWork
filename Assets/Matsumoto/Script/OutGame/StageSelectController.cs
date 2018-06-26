@@ -20,7 +20,13 @@ public class StageSelectController : MonoBehaviour {
 	public StageWindow stageContentView;
 	public QuitGameWindow quitWindow;
 
+	public TextMesh clickStartText;
 	public Image monitorEffect;
+
+	Coroutine clickClickAnimationCoroutine;
+
+	public Transform directionalLight;
+	public float lightMoveSpeed = 1;
 
 	StageSelectState state = StageSelectState.Opening;
 	
@@ -52,12 +58,26 @@ public class StageSelectController : MonoBehaviour {
 		foreach(var item in stages) {
 			item.Init(this);
 		}
+
+		//アニメーション再生
+		clickClickAnimationCoroutine = StartCoroutine(ClickAnimation());
+		StartCoroutine(TimeAnimation());
+
+		//BGM再生
+		if(AudioManager.CurrentBGMName != "") {
+			AudioManager.FadeOut(2.0f);
+		}
+		AudioManager.FadeIn(1.0f, "town1");
 	}
 
 	void Update() {
 		if(state == StageSelectState.Opening && Input.GetMouseButtonDown(0)) {
 			Camera.main.GetComponent<PlayableDirector>().Play();
 			state = StageSelectState.ListView;
+
+			//アニメーションを止める
+			StopCoroutine(clickClickAnimationCoroutine);
+			clickStartText.color = new Color(0, 0, 0, 0);
 		}
 	}
 
@@ -84,6 +104,33 @@ public class StageSelectController : MonoBehaviour {
 			default:
 				break;
 		}
+	}
+
+	IEnumerator ClickAnimation() {
+
+		var textColor = clickStartText.color;
+		var speed = 1;
+
+		while(true) {
+
+			textColor.a = Mathf.Abs(Mathf.Sin(Time.time * speed));
+			clickStartText.color = textColor;
+			yield return null;
+		}
+
+	}
+
+	IEnumerator TimeAnimation() {
+
+		var speed = lightMoveSpeed;
+
+		while(true) {
+
+			directionalLight.rotation *= Quaternion.Euler(new Vector3(1 * speed * Time.deltaTime, 0, 0));
+
+			yield return null;
+		}
+
 	}
 
 	public void ShowStageWindow(StageMoveButton button) {

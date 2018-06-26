@@ -22,12 +22,18 @@ public class StageWindow : MonoBehaviour {
 
 	public Button startButton;
 
+	bool isSceneMove = false;
+
 	void Start() {
 		startButton.onClick
 			.AddListener(MoveStage);
 	}
 
 	void MoveStage() {
+
+		if(isSceneMove) return;
+		isSceneMove = true;
+
 		AudioManager.PlaySE("Button3");
 		GameMaster.LoadPathName = loadPathName;
 		GameMaster.LoadStudioName = loadStudioName;

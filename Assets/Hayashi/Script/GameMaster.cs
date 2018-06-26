@@ -60,8 +60,11 @@ public class GameMaster : MonoBehaviour {
 
 		countDownText.text = "";
 
-		//Debug BGM再生
-		AudioManager.PlayBGM("bgm_maoudamashii_cyber45");
+		//BGM再生
+		Debug.Log(AudioManager.CurrentBGMName);
+		if(AudioManager.CurrentBGMName != "StageBGM1") {
+			AudioManager.CrossFade(1.0f, "StageBGM1");
+		}
 	}
 
 	void Start() {

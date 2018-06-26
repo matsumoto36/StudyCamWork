@@ -10,8 +10,11 @@ using UnityEngine;
 /// </summary>
 public class GimmickManager : MonoBehaviour {
 
+	public const float LINE_WIDTH_MIN = 0.05f;
+	public const float LINE_WIDTH_MAX = 0.2f;
+	public const float MOVE_Z = 18;
+
 	public LineRenderer linePre;
-	public float moveZ = 18;
 
 	Player player;
 	GimmickInfo[] gimmicks;
@@ -158,21 +161,25 @@ public class GimmickManager : MonoBehaviour {
 			var diff = to - from;
 			if(diff > 0) {
 
-				var partition = (int)(32 * diff);
+				var partition = (int)(64 * diff);
 				if(partition == 0) partition = 1;
 
 				var dt = diff / partition;
 				var point = new Vector3[partition + 1];
+				var keyframe = new Keyframe[partition + 1];
 
 				for(int i = 0;i <= partition;i++) {
 					point[i] = path.GetPoint((from + dt * i) / path.LineCount);
 					point[i].z = lineZ;
+
+					keyframe[i] = new Keyframe(i / (float)partition, Mathf.Lerp(LINE_WIDTH_MIN, LINE_WIDTH_MAX, 1 - lineZ / MOVE_Z));
 				}
 
 				var l = Instantiate(linePre);
 				l.material = new Material(l.material);
 				l.positionCount = point.Length;
 				l.SetPositions(point);
+				l.widthCurve = new AnimationCurve(keyframe);
 				return l;
 			}
 

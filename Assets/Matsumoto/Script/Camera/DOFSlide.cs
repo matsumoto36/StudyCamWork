@@ -54,6 +54,8 @@ public class DOFSlide : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		if(GameMaster.Instance.State != GameState.Playing) return;
+
 		IsFocus = Input.GetMouseButton(0);
 
 		var focusAngle = IsFocus ? 1 : -1;
