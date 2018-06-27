@@ -7,6 +7,8 @@ public class GameEnd : MonoBehaviour
 {
     //リザルトの背景
     public Image ResultBack;
+    //リザルトの背景の枠
+    public Image ResultBackFrame;
     //リザルトのタイトル
     public Text Result;
     //スコア　文字
@@ -22,28 +24,54 @@ public class GameEnd : MonoBehaviour
     //正確さ　数字
     public Text AccuracyNumber;
 
+    //リザルト用キャンバス
     public GameObject canvas;
 
     Text[] text = new Text[6];
 
     //リトライボタン
-    public Text Retry;
-    public Text ClearRetry;
+    public CanvasGroup Retry;
     //ステージセレクトボタン
-    public Text StageSelect;
-    public Text ClearStageSelect;
-
+    public CanvasGroup Back;
+    //ネクストステージボタン
+    public CanvasGroup Next;
+    //リザルトのスキップ
     bool skip;
+
+    Color startColor = new Color(0, 0, 0, 0);
+    Color endColor = new Color(0, 0, 0, 0.8f);
+
+    Color TextstartColor = new Color(1, 1, 1, 0);
+    Color TextendColor = new Color(1, 1, 1, 1);
 
     // Use this for initialization
     void Start ()
     {
         text[0] = ScoreFont;
         text[1] = ScoreNumber;
-        text[2] = ComboFont;
-        text[3] = ComboNumber;
-        text[4] = AccuracyFont;
-        text[5] = AccuracyNumber;
+        text[2] = AccuracyFont;
+        text[3] = AccuracyNumber;
+        text[4] = ComboFont;
+        text[5] = ComboNumber;
+
+        //グループ内のUI要素が入力を受け付けるかどうか
+        Retry.interactable = false;
+        Back.interactable = false;
+        Next.interactable = false;
+
+        ResultBack.color = startColor;
+        ResultBackFrame.color = TextstartColor;
+        Result.color = TextstartColor;
+        ScoreFont.color = TextstartColor;
+        ScoreNumber.color = TextstartColor;
+        ComboFont.color = TextstartColor;
+        ComboNumber.color = TextstartColor;
+        AccuracyFont.color = TextstartColor;
+        AccuracyNumber.color = TextstartColor;
+
+        Retry.alpha = 0;
+        Back.alpha = 0;
+        Next.alpha = 0;
 
         GameMaster.Instance.OnGameClear += () =>
         {
@@ -61,16 +89,14 @@ public class GameEnd : MonoBehaviour
 
     }
 
+    //ゲームクリア時のコルーチン
     IEnumerator GameClearResult()
     {
-        Color startColor = new Color(0, 0, 0, 0);
-        Color endColor = new Color(0, 0, 0, 0.8f);
+        //Color startColor = new Color(0, 0, 0, 0);
+        //Color endColor = new Color(0, 0, 0, 0.8f);
 
-        Color TextstartColor = new Color(1, 1, 1, 0);
-        Color TextendColor = new Color(1, 1, 1, 1);
-
-        ClearRetry.gameObject.SetActive(true);
-        ClearStageSelect.gameObject.SetActive(true);
+        //Color TextstartColor = new Color(1, 1, 1, 0);
+        //Color TextendColor = new Color(1, 1, 1, 1);
 
         //α値を変更する時間
         float time = 0;
@@ -122,7 +148,15 @@ public class GameEnd : MonoBehaviour
 
         time = 0;
 
-        while(time < 1.0)
+        //Retry.gameObject.SetActive(true);
+        //StageSelect.gameObject.SetActive(true);
+
+        //グループ内のUI要素が入力を受け付けるかどうか
+        Retry.interactable = true;
+        Back.interactable = true;
+        Next.interactable = true;
+
+        while (time < 1.0)
         {
             if (Input.GetMouseButton(0))
             {
@@ -135,24 +169,24 @@ public class GameEnd : MonoBehaviour
 
             time += Time.deltaTime;
 
-            ClearRetry.color = Color.Lerp(TextstartColor, TextendColor, time);
-            ClearStageSelect.color = Color.Lerp(TextstartColor, TextendColor, time);
-
+            Retry.alpha = Mathf.Lerp(0, 1, time);
+            Back.alpha = Mathf.Lerp(0, 1, time);
+            Next.alpha = Mathf.Lerp(0, 1, time);
+            
             yield return null;
         }
         //yield return new WaitForSeconds(1);
     }
 
+    //ゲームオーバー時のコルーチン
     IEnumerator GameOverResult()
     {
-        Color startColor = new Color(0, 0, 0, 0);
-        Color endColor = new Color(0, 0, 0, 0.8f);
+        //Retry.gameObject.SetActive(true);
+        //Back.gameObject.SetActive(true);
 
-        Color TextstartColor = new Color(1, 1, 1, 0);
-        Color TextendColor = new Color(1, 1, 1, 1);
-
-        Retry.gameObject.SetActive(true);
-        StageSelect.gameObject.SetActive(true);
+        //グループ内のUI要素が入力を受け付けるかどうか
+        Retry.interactable = true;
+        Back.interactable = true;
 
         //α値を変更する時間
         float time = 0;
@@ -173,8 +207,8 @@ public class GameEnd : MonoBehaviour
             time += Time.deltaTime * 3;
             ResultBack.color = Color.Lerp(startColor, endColor, time);
 
-            Retry.color = Color.Lerp(TextstartColor, TextendColor, time);
-            StageSelect.color = Color.Lerp(TextstartColor, TextendColor, time);
+            Retry.alpha = Mathf.Lerp(0, 1, time);
+            Back.alpha = Mathf.Lerp(0, 1, time);
 
             yield return null;
         }
