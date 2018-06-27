@@ -141,7 +141,7 @@ public class MouseCamera : MonoBehaviour
                 gauge = Mathf.Min(gauge + Time.deltaTime / gaugeAmount, 1);
             }
 
-			CaptureStatus = IsPlayerCapture();
+			CaptureStatus = IsPlayerCapture(cameraObject.GetObjectPosition());
 
 			//プレイヤーにステータスを伝える
             targetPlayer.SetLight(CaptureStatus);
@@ -192,7 +192,7 @@ public class MouseCamera : MonoBehaviour
 	/// プレイヤーがいい感じにキャプチャーされているか判定する
 	/// </summary>
 	/// <returns></returns>
-	PlayerCaptureStatus IsPlayerCapture()
+	PlayerCaptureStatus IsPlayerCapture(Vector2 cameraPosition)
     {                   //主なあたり判定
 
         if (!targetPlayer) return PlayerCaptureStatus.None;
@@ -207,7 +207,7 @@ public class MouseCamera : MonoBehaviour
         var sizeOffset = new Vector2(0, 0);
 		var checkPoint = Camera.main.WorldToScreenPoint(targetPlayer.transform.position);  //スクリーン座標に置き換える
         var rect = new Rect(
-			(Vector2)Input.mousePosition - (wideCameraSize / 2),
+			cameraPosition - (wideCameraSize / 2),
             wideCameraSize + sizeOffset);
 
 		var isInside = rect.Contains(checkPoint);
@@ -217,7 +217,7 @@ public class MouseCamera : MonoBehaviour
 		if(isFocus && !isInside) return PlayerCaptureStatus.FocusOnly;
 
 		rect = new Rect(
-			(Vector2)Input.mousePosition - (smallCameraSize / 2),
+			cameraPosition - (smallCameraSize / 2),
 			smallCameraSize + sizeOffset);
 
 		var isInsideSmall = rect.Contains(checkPoint);
@@ -226,21 +226,7 @@ public class MouseCamera : MonoBehaviour
 
 		return PlayerCaptureStatus.All;
     }
-    bool IsPSmallCapture()
-    {
 
-        if (!targetPlayer) return false;
-
-        var sizeOffset = new Vector2(0, 0);
-        var rect = new Rect(
-            (Vector2)Input.mousePosition - (smallCameraSize / 2),
-            smallCameraSize + sizeOffset);
-
-        var checkPoint = Camera.main.WorldToScreenPoint(targetPlayer.transform.position);
-        return rect.Contains(checkPoint);
-        
-
-    }
     void ComboChain()
     {
         if (playTime > comboTimeCount)

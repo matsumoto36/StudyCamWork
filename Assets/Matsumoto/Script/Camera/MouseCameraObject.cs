@@ -103,6 +103,13 @@ public class MouseCameraObject : MonoBehaviour {
 	/// </summary>
 	public void UpdateCameraPosition(Vector2 mousePosition) {
 
+		//範囲内に収める
+		mousePosition.x = Mathf.Min(mousePosition.x, Screen.width - cameraUI.sizeDelta.x / 2);
+		mousePosition.x = Mathf.Max(mousePosition.x, cameraUI.sizeDelta.x / 2);
+
+		mousePosition.y = Mathf.Min(mousePosition.y, Screen.height - cameraUI.sizeDelta.y / 2);
+		mousePosition.y = Mathf.Max(mousePosition.y, cameraUI.sizeDelta.y / 2);
+
 		//スクリーン位置を更新
 		cameraUI.position = mousePosition;
 
@@ -126,6 +133,14 @@ public class MouseCameraObject : MonoBehaviour {
 		);
 
 		//if(GameMaster.Instance.State == GameState.Playing) RecordFrame();
+	}
+
+	/// <summary>
+	/// カメラの位置をスクリーン座標系で取得
+	/// </summary>
+	/// <returns></returns>
+	public Vector2 GetObjectPosition() {
+		return cameraUI.position;
 	}
 
 	/// <summary>
