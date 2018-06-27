@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(GimmickBase), true)]
+[CanEditMultipleObjects]
 public class GimmickBaseInspector : Editor {
 
 	const float LINE_WIDTH = 10;

@@ -22,6 +22,7 @@ public class StageWindow : MonoBehaviour {
 
 	public Button startButton;
 
+	StageMoveButton button;
 	bool isSceneMove = false;
 
 	void Start() {
@@ -34,13 +35,28 @@ public class StageWindow : MonoBehaviour {
 		if(isSceneMove) return;
 		isSceneMove = true;
 
-		AudioManager.PlaySE("Button3");
+		//先のステージをすべて登録
+		var nextStageList = new List<string[]>();
+		while(button.nextStage) {
+			button = button.nextStage;
+
+			nextStageList.Add(
+				new string[] { button.loadPathName, button.loadStudioName }
+				);
+		}
+		nextStageList.Add(null);
+
+		GameMaster.nextStageList = nextStageList;
 		GameMaster.LoadPathName = loadPathName;
 		GameMaster.LoadStudioName = loadStudioName;
+
+		AudioManager.PlaySE("Button3");
 		FindObjectOfType<TimerController>().SceneMove("GameScene");
 	}
 
 	public void Show(StageMoveButton button) {
+
+		this.button = button;
 
 		frameImage.sprite = button.frameImage.sprite;
 		frameImage.color = button.frameImage.color;

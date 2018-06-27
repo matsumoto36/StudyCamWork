@@ -37,6 +37,8 @@ public class GameEnd : MonoBehaviour
     public CanvasGroup Next;
     //リザルトのスキップ
     bool skip;
+	//シーン移動中か？
+	bool isSceneMoving = false;
 
     Color startColor = new Color(0, 0, 0, 0);
     Color endColor = new Color(0, 0, 0, 0.8f);
@@ -119,8 +121,10 @@ public class GameEnd : MonoBehaviour
             time += Time.deltaTime;
             ResultBack.color = Color.Lerp(startColor, endColor, time);
             Result.color = Color.Lerp(TextstartColor, TextendColor, time);
+			ResultBackFrame.color = Color.Lerp(startColor, endColor, time);
 
-            yield return null;
+
+			yield return null;
         }
 
         for (int i = 0; i < 6; i++)
@@ -154,9 +158,11 @@ public class GameEnd : MonoBehaviour
         //グループ内のUI要素が入力を受け付けるかどうか
         Retry.interactable = true;
         Back.interactable = true;
-        Next.interactable = true;
 
-        while (time < 1.0)
+		if(GameMaster.Instance.CanMoveNextStage())
+			Next.interactable = true;
+
+		while (time < 1.0)
         {
             if (Input.GetMouseButton(0))
             {
@@ -171,7 +177,9 @@ public class GameEnd : MonoBehaviour
 
             Retry.alpha = Mathf.Lerp(0, 1, time);
             Back.alpha = Mathf.Lerp(0, 1, time);
-            Next.alpha = Mathf.Lerp(0, 1, time);
+
+			if(GameMaster.Instance.CanMoveNextStage())
+				Next.alpha = Mathf.Lerp(0, 1, time);
             
             yield return null;
         }
@@ -205,9 +213,7 @@ public class GameEnd : MonoBehaviour
             }
 
             time += Time.deltaTime * 3;
-            ResultBack.color = Color.Lerp(startColor, endColor, time);
-
-            Retry.alpha = Mathf.Lerp(0, 1, time);
+			Retry.alpha = Mathf.Lerp(0, 1, time);
             Back.alpha = Mathf.Lerp(0, 1, time);
 
             yield return null;
@@ -220,6 +226,9 @@ public class GameEnd : MonoBehaviour
 
 		AudioManager.PlaySE("click03");
 
+		if(isSceneMoving) return;
+		isSceneMoving = true;
+
 		FindObjectOfType<TimerController>()
 			.SceneMove("GameScene");
 	}
@@ -228,9 +237,22 @@ public class GameEnd : MonoBehaviour
 
 		AudioManager.PlaySE("click03");
 
+		if(isSceneMoving) return;
+		isSceneMoving = true;
+
 		StageSelectController.movieSkip = true;
 
 		FindObjectOfType<TimerController>()
 			.SceneMove("TitleScene");
+	}
+
+	public void OnNextStageClick() {
+
+		AudioManager.PlaySE("click03");
+
+		if(isSceneMoving) return;
+		isSceneMoving = true;
+
+		GameMaster.Instance.NextScene();
 	}
 }
