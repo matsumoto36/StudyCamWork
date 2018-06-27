@@ -181,7 +181,7 @@ public class MouseCamera : MonoBehaviour
 			scoreTextView = Mathf.Min(scoreTextView + scoreUpRate, Score);
 			scoreText.text = scoreTextView.ToString("000000");
 
-			accTextView = Mathf.MoveTowards(accTextView, Accuracy, accDownRate);
+			accTextView = Mathf.MoveTowards(accTextView, Accuracy, Time.deltaTime / 10);
 			if(accTextView == 1.0f) accText.text = ("100%");
             else accText.text = accTextView.ToString("P");
 
@@ -191,9 +191,6 @@ public class MouseCamera : MonoBehaviour
 
 	void CalcScoreUpRate() {
 		scoreUpRate = (int)((Score - scoreTextView) * Time.deltaTime);
-	}
-	void CalcAccDownRate() {
-		accDownRate = Mathf.Abs((Accuracy - accTextView) * Time.deltaTime);
 	}
 
 	/// <summary>
@@ -239,7 +236,7 @@ public class MouseCamera : MonoBehaviour
     {
         if (playTime * checkSpeed > comboTimeCount)
         {
-			scoreMax += gameBalance.BaseScore + gameBalance.CameraInsideScore;
+			if(!isTeleport) scoreMax += gameBalance.BaseScore + gameBalance.CameraInsideScore;
 			comboTimeCount++;
 
 			if (CaptureStatus == PlayerCaptureStatus.Near ||
@@ -273,8 +270,6 @@ public class MouseCamera : MonoBehaviour
             {
                 if (!IsTeleport)
                 {
-					CalcAccDownRate();
-
 					//ダメージ演出
 					StartCoroutine(cameraObject.DamageFlash());
 

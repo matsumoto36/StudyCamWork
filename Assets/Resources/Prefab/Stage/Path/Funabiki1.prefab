@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114495344005383756}
   - component: {fileID: 114736323320622142}
   m_Layer: 0
-  m_Name: gm1
+  m_Name: Funabiki1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -286,7 +286,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
-  moveZ: 18
 --- !u!114 &114495344005383756
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -300,6 +299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpeed: 3
   damage: 10
+  checkWait: 1
   focusGrace: 0.1
   focusDuration: 1
   cameraWideSizeRatio: 0.2
