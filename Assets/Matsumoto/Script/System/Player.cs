@@ -32,7 +32,6 @@ public class Player : MonoBehaviour {
 
 	Bezier2D path;
 	PKFxFX particle;
-	float startTime;
 	float sumSpeed;
 
 	public Transform Body {
@@ -82,7 +81,7 @@ public class Player : MonoBehaviour {
 
 		SetLight(PlayerCaptureStatus.All);
 
-		GameMaster.Instance.OnGameStart += () => startTime = Time.time;
+		StartCoroutine(MoveAudioUpdate());
 	}
 
 	public void SetLight(PlayerCaptureStatus status) {
@@ -159,5 +158,32 @@ public class Player : MonoBehaviour {
 		if(t >= 1.0f) {
 			GameMaster.Instance.GameClear();
 		}
+	}
+
+	IEnumerator MoveAudioUpdate() {
+
+		var moveSound = AudioManager.PlaySERaw("PlayerMoveLoop");
+		moveSound.transform.SetParent(transform);
+		moveSound.loop = true;
+
+		var volume = 0.0f;
+		var fadeSpeed = 1.0f;
+
+		while(true) {
+
+			var canPlay = false;
+			if(Speed != 0) canPlay = true;
+			if(GameMaster.Instance.State == GameState.Playing) canPlay = true;
+			else canPlay = false;
+
+			var volumeVec = canPlay ? 1 : -1;
+			volume = Mathf.Clamp(volume + volumeVec * fadeSpeed * Time.deltaTime, 0, 1);
+
+			moveSound.volume = volume;
+			moveSound.pitch = Speed / 10;
+
+			yield return null;
+		}
+
 	}
 }

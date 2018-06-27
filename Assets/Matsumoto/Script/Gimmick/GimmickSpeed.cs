@@ -13,8 +13,6 @@ public class GimmickSpeed : GimmickBase {
 	PKFxFX particle;
 	Vector3 prevPlayerPos;
 
-	float duration;
-
 	public override void SpawnModel(Player player) {
 
 		if(speedMul >= 1) {
@@ -90,7 +88,7 @@ public class GimmickSpeed : GimmickBase {
 	}
 
 	public override float GetSectionTime(float speed) {
-		return duration = path.GetPointLength(startPoint, endPoint) / speed / speedMul;
+		return path.GetPointLength(startPoint, endPoint) / speed / speedMul;
 	}
 
 	public override void EditGimmickLine(LineRenderer lineRenderer, ref float z) {

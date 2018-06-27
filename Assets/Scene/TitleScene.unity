@@ -715,7 +715,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 2090979048}
   stageImage: {fileID: 210084332}
   frameImage: {fileID: 2006014062}
 --- !u!1 &96947359
@@ -869,8 +869,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000022888}
-  m_SizeDelta: {x: 0, y: 830}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 857.6}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &113917865
 MonoBehaviour:
@@ -1028,7 +1028,7 @@ MonoBehaviour:
   loadPathName: 1-3
   loadStudioName: SFStage
   title: 1-3
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 350888358}
   stageImage: {fileID: 197811476}
   frameImage: {fileID: 1295770856}
 --- !u!1 &140008488
@@ -1071,8 +1071,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000022888}
-  m_SizeDelta: {x: 0, y: 830}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 857.6}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &140008490
 MonoBehaviour:
@@ -1267,7 +1267,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 583688738}
   stageImage: {fileID: 1481884566}
   frameImage: {fileID: 2067137131}
 --- !u!1 &177812593
@@ -1483,7 +1483,7 @@ MonoBehaviour:
   loadPathName: 3-3
   loadStudioName: SFStage
   title: 3-3
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1263599687}
   stageImage: {fileID: 1599378567}
   frameImage: {fileID: 1220640296}
 --- !u!1 &197811473
@@ -1997,8 +1997,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: aacde636c20180f4d932aac481094606, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2054,7 +2054,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 790803027}
   stageImage: {fileID: 1664515039}
   frameImage: {fileID: 934617855}
 --- !u!1 &234520595
@@ -2362,7 +2362,7 @@ MonoBehaviour:
   loadPathName: 2-8
   loadStudioName: SFStage
   title: 2-8
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1450550221}
   stageImage: {fileID: 1716442435}
   frameImage: {fileID: 1799938103}
 --- !u!1 &283029758
@@ -2515,7 +2515,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.000091553}
-  m_SizeDelta: {x: 0, y: 830}
+  m_SizeDelta: {x: 0, y: 857.6}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &329626974
 MonoBehaviour:
@@ -2579,6 +2579,7 @@ RectTransform:
   m_Children:
   - {fileID: 1631101237}
   - {fileID: 1028248542}
+  - {fileID: 1711144790}
   m_Father: {fileID: 1356053533}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2606,8 +2607,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: aacde636c20180f4d932aac481094606, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2806,7 +2807,7 @@ MonoBehaviour:
   loadPathName: 1-4
   loadStudioName: SFStage
   title: 1-4
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1530571440}
   stageImage: {fileID: 934158798}
   frameImage: {fileID: 436967315}
 --- !u!1 &352878797
@@ -3070,7 +3071,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 2008941165}
   stageImage: {fileID: 2030759034}
   frameImage: {fileID: 513656956}
 --- !u!1 &436967313
@@ -3672,7 +3673,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 948834259}
   stageImage: {fileID: 1497314765}
   frameImage: {fileID: 1758476383}
 --- !u!1 &545155621
@@ -3940,7 +3941,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 95776392}
   stageImage: {fileID: 1904908300}
   frameImage: {fileID: 212204654}
 --- !u!1 &593786304
@@ -3992,7 +3993,7 @@ MonoBehaviour:
   loadPathName: 2-6
   loadStudioName: SFStage
   title: 2-6
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1154784442}
   stageImage: {fileID: 1966502678}
   frameImage: {fileID: 1135939668}
 --- !u!1 &595018900
@@ -4265,7 +4266,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 543707667}
   stageImage: {fileID: 759915782}
   frameImage: {fileID: 1144042025}
 --- !u!1 &652343993
@@ -4814,7 +4815,7 @@ MonoBehaviour:
   loadPathName: 1-2
   loadStudioName: SFStage
   title: 1-2
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 135863270}
   stageImage: {fileID: 2022674601}
   frameImage: {fileID: 1786861447}
 --- !u!1 &732234457
@@ -5341,7 +5342,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1692554980}
   stageImage: {fileID: 1230194539}
   frameImage: {fileID: 1501670087}
 --- !u!1 &800235122
@@ -6509,7 +6510,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1803636342}
   stageImage: {fileID: 884786361}
   frameImage: {fileID: 1503463546}
 --- !u!1 &949860955
@@ -6654,6 +6655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backButton: {fileID: 1766301011}
+  EndWindowBack: {fileID: 1711144793}
   stageContentView: {fileID: 986986700}
   quitWindow: {fileID: 1950783029}
   clickStartText: {fileID: 597793399}
@@ -6860,7 +6862,7 @@ MonoBehaviour:
   loadPathName: 3-5
   loadStudioName: SFStage
   title: 3-5
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 640321644}
   stageImage: {fileID: 152862510}
   frameImage: {fileID: 1224492455}
 --- !u!1 &993723726
@@ -7313,8 +7315,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -107}
-  m_SizeDelta: {x: 600, y: 100}
+  m_AnchoredPosition: {x: -200, y: -107}
+  m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1028248543
 MonoBehaviour:
@@ -7390,6 +7392,80 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1028248541}
+--- !u!1 &1034772914
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1034772915}
+  - component: {fileID: 1034772917}
+  - component: {fileID: 1034772916}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1034772915
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1034772914}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1711144790}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1034772916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1034772914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 19a9e6e58f09fd94fb499b3cacde106e, type: 3}
+    m_FontSize: 80
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 8
+    m_MaxSize: 300
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: No
+--- !u!222 &1034772917
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1034772914}
 --- !u!1 &1037475248
 GameObject:
   m_ObjectHideFlags: 0
@@ -7439,7 +7515,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1430900632}
   stageImage: {fileID: 1762481422}
   frameImage: {fileID: 653841288}
 --- !u!1 &1061632246
@@ -7529,7 +7605,7 @@ MonoBehaviour:
   loadPathName: 2-4
   loadStudioName: SFStage
   title: 2-4
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1861697919}
   stageImage: {fileID: 1794588939}
   frameImage: {fileID: 1800659540}
 --- !u!1 &1070586665
@@ -8361,7 +8437,7 @@ MonoBehaviour:
   loadPathName: 2-7
   loadStudioName: SFStage
   title: 2-7
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 274234734}
   stageImage: {fileID: 1003566651}
   frameImage: {fileID: 397680705}
 --- !u!1 &1160275368
@@ -8621,7 +8697,7 @@ MonoBehaviour:
   loadPathName: 2-1
   loadStudioName: SFStage
   title: 2-1
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1879349966}
   stageImage: {fileID: 1381655199}
   frameImage: {fileID: 333832672}
 --- !u!1 &1197796657
@@ -9247,7 +9323,7 @@ MonoBehaviour:
   loadPathName: 2-3
   loadStudioName: SFStage
   title: 2-3
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1065069294}
   stageImage: {fileID: 1556162377}
   frameImage: {fileID: 687087616}
 --- !u!1 &1250334851
@@ -9373,7 +9449,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 988278026}
   stageImage: {fileID: 1688247162}
   frameImage: {fileID: 1314601773}
 --- !u!1 &1276956110
@@ -9933,7 +10009,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 423046298}
   stageImage: {fileID: 510460422}
   frameImage: {fileID: 1858328494}
 --- !u!1 &1321577126
@@ -10061,8 +10137,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000022888}
-  m_SizeDelta: {x: 0, y: 830}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 857.6}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1322769187
 MonoBehaviour:
@@ -10736,7 +10812,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1037475250}
   stageImage: {fileID: 993723729}
   frameImage: {fileID: 1539282254}
 --- !u!1 &1381655196
@@ -11303,7 +11379,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 528900801}
   stageImage: {fileID: 542278164}
   frameImage: {fileID: 2037832095}
 --- !u!1 &1431895951
@@ -11355,7 +11431,7 @@ MonoBehaviour:
   loadPathName: 1-6
   loadStudioName: SFStage
   title: 1-6
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1844180311}
   stageImage: {fileID: 1276956113}
   frameImage: {fileID: 1730936676}
 --- !u!1 &1440370516
@@ -11555,7 +11631,7 @@ MonoBehaviour:
   loadPathName: 3-1
   loadStudioName: SFStage
   title: 3-1
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1909326884}
   stageImage: {fileID: 1343170251}
   frameImage: {fileID: 1461408288}
 --- !u!1 &1457018813 stripped
@@ -11958,8 +12034,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000061035156}
-  m_SizeDelta: {x: 0, y: 830}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 857.6}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1496668656
 MonoBehaviour:
@@ -12403,7 +12479,7 @@ MonoBehaviour:
   loadPathName: 1-1
   loadStudioName: SFStage
   title: 1-1
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 713533196}
   stageImage: {fileID: 744878097}
   frameImage: {fileID: 1278781306}
 --- !u!1 &1529918933
@@ -12529,7 +12605,7 @@ MonoBehaviour:
   loadPathName: 1-5
   loadStudioName: SFStage
   title: 1-5
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1431895953}
   stageImage: {fileID: 1910808873}
   frameImage: {fileID: 1233944729}
 --- !u!1 &1530684722
@@ -13917,7 +13993,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1320187138}
   stageImage: {fileID: 1496968352}
   frameImage: {fileID: 699870883}
 --- !u!1 &1692708292
@@ -13969,7 +14045,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1197722518}
   stageImage: {fileID: 1536523754}
   frameImage: {fileID: 15707945}
 --- !u!1 &1698349970
@@ -14342,6 +14418,117 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1707534039}
+--- !u!1 &1711144789
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1711144790}
+  - component: {fileID: 1711144792}
+  - component: {fileID: 1711144791}
+  - component: {fileID: 1711144793}
+  m_Layer: 5
+  m_Name: Button (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1711144790
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1711144789}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1034772915}
+  m_Father: {fileID: 331923068}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 200, y: -107.00003}
+  m_SizeDelta: {x: 300, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1711144791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1711144789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &1711144792
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1711144789}
+--- !u!114 &1711144793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1711144789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1711144791}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1716442432
 GameObject:
   m_ObjectHideFlags: 0
@@ -14699,7 +14886,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 16, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1731702686
@@ -14955,8 +15142,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -100}
-  m_SizeDelta: {x: 200, y: 100}
+  m_AnchoredPosition: {x: 150.8, y: -100}
+  m_SizeDelta: {x: 183.7, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1766301011
 MonoBehaviour:
@@ -15018,8 +15205,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 569c6592db5486e4396121b7bc608922, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -15261,7 +15448,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 230665826}
   stageImage: {fileID: 96947362}
   frameImage: {fileID: 469447698}
 --- !u!1 &1799938101
@@ -15451,7 +15638,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1799837091}
   stageImage: {fileID: 2023952002}
   frameImage: {fileID: 976940753}
 --- !u!1 &1841661822
@@ -15572,7 +15759,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1692708294}
   stageImage: {fileID: 1372318724}
   frameImage: {fileID: 748742538}
 --- !u!1 &1857938207
@@ -15762,7 +15949,7 @@ MonoBehaviour:
   loadPathName: 2-5
   loadStudioName: SFStage
   title: 2-5
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 593786306}
   stageImage: {fileID: 90264676}
   frameImage: {fileID: 1857938209}
 --- !u!1 &1879349964
@@ -15814,7 +16001,7 @@ MonoBehaviour:
   loadPathName: 2-2
   loadStudioName: SFStage
   title: 2-2
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1245379784}
   stageImage: {fileID: 1699119050}
   frameImage: {fileID: 1841661824}
 --- !u!1 &1904908297
@@ -15977,7 +16164,7 @@ MonoBehaviour:
   loadPathName: 3-2
   loadStudioName: SFStage
   title: 3-2
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 189860949}
   stageImage: {fileID: 831378918}
   frameImage: {fileID: 1929297340}
 --- !u!1 &1910808870
@@ -16582,7 +16769,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 169649231}
   stageImage: {fileID: 1392613031}
   frameImage: {fileID: 409990121}
 --- !u!1 &2011659228
@@ -17590,7 +17777,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1376630936}
   stageImage: {fileID: 1684405050}
   frameImage: {fileID: 1138165508}
 --- !u!1 &2093815174
