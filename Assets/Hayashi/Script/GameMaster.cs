@@ -64,7 +64,6 @@ public class GameMaster : MonoBehaviour {
 		countDownText.text = "";
 
 		//BGM再生
-		Debug.Log(AudioManager.CurrentBGMName);
 		if(AudioManager.CurrentBGMName != "StageBGM1") {
 			AudioManager.CrossFade(1.0f, "StageBGM1");
 		}
@@ -191,6 +190,7 @@ public class GameMaster : MonoBehaviour {
 	}
 
 	public bool CanMoveNextStage() {
+		if(nextStageList == null) return false;
 		return nextStageList[counter] != null;
 	}
 }
