@@ -2280,6 +2280,7 @@ GameObject:
   - component: {fileID: 981081408}
   - component: {fileID: 981081410}
   - component: {fileID: 981081409}
+  - component: {fileID: 981081411}
   m_Layer: 5
   m_Name: Combo
   m_TagString: Untagged
@@ -2337,13 +2338,28 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: x0
 --- !u!222 &981081410
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 981081407}
+--- !u!111 &981081411
+Animation:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 981081407}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: a65d755ee67ae9446872bd1f5160bce6, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: a65d755ee67ae9446872bd1f5160bce6, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &994340919
 GameObject:
   m_ObjectHideFlags: 0
