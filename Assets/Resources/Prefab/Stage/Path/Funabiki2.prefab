@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 114440902333139784}
   - component: {fileID: 114100233896503900}
   m_Layer: 0
-  m_Name: gm2
+  m_Name: Funabiki2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -326,12 +326,7 @@ MonoBehaviour:
   gimmickColor: {r: 1, g: 0, b: 0, a: 1}
   startPoint: 0.5
   endPoint: 0.8
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
+  markModel: {fileID: 0}
   text: {fileID: 0}
   speedMul: 5
 --- !u!114 &114073185063020506
@@ -348,12 +343,7 @@ MonoBehaviour:
   gimmickColor: {r: 1, g: 0, b: 0, a: 1}
   startPoint: 1.1
   endPoint: 1.5
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
+  markModel: {fileID: 0}
   text: {fileID: 0}
   speedMul: 5
 --- !u!114 &114075757227596626
@@ -370,12 +360,7 @@ MonoBehaviour:
   gimmickColor: {r: 1, g: 0, b: 0, a: 1}
   startPoint: 0.15
   endPoint: 0.5
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
+  markModel: {fileID: 0}
   text: {fileID: 0}
   speedMul: 2
 --- !u!114 &114100233896503900
@@ -416,12 +401,7 @@ MonoBehaviour:
   gimmickColor: {r: 1, g: 0, b: 0, a: 1}
   startPoint: 0.8
   endPoint: 1.1
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
+  markModel: {fileID: 0}
   text: {fileID: 0}
   speedMul: 2
 --- !u!114 &114407939440637524
@@ -438,12 +418,7 @@ MonoBehaviour:
   gimmickColor: {r: 1, g: 0, b: 0, a: 1}
   startPoint: 1.5
   endPoint: 1.83
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
+  markModel: {fileID: 0}
   text: {fileID: 0}
   speedMul: 2
 --- !u!114 &114415422978385676
@@ -460,12 +435,7 @@ MonoBehaviour:
   gimmickColor: {r: 1, g: 0, b: 0, a: 1}
   startPoint: 1.83
   endPoint: 2.05
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
+  markModel: {fileID: 0}
   text: {fileID: 0}
   speedMul: 5
 --- !u!114 &114440902333139784
@@ -480,6 +450,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 3
+  damage: 10
+  checkWait: 1
   focusGrace: 0.1
   focusDuration: 1
   cameraWideSizeRatio: 0.2
@@ -500,12 +472,7 @@ MonoBehaviour:
   gimmickColor: {r: 1, g: 0, b: 0, a: 1}
   startPoint: 0.03
   endPoint: 0.15
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
+  markModel: {fileID: 0}
   text: {fileID: 0}
   speedMul: 4
 --- !u!114 &114660981297705616
@@ -522,12 +489,7 @@ MonoBehaviour:
   gimmickColor: {r: 1, g: 0, b: 0, a: 1}
   startPoint: 2.5
   endPoint: 3
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
+  markModel: {fileID: 0}
   text: {fileID: 0}
   speedMul: 4
 --- !u!114 &114698227867447050
@@ -542,8 +504,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
-  moveZ: 18
-  lines: []
 --- !u!114 &114969798922778062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -558,11 +518,6 @@ MonoBehaviour:
   gimmickColor: {r: 1, g: 0, b: 0, a: 1}
   startPoint: 2.05
   endPoint: 2.5
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
+  markModel: {fileID: 0}
   text: {fileID: 0}
   speedMul: 2
