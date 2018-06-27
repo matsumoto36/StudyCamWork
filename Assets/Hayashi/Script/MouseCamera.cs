@@ -64,8 +64,10 @@ public class MouseCamera : MonoBehaviour
         set
         {
             isTeleport = value;
-            if (!isTeleport) CameraUpdate();
-            Debug.Log("bbbb");
+			if(!isTeleport) {
+				CameraUpdate();
+				Apply();
+			}
         }
     }
 
@@ -174,23 +176,29 @@ public class MouseCamera : MonoBehaviour
 
             
             ComboChain();
+			UpdateUI();
 
-            hpBar.value = life;
-			inCamhpBar.value = life;
 
-			scoreTextView = Mathf.Min(scoreTextView + scoreUpRate, Score);
-			scoreText.text = scoreTextView.ToString("000000");
-
-			accTextView = Mathf.MoveTowards(accTextView, Accuracy, Time.deltaTime / 10);
-			if(accTextView == 1.0f) accText.text = ("100%");
-            else accText.text = accTextView.ToString("P");
-
-            comboText.text = "x" + Combo.ToString("");
-        }
+		}
     }
 
 	void CalcScoreUpRate() {
 		scoreUpRate = (int)((Score - scoreTextView) * Time.deltaTime);
+	}
+
+	void UpdateUI() {
+
+		hpBar.value = life;
+		inCamhpBar.value = life;
+
+		scoreTextView = Mathf.Min(scoreTextView + scoreUpRate, Score);
+		scoreText.text = scoreTextView.ToString("000000");
+
+		accTextView = Mathf.MoveTowards(accTextView, Accuracy, Time.deltaTime / 10);
+		if(accTextView == 1.0f) accText.text = ("100%");
+		else accText.text = accTextView.ToString("P");
+
+		comboText.text = "x" + Combo.ToString("");
 	}
 
 	/// <summary>
@@ -236,59 +244,65 @@ public class MouseCamera : MonoBehaviour
     {
         if (playTime * checkSpeed > comboTimeCount)
         {
-			if(!isTeleport) scoreMax += gameBalance.BaseScore + gameBalance.CameraInsideScore;
 			comboTimeCount++;
-
-			if (CaptureStatus == PlayerCaptureStatus.Near ||
-				CaptureStatus == PlayerCaptureStatus.All)
-            {
-                if (!isTeleport)
-                {
-					if(CaptureStatus == PlayerCaptureStatus.All) {
-						plus = gameBalance.CameraInsideScore;
-					}
-					else {
-						plus = 0;
-					}
-
-					var point = plus + gameBalance.BaseScore;
-					if(Combo >= 1) {
-						Score += (int)(point * Combo * 1.05);
-					}
-					else if(Combo >= 0) {
-						Score += point;
-					}
-					CalcScoreUpRate();
-					scoreWithoutCombo += point;
-
-					Combo++;
-					StartCoroutine(FlashComboText());
-                }
-               
-            }
-            else
-            {
-                if (!IsTeleport)
-                {
-					//ダメージ演出
-					StartCoroutine(cameraObject.DamageFlash());
-
-					life -= lifeDamage;
-					if(life <= 0.0f) GameMaster.Instance.GameOver();
-				}
-
-				Debug.Log("damage");
-                if (!IsTeleport)
-                {
-                    if (ComboData <= Combo)
-                    {
-                        ComboData =Combo;
-                    }
-                    Combo = 0;
-                }
-            }
+			Apply();
 
 		}
+	}
+
+	/// <summary>
+	/// 実行されると判定によってスコア上昇かダメージが入る
+	/// </summary>
+	void Apply() {
+
+		if(!isTeleport) scoreMax += gameBalance.BaseScore + gameBalance.CameraInsideScore;
+
+		if(CaptureStatus == PlayerCaptureStatus.Near ||
+			CaptureStatus == PlayerCaptureStatus.All) {
+			if(!isTeleport) {
+				if(CaptureStatus == PlayerCaptureStatus.All) {
+					plus = gameBalance.CameraInsideScore;
+				}
+				else {
+					plus = 0;
+				}
+
+				var point = plus + gameBalance.BaseScore;
+				if(Combo >= 1) {
+					Score += (int)(point * Combo * 1.05);
+				}
+				else if(Combo >= 0) {
+					Score += point;
+				}
+				CalcScoreUpRate();
+				scoreWithoutCombo += point;
+
+				Combo++;
+				StartCoroutine(FlashComboText());
+			}
+
+		}
+		else {
+			if(!IsTeleport) {
+				//ダメージ演出
+				StartCoroutine(cameraObject.DamageFlash());
+
+				life -= lifeDamage;
+				if(life <= 0.0f) {
+					UpdateUI();
+					GameMaster.Instance.GameOver();
+				}
+			}
+
+			Debug.Log("damage");
+			if(!IsTeleport) {
+				if(ComboData <= Combo) {
+					ComboData = Combo;
+				}
+				Combo = 0;
+			}
+		}
+
 	}
 
 	IEnumerator FlashComboText() {
