@@ -17,7 +17,9 @@ public class StageSelectController : MonoBehaviour {
 	public static bool movieSkip;
 
 	public Button backButton;
-	public StageWindow stageContentView;
+    public Button EndWindowBack;
+
+    public StageWindow stageContentView;
 	public QuitGameWindow quitWindow;
 
 	public TextMesh clickStartText;
@@ -48,7 +50,9 @@ public class StageSelectController : MonoBehaviour {
 	void Start () {
 
 		backButton.onClick.AddListener(BackButton);
-		stageContentView.Hide();
+        EndWindowBack.onClick.AddListener(BackButton);
+
+        stageContentView.Hide();
 		quitWindow.IsActive(false);
 
 		var stages = FindObjectsOfType<StageMoveButton>();
