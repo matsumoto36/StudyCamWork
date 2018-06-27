@@ -12,6 +12,8 @@ public class GimmickFocusIO : GimmickBase {
 
 	float playerSpeed;
 
+	DOFSlide slide;
+
 	public override void SpawnModel(Player player) {
 
 		if(isToFar) {
@@ -44,6 +46,17 @@ public class GimmickFocusIO : GimmickBase {
 
 	public override void OnApplyUpdate(Player player, float t) {
 		base.OnApplyUpdate(player, t);
+
+		if(!slide) slide = FindObjectOfType<DOFSlide>();
+
+		var playerZRate = player.Body.localPosition.z / GimmickManager.MOVE_Z;
+		var focusRate = slide.Value;
+		var focusGrace = GameMaster.Instance.GameBalanceData.FocusGrace;
+		var isFocus = Mathf.Abs(playerZRate - focusRate) <= focusGrace;
+
+		if(isToFar == Input.GetMouseButton(0) && isFocus) {
+			slide.Value = playerZRate;
+		}
 
 		//プレイヤーのbodyのZを変更
 		var duration = GameMaster.Instance.GameBalanceData.FocusDuration;
