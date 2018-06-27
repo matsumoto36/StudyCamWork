@@ -715,7 +715,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 2090979048}
   stageImage: {fileID: 210084332}
   frameImage: {fileID: 2006014062}
 --- !u!1 &96947359
@@ -1028,7 +1028,7 @@ MonoBehaviour:
   loadPathName: 1-3
   loadStudioName: SFStage
   title: 1-3
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 350888358}
   stageImage: {fileID: 197811476}
   frameImage: {fileID: 1295770856}
 --- !u!1 &140008488
@@ -1267,7 +1267,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 583688738}
   stageImage: {fileID: 1481884566}
   frameImage: {fileID: 2067137131}
 --- !u!1 &177812593
@@ -1483,7 +1483,7 @@ MonoBehaviour:
   loadPathName: 3-3
   loadStudioName: SFStage
   title: 3-3
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1263599687}
   stageImage: {fileID: 1599378567}
   frameImage: {fileID: 1220640296}
 --- !u!1 &197811473
@@ -2054,7 +2054,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 790803027}
   stageImage: {fileID: 1664515039}
   frameImage: {fileID: 934617855}
 --- !u!1 &234520595
@@ -2362,7 +2362,7 @@ MonoBehaviour:
   loadPathName: 2-8
   loadStudioName: SFStage
   title: 2-8
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1450550221}
   stageImage: {fileID: 1716442435}
   frameImage: {fileID: 1799938103}
 --- !u!1 &283029758
@@ -2807,7 +2807,7 @@ MonoBehaviour:
   loadPathName: 1-4
   loadStudioName: SFStage
   title: 1-4
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1530571440}
   stageImage: {fileID: 934158798}
   frameImage: {fileID: 436967315}
 --- !u!1 &352878797
@@ -3071,7 +3071,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 2008941165}
   stageImage: {fileID: 2030759034}
   frameImage: {fileID: 513656956}
 --- !u!1 &436967313
@@ -3673,7 +3673,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 948834259}
   stageImage: {fileID: 1497314765}
   frameImage: {fileID: 1758476383}
 --- !u!1 &545155621
@@ -3941,7 +3941,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 95776392}
   stageImage: {fileID: 1904908300}
   frameImage: {fileID: 212204654}
 --- !u!1 &593786304
@@ -3993,7 +3993,7 @@ MonoBehaviour:
   loadPathName: 2-6
   loadStudioName: SFStage
   title: 2-6
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1154784442}
   stageImage: {fileID: 1966502678}
   frameImage: {fileID: 1135939668}
 --- !u!1 &595018900
@@ -4266,7 +4266,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 543707667}
   stageImage: {fileID: 759915782}
   frameImage: {fileID: 1144042025}
 --- !u!1 &652343993
@@ -4815,7 +4815,7 @@ MonoBehaviour:
   loadPathName: 1-2
   loadStudioName: SFStage
   title: 1-2
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 135863270}
   stageImage: {fileID: 2022674601}
   frameImage: {fileID: 1786861447}
 --- !u!1 &732234457
@@ -5342,7 +5342,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1692554980}
   stageImage: {fileID: 1230194539}
   frameImage: {fileID: 1501670087}
 --- !u!1 &800235122
@@ -6510,7 +6510,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1803636342}
   stageImage: {fileID: 884786361}
   frameImage: {fileID: 1503463546}
 --- !u!1 &949860955
@@ -6862,7 +6862,7 @@ MonoBehaviour:
   loadPathName: 3-5
   loadStudioName: SFStage
   title: 3-5
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 640321644}
   stageImage: {fileID: 152862510}
   frameImage: {fileID: 1224492455}
 --- !u!1 &993723726
@@ -7515,7 +7515,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1430900632}
   stageImage: {fileID: 1762481422}
   frameImage: {fileID: 653841288}
 --- !u!1 &1061632246
@@ -7605,7 +7605,7 @@ MonoBehaviour:
   loadPathName: 2-4
   loadStudioName: SFStage
   title: 2-4
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1861697919}
   stageImage: {fileID: 1794588939}
   frameImage: {fileID: 1800659540}
 --- !u!1 &1070586665
@@ -8437,7 +8437,7 @@ MonoBehaviour:
   loadPathName: 2-7
   loadStudioName: SFStage
   title: 2-7
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 274234734}
   stageImage: {fileID: 1003566651}
   frameImage: {fileID: 397680705}
 --- !u!1 &1160275368
@@ -8697,7 +8697,7 @@ MonoBehaviour:
   loadPathName: 2-1
   loadStudioName: SFStage
   title: 2-1
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1879349966}
   stageImage: {fileID: 1381655199}
   frameImage: {fileID: 333832672}
 --- !u!1 &1197796657
@@ -9323,7 +9323,7 @@ MonoBehaviour:
   loadPathName: 2-3
   loadStudioName: SFStage
   title: 2-3
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1065069294}
   stageImage: {fileID: 1556162377}
   frameImage: {fileID: 687087616}
 --- !u!1 &1250334851
@@ -9449,7 +9449,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 988278026}
   stageImage: {fileID: 1688247162}
   frameImage: {fileID: 1314601773}
 --- !u!1 &1276956110
@@ -10009,7 +10009,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 423046298}
   stageImage: {fileID: 510460422}
   frameImage: {fileID: 1858328494}
 --- !u!1 &1321577126
@@ -10812,7 +10812,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1037475250}
   stageImage: {fileID: 993723729}
   frameImage: {fileID: 1539282254}
 --- !u!1 &1381655196
@@ -11379,7 +11379,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 528900801}
   stageImage: {fileID: 542278164}
   frameImage: {fileID: 2037832095}
 --- !u!1 &1431895951
@@ -11431,7 +11431,7 @@ MonoBehaviour:
   loadPathName: 1-6
   loadStudioName: SFStage
   title: 1-6
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1844180311}
   stageImage: {fileID: 1276956113}
   frameImage: {fileID: 1730936676}
 --- !u!1 &1440370516
@@ -11631,7 +11631,7 @@ MonoBehaviour:
   loadPathName: 3-1
   loadStudioName: SFStage
   title: 3-1
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1909326884}
   stageImage: {fileID: 1343170251}
   frameImage: {fileID: 1461408288}
 --- !u!1 &1457018813 stripped
@@ -12479,7 +12479,7 @@ MonoBehaviour:
   loadPathName: 1-1
   loadStudioName: SFStage
   title: 1-1
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 713533196}
   stageImage: {fileID: 744878097}
   frameImage: {fileID: 1278781306}
 --- !u!1 &1529918933
@@ -12605,7 +12605,7 @@ MonoBehaviour:
   loadPathName: 1-5
   loadStudioName: SFStage
   title: 1-5
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1431895953}
   stageImage: {fileID: 1910808873}
   frameImage: {fileID: 1233944729}
 --- !u!1 &1530684722
@@ -13993,7 +13993,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1320187138}
   stageImage: {fileID: 1496968352}
   frameImage: {fileID: 699870883}
 --- !u!1 &1692708292
@@ -14045,7 +14045,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1197722518}
   stageImage: {fileID: 1536523754}
   frameImage: {fileID: 15707945}
 --- !u!1 &1698349970
@@ -15448,7 +15448,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 230665826}
   stageImage: {fileID: 96947362}
   frameImage: {fileID: 469447698}
 --- !u!1 &1799938101
@@ -15638,7 +15638,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1799837091}
   stageImage: {fileID: 2023952002}
   frameImage: {fileID: 976940753}
 --- !u!1 &1841661822
@@ -15759,7 +15759,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1692708294}
   stageImage: {fileID: 1372318724}
   frameImage: {fileID: 748742538}
 --- !u!1 &1857938207
@@ -15949,7 +15949,7 @@ MonoBehaviour:
   loadPathName: 2-5
   loadStudioName: SFStage
   title: 2-5
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 593786306}
   stageImage: {fileID: 90264676}
   frameImage: {fileID: 1857938209}
 --- !u!1 &1879349964
@@ -16001,7 +16001,7 @@ MonoBehaviour:
   loadPathName: 2-2
   loadStudioName: SFStage
   title: 2-2
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1245379784}
   stageImage: {fileID: 1699119050}
   frameImage: {fileID: 1841661824}
 --- !u!1 &1904908297
@@ -16164,7 +16164,7 @@ MonoBehaviour:
   loadPathName: 3-2
   loadStudioName: SFStage
   title: 3-2
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 189860949}
   stageImage: {fileID: 831378918}
   frameImage: {fileID: 1929297340}
 --- !u!1 &1910808870
@@ -16769,7 +16769,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 169649231}
   stageImage: {fileID: 1392613031}
   frameImage: {fileID: 409990121}
 --- !u!1 &2011659228
@@ -17777,7 +17777,7 @@ MonoBehaviour:
   loadPathName: TestStage
   loadStudioName: SFStage
   title: TestStage
-  nextStage: {fileID: 0}
+  nextStage: {fileID: 1376630936}
   stageImage: {fileID: 1684405050}
   frameImage: {fileID: 1138165508}
 --- !u!1 &2093815174
