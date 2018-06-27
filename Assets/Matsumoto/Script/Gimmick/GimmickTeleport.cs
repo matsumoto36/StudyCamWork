@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class GimmickTeleport : GimmickBase {
 
 	public GameObject effectPre;
-	GameObject effect;
 
 	public float waitTime;
 	public Text text;
@@ -48,9 +47,6 @@ public class GimmickTeleport : GimmickBase {
 		playerSpeed = player.Speed;
 		player.Speed = 0;
 
-		var pos = path.GetPoint(endPoint / path.LineCount);
-		effect = Instantiate(effectPre, pos, Quaternion.identity);
-
 		mouseCamera = FindObjectOfType<MouseCamera>();
 		mouseCamera.IsTeleport = true;
 
@@ -62,6 +58,9 @@ public class GimmickTeleport : GimmickBase {
 
 		p.GetAttribute("WaitTime").ValueFloat = waitTime;
 		p.GetAttribute("Radius").ValueFloat = player.Body.localScale.x / 2;
+
+		AudioManager.PlaySE("magic-drain1");
+		StartCoroutine(PlaySEDelay(waitTime - 0.1f));
 	}
 
 	public override void OnApplyUpdate(Player player, float t) {
@@ -82,9 +81,6 @@ public class GimmickTeleport : GimmickBase {
 		player.MovedLength += path.GetPointLength(startPoint, endPoint);
 		player.Speed = playerSpeed;
 
-		effect.GetComponent<ParticleSystem>().Stop();
-		Destroy(effect, 1);
-
 		mouseCamera.IsTeleport = false;
 	}
 
@@ -96,5 +92,10 @@ public class GimmickTeleport : GimmickBase {
 
 		lineRenderer.material.SetColor("_Color", gimmickColor);
 		base.EditGimmickLine(lineRenderer, ref z);
+	}
+
+	IEnumerator PlaySEDelay(float t) {
+		yield return new WaitForSeconds(t);
+		AudioManager.PlaySE("magic-gravity1");
 	}
 }

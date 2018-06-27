@@ -17,16 +17,23 @@ public class StageSelectController : MonoBehaviour {
 	public static bool movieSkip;
 
 	public Button backButton;
-	public StageWindow stageContentView;
+    public Button EndWindowBack;
+
+    public StageWindow stageContentView;
 	public QuitGameWindow quitWindow;
 
 	public TextMesh clickStartText;
 	public Image monitorEffect;
 
-	Coroutine clickClickAnimationCoroutine;
-
 	public Transform directionalLight;
 	public float lightMoveSpeed = 1;
+
+	public bool setFadeTitleBGM;
+	bool changeSetFadeTitleBGM;
+	public bool setPlaySelectStageBGM;
+	bool changeSsetPlaySelectStageBGM;
+
+	Coroutine clickClickAnimationCoroutine;
 
 	StageSelectState state = StageSelectState.Opening;
 	
@@ -43,7 +50,9 @@ public class StageSelectController : MonoBehaviour {
 	void Start () {
 
 		backButton.onClick.AddListener(BackButton);
-		stageContentView.Hide();
+        EndWindowBack.onClick.AddListener(BackButton);
+
+        stageContentView.Hide();
 		quitWindow.IsActive(false);
 
 		var stages = FindObjectsOfType<StageMoveButton>();
@@ -65,12 +74,33 @@ public class StageSelectController : MonoBehaviour {
 
 		//BGM再生
 		if(AudioManager.CurrentBGMName != "") {
-			AudioManager.FadeOut(2.0f);
+			AudioManager.FadeOut(1.0f);
 		}
-		AudioManager.FadeIn(1.0f, "town1");
+
+		if(movieSkip) {
+			AudioManager.FadeIn(1.0f, "bgm_maoudamashii_cyber29");
+		}
+		else {
+			AudioManager.FadeIn(1.0f, "town1");
+		}
 	}
 
 	void Update() {
+
+		//アニメーション制御用
+		if(setFadeTitleBGM && !changeSetFadeTitleBGM) {
+			changeSetFadeTitleBGM = true;
+			Debug.Log("FadeTitleBGM");
+			AudioManager.FadeOut(5.0f);
+		}
+
+		if(setPlaySelectStageBGM && !changeSsetPlaySelectStageBGM) {
+			changeSsetPlaySelectStageBGM = true;
+			Debug.Log("FadeStageSelectBGM");
+			AudioManager.FadeIn(3.0f, "bgm_maoudamashii_cyber29");
+		}
+
+
 		if(state == StageSelectState.Opening && Input.GetMouseButtonDown(0)) {
 			Camera.main.GetComponent<PlayableDirector>().Play();
 			state = StageSelectState.ListView;
@@ -83,21 +113,23 @@ public class StageSelectController : MonoBehaviour {
 
 	void BackButton() {
 
-		AudioManager.PlaySE("Button3");
 
 		switch(state) {
 			case StageSelectState.ListView:
 				//ゲームを終了するかきく
+				AudioManager.PlaySE("cancel5");
 				quitWindow.IsActive(true);
 				state = StageSelectState.QuitGameView;
 				break;
 			case StageSelectState.StageContentView:
 				//一覧に戻る
+				AudioManager.PlaySE("click03");
 				stageContentView.Hide();
 				state = StageSelectState.ListView;
 				break;
 			case StageSelectState.QuitGameView:
 				//ゲームを終了するのをやめる
+				AudioManager.PlaySE("click03");
 				quitWindow.IsActive(false);
 				state = StageSelectState.ListView;
 				break;

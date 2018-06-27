@@ -8,7 +8,7 @@ Shader "Custom/LineMaskShader"{
 
 		SubShader
 	{
-		Tags{ "Queue" = "Geometry+1" "IgnoreProjector" = "True" }
+		Tags{ "Queue" = "Geometry" "IgnoreProjector" = "True" }
 		ZWrite Off
 		AlphaTest Greater 0.5
 		ColorMask 0

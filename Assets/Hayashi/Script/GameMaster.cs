@@ -21,10 +21,13 @@ public class GameMaster : MonoBehaviour {
 
 	public GameBalanceData GameBalanceData { get; private set; }
 
-	public static string LoadStudioName = "";
-	public string loadStudioName;
 	public static string LoadPathName = "";
 	public string loadPathName;
+	public static string LoadStudioName = "";
+	public string loadStudioName;
+
+	public static List<string[]> nextStageList;
+	static int counter = 0;
 
 	public Text countDownText;
    
@@ -69,8 +72,8 @@ public class GameMaster : MonoBehaviour {
 
 	void Start() {
 
-		if(LoadStudioName != "") loadStudioName = LoadStudioName;
 		if(LoadPathName != "") loadPathName = LoadPathName;
+		if(LoadStudioName != "") loadStudioName = LoadStudioName;
 
 		//スタジオの生成
 		Instantiate(Resources.Load<GameObject>(STUDIO_PREFAB_BASE_PATH + loadStudioName));
@@ -109,6 +112,15 @@ public class GameMaster : MonoBehaviour {
 
 		State = GameState.Ending;
 
+		if(MouseCamera.Accuracy < 1.0f) {
+			//通常クリア
+			AudioManager.PlaySE("people-performance-cheer2");
+		}
+		else {
+			//パーフェクト
+			AudioManager.PlaySE("people-performance-cheer1");
+		}
+
 		//データのセーブ
 		if(GameData.stageData != null) {
 			var data = GameData.stageData[loadPathName];
@@ -143,6 +155,7 @@ public class GameMaster : MonoBehaviour {
 			OnGameStartCountDown();
 
 		yield return new WaitForSeconds(1);
+		AudioManager.PlaySE("CountDown");
 		countDownText.text = "3";
 		yield return new WaitForSeconds(1);
 		countDownText.text = "2";
@@ -161,5 +174,23 @@ public class GameMaster : MonoBehaviour {
         }
 
 		State = GameState.Playing;
+	}
+
+	public void NextScene() {
+
+		var nextStageStr = nextStageList[counter];
+		if(nextStageStr == null) return;
+
+		LoadPathName = nextStageStr[0];
+		LoadStudioName = nextStageStr[1];
+
+		counter++;
+
+		FindObjectOfType<TimerController>()
+			.SceneMove("GameScene");
+	}
+
+	public bool CanMoveNextStage() {
+		return nextStageList[counter] != null;
 	}
 }
