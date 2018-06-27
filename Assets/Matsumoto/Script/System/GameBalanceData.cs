@@ -16,6 +16,10 @@ public class GameBalanceData : MonoBehaviour{
 	public int Damage { get { return damage; } }
 
 	[SerializeField]
+	float checkWait = 1;                    //何秒に一回収まっているか調べるか
+	public float CheckWait { get { return checkWait; } }
+
+	[SerializeField]
 	float focusGrace = 0.1f;				//フォーカスの猶予時間
 	public float FocusGrace { get { return focusGrace; }}
 

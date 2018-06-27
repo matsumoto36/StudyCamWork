@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class GimmickTeleport : GimmickBase {
 
 	public GameObject effectPre;
-	GameObject effect;
 
 	public float waitTime;
 	public Text text;
@@ -48,9 +47,6 @@ public class GimmickTeleport : GimmickBase {
 		playerSpeed = player.Speed;
 		player.Speed = 0;
 
-		var pos = path.GetPoint(endPoint / path.LineCount);
-		effect = Instantiate(effectPre, pos, Quaternion.identity);
-
 		mouseCamera = FindObjectOfType<MouseCamera>();
 		mouseCamera.IsTeleport = true;
 
@@ -84,9 +80,6 @@ public class GimmickTeleport : GimmickBase {
 
 		player.MovedLength += path.GetPointLength(startPoint, endPoint);
 		player.Speed = playerSpeed;
-
-		effect.GetComponent<ParticleSystem>().Stop();
-		Destroy(effect, 1);
 
 		mouseCamera.IsTeleport = false;
 	}

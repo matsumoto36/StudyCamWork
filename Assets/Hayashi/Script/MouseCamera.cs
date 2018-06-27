@@ -43,6 +43,7 @@ public class MouseCamera : MonoBehaviour
     bool isGameStart;　　　　//ゲームスタート
 
     float playTime;
+	float checkSpeed;
     int comboTimeCount;
     public int ComboData;
     public int AccuaryTex;
@@ -83,8 +84,11 @@ public class MouseCamera : MonoBehaviour
 		//受けるダメージを設定
 		lifeDamage = gameBalance.Damage;
 
-        //カメラのサイズを設定
-        wideCameraSize = new Vector2(Screen.width, Screen.height) * gameBalance.CameraWideSizeRatio;
+		//チェックの速さの設定
+		checkSpeed = 1 / gameBalance.CheckWait;
+
+		//カメラのサイズを設定
+		wideCameraSize = new Vector2(Screen.width, Screen.height) * gameBalance.CameraWideSizeRatio;
         smallCameraSize = wideCameraSize * gameBalance.CameraSmallSizeRatio;
 
         
@@ -124,6 +128,10 @@ public class MouseCamera : MonoBehaviour
     // Update is called once per frame
     public void CameraUpdate()
     {
+
+		if(Input.GetKeyDown(KeyCode.T)) {
+			StartCoroutine(FlashComboText());
+		}
 
         cameraObject.UpdateCameraPosition(Input.mousePosition);
 
@@ -229,7 +237,7 @@ public class MouseCamera : MonoBehaviour
 
     void ComboChain()
     {
-        if (playTime > comboTimeCount)
+        if (playTime * checkSpeed > comboTimeCount)
         {
 			scoreMax += gameBalance.BaseScore + gameBalance.CameraInsideScore;
 			comboTimeCount++;
@@ -257,7 +265,7 @@ public class MouseCamera : MonoBehaviour
 					scoreWithoutCombo += point;
 
 					Combo++;
-					//FlashComboText();
+					StartCoroutine(FlashComboText());
                 }
                
             }
@@ -290,11 +298,11 @@ public class MouseCamera : MonoBehaviour
 
 	IEnumerator FlashComboText() {
 
-		var cText = Instantiate(comboText);
-		cText.transform.SetParent(comboText.transform.parent);
-
-		//Todo
-
 		yield return null;
+		var cText = Instantiate(comboText, comboText.transform);
+		cText.transform.SetParent(comboText.transform.parent);
+		cText.GetComponent<Animation>().Play();
+		yield return new WaitForSeconds(1.0f / 3);
+		Destroy(cText.gameObject);
 	}
 }

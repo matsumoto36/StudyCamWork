@@ -165,7 +165,7 @@ public class GameEnd : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        oto.color = new Color(1, 1, 1, 1);
+        //oto.color = new Color(1, 1, 1, 1);
     }
 
 	public void OnRetryClick() {
