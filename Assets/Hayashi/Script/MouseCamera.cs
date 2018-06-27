@@ -153,13 +153,14 @@ public class MouseCamera : MonoBehaviour
 
 			CaptureStatus = IsPlayerCapture(cameraObject.GetObjectPosition());
 
-			//プレイヤーにステータスを伝える
-            targetPlayer.SetLight(CaptureStatus);
 
 			if(IsTeleport) {
+				targetPlayer.SetLight(PlayerCaptureStatus.All);
 				cameraObject.CameraColorType = CameraColorType.Normal;
 			}
 			else {
+				targetPlayer.SetLight(CaptureStatus);
+
 				switch(CaptureStatus) {
 					case PlayerCaptureStatus.All:
 						cameraObject.CameraColorType = CameraColorType.Normal;
