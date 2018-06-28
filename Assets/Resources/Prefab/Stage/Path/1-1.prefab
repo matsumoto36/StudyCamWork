@@ -157,7 +157,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1188837186090398}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -5.594217, y: 0.21363664, z: -44.36007}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -320,15 +320,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points:
-  - {x: -15.144234, y: 6.1808515}
-  - {x: -11.199391, y: -0.06515102}
-  - {x: -7.254549, y: -6.3111534}
-  - {x: -3.7041852, y: -5.1276984}
-  - {x: -0.15382671, y: -0.13089752}
-  - {x: 3.3965318, y: 4.8659034}
-  - {x: 8.722068, y: 6.115105}
-  - {x: 11.48346, y: -0.065151006}
-  - {x: 14.244853, y: -6.245407}
+  - {x: -8.253907, y: -0.16221249}
+  - {x: -8.253907, y: -0.16221249}
+  - {x: -8.253907, y: -0.16221249}
+  - {x: 8.381086, y: -0.16221249}
+  - {x: 8.381086, y: -0.16221249}
+  - {x: 8.381086, y: -0.16221249}
 --- !u!114 &114675090142232804
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -341,7 +338,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
-  moveZ: 18
 --- !u!114 &114781572700074624
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -355,6 +351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpeed: 3
   damage: 10
+  checkWait: 1
   focusGrace: 0.1
   focusDuration: 1
   cameraWideSizeRatio: 0.2
