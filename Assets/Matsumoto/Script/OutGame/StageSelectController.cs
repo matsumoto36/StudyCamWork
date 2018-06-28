@@ -47,6 +47,8 @@ public class StageSelectController : MonoBehaviour {
 
 		titleAnimation = Camera.main.GetComponent<PlayableDirector>();
 
+		selectStageGroup.interactable = false;
+
 		if(movieSkip) {
 			var cam = Camera.main;
 			monitorEffect.color = new Color(0, 0, 0, 0);
@@ -62,7 +64,6 @@ public class StageSelectController : MonoBehaviour {
 		backButton.onClick.AddListener(BackButton);
         EndWindowBack.onClick.AddListener(BackButton);
 
-		selectStageGroup.interactable = false;
 
 		stageContentView.Hide();
 		quitWindow.IsActive(false);
