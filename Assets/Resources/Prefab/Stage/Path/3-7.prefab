@@ -221,8 +221,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 3
-  damage: 30
-  focusGrace: 0.1
+  damage: 20
+  checkWait: 1
+  focusGrace: 0.2
   focusDuration: 1
   cameraWideSizeRatio: 0.2
   cameraSmallSizeRatio: 0.5
