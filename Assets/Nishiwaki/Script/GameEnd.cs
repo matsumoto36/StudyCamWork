@@ -5,29 +5,28 @@ using UnityEngine.UI;
 
 public class GameEnd : MonoBehaviour
 {
-    //リザルトの背景
-    public Image ResultBack;
-    //リザルトの背景の枠
-    public Image ResultBackFrame;
-    //リザルトのタイトル
-    public Text Result;
-    //スコア　文字
-    public Text ScoreFont;
-    //スコア　数字
-    public Text ScoreNumber;
-    //コンボ　文字
-    public Text ComboFont;
-    //コンボ　数字
-    public Text ComboNumber;
-    //正確さ　文字
-    public Text AccuracyFont;
-    //正確さ　数字
-    public Text AccuracyNumber;
+    //リザルトの背景、枠、文字
+    public CanvasGroup ResultBackFrame;
+    //リザルトのもろもろ
+    public CanvasGroup ResultGroup;
+    //スコア
+    public Text Score;
+    //コンボ
+    public Text Combo;
+    //正確さ
+    public Text Accuracy;
+
+    //ベストスコア
+    public Text BestScore;
+    //ベスト正確さ
+    public Text BestAccuracy;
+    //ベストコンボ
+    public Text BestCombo;
 
     //リザルト用キャンバス
     public GameObject canvas;
 
-    Text[] text = new Text[6];
+    Text[] text = new Text[3];
 
     //リトライボタン
     public CanvasGroup Retry;
@@ -49,27 +48,20 @@ public class GameEnd : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        text[0] = ScoreFont;
-        text[1] = ScoreNumber;
-        text[2] = AccuracyFont;
-        text[3] = AccuracyNumber;
-        text[4] = ComboFont;
-        text[5] = ComboNumber;
+        text[0] = Score;
+        text[1] = Accuracy;
+        text[2] = Combo;
 
         //グループ内のUI要素が入力を受け付けるかどうか
         Retry.interactable = false;
         Back.interactable = false;
         Next.interactable = false;
 
-        ResultBack.color = startColor;
-        ResultBackFrame.color = TextstartColor;
-        Result.color = TextstartColor;
-        ScoreFont.color = TextstartColor;
-        ScoreNumber.color = TextstartColor;
-        ComboFont.color = TextstartColor;
-        ComboNumber.color = TextstartColor;
-        AccuracyFont.color = TextstartColor;
-        AccuracyNumber.color = TextstartColor;
+        ResultBackFrame.alpha = 0;
+        ResultGroup.alpha = 0;
+        Score.color = TextstartColor;
+        Combo.color = TextstartColor;
+        Accuracy.color = TextstartColor;
 
         Retry.alpha = 0;
         Back.alpha = 0;
@@ -94,11 +86,11 @@ public class GameEnd : MonoBehaviour
     //ゲームクリア時のコルーチン
     IEnumerator GameClearResult()
     {
-        //Color startColor = new Color(0, 0, 0, 0);
-        //Color endColor = new Color(0, 0, 0, 0.8f);
+        StageData Data = GameData.stageData[GameMaster.LoadPathName];
 
-        //Color TextstartColor = new Color(1, 1, 1, 0);
-        //Color TextendColor = new Color(1, 1, 1, 1);
+        BestScore.text = Data.score.ToString();
+        BestAccuracy.text = Data.accuracy.ToString("p");
+        BestCombo.text = "x" + Data.maxCombo.ToString();
 
         //α値を変更する時間
         float time = 0;
@@ -119,15 +111,13 @@ public class GameEnd : MonoBehaviour
             }
 
             time += Time.deltaTime;
-            ResultBack.color = Color.Lerp(startColor, endColor, time);
-            Result.color = Color.Lerp(TextstartColor, TextendColor, time);
-			ResultBackFrame.color = Color.Lerp(TextstartColor, TextendColor, time);
-
+            ResultGroup.alpha = Mathf.Lerp(0, 1, time);
+            ResultBackFrame.alpha = Mathf.Lerp(0, 1, time);
 
 			yield return null;
         }
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < text.Length; i++)
         {
             time = 0;
 
