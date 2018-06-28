@@ -84,7 +84,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 3
-  damage: 30
+  damage: 20
+  checkWait: 1
   focusGrace: 0.1
   focusDuration: 1
   cameraWideSizeRatio: 0.2
@@ -103,7 +104,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
-  moveZ: 18
 --- !u!114 &114338179511083948
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -148,6 +148,6 @@ MonoBehaviour:
   - {x: 5.827042, y: -6.438873}
   - {x: 5.827042, y: -6.438873}
   - {x: 5.827042, y: -6.438873}
-  - {x: 5.351073, y: -5.3599815}
-  - {x: 0.33465695, y: 6.1380153}
-  - {x: -0.09438586, y: 6.9879}
+  - {x: 5.1378202, y: -4.933477}
+  - {x: 0.12140447, y: 6.56452}
+  - {x: -0.30763835, y: 7.4144044}

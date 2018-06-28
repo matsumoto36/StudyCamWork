@@ -60,7 +60,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1588514701846214
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,7 +234,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
-  moveZ: 18
 --- !u!114 &114160983324828086
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -365,8 +364,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 2
-  damage: 30
-  focusGrace: 0.3
+  damage: 20
+  checkWait: 1
+  focusGrace: 0.2
   focusDuration: 1
   cameraWideSizeRatio: 0.2
   cameraSmallSizeRatio: 0.5

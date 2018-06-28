@@ -192,7 +192,7 @@ public class MouseCamera : MonoBehaviour
 		inCamhpBar.value = life;
 
 		scoreTextView = Mathf.Min(scoreTextView + scoreUpRate, Score);
-		scoreText.text = scoreTextView.ToString("000000");
+		scoreText.text = scoreTextView.ToString();
 
 		accTextView = Mathf.MoveTowards(accTextView, Accuracy, Time.deltaTime / 10);
 		if(accTextView == 1.0f) accText.text = ("100%");

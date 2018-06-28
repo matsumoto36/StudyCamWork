@@ -28,7 +28,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1263110214889964
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 3
-  damage: 30
+  damage: 20
   checkWait: 1
   focusGrace: 0.1
   focusDuration: 1
@@ -167,7 +167,6 @@ MonoBehaviour:
   startPoint: 1
   endPoint: 2
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 3
   text: {fileID: 0}
 --- !u!114 &114445485099606076
@@ -185,7 +184,6 @@ MonoBehaviour:
   startPoint: 5
   endPoint: 5.99
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 3
   text: {fileID: 0}
 --- !u!114 &114712628081640074
@@ -215,7 +213,6 @@ MonoBehaviour:
   startPoint: 3
   endPoint: 4
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 3
   text: {fileID: 0}
 --- !u!114 &114818877957366802
