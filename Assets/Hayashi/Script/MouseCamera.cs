@@ -11,8 +11,7 @@ public class MouseCamera : MonoBehaviour
     public Slider hpBar;
     public Slider inCamhpBar;
 
-	//public bool isCapture = false;
-	//public bool isPlayerFocus;
+	public RectTransform HPFlash;
 
 	int life = 100;				//体力
     int lifeDamage;			//ダメージの数値
@@ -285,10 +284,15 @@ public class MouseCamera : MonoBehaviour
 		}
 		else {
 			if(!IsTeleport) {
-				//ダメージ演出
-				StartCoroutine(cameraObject.DamageFlash());
+
 
 				life -= lifeDamage;
+
+				//ダメージ演出
+				var damage = life < 0 ? lifeDamage + life : lifeDamage;
+				StartCoroutine(FlashHPDown(damage));
+				StartCoroutine(cameraObject.DamageFlash());
+
 				if(life <= 0.0f) {
 					UpdateUI();
 					GameMaster.Instance.GameOver();
@@ -314,5 +318,26 @@ public class MouseCamera : MonoBehaviour
 		cText.GetComponent<Animation>().Play();
 		yield return new WaitForSeconds(1.0f / 3);
 		Destroy(cText.gameObject);
+	}
+
+	IEnumerator FlashHPDown(float downHP) {
+
+		var hpDownBar = Instantiate(HPFlash, HPFlash.transform);
+		hpDownBar.transform.SetParent(HPFlash.transform.parent);
+
+		var parentT = hpDownBar.transform.parent.GetComponent<RectTransform>();
+		var width = parentT.sizeDelta.x * downHP * 0.01f;
+		var posX = parentT.sizeDelta.x * (life) * 0.01f;
+
+		var image = hpDownBar.GetChild(0).GetComponent<RectTransform>();
+		image.sizeDelta
+			= new Vector2(width, image.sizeDelta.y);
+		hpDownBar.anchoredPosition
+			= new Vector2(posX, -43);
+
+		hpDownBar.GetComponent<Animation>().Play();
+
+		yield return new WaitForSeconds(0.5f);
+		Destroy(hpDownBar.gameObject);
 	}
 }

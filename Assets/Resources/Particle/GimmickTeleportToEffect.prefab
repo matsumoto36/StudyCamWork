@@ -54,7 +54,7 @@ MonoBehaviour:
   m_FxAttributesList:
   - m_Descriptor:
       Type: 28
-      MinMaxFlag: 3
+      MinMaxFlag: 1
       Name: EffectSize
       Description: 
       DefaultValue0: 0.019802
@@ -65,7 +65,7 @@ MonoBehaviour:
       MinValue1: 0
       MinValue2: 0
       MinValue3: 0
-      MaxValue0: 1
+      MaxValue0: 0
       MaxValue1: 0
       MaxValue2: 0
       MaxValue3: 0
@@ -74,12 +74,33 @@ MonoBehaviour:
     m_Value2: 0
     m_Value3: 0
   - m_Descriptor:
+      Type: 28
+      MinMaxFlag: 1
+      Name: EffectSize2
+      Description: 
+      DefaultValue0: 0.0693069
+      DefaultValue1: 0
+      DefaultValue2: 0
+      DefaultValue3: 0
+      MinValue0: 0
+      MinValue1: 0
+      MinValue2: 0
+      MinValue3: 0
+      MaxValue0: 0
+      MaxValue1: 0
+      MaxValue2: 0
+      MaxValue3: 0
+    m_Value0: 0.0693069
+    m_Value1: 0
+    m_Value2: 0
+    m_Value3: 0
+  - m_Descriptor:
       Type: 31
       MinMaxFlag: 3
       Name: MainColor
       Description: 
-      DefaultValue0: 0.0792079
-      DefaultValue1: 0.9183168
+      DefaultValue0: 0.1485149
+      DefaultValue1: 0.9480198
       DefaultValue2: 1
       DefaultValue3: 1
       MinValue0: 0
@@ -118,9 +139,9 @@ MonoBehaviour:
   - m_Descriptor:
       Type: 28
       MinMaxFlag: 1
-      Name: Speed
+      Name: Intencity2
       Description: 
-      DefaultValue0: 7
+      DefaultValue0: 5
       DefaultValue1: 0
       DefaultValue2: 0
       DefaultValue3: 0
@@ -132,7 +153,28 @@ MonoBehaviour:
       MaxValue1: 0
       MaxValue2: 0
       MaxValue3: 0
-    m_Value0: 7
+    m_Value0: 5
+    m_Value1: 0
+    m_Value2: 0
+    m_Value3: 0
+  - m_Descriptor:
+      Type: 28
+      MinMaxFlag: 1
+      Name: Speed
+      Description: 
+      DefaultValue0: 15
+      DefaultValue1: 0
+      DefaultValue2: 0
+      DefaultValue3: 0
+      MinValue0: 0
+      MinValue1: 0
+      MinValue2: 0
+      MinValue3: 0
+      MaxValue0: 0
+      MaxValue1: 0
+      MaxValue2: 0
+      MaxValue3: 0
+    m_Value0: 20
     m_Value1: 0
     m_Value2: 0
     m_Value3: 0
