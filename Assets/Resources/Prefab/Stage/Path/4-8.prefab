@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1814434523993728
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,7 +405,7 @@ MonoBehaviour:
   endPoint: 14
   markModel: {fileID: 0}
   text: {fileID: 0}
-  speedMul: 3
+  speedMul: 2.5
 --- !u!114 &114241637445199138
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -418,7 +418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 3
-  damage: 30
+  damage: 20
   checkWait: 1
   focusGrace: 0.2
   focusDuration: 1
@@ -515,7 +515,6 @@ MonoBehaviour:
   startPoint: 3
   endPoint: 4
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 2
   text: {fileID: 0}
 --- !u!114 &114467992220428470
@@ -533,7 +532,6 @@ MonoBehaviour:
   startPoint: 6
   endPoint: 7
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114478937154032096
@@ -581,7 +579,7 @@ MonoBehaviour:
   endPoint: 9
   markModel: {fileID: 0}
   text: {fileID: 0}
-  speedMul: 3
+  speedMul: 2.5
 --- !u!114 &114722761304542882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -598,7 +596,7 @@ MonoBehaviour:
   endPoint: 6
   markModel: {fileID: 0}
   text: {fileID: 0}
-  speedMul: 3
+  speedMul: 2.5
 --- !u!114 &114787906680494346
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -632,7 +630,7 @@ MonoBehaviour:
   endPoint: 2
   markModel: {fileID: 0}
   text: {fileID: 0}
-  speedMul: 3
+  speedMul: 2.5
 --- !u!114 &114924975538204880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -648,6 +646,5 @@ MonoBehaviour:
   startPoint: 10
   endPoint: 11
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 1
   text: {fileID: 0}
