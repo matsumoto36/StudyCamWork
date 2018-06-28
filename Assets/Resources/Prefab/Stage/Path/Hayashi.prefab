@@ -298,7 +298,7 @@ MonoBehaviour:
   endPoint: 0.41
   markModel: {fileID: 0}
   text: {fileID: 0}
-  speedMul: 5
+  speedMul: 6
 --- !u!114 &114385144139957048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -332,7 +332,7 @@ MonoBehaviour:
   endPoint: 1.72
   markModel: {fileID: 0}
   text: {fileID: 0}
-  speedMul: 5
+  speedMul: 6
 --- !u!114 &114503445900111326
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -348,8 +348,7 @@ MonoBehaviour:
   startPoint: 0.58
   endPoint: 0.98
   markModel: {fileID: 0}
-  effectPre: {fileID: 1272900843026218, guid: 1d9e370f6faa79748b844cfd9309e96a, type: 2}
-  waitTime: 2
+  waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114553855097079462
 MonoBehaviour:
@@ -384,7 +383,7 @@ MonoBehaviour:
   endPoint: 2.99
   markModel: {fileID: 0}
   text: {fileID: 0}
-  speedMul: 5
+  speedMul: 6
 --- !u!114 &114642543710322362
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -396,8 +395,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02ad5f365adb6504f8cd34ed077cebe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 2
+  playerSpeed: 3
   damage: 30
+  checkWait: 1
   focusGrace: 0.3
   focusDuration: 1
   cameraWideSizeRatio: 0.2
@@ -419,8 +419,7 @@ MonoBehaviour:
   startPoint: 1.72
   endPoint: 2
   markModel: {fileID: 0}
-  effectPre: {fileID: 1819077890711364, guid: b9d92d3c9686fc6448442d2ed99cb263, type: 2}
-  waitTime: 2
+  waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114716671665195574
 MonoBehaviour:
@@ -437,7 +436,7 @@ MonoBehaviour:
   startPoint: 5
   endPoint: 5.33
   markModel: {fileID: 0}
-  isToFar: 0
+  isToFar: 1
   text: {fileID: 0}
 --- !u!114 &114785449998378960
 MonoBehaviour:
@@ -451,7 +450,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
-  moveZ: 18
 --- !u!114 &114928620216152358
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -464,24 +462,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points:
-  - {x: 8.010839, y: 9.517}
-  - {x: 0.075279534, y: 9.510484}
-  - {x: -1.9012961, y: 6.7885036}
-  - {x: -9.363702, y: -3.8188856}
-  - {x: -11.812222, y: -7.3589115}
-  - {x: -7.392645, y: -4.946051}
-  - {x: 5.7942905, y: 2.1874352}
-  - {x: 11.745884, y: 5.534726}
-  - {x: 7.530104, y: -0.29295135}
-  - {x: 7.158556, y: -0.9124894}
-  - {x: 0.21494567, y: -9.096043}
-  - {x: -4.372982, y: -3.1446295}
-  - {x: -8.588138, y: 1.6905847}
-  - {x: -12.060128, y: 6.030347}
-  - {x: -7.9683495, y: 3.92281}
-  - {x: 7.411808, y: -5.1296606}
-  - {x: 11.622415, y: -7.235181}
-  - {x: 8.150599, y: -1.904175}
-  - {x: 2.105895, y: 6.744399}
-  - {x: 0.09798336, y: 9.5706835}
-  - {x: -3.00246, y: 5.48548}
+  - {x: 7.99113, y: 5.2521324}
+  - {x: 0.055571645, y: 5.245616}
+  - {x: -1.9210043, y: 2.5236359}
+  - {x: -6.62574, y: -3.1279335}
+  - {x: -9.301779, y: -6.497066}
+  - {x: -4.882202, y: -4.0842056}
+  - {x: 2.761922, y: 0.4318123}
+  - {x: 8.713515, y: 3.7791033}
+  - {x: 4.8963156, y: -3.0161085}
+  - {x: 2.372064, y: -4.6296015}
+  - {x: 0.14998987, y: -8.091948}
+  - {x: -4.267048, y: -2.7665436}
+  - {x: -6.312886, y: -1.2675776}
+  - {x: -9.955433, y: 3.0721846}
+  - {x: -5.465252, y: 0.90793467}
+  - {x: 3.9008293, y: -3.2028537}
+  - {x: 8.05464, y: -5.649817}
+  - {x: 4.1845884, y: -0.43265426}
+  - {x: 2.427699, y: 2.4149818}
+  - {x: 0.078680545, y: 5.2412663}
+  - {x: -3.0217626, y: 1.1560626}
