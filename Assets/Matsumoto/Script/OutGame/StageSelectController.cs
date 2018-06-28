@@ -54,6 +54,7 @@ public class StageSelectController : MonoBehaviour {
 			cam.transform.rotation = Quaternion.identity;
 			cam.orthographic = true;
 			state = StageSelectState.ListView;
+			selectStageGroup.interactable = true;
 		}
 	}
 	void Start () {
