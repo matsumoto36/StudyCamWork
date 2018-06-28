@@ -121,7 +121,7 @@ public class GameEnd : MonoBehaviour
             time += Time.deltaTime;
             ResultBack.color = Color.Lerp(startColor, endColor, time);
             Result.color = Color.Lerp(TextstartColor, TextendColor, time);
-			ResultBackFrame.color = Color.Lerp(startColor, endColor, time);
+			ResultBackFrame.color = Color.Lerp(TextstartColor, TextendColor, time);
 
 
 			yield return null;

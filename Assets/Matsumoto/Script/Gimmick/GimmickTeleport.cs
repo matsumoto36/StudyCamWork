@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class GimmickTeleport : GimmickBase {
 
-	public GameObject effectPre;
-
 	public float waitTime;
 	public Text text;
 	Color playerCol;
