@@ -6,6 +6,7 @@ using UnityEngine.Playables;
 using UnityEngine;
 
 public enum StageSelectState {
+	Title,
 	Opening,
 	ListView,
 	StageContentView,
@@ -16,6 +17,7 @@ public class StageSelectController : MonoBehaviour {
 
 	public static bool movieSkip;
 
+	public CanvasGroup selectStageGroup;
 	public Button backButton;
     public Button EndWindowBack;
 
@@ -31,13 +33,20 @@ public class StageSelectController : MonoBehaviour {
 	public bool setFadeTitleBGM;
 	bool changeSetFadeTitleBGM;
 	public bool setPlaySelectStageBGM;
-	bool changeSsetPlaySelectStageBGM;
+	bool changeSetPlaySelectStageBGM;
+	public bool setEnableButton;
+	bool changeSetEnableButton;
+
+	PlayableDirector titleAnimation;
 
 	Coroutine clickClickAnimationCoroutine;
 
-	StageSelectState state = StageSelectState.Opening;
+	StageSelectState state = StageSelectState.Title;
 	
 	void Awake() {
+
+		titleAnimation = Camera.main.GetComponent<PlayableDirector>();
+
 		if(movieSkip) {
 			var cam = Camera.main;
 			monitorEffect.color = new Color(0, 0, 0, 0);
@@ -45,6 +54,7 @@ public class StageSelectController : MonoBehaviour {
 			cam.transform.rotation = Quaternion.identity;
 			cam.orthographic = true;
 			state = StageSelectState.ListView;
+			selectStageGroup.interactable = true;
 		}
 	}
 	void Start () {
@@ -52,7 +62,9 @@ public class StageSelectController : MonoBehaviour {
 		backButton.onClick.AddListener(BackButton);
         EndWindowBack.onClick.AddListener(BackButton);
 
-        stageContentView.Hide();
+		selectStageGroup.interactable = false;
+
+		stageContentView.Hide();
 		quitWindow.IsActive(false);
 
 		var stages = FindObjectsOfType<StageMoveButton>();
@@ -94,20 +106,26 @@ public class StageSelectController : MonoBehaviour {
 			AudioManager.FadeOut(5.0f);
 		}
 
-		if(setPlaySelectStageBGM && !changeSsetPlaySelectStageBGM) {
-			changeSsetPlaySelectStageBGM = true;
+		if(setPlaySelectStageBGM && !changeSetPlaySelectStageBGM) {
+			changeSetPlaySelectStageBGM = true;
 			Debug.Log("FadeStageSelectBGM");
 			AudioManager.FadeIn(3.0f, "bgm_maoudamashii_cyber29");
 		}
 
-
-		if(state == StageSelectState.Opening && Input.GetMouseButtonDown(0)) {
-			Camera.main.GetComponent<PlayableDirector>().Play();
-			state = StageSelectState.ListView;
+		if(state == StageSelectState.Title && Input.GetMouseButtonDown(0)) {
+			titleAnimation.Play();
+			state = StageSelectState.Opening;
 
 			//アニメーションを止める
 			StopCoroutine(clickClickAnimationCoroutine);
 			clickStartText.color = new Color(0, 0, 0, 0);
+		}
+
+
+		if(setEnableButton && !changeSetEnableButton) {
+			changeSetEnableButton = true;
+			state = StageSelectState.ListView;
+			selectStageGroup.interactable = true;
 		}
 	}
 
