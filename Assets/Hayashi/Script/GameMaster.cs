@@ -120,6 +120,8 @@ public class GameMaster : MonoBehaviour {
 			AudioManager.PlaySE("people-performance-cheer1");
 		}
 
+		if(OnGameClear != null) OnGameClear();
+
 		//データのセーブ
 		if(GameData.stageData != null) {
 			var data = GameData.stageData[loadPathName];
@@ -132,7 +134,6 @@ public class GameMaster : MonoBehaviour {
 			}
 		}
 
-		if(OnGameClear != null) OnGameClear();
 		countDownText.text = "GameClear";
 
 		State = GameState.AfterEnd;
