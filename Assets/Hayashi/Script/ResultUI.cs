@@ -24,7 +24,7 @@ public class ResultUI : MonoBehaviour {
         ResultCombo = MouseCamera.Combo;
         ResultAccuracy = MouseCamera.Accuracy;
 
-        ResultScoreText.text = ResultScore.ToString("000000");
+        ResultScoreText.text = ResultScore.ToString();
         if (ResultAccuracy == 1.0f) ResultaccText.text = "100%";
         else ResultaccText.text = ResultAccuracy.ToString("P");
         ResultcomboText.text = "x" + ResultCombo.ToString("");
