@@ -237,6 +237,7 @@ MonoBehaviour:
   loadPathName: Murata6
   loadStudioName: SFStage
   title: Murata6
+  windowIndex: 0
   nextStage: {fileID: 0}
   stageImage: {fileID: 381099442}
   frameImage: {fileID: 501771999}
@@ -878,6 +879,7 @@ MonoBehaviour:
   loadPathName: Murata1
   loadStudioName: SFStage
   title: Murata1
+  windowIndex: 4
   nextStage: {fileID: 2090979048}
   stageImage: {fileID: 210084332}
   frameImage: {fileID: 2006014062}
@@ -1191,6 +1193,7 @@ MonoBehaviour:
   loadPathName: 1-3
   loadStudioName: SFStage
   title: 1-3
+  windowIndex: 0
   nextStage: {fileID: 350888358}
   stageImage: {fileID: 197811476}
   frameImage: {fileID: 1295770856}
@@ -1504,6 +1507,7 @@ MonoBehaviour:
   loadPathName: Matsu1
   loadStudioName: SFStage
   title: Matsu1
+  windowIndex: 4
   nextStage: {fileID: 583688738}
   stageImage: {fileID: 1481884566}
   frameImage: {fileID: 2067137131}
@@ -1720,6 +1724,7 @@ MonoBehaviour:
   loadPathName: 3-3
   loadStudioName: SFStage
   title: 3-3
+  windowIndex: 2
   nextStage: {fileID: 1263599687}
   stageImage: {fileID: 1599378567}
   frameImage: {fileID: 1220640296}
@@ -2291,6 +2296,7 @@ MonoBehaviour:
   loadPathName: 4-3
   loadStudioName: SFStage
   title: 4-3
+  windowIndex: 3
   nextStage: {fileID: 790803027}
   stageImage: {fileID: 1664515039}
   frameImage: {fileID: 934617855}
@@ -2599,6 +2605,7 @@ MonoBehaviour:
   loadPathName: 2-8
   loadStudioName: SFStage
   title: 2-8
+  windowIndex: 1
   nextStage: {fileID: 1450550221}
   stageImage: {fileID: 1716442435}
   frameImage: {fileID: 1799938103}
@@ -2755,6 +2762,7 @@ MonoBehaviour:
   loadPathName: Murata4
   loadStudioName: SFStage
   title: Murata4
+  windowIndex: 0
   nextStage: {fileID: 965753912}
   stageImage: {fileID: 918270914}
   frameImage: {fileID: 713595027}
@@ -3096,6 +3104,7 @@ MonoBehaviour:
   loadPathName: 1-4
   loadStudioName: SFStage
   title: 1-4
+  windowIndex: 0
   nextStage: {fileID: 1530571440}
   stageImage: {fileID: 934158798}
   frameImage: {fileID: 436967315}
@@ -3574,6 +3583,7 @@ MonoBehaviour:
   loadPathName: 4-7
   loadStudioName: SFStage
   title: 4-7
+  windowIndex: 3
   nextStage: {fileID: 2008941165}
   stageImage: {fileID: 2030759034}
   frameImage: {fileID: 513656956}
@@ -4147,6 +4157,7 @@ MonoBehaviour:
   loadPathName: Murata2
   loadStudioName: SFStage
   title: Murata2
+  windowIndex: 0
   nextStage: {fileID: 1570838843}
   stageImage: {fileID: 1564652237}
   frameImage: {fileID: 1244941087}
@@ -4199,6 +4210,7 @@ MonoBehaviour:
   loadPathName: Murata6
   loadStudioName: SFStage
   title: Murata6
+  windowIndex: 4
   nextStage: {fileID: 0}
   stageImage: {fileID: 2083204526}
   frameImage: {fileID: 501781174}
@@ -4251,6 +4263,7 @@ MonoBehaviour:
   loadPathName: Matsu2
   loadStudioName: SFStage
   title: Matsu2
+  windowIndex: 0
   nextStage: {fileID: 2025792643}
   stageImage: {fileID: 1370707101}
   frameImage: {fileID: 558555598}
@@ -4414,6 +4427,7 @@ MonoBehaviour:
   loadPathName: 3-7
   loadStudioName: SFStage
   title: 3-7
+  windowIndex: 2
   nextStage: {fileID: 948834259}
   stageImage: {fileID: 1497314765}
   frameImage: {fileID: 1758476383}
@@ -4751,6 +4765,7 @@ MonoBehaviour:
   loadPathName: Matsu2
   loadStudioName: SFStage
   title: Matsu2
+  windowIndex: 4
   nextStage: {fileID: 95776392}
   stageImage: {fileID: 1904908300}
   frameImage: {fileID: 212204654}
@@ -4803,6 +4818,7 @@ MonoBehaviour:
   loadPathName: 2-6
   loadStudioName: SFStage
   title: 2-6
+  windowIndex: 1
   nextStage: {fileID: 1154784442}
   stageImage: {fileID: 1966502678}
   frameImage: {fileID: 1135939668}
@@ -5150,6 +5166,7 @@ MonoBehaviour:
   loadPathName: 3-6
   loadStudioName: SFStage
   title: 3-6
+  windowIndex: 2
   nextStage: {fileID: 543707667}
   stageImage: {fileID: 759915782}
   frameImage: {fileID: 1144042025}
@@ -5768,6 +5785,7 @@ MonoBehaviour:
   loadPathName: 1-2
   loadStudioName: SFStage
   title: 1-2
+  windowIndex: 0
   nextStage: {fileID: 135863270}
   stageImage: {fileID: 2022674601}
   frameImage: {fileID: 1786861447}
@@ -6549,6 +6567,7 @@ MonoBehaviour:
   loadPathName: 4-4
   loadStudioName: SFStage
   title: 4-4
+  windowIndex: 3
   nextStage: {fileID: 1692554980}
   stageImage: {fileID: 1230194539}
   frameImage: {fileID: 1501670087}
@@ -7903,6 +7922,7 @@ MonoBehaviour:
   loadPathName: 3-8
   loadStudioName: SFStage
   title: 3-8
+  windowIndex: 2
   nextStage: {fileID: 1803636342}
   stageImage: {fileID: 884786361}
   frameImage: {fileID: 1503463546}
@@ -8125,6 +8145,7 @@ MonoBehaviour:
   loadPathName: Murata5
   loadStudioName: SFStage
   title: Murata5
+  windowIndex: 0
   nextStage: {fileID: 1892978}
   stageImage: {fileID: 3691194}
   frameImage: {fileID: 1584941805}
@@ -8309,6 +8330,7 @@ MonoBehaviour:
   loadPathName: Matsu1
   loadStudioName: SFStage
   title: Matsu1
+  windowIndex: 0
   nextStage: {fileID: 542130762}
   stageImage: {fileID: 1857122645}
   frameImage: {fileID: 402897355}
@@ -8361,6 +8383,7 @@ MonoBehaviour:
   loadPathName: 3-5
   loadStudioName: SFStage
   title: 3-5
+  windowIndex: 2
   nextStage: {fileID: 640321644}
   stageImage: {fileID: 152862510}
   frameImage: {fileID: 1224492455}
@@ -9014,6 +9037,7 @@ MonoBehaviour:
   loadPathName: Murata4
   loadStudioName: SFStage
   title: Murata4
+  windowIndex: 4
   nextStage: {fileID: 1430900632}
   stageImage: {fileID: 1762481422}
   frameImage: {fileID: 653841288}
@@ -9171,6 +9195,7 @@ MonoBehaviour:
   loadPathName: 2-4
   loadStudioName: SFStage
   title: 2-4
+  windowIndex: 1
   nextStage: {fileID: 1861697919}
   stageImage: {fileID: 1794588939}
   frameImage: {fileID: 1800659540}
@@ -10257,6 +10282,7 @@ MonoBehaviour:
   loadPathName: 2-7
   loadStudioName: SFStage
   title: 2-7
+  windowIndex: 1
   nextStage: {fileID: 274234734}
   stageImage: {fileID: 1003566651}
   frameImage: {fileID: 397680705}
@@ -10529,6 +10555,7 @@ MonoBehaviour:
   loadPathName: 2-1
   loadStudioName: SFStage_Tutorial2-1
   title: 2-1
+  windowIndex: 1
   nextStage: {fileID: 1879349966}
   stageImage: {fileID: 1381655199}
   frameImage: {fileID: 333832672}
@@ -11224,6 +11251,7 @@ MonoBehaviour:
   loadPathName: 2-3
   loadStudioName: SFStage
   title: 2-3
+  windowIndex: 1
   nextStage: {fileID: 1065069294}
   stageImage: {fileID: 1556162377}
   frameImage: {fileID: 687087616}
@@ -11350,6 +11378,7 @@ MonoBehaviour:
   loadPathName: 3-4
   loadStudioName: SFStage
   title: 3-4
+  windowIndex: 2
   nextStage: {fileID: 988278026}
   stageImage: {fileID: 1688247162}
   frameImage: {fileID: 1314601773}
@@ -11910,6 +11939,7 @@ MonoBehaviour:
   loadPathName: 4-6
   loadStudioName: SFStage
   title: 4-6
+  windowIndex: 3
   nextStage: {fileID: 423046298}
   stageImage: {fileID: 510460422}
   frameImage: {fileID: 1858328494}
@@ -12898,6 +12928,7 @@ MonoBehaviour:
   loadPathName: Murata3
   loadStudioName: SFStage
   title: Murata3
+  windowIndex: 4
   nextStage: {fileID: 1037475250}
   stageImage: {fileID: 993723729}
   frameImage: {fileID: 1539282254}
@@ -13604,6 +13635,7 @@ MonoBehaviour:
   loadPathName: Murata5
   loadStudioName: SFStage
   title: Murata5
+  windowIndex: 4
   nextStage: {fileID: 528900801}
   stageImage: {fileID: 542278164}
   frameImage: {fileID: 2037832095}
@@ -13656,6 +13688,7 @@ MonoBehaviour:
   loadPathName: 1-6
   loadStudioName: SFStage
   title: 1-6
+  windowIndex: 0
   nextStage: {fileID: 1844180311}
   stageImage: {fileID: 1276956113}
   frameImage: {fileID: 1730936676}
@@ -13856,6 +13889,7 @@ MonoBehaviour:
   loadPathName: 3-1
   loadStudioName: SFStage_Tutorial3-1
   title: 3-1
+  windowIndex: 2
   nextStage: {fileID: 1909326884}
   stageImage: {fileID: 1343170251}
   frameImage: {fileID: 1461408288}
@@ -14706,6 +14740,7 @@ MonoBehaviour:
   loadPathName: 1-1
   loadStudioName: SFStage_Tutorial1-1
   title: 1-1
+  windowIndex: 0
   nextStage: {fileID: 713533196}
   stageImage: {fileID: 744878097}
   frameImage: {fileID: 1278781306}
@@ -14832,6 +14867,7 @@ MonoBehaviour:
   loadPathName: 1-5
   loadStudioName: SFStage
   title: 1-5
+  windowIndex: 0
   nextStage: {fileID: 1431895953}
   stageImage: {fileID: 1910808873}
   frameImage: {fileID: 1233944729}
@@ -15434,6 +15470,7 @@ MonoBehaviour:
   loadPathName: Murata3
   loadStudioName: SFStage
   title: Murata3
+  windowIndex: 0
   nextStage: {fileID: 306278524}
   stageImage: {fileID: 718813881}
   frameImage: {fileID: 1148875630}
@@ -16452,6 +16489,7 @@ MonoBehaviour:
   loadPathName: 4-5
   loadStudioName: SFStage
   title: 4-5
+  windowIndex: 3
   nextStage: {fileID: 1320187138}
   stageImage: {fileID: 1496968352}
   frameImage: {fileID: 699870883}
@@ -16504,6 +16542,7 @@ MonoBehaviour:
   loadPathName: 1-8
   loadStudioName: SFStage
   title: 1-8
+  windowIndex: 0
   nextStage: {fileID: 1197722518}
   stageImage: {fileID: 1536523754}
   frameImage: {fileID: 15707945}
@@ -17907,6 +17946,7 @@ MonoBehaviour:
   loadPathName: 4-2
   loadStudioName: SFStage
   title: 4-2
+  windowIndex: 3
   nextStage: {fileID: 230665826}
   stageImage: {fileID: 96947362}
   frameImage: {fileID: 469447698}
@@ -18208,6 +18248,7 @@ MonoBehaviour:
   loadPathName: 4-1
   loadStudioName: SFStage_Tutorial4-1
   title: 4-1
+  windowIndex: 3
   nextStage: {fileID: 1799837091}
   stageImage: {fileID: 2023952002}
   frameImage: {fileID: 976940753}
@@ -18329,6 +18370,7 @@ MonoBehaviour:
   loadPathName: 1-7
   loadStudioName: SFStage
   title: 1-7
+  windowIndex: 0
   nextStage: {fileID: 1692708294}
   stageImage: {fileID: 1372318724}
   frameImage: {fileID: 748742538}
@@ -18630,6 +18672,7 @@ MonoBehaviour:
   loadPathName: 2-5
   loadStudioName: SFStage
   title: 2-5
+  windowIndex: 1
   nextStage: {fileID: 593786306}
   stageImage: {fileID: 90264676}
   frameImage: {fileID: 1857938209}
@@ -18827,6 +18870,7 @@ MonoBehaviour:
   loadPathName: 2-2
   loadStudioName: SFStage
   title: 2-2
+  windowIndex: 1
   nextStage: {fileID: 1245379784}
   stageImage: {fileID: 1699119050}
   frameImage: {fileID: 1841661824}
@@ -19066,6 +19110,7 @@ MonoBehaviour:
   loadPathName: 3-2
   loadStudioName: SFStage
   title: 3-2
+  windowIndex: 2
   nextStage: {fileID: 189860949}
   stageImage: {fileID: 831378918}
   frameImage: {fileID: 1929297340}
@@ -19745,6 +19790,7 @@ MonoBehaviour:
   loadPathName: 4-8
   loadStudioName: SFStage
   title: 4-8
+  windowIndex: 3
   nextStage: {fileID: 169649231}
   stageImage: {fileID: 1392613031}
   frameImage: {fileID: 409990121}
@@ -20192,6 +20238,7 @@ MonoBehaviour:
   loadPathName: Murata1
   loadStudioName: SFStage
   title: Murata1
+  windowIndex: 0
   nextStage: {fileID: 520743861}
   stageImage: {fileID: 1077920258}
   frameImage: {fileID: 674960968}
@@ -20806,6 +20853,7 @@ MonoBehaviour:
   loadPathName: Murata2
   loadStudioName: SFStage
   title: Murata2
+  windowIndex: 4
   nextStage: {fileID: 1376630936}
   stageImage: {fileID: 1684405050}
   frameImage: {fileID: 1138165508}
