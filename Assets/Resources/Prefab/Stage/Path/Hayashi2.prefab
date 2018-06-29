@@ -400,7 +400,7 @@ MonoBehaviour:
   endPoint: 11
   markModel: {fileID: 0}
   text: {fileID: 0}
-  speedMul: 6
+  speedMul: 8
 --- !u!114 &114044879246762518
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -430,7 +430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 3
-  damage: 50
+  damage: 25
   checkWait: 1
   focusGrace: 0.3
   focusDuration: 1
@@ -454,7 +454,7 @@ MonoBehaviour:
   endPoint: 10
   markModel: {fileID: 0}
   text: {fileID: 0}
-  speedMul: 2
+  speedMul: 7
 --- !u!114 &114287448635028920
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -487,7 +487,6 @@ MonoBehaviour:
   startPoint: 6
   endPoint: 7
   markModel: {fileID: 0}
-  effectPre: {fileID: 1272900843026218, guid: 1d9e370f6faa79748b844cfd9309e96a, type: 2}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114417577990716164
@@ -553,10 +552,10 @@ MonoBehaviour:
   - {x: -4.957449, y: -2.6961122}
   - {x: -10.667536, y: -7.8126516}
   - {x: -11.846109, y: -8.837518}
-  - {x: -10.093934, y: -8.866552}
-  - {x: -5.8575077, y: -8.7374735}
-  - {x: -3.6883116, y: -8.70644}
-  - {x: -2.3229046, y: -5.2444134}
+  - {x: -9.902941, y: -8.790154}
+  - {x: -5.6601253, y: -8.753137}
+  - {x: -3.7965205, y: -8.722103}
+  - {x: -2.507511, y: -5.2600765}
   - {x: 0.20090544, y: 1.842972}
   - {x: 1.4512157, y: 4.9210334}
   - {x: 2.9723067, y: 2.4477603}
@@ -566,12 +565,12 @@ MonoBehaviour:
   - {x: 9.664115, y: 2.0965025}
   - {x: 9.780651, y: 5.139983}
   - {x: 8.234317, y: 2.777918}
-  - {x: 2.8447711, y: -6.042779}
-  - {x: 1.1855559, y: -8.595532}
-  - {x: 0.082764626, y: -8.620664}
-  - {x: -2.3488007, y: -8.675742}
-  - {x: -3.6880655, y: -8.699495}
-  - {x: -3.5192685, y: -5.0008287}
+  - {x: 2.8447711, y: -6.119177}
+  - {x: 1.1855559, y: -8.67193}
+  - {x: 0.04456663, y: -8.658864}
+  - {x: -2.3403723, y: -8.6435}
+  - {x: -3.7560349, y: -8.638459}
+  - {x: -4.313239, y: -9.082748}
 --- !u!114 &114661027003499860
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -621,7 +620,6 @@ MonoBehaviour:
   startPoint: 8
   endPoint: 9
   markModel: {fileID: 0}
-  effectPre: {fileID: 1272900843026218, guid: 1d9e370f6faa79748b844cfd9309e96a, type: 2}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114824118502585458
@@ -639,6 +637,5 @@ MonoBehaviour:
   startPoint: 4
   endPoint: 5
   markModel: {fileID: 0}
-  effectPre: {fileID: 1272900843026218, guid: 1d9e370f6faa79748b844cfd9309e96a, type: 2}
   waitTime: 1
   text: {fileID: 0}
