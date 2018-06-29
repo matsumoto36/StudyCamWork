@@ -16,7 +16,8 @@ public class MouseCamera : MonoBehaviour
 	int life = 100;				//体力
     int lifeDamage;			//ダメージの数値
     public static int Combo;				//コンボ
-    public static int act;
+    public static int ComboMax;                //コンボ
+	public static int act;
     public static int Score;               //最終的に入るスコア
     static int scoreWithoutCombo;          //現時点でコンボ抜きにしたスコア
     static int scoreMax;                   //現時点でのスコアの最大値
@@ -44,7 +45,6 @@ public class MouseCamera : MonoBehaviour
     float playTime;
 	float checkSpeed;
     int comboTimeCount;
-    public int ComboData;
     public int AccuaryTex;
     float gaugeAmount = 1;
     float gauge = 1;
@@ -276,6 +276,10 @@ public class MouseCamera : MonoBehaviour
 					Score += point;
 				}
 
+				if(ComboMax <= Combo) {
+					ComboMax = Combo;
+				}
+
 				AudioManager.PlaySE("decision22");
 
 				CalcScoreUpRate();
@@ -310,9 +314,6 @@ public class MouseCamera : MonoBehaviour
 
 			Debug.Log("damage");
 			if(!IsTeleport) {
-				if(ComboData <= Combo) {
-					ComboData = Combo;
-				}
 				Combo = 0;
 			}
 		}

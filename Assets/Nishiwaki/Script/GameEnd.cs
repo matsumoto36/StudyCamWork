@@ -87,7 +87,8 @@ public class GameEnd : MonoBehaviour
         StageData Data = GameData.stageData[GameMaster.LoadPathName];
 
         BestScore.text = Data.score.ToString();
-        BestAccuracy.text = Data.accuracy.ToString("p");
+		if(Data.accuracy >= 1.0f) BestAccuracy.text = "100%";
+		else BestAccuracy.text = Data.accuracy.ToString("p");
         BestCombo.text = "x" + Data.maxCombo.ToString();
 
         //α値を変更する時間

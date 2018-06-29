@@ -130,7 +130,7 @@ public class GameMaster : MonoBehaviour {
 			if(data.score < MouseCamera.Score) {
 				data.score = MouseCamera.Score;
 				data.accuracy = MouseCamera.Accuracy;
-				data.maxCombo = MouseCamera.Combo;
+				data.maxCombo = MouseCamera.ComboMax;
 				GameData.stageData[loadPathName] = data;
 				GameData.Save();
 			}

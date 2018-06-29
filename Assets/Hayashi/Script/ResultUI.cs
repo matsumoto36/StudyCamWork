@@ -21,7 +21,7 @@ public class ResultUI : MonoBehaviour {
 	void Update ()
     {
         ResultScore = MouseCamera.Score;
-        ResultCombo = MouseCamera.Combo;
+        ResultCombo = MouseCamera.ComboMax;
         ResultAccuracy = MouseCamera.Accuracy;
 
         ResultScoreText.text = ResultScore.ToString();
