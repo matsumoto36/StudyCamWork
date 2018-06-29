@@ -9,8 +9,8 @@ public class TimerController : MonoBehaviour
     public static string Next_Scene;//シーン名
 
     PostEffect effect;
-    
 
+	bool isSceneMoving = false;
 
     void Start()
     {
@@ -53,6 +53,15 @@ public class TimerController : MonoBehaviour
     }
     public void SceneMove(string SceneName)
     {
-        StartCoroutine(SM(SceneName));
+		if(isSceneMoving) {
+			foreach(var item in FindObjectsOfType<TimerController>()) {
+				if(item == this) continue;
+				item.SceneMove(SceneName);
+				return;
+			}
+		}
+
+		isSceneMoving = true;
+		StartCoroutine(SM(SceneName));
     }
 }

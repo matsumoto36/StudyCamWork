@@ -47,8 +47,8 @@ public class GimmickManager : MonoBehaviour {
 		SetStartTime();
 		SetLine();
 
-		foreach(var item in gimmicks) {
-			item.gimmick.SpawnModel(player);
+		for(int i = g.Length - 1; i >= 0;i--) {
+			gimmicks[i].gimmick.SpawnModel(player);
 		}
 
 		GameMaster.Instance.OnGameStart += () => startTime = Time.time;
