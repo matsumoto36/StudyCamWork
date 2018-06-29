@@ -14,13 +14,12 @@ public enum PlayerCaptureStatus {
 
 public class Player : MonoBehaviour {
 
-	public const float SCALE_MIN = 1.0f;
-	public const float SCALE_MAX = 1.5f;
+	public const float SCALE_MIN = 0.8f;
+	public const float SCALE_MAX = 1.2f;
 
 	public Renderer centerLight;
 	public Renderer ring1;
 	public Renderer ring2;
-
 
 	public Color CaptureLightColor;
 	public Color NearLightColor;
@@ -33,6 +32,7 @@ public class Player : MonoBehaviour {
 	Bezier2D path;
 	PKFxFX particle;
 	float sumSpeed;
+	bool isSceneMoved;
 
 	public Transform Body {
 		get; private set;
@@ -136,11 +136,23 @@ public class Player : MonoBehaviour {
 	}
 
 	void Update() {
-		//デバッグ機能
-		//リトライ
-		if(Input.GetKeyDown(KeyCode.R))
-			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
+		//リトライ
+		if(Input.GetKeyDown(KeyCode.R) && !isSceneMoved) {
+			isSceneMoved = true;
+
+			AudioManager.PlaySE("Button3");
+			FindObjectOfType<TimerController>().SceneMove("GameScene");
+		}
+
+		//セレクト
+		if(Input.GetKeyDown(KeyCode.T) && !isSceneMoved) {
+			isSceneMoved = true;
+
+			AudioManager.PlaySE("Button3");
+			StageSelectController.movieSkip = true;
+			FindObjectOfType<TimerController>().SceneMove("TitleScene");
+		}
 	}
 
 	// Update is called once per frame
