@@ -36,8 +36,6 @@ public class GameEnd : MonoBehaviour
     public CanvasGroup Next;
     //リザルトのスキップ
     bool skip;
-	//シーン移動中か？
-	bool isSceneMoving = false;
 
     Color startColor = new Color(0, 0, 0, 0);
     Color endColor = new Color(0, 0, 0, 0.8f);
@@ -216,32 +214,19 @@ public class GameEnd : MonoBehaviour
 
 		AudioManager.PlaySE("click03");
 
-		if(isSceneMoving) return;
-		isSceneMoving = true;
-
-		FindObjectOfType<TimerController>()
-			.SceneMove("GameScene");
+		GameMaster.Instance.Retry();
 	}
 
 	public void OnStageSelectClick() {
 
 		AudioManager.PlaySE("click03");
 
-		if(isSceneMoving) return;
-		isSceneMoving = true;
-
-		StageSelectController.movieSkip = true;
-
-		FindObjectOfType<TimerController>()
-			.SceneMove("TitleScene");
+		GameMaster.Instance.MoveSelectScene();
 	}
 
 	public void OnNextStageClick() {
 
 		AudioManager.PlaySE("click03");
-
-		if(isSceneMoving) return;
-		isSceneMoving = true;
 
 		GameMaster.Instance.NextScene();
 	}

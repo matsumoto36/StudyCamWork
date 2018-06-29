@@ -35,14 +35,17 @@ public class StageWindow : MonoBehaviour {
 		if(isSceneMove) return;
 		isSceneMove = true;
 
+		SelectWindowActive.activeWindowIndex = button.windowIndex;
+
 		//先のステージをすべて登録
-		var nextStageList = new List<string[]>();
+		var nextStageList = new List<StageInfo>();
 		while(button.nextStage) {
 			button = button.nextStage;
 
 			nextStageList.Add(
-				new string[] { button.loadPathName, button.loadStudioName }
-				);
+				new StageInfo(
+					button.loadPathName,button.loadStudioName, button.windowIndex
+					));
 		}
 		nextStageList.Add(null);
 

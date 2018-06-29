@@ -9,6 +9,7 @@ public class StageMoveButton : MonoBehaviour {
 	public string loadStudioName;
 	public string title;
 
+	public int windowIndex;
 	public StageMoveButton nextStage;
 	public Image stageImage;
 	public Image frameImage;

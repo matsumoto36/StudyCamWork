@@ -142,7 +142,7 @@ public class Player : MonoBehaviour {
 			isSceneMoved = true;
 
 			AudioManager.PlaySE("Button3");
-			FindObjectOfType<TimerController>().SceneMove("GameScene");
+			GameMaster.Instance.Retry();
 		}
 
 		//セレクト
@@ -151,7 +151,7 @@ public class Player : MonoBehaviour {
 
 			AudioManager.PlaySE("Button3");
 			StageSelectController.movieSkip = true;
-			FindObjectOfType<TimerController>().SceneMove("TitleScene");
+			GameMaster.Instance.MoveSelectScene();
 		}
 	}
 

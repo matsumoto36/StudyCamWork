@@ -98,11 +98,11 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	/// </summary>
 	/// <param name="type">SEの名前</param>
 	/// <param name="vol">音量</param>
-	public static void PlaySE(string SEName, float vol = 1.0f) {
+	public static AudioSource PlaySE(string SEName, float vol = 1.0f) {
 
 		//SE取得
 		var info = GetSEInfo(SEName);
-		if(info == null) return;
+		if(info == null) return null;
 
 		if(info.stockList.Count > 0) {
 			//stockListから空で且つ番号が一番若いSEInfoを受け取る
@@ -129,7 +129,11 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 
 				info.stockList.Add(seInfo.index, seInfo);
 			}));
+
+			return src;
 		}
+
+		return null;
 	}
 
 	/// <summary>

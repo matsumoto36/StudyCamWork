@@ -26,7 +26,7 @@ public class GameMaster : MonoBehaviour {
 	public static string LoadStudioName = "";
 	public string loadStudioName;
 
-	public static List<string[]> nextStageList;
+	public static List<StageInfo> nextStageList;
 	static int counter = 0;
 
 	public Text countDownText;
@@ -38,6 +38,8 @@ public class GameMaster : MonoBehaviour {
 	public event Action OnGameStartCountDown;
 	public event Action OnGameOver;
 	public event Action OnGameClear;
+
+	bool isSceneMoving;
 
 	public GameState State { get; private set; }
 
@@ -170,7 +172,6 @@ public class GameMaster : MonoBehaviour {
         {
 
             OnGameStart();
-            //Debug.Log("a");
         }
 
 		State = GameState.Playing;
@@ -178,11 +179,14 @@ public class GameMaster : MonoBehaviour {
 
 	public void NextScene() {
 
-		var nextStageStr = nextStageList[counter];
-		if(nextStageStr == null) return;
+		var nextStageInfo = nextStageList[counter];
+		if(nextStageInfo == null) return;
 
-		LoadPathName = nextStageStr[0];
-		LoadStudioName = nextStageStr[1];
+		if(isSceneMoving) return;
+		isSceneMoving = true;
+
+		LoadPathName = nextStageInfo.pathName;
+		LoadStudioName = nextStageInfo.studioName;
 
 		counter++;
 
@@ -193,5 +197,30 @@ public class GameMaster : MonoBehaviour {
 	public bool CanMoveNextStage() {
 		if(nextStageList == null) return false;
 		return nextStageList[counter] != null;
+	}
+
+	public void MoveSelectScene() {
+
+		if(isSceneMoving) return;
+		isSceneMoving = true;
+
+		StageSelectController.movieSkip = true;
+
+		if(counter > 0) {
+			SelectWindowActive.activeWindowIndex = nextStageList[counter - 1].windowIndex;
+		}
+
+		FindObjectOfType<TimerController>()
+			.SceneMove("TitleScene");
+
+	}
+
+	public void Retry() {
+
+		if(isSceneMoving) return;
+		isSceneMoving = true;
+
+		FindObjectOfType<TimerController>()
+			.SceneMove("GameScene");
 	}
 }

@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class SelectWindowActive : MonoBehaviour {
 
+	public static int activeWindowIndex = 0;
+
 	public RectTransform[] stageWindows;
 	public Button[] stageSelectButtons;
 
 	public Color activeColor;
 	public Color inActiveColor;
-
-	int activeWindowIndex = -1;
 
 	Image[] buttonImages;
 
@@ -33,12 +33,11 @@ public class SelectWindowActive : MonoBehaviour {
 			buttonImages[i] = button.GetComponent<Image>();
 		}
 
-		SetActiveWindow(0);
+		SetActiveWindow(activeWindowIndex);
 	}
 	
 	void SetActiveWindow(int windowIndex) {
 
-		if(windowIndex == activeWindowIndex) return;
 		activeWindowIndex = windowIndex;
 
 		for(int i = 0;i < buttonImages.Length;i++) {
