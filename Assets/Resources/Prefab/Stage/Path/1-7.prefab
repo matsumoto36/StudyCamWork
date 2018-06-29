@@ -271,7 +271,6 @@ MonoBehaviour:
   startPoint: 1
   endPoint: 2
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 3
   text: {fileID: 0}
 --- !u!114 &114778814306009368
