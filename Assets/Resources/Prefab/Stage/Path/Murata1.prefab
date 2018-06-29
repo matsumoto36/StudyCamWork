@@ -136,7 +136,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4849529244117908}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4103061887495782
 Transform:
@@ -149,7 +149,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4849529244117908}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4395115947414640
 Transform:
@@ -162,7 +162,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4849529244117908}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4642457153298518
 Transform:
@@ -188,7 +188,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4849529244117908}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4849529244117908
 Transform:
@@ -200,11 +200,11 @@ Transform:
   m_LocalPosition: {x: -5.594217, y: 0.21363664, z: -44.36007}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4103061887495782}
   - {fileID: 4768349006193346}
+  - {fileID: 4103061887495782}
+  - {fileID: 4395115947414640}
   - {fileID: 4070657070786590}
   - {fileID: 4881326733944398}
-  - {fileID: 4395115947414640}
   - {fileID: 4642457153298518}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -220,7 +220,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4849529244117908}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114101991027870310
 MonoBehaviour:
@@ -243,21 +243,21 @@ MonoBehaviour:
   - {x: 7.164586, y: -0.020453691}
   - {x: 8.042421, y: -0.020453691}
   - {x: 7.3955965, y: -0.80588436}
-  - {x: 0.55773354, y: -7.6437464}
-  - {x: 0.003312707, y: -8.01336}
-  - {x: -0.597309, y: -7.5975447}
+  - {x: 0.5125649, y: -5.6111193}
+  - {x: -0.04185593, y: -5.980733}
+  - {x: -0.64247763, y: -5.5649176}
   - {x: -7.435173, y: -0.5748757}
   - {x: -8.035796, y: 0.025747895}
   - {x: -8.544017, y: -0.62107706}
-  - {x: -14.596451, y: -7.3203335}
-  - {x: -15.012265, y: -8.013361}
-  - {x: -14.226836, y: -7.96716}
-  - {x: -0.7821175, y: -7.9671593}
-  - {x: 0.0033128262, y: -7.9671593}
-  - {x: 0.788743, y: -7.9209576}
-  - {x: 14.51067, y: -8.01336}
-  - {x: 15.018889, y: -8.01336}
-  - {x: 14.510668, y: -7.366535}
+  - {x: -11.570095, y: -5.2877054}
+  - {x: -11.985909, y: -5.980733}
+  - {x: -11.20048, y: -5.934532}
+  - {x: -0.8272861, y: -5.9797015}
+  - {x: -0.041855812, y: -5.9797015}
+  - {x: 0.7435744, y: -5.9335}
+  - {x: 11.484314, y: -5.9807324}
+  - {x: 11.992534, y: -5.9807324}
+  - {x: 11.484312, y: -5.3339076}
   - {x: 8.365834, y: -0.6210778}
   - {x: 8.04242, y: 0.025748253}
   - {x: 7.5342026, y: 0.67257345}
@@ -279,7 +279,6 @@ MonoBehaviour:
   startPoint: 8
   endPoint: 8.72
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 3
   text: {fileID: 0}
 --- !u!114 &114363659798067798
@@ -397,6 +396,5 @@ MonoBehaviour:
   startPoint: 3
   endPoint: 4
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 3
   text: {fileID: 0}
