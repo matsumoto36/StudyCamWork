@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 114642543710322362}
   - component: {fileID: 114928620216152358}
   m_Layer: 0
-  m_Name: Hayashi
+  m_Name: 5-3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

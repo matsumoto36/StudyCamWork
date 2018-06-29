@@ -876,9 +876,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: Murata1
+  loadPathName: 5-3
   loadStudioName: SFStage
-  title: Murata1
+  title: 5-3
   windowIndex: 4
   nextStage: {fileID: 2090979048}
   stageImage: {fileID: 210084332}
@@ -1504,9 +1504,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: Matsu1
+  loadPathName: 5-1
   loadStudioName: SFStage
-  title: Matsu1
+  title: 5-1
   windowIndex: 4
   nextStage: {fileID: 583688738}
   stageImage: {fileID: 1481884566}
@@ -2077,14 +2077,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5514706, g: 0.51092124, b: 0.51092124, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 1bdd748019818d0409c5ae3f2748a607, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4207,9 +4207,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: Murata6
+  loadPathName: 5-8
   loadStudioName: SFStage
-  title: Murata6
+  title: 5-8
   windowIndex: 4
   nextStage: {fileID: 0}
   stageImage: {fileID: 2083204526}
@@ -4357,14 +4357,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5514706, g: 0.51092124, b: 0.51092124, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 1d7b64c65403644428136629e57b6e35, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4762,9 +4762,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: Matsu2
+  loadPathName: 5-2
   loadStudioName: SFStage
-  title: Matsu2
+  title: 5-2
   windowIndex: 4
   nextStage: {fileID: 95776392}
   stageImage: {fileID: 1904908300}
@@ -8477,14 +8477,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5514706, g: 0.51092124, b: 0.51092124, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 76167e6fe48df25469a8dbdd823562b1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9034,9 +9034,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: Murata4
+  loadPathName: 5-6
   loadStudioName: SFStage
-  title: Murata4
+  title: 5-6
   windowIndex: 4
   nextStage: {fileID: 1430900632}
   stageImage: {fileID: 1762481422}
@@ -12925,9 +12925,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: Murata3
+  loadPathName: 5-5
   loadStudioName: SFStage
-  title: Murata3
+  title: 5-5
   windowIndex: 4
   nextStage: {fileID: 1037475250}
   stageImage: {fileID: 993723729}
@@ -13632,9 +13632,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: Murata5
+  loadPathName: 5-7
   loadStudioName: SFStage
-  title: Murata5
+  title: 5-7
   windowIndex: 4
   nextStage: {fileID: 528900801}
   stageImage: {fileID: 542278164}
@@ -14162,14 +14162,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5514706, g: 0.51092124, b: 0.51092124, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 99970eadc9c799c49847b180fc800fa1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -16308,14 +16308,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5514706, g: 0.51092124, b: 0.51092124, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 82666997bf5e64c42a2d8151ed872dce, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -17585,14 +17585,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5514706, g: 0.51092124, b: 0.51092124, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 5973b0a0e3959054f8c3d7dc60731296, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -19040,14 +19040,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5514706, g: 0.51092124, b: 0.51092124, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 6066d775558832c438cdda82c3b9d2e7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -20783,14 +20783,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5514706, g: 0.51092124, b: 0.51092124, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 8e3881d0e15ca5d4dbf9bf7e3d07bd62, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -20850,9 +20850,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: Murata2
+  loadPathName: 5-4
   loadStudioName: SFStage
-  title: Murata2
+  title: 5-4
   windowIndex: 4
   nextStage: {fileID: 1376630936}
   stageImage: {fileID: 1684405050}

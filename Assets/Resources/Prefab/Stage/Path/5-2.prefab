@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 114441405219225514}
   - component: {fileID: 114951694290873482}
   m_Layer: 0
-  m_Name: Murata2
+  m_Name: 5-2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -525,7 +525,7 @@ MonoBehaviour:
   startPoint: 5.7
   endPoint: 5.98
   markModel: {fileID: 0}
-  isToFar: 0
+  isToFar: 1
   text: {fileID: 0}
 --- !u!114 &114951694290873482
 MonoBehaviour:
