@@ -51,6 +51,7 @@ public class MouseCamera : MonoBehaviour
 
     DOFSlide dofSlide;
 
+	float warningPlayTime;
 
 	public PlayerCaptureStatus CaptureStatus {
 		get; private set;
@@ -274,6 +275,9 @@ public class MouseCamera : MonoBehaviour
 				else if(Combo >= 0) {
 					Score += point;
 				}
+
+				AudioManager.PlaySE("decision22");
+
 				CalcScoreUpRate();
 				scoreWithoutCombo += point;
 
@@ -287,6 +291,11 @@ public class MouseCamera : MonoBehaviour
 
 
 				life -= lifeDamage;
+
+				if(Time.time - warningPlayTime > 0.7f) {
+					AudioManager.PlaySE("warning2");
+					warningPlayTime = Time.time;
+				}
 
 				//ダメージ演出
 				var damage = life < 0 ? lifeDamage + life : lifeDamage;
