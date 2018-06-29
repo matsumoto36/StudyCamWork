@@ -477,7 +477,6 @@ MonoBehaviour:
   startPoint: 3
   endPoint: 4
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 3
   text: {fileID: 0}
 --- !u!114 &114047477756637698
@@ -495,7 +494,7 @@ MonoBehaviour:
   startPoint: 12.5
   endPoint: 13
   markModel: {fileID: 0}
-  isToFar: 1
+  isToFar: 0
   text: {fileID: 0}
 --- !u!114 &114129082640378294
 MonoBehaviour:
@@ -529,7 +528,6 @@ MonoBehaviour:
   startPoint: 15
   endPoint: 16
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 3
   text: {fileID: 0}
 --- !u!114 &114245585436003680
@@ -577,12 +575,12 @@ MonoBehaviour:
   - {x: -5.082314, y: -1.5891861}
   - {x: -5.0378, y: 1.0371314}
   - {x: -4.993288, y: 3.1737995}
-  - {x: -8.242797, y: 4.909835}
+  - {x: -8.690218, y: 4.9657626}
   - {x: -9.978836, y: 4.998864}
-  - {x: -12.026471, y: 4.9988627}
-  - {x: -14.074108, y: 3.262824}
-  - {x: -14.029597, y: 0.99261796}
-  - {x: -13.985082, y: -0.78793526}
+  - {x: -11.271445, y: 5.0268273}
+  - {x: -13.039443, y: 2.3679793}
+  - {x: -12.994932, y: 0.96465456}
+  - {x: -12.950417, y: -0.31254786}
   - {x: -11.6703615, y: -2.7465458}
   - {x: -10.067865, y: -2.4794626}
   - {x: -10.067865, y: -4.571614}
@@ -598,12 +596,12 @@ MonoBehaviour:
   - {x: 9.651771, y: -5.506404}
   - {x: 9.963368, y: -2.4794612}
   - {x: 11.120725, y: -2.0343218}
-  - {x: 13.168366, y: -1.9898087}
-  - {x: 14.014129, y: 1.0371326}
-  - {x: 14.014132, y: 2.8621993}
-  - {x: 12.456144, y: 4.865324}
+  - {x: 12.661292, y: -1.3016373}
+  - {x: 12.963761, y: 1.0371326}
+  - {x: 12.963764, y: 2.2102475}
+  - {x: 11.804192, y: 5.0826416}
   - {x: 9.963369, y: 4.998864}
-  - {x: 6.1796885, y: 4.9988627}
+  - {x: 7.121397, y: 5.071302}
   - {x: 4.1765704, y: 2.3725452}
   - {x: 4.977821, y: 1.0371313}
   - {x: 6.580321, y: 0.8590741}
@@ -622,7 +620,6 @@ MonoBehaviour:
   startPoint: 9
   endPoint: 10
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 3
   text: {fileID: 0}
 --- !u!114 &114650479962716852
@@ -708,7 +705,6 @@ MonoBehaviour:
   startPoint: 5.5
   endPoint: 6.02
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 3
   text: {fileID: 0}
 --- !u!114 &114842691864742304
@@ -726,7 +722,6 @@ MonoBehaviour:
   startPoint: 16
   endPoint: 17
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 3
   text: {fileID: 0}
 --- !u!114 &114873654382305770
