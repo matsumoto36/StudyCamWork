@@ -108,6 +108,7 @@ public class MouseCamera : MonoBehaviour
             Score = 0;
             scoreWithoutCombo = 0;
             scoreMax = 0;
+            ComboMax = 0;
         };
 
         GameMaster.Instance.OnGameClear += () => {
