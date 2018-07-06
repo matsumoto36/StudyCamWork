@@ -270,6 +270,9 @@ public class MouseCamera : MonoBehaviour
 				}
 
 				var point = plus + gameBalance.BaseScore;
+
+				Combo++;
+
 				if(Combo >= 1) {
 					Score += (int)(point * Combo * 1.05);
 				}
@@ -278,6 +281,7 @@ public class MouseCamera : MonoBehaviour
 				}
 
 				if(ComboMax <= Combo) {
+					Debug.Log("AddCombo " + Combo);
 					ComboMax = Combo;
 				}
 
@@ -286,7 +290,6 @@ public class MouseCamera : MonoBehaviour
 				CalcScoreUpRate();
 				scoreWithoutCombo += point;
 
-				Combo++;
 				StartCoroutine(FlashComboText());
 			}
 
@@ -307,13 +310,13 @@ public class MouseCamera : MonoBehaviour
 				StartCoroutine(FlashHPDown(damage));
 				StartCoroutine(cameraObject.DamageFlash());
 
+				Debug.Log("damage");
+
 				if(life <= 0.0f) {
 					UpdateUI();
 					GameMaster.Instance.GameOver();
 				}
 			}
-
-			Debug.Log("damage");
 			if(!IsTeleport) {
 				Combo = 0;
 			}
