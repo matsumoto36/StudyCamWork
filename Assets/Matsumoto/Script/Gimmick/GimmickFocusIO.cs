@@ -90,7 +90,7 @@ public class GimmickFocusIO : GimmickBase {
 		moveZ = GimmickManager.MOVE_Z;
 		markModelSpawnZ = z;
 
-		var partition = (int)(32 * (endPoint - startPoint));
+		var partition = (int)(256 * (endPoint - startPoint));
 		if(partition == 0) partition = 1;
 
 		var diff = endPoint - startPoint;

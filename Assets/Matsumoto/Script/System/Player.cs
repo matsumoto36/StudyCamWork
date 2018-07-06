@@ -166,10 +166,6 @@ public class Player : MonoBehaviour {
 		movedLength = Mathf.Clamp(movedLength, 0, path.Length);
 		var t = movedLength / path.Length;
 		transform.position = path.GetPointNormalize(t);
-
-		if(t >= 1.0f) {
-			GameMaster.Instance.GameClear();
-		}
 	}
 
 	IEnumerator MoveAudioUpdate() {

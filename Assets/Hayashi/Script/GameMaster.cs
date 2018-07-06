@@ -124,6 +124,9 @@ public class GameMaster : MonoBehaviour {
 
 		if(OnGameClear != null) OnGameClear();
 
+		Debug.Log("DataSeve");
+		Debug.Log("Combo " + MouseCamera.ComboMax);
+
 		//データのセーブ
 		if(GameData.stageData != null) {
 			var data = GameData.stageData[loadPathName];

@@ -161,7 +161,7 @@ public class GimmickManager : MonoBehaviour {
 			var diff = to - from;
 			if(diff > 0) {
 
-				var partition = (int)(64 * diff);
+				var partition = (int)(256 * diff);
 				if(partition == 0) partition = 1;
 
 				var dt = diff / partition;

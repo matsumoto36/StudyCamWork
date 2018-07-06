@@ -11,10 +11,13 @@ public class StageController : MonoBehaviour {
 	Player player;
 	GimmickManager gimmickManager;
 
+	float pathLength;
+
 	public void InitStage(Player player, Bezier2D path, GimmickManager manager) {
 
 		this.player = player;
 		gimmickManager = manager;
+		pathLength = path.Length;
 
 		player.Init(path);
 		gimmickManager.Init(path, player);
@@ -34,5 +37,12 @@ public class StageController : MonoBehaviour {
 		}
 
 		mouseCamera.CameraUpdate();
+
+		//クリアチェック
+		if(state == GameState.Playing) {
+			if(player.MovedLength / pathLength >= 1.0f) {
+				GameMaster.Instance.GameClear();
+			}
+		}
 	}
 }
