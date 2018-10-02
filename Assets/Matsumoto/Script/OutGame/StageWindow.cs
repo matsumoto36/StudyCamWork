@@ -52,7 +52,8 @@ public class StageWindow : MonoBehaviour {
 		}
 		nextStageList.Add(null);
 
-		GameMaster.nextStageList = nextStageList;
+		GameMaster.SetNextStage(nextStageList);
+
 		//debug
 		foreach(var item in GameMaster.nextStageList) {
 			if(item != null)

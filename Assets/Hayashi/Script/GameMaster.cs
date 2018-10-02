@@ -180,6 +180,11 @@ public class GameMaster : MonoBehaviour {
 		State = GameState.Playing;
 	}
 
+	public static void SetNextStage(List<StageInfo> stageInfo) {
+		nextStageList = stageInfo;
+		counter = 0;
+	}
+
 	public void NextScene() {
 
 		var nextStageInfo = nextStageList[counter];

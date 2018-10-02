@@ -1,4 +1,6 @@
-﻿
+﻿using System;
+
+[Serializable]
 public class StageInfo {
 	public string pathName;
 	public string studioName;
