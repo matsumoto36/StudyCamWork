@@ -280,7 +280,7 @@ public class MouseCamera : MonoBehaviour
 					Score += point;
 				}
 
-				if(ComboMax <= Combo) {
+				if(ComboMax < Combo) {
 					Debug.Log("AddCombo " + Combo);
 					ComboMax = Combo;
 				}

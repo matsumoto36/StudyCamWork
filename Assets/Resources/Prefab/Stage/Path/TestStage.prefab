@@ -221,7 +221,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
-  moveZ: 18
 --- !u!114 &114471024487335636
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -271,7 +270,6 @@ MonoBehaviour:
   startPoint: 4.23
   endPoint: 4.3
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114719844981425670
@@ -289,7 +287,6 @@ MonoBehaviour:
   startPoint: 1
   endPoint: 1.49
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114774678634903390
@@ -305,6 +302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpeed: 3
   damage: 10
+  checkWait: 1
   focusGrace: 0.1
   focusDuration: 1
   cameraWideSizeRatio: 0.2

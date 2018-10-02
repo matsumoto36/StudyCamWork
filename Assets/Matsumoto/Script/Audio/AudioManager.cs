@@ -11,7 +11,10 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 
 	const string MIXER_PATH = "Sound/MainAudioMixer";		//ミキサーのパス
 	const string BGM_PATH = "Sound/BGM/";					//BGMのフォルダーパス
-	const string SE_PATH = "Sound/SE/";						//SEのフォルダーパス
+	const string SE_PATH = "Sound/SE/";                     //SEのフォルダーパス
+
+	const string BGM_VOLUME_KEY = "BGMVolume";				//MixerからBGMの音量にアクセスするためのキー
+	const string SE_VOLUME_KEY = "SEVolume";				//MixerからBGMの音量にアクセスするためのキー
 
 	const int MAX_PLAYING_SE_COUNT = 10;					//同時再生できるSEの数
 
@@ -29,6 +32,28 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	AudioSource fadeInAudio;                                //BGMフェードイン用のAudioSource
 
 	public AudioMixer Mixer { get; private set; }           //ミキサー
+
+	public static float SEVolume {
+		get {
+			float volume = 0.0f;
+			Instance.Mixer.GetFloat(SE_VOLUME_KEY, out volume);
+			return volume;
+		}
+		set {
+			Instance.Mixer.SetFloat(SE_VOLUME_KEY, value);
+		}
+	}
+
+	public static float BGMVolume {
+		get {
+			float volume = 0.0f;
+			Instance.Mixer.GetFloat(BGM_VOLUME_KEY, out volume);
+			return volume;
+		}
+		set {
+			Instance.Mixer.SetFloat(BGM_VOLUME_KEY, value);
+		}
+	}
 
 	public static string CurrentBGMName {
 		get {

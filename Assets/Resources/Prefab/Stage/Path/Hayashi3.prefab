@@ -434,7 +434,6 @@ MonoBehaviour:
   startPoint: 7
   endPoint: 8
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114331933751011694
@@ -503,7 +502,6 @@ MonoBehaviour:
   startPoint: 1
   endPoint: 2
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114627684961191032
@@ -541,7 +539,6 @@ MonoBehaviour:
   startPoint: 2
   endPoint: 3
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114812901975584950
@@ -559,7 +556,6 @@ MonoBehaviour:
   startPoint: 0
   endPoint: 1
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114847980982194002
@@ -577,7 +573,6 @@ MonoBehaviour:
   startPoint: 3
   endPoint: 4
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114864545004009888
@@ -595,6 +590,5 @@ MonoBehaviour:
   startPoint: 4
   endPoint: 5
   markModel: {fileID: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
   waitTime: 1
   text: {fileID: 0}

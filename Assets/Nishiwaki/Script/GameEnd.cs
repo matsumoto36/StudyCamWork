@@ -36,6 +36,8 @@ public class GameEnd : MonoBehaviour
     public CanvasGroup Next;
     //リザルトのスキップ
     bool skip;
+	//どれかのボタンが選択されたかどうか
+	bool isButtonSelected;
 
     Color startColor = new Color(0, 0, 0, 0);
     Color endColor = new Color(0, 0, 0, 0.8f);
@@ -213,21 +215,33 @@ public class GameEnd : MonoBehaviour
 
 	public void OnRetryClick() {
 
+		if(isButtonSelected) return;
+		isButtonSelected = true;
+
 		AudioManager.PlaySE("click03");
+		Retry.GetComponentInChildren<Button>().interactable = false;
 
 		GameMaster.Instance.Retry();
 	}
 
 	public void OnStageSelectClick() {
 
+		if(isButtonSelected) return;
+		isButtonSelected = true;
+
 		AudioManager.PlaySE("click03");
+		Back.GetComponentInChildren<Button>().interactable = false;
 
 		GameMaster.Instance.MoveSelectScene();
 	}
 
 	public void OnNextStageClick() {
 
+		if(isButtonSelected) return;
+		isButtonSelected = true;
+
 		AudioManager.PlaySE("click03");
+		Next.GetComponentInChildren<Button>().interactable = false;
 
 		GameMaster.Instance.NextScene();
 	}

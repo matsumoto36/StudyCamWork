@@ -566,12 +566,7 @@ MonoBehaviour:
   gimmickColor: {r: 1, g: 0, b: 0, a: 1}
   startPoint: 14
   endPoint: 15
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
+  markModel: {fileID: 0}
   text: {fileID: 0}
   speedMul: 3
 --- !u!114 &114034426570974948
@@ -586,7 +581,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
-  moveZ: 18
 --- !u!114 &114103531542544106
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -600,6 +594,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpeed: 3
   damage: 25
+  checkWait: 1
   focusGrace: 0.1
   focusDuration: 1
   cameraWideSizeRatio: 0.2
@@ -620,13 +615,7 @@ MonoBehaviour:
   gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
   startPoint: 7
   endPoint: 8
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
+  markModel: {fileID: 0}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114118437414927324
@@ -643,13 +632,7 @@ MonoBehaviour:
   gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
   startPoint: 9
   endPoint: 10
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
+  markModel: {fileID: 0}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114135735703767876
@@ -666,13 +649,7 @@ MonoBehaviour:
   gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
   startPoint: 1
   endPoint: 2
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
+  markModel: {fileID: 0}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114207699633098626
@@ -689,13 +666,7 @@ MonoBehaviour:
   gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
   startPoint: 8
   endPoint: 9
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
+  markModel: {fileID: 0}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114360852736771782
@@ -712,13 +683,7 @@ MonoBehaviour:
   gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
   startPoint: 12
   endPoint: 13
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
+  markModel: {fileID: 0}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114366307050860094
@@ -735,13 +700,7 @@ MonoBehaviour:
   gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
   startPoint: 0
   endPoint: 1
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
+  markModel: {fileID: 0}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114375457810580318
@@ -824,13 +783,7 @@ MonoBehaviour:
   gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
   startPoint: 11
   endPoint: 12
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
+  markModel: {fileID: 0}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114498844040785308
@@ -847,13 +800,7 @@ MonoBehaviour:
   gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
   startPoint: 5
   endPoint: 6
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
+  markModel: {fileID: 0}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114624337842032936
@@ -870,13 +817,7 @@ MonoBehaviour:
   gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
   startPoint: 13
   endPoint: 14
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
+  markModel: {fileID: 0}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114632162893440010
@@ -893,13 +834,7 @@ MonoBehaviour:
   gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
   startPoint: 3
   endPoint: 4
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
+  markModel: {fileID: 0}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114684220162419976
@@ -916,13 +851,7 @@ MonoBehaviour:
   gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
   startPoint: 15
   endPoint: 16
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
+  markModel: {fileID: 0}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114725756268083644
@@ -939,12 +868,7 @@ MonoBehaviour:
   gimmickColor: {r: 1, g: 0, b: 0, a: 1}
   startPoint: 16
   endPoint: 17
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
+  markModel: {fileID: 0}
   text: {fileID: 0}
   speedMul: 2
 --- !u!114 &114730896037182132
@@ -961,13 +885,7 @@ MonoBehaviour:
   gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
   startPoint: 6
   endPoint: 7
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
+  markModel: {fileID: 0}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114778712242847896
@@ -984,13 +902,7 @@ MonoBehaviour:
   gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
   startPoint: 10
   endPoint: 11
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
+  markModel: {fileID: 0}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114876109641143666
@@ -1007,13 +919,7 @@ MonoBehaviour:
   gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
   startPoint: 2
   endPoint: 3
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
+  markModel: {fileID: 0}
   waitTime: 1
   text: {fileID: 0}
 --- !u!114 &114900963551048840
@@ -1030,12 +936,6 @@ MonoBehaviour:
   gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
   startPoint: 4
   endPoint: 5
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
-  effectPre: {fileID: 1540715451258006, guid: 233b52f1b0a05fe44a02bc694cc07994, type: 2}
+  markModel: {fileID: 0}
   waitTime: 1
   text: {fileID: 0}

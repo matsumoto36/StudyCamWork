@@ -175,6 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpeed: 3
   damage: 10
+  checkWait: 1
   focusGrace: 0.1
   focusDuration: 1
   cameraWideSizeRatio: 0.2
@@ -195,12 +196,7 @@ MonoBehaviour:
   gimmickColor: {r: 1, g: 0, b: 0, a: 1}
   startPoint: 5.5
   endPoint: 6
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
+  markModel: {fileID: 0}
   text: {fileID: 0}
   speedMul: 4
 --- !u!114 &114203727281823196
@@ -217,12 +213,7 @@ MonoBehaviour:
   gimmickColor: {r: 0.986207, g: 0, b: 1, a: 1}
   startPoint: 4.5
   endPoint: 5.4
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
+  markModel: {fileID: 0}
   isToFar: 1
   text: {fileID: 0}
 --- !u!114 &114314376320696926
@@ -278,12 +269,7 @@ MonoBehaviour:
   gimmickColor: {r: 1, g: 0, b: 0, a: 1}
   startPoint: 2.4
   endPoint: 3.9
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
+  markModel: {fileID: 0}
   text: {fileID: 0}
   speedMul: 5
 --- !u!114 &114590906093322578
@@ -298,7 +284,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
-  moveZ: 18
 --- !u!114 &114675049452596714
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -313,11 +298,6 @@ MonoBehaviour:
   gimmickColor: {r: 0.986207, g: 0, b: 1, a: 1}
   startPoint: 6.2
   endPoint: 7
-  startPointModel: {fileID: 0}
-  endPointModel: {fileID: 0}
-  startPointModelPre: {fileID: 0}
-  startPointModelOffset: {x: 0, y: 0, z: 0}
-  endPointModelPre: {fileID: 0}
-  endPointModelOffset: {x: 0, y: 0, z: 0}
+  markModel: {fileID: 0}
   isToFar: 0
   text: {fileID: 0}

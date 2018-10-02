@@ -21,6 +21,7 @@ public class MouseCameraObject : MonoBehaviour {
     public Image SmalCameraImage;
     public Image failImage;
     public Image damageFlashImage;
+    public Image recImage;
 	public RawImage cameraRenderImage;
 	public RawImage debugRenderImage;
 	public RenderTexture renderTexture;
@@ -60,10 +61,21 @@ public class MouseCameraObject : MonoBehaviour {
 
 		GameMaster.Instance.OnGameStartCountDown
 			+= () => StartCoroutine(MaskScaleAnim());
-        
+
+		GameMaster.Instance.OnGameStart
+			+= () => recImage.color = new Color(1, 1, 1, 0.5f);
+
+		GameMaster.Instance.OnGameOver
+			+= () => recImage.color = new Color(1, 1, 1, 0);
+
+		GameMaster.Instance.OnGameClear
+			+= () => recImage.color = new Color(1, 1, 1, 0);
+
+
 		recordData = new List<RenderTexture>();
 
 		damageFlashImage.color = new Color(1, 0, 0, 0);
+		recImage.color = new Color(1, 1, 1, 0);
 	}
 
 	/// <summary>

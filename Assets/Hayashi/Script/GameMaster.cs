@@ -124,7 +124,7 @@ public class GameMaster : MonoBehaviour {
 
 		if(OnGameClear != null) OnGameClear();
 
-		Debug.Log("DataSeve");
+		Debug.Log("DataSave");
 		Debug.Log("Combo " + MouseCamera.ComboMax);
 
 		//データのセーブ
@@ -206,6 +206,8 @@ public class GameMaster : MonoBehaviour {
 
 		if(isSceneMoving) return;
 		isSceneMoving = true;
+
+		Cursor.visible = true;
 
 		StageSelectController.movieSkip = true;
 

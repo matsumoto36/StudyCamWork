@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.Video;
 using UnityEngine.Playables;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ public class StageSelectController : MonoBehaviour {
 
 	public CanvasGroup selectStageGroup;
 	public Button backButton;
-    public Button EndWindowBack;
+    public Button endWindowBack;
 
     public StageWindow stageContentView;
 	public QuitGameWindow quitWindow;
@@ -37,17 +38,23 @@ public class StageSelectController : MonoBehaviour {
 	public bool setEnableButton;
 	bool changeSetEnableButton;
 
+	public VideoPlayer videoPlayer;
+	public Text movieText;
+	Color movieTextColor;
+	public float movieStartTime = 10.0f;
+
 	PlayableDirector titleAnimation;
 
 	Coroutine clickClickAnimationCoroutine;
 
-	StageSelectState state = StageSelectState.Title;
+	StageSelectState state;
 	
 	void Awake() {
 
 		titleAnimation = Camera.main.GetComponent<PlayableDirector>();
 
 		selectStageGroup.interactable = false;
+		state = StageSelectState.Title;
 
 		if(movieSkip) {
 			var cam = Camera.main;
@@ -58,11 +65,14 @@ public class StageSelectController : MonoBehaviour {
 			state = StageSelectState.ListView;
 			selectStageGroup.interactable = true;
 		}
+
+		//ムービー待機開始
+		StartCoroutine(GameMovieLoop());
 	}
 	void Start () {
 
 		backButton.onClick.AddListener(BackButton);
-        EndWindowBack.onClick.AddListener(BackButton);
+        endWindowBack.onClick.AddListener(BackButton);
 
 
 		stageContentView.Hide();
@@ -122,7 +132,6 @@ public class StageSelectController : MonoBehaviour {
 			clickStartText.color = new Color(0, 0, 0, 0);
 		}
 
-
 		if(setEnableButton && !changeSetEnableButton) {
 			changeSetEnableButton = true;
 			state = StageSelectState.ListView;
@@ -179,6 +188,76 @@ public class StageSelectController : MonoBehaviour {
 
 			directionalLight.rotation *= Quaternion.Euler(new Vector3(1 * speed * Time.deltaTime, 0, 0));
 
+			yield return null;
+		}
+
+	}
+
+	IEnumerator GameMovieLoop() {
+
+		var t = 0.0f;
+		var prevMousePosition = Input.mousePosition;
+		var isPlayingMovie = false;
+		var videoImage = videoPlayer.GetComponent<RawImage>();
+
+		movieTextColor = movieText.color;
+		Coroutine textAnimCol = null;
+
+		//ちらつきを抑えるための動作
+		videoPlayer.Play();
+		videoPlayer.Pause();
+
+		while(true) {
+			yield return null;
+			if(state != StageSelectState.Title) continue;
+
+			var mouseDelta = Input.mousePosition - prevMousePosition;
+			prevMousePosition = Input.mousePosition;
+
+			if(isPlayingMovie) {
+				//ムービー再生中にマウスをいじった場合
+				if((mouseDelta.magnitude > 0.01f || Input.GetMouseButtonDown(0))) {
+					isPlayingMovie = false;
+
+					if(textAnimCol != null) StopCoroutine(textAnimCol);
+					movieText.gameObject.SetActive(false);
+
+					videoImage.color = new Color(1, 1, 1, 0);
+					videoPlayer.Pause();
+
+					Cursor.visible = true;
+					AudioManager.BGMVolume = 0;
+				}
+			}
+			else {
+				//再生待ち時間が超えた場合
+				if((t += Time.deltaTime) > movieStartTime && !isPlayingMovie) {
+					t = 0;
+					isPlayingMovie = true;
+					videoPlayer.time = 0;
+					videoPlayer.Play();
+					yield return new WaitForSeconds(1.0f);
+					videoImage.color = new Color(1, 1, 1, 1);
+
+					movieText.gameObject.SetActive(true);
+					textAnimCol = StartCoroutine(MovieTextAnimation());
+
+					Cursor.visible = false;
+					AudioManager.BGMVolume = -80;
+				}
+			}
+		}
+	}
+
+	IEnumerator MovieTextAnimation() {
+
+		var textColor = movieTextColor;
+		var speed = 1;
+
+		while(true) {
+
+			textColor.a = Mathf.Abs(Mathf.Sin(Time.time * speed));
+			movieText.color = textColor;
 			yield return null;
 		}
 

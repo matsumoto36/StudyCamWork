@@ -35,6 +35,9 @@ public class StageWindow : MonoBehaviour {
 		if(isSceneMove) return;
 		isSceneMove = true;
 
+		//ボタンをロック
+		startButton.interactable = false;
+
 		SelectWindowActive.activeWindowIndex = button.windowIndex;
 
 		//先のステージをすべて登録
@@ -50,6 +53,14 @@ public class StageWindow : MonoBehaviour {
 		nextStageList.Add(null);
 
 		GameMaster.nextStageList = nextStageList;
+		//debug
+		foreach(var item in GameMaster.nextStageList) {
+			if(item != null)
+				Debug.Log(item.pathName);
+			else
+				Debug.Log("null");
+		}
+
 		GameMaster.LoadPathName = loadPathName;
 		GameMaster.LoadStudioName = loadStudioName;
 
