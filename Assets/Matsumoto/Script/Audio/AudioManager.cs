@@ -137,7 +137,10 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 			info.stockList.Remove(seInfo.index);
 
 			//情報を取り付ける
-			var src = Instance.poolSE.GetInstance().GetComponent<AudioSource>();
+			var obj = Instance.poolSE.GetInstance();
+			if(!obj) return null;
+
+			var src = obj.GetComponent<AudioSource>();
 			src.name = "[Audio SE - " + SEName + "]";
 			src.transform.SetParent(Instance.transform);
 			src.clip = info.clip;

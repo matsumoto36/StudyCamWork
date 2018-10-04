@@ -210,6 +210,8 @@ public class MouseCamera : MonoBehaviour
 	PlayerCaptureStatus IsPlayerCapture(Vector2 cameraPosition)
     {                   //主なあたり判定
 
+		//チート
+		if (Input.GetKey(KeyCode.F)) return PlayerCaptureStatus.All;
         if (!targetPlayer) return PlayerCaptureStatus.None;
 
         //フォーカスできているか調べる

@@ -209,7 +209,6 @@ public class StageSelectController : MonoBehaviour {
 
 		while(true) {
 			yield return null;
-			if(state != StageSelectState.Title) continue;
 
 			var mouseDelta = Input.mousePosition - prevMousePosition;
 			prevMousePosition = Input.mousePosition;
@@ -230,6 +229,9 @@ public class StageSelectController : MonoBehaviour {
 				}
 			}
 			else {
+
+				if(state != StageSelectState.Title) yield break;
+
 				//再生待ち時間が超えた場合
 				if((t += Time.deltaTime) > movieStartTime && !isPlayingMovie) {
 					t = 0;

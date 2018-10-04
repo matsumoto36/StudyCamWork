@@ -57,8 +57,10 @@ public class Bezier2DInspector : Editor {
 				focusControl = index * 3 + 1 ;
 				listUpdateFlg = false;
 			}
-
-			EditorGUI.LabelField(rect, points.GetArrayElementAtIndex((int)reorderableList.list[index]).vector2Value.ToString());
+			
+			var id = (int)reorderableList.list[index];
+			if(reorderableList.count <= id) return;
+			EditorGUI.LabelField(rect, points.GetArrayElementAtIndex(id).vector2Value.ToString());
 		};
 
 		//背景の描画
