@@ -6,131 +6,138 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
 
+/// <summary>
+/// パスを作るためのツールクラス
+/// </summary>
 [CustomEditor(typeof(Bezier2D))]
 public class Bezier2DInspector : Editor {
 
-	const float HANDLE_SIZE = 0.2f;
+	private const float HandleSize = 0.2f;
 
-	static Rect windowRect = new Rect(40, 40, 120, 120);
+	private static readonly Color BezierColor = Color.white;
+	private static readonly Color TangentColor = Color.blue;
+	private static readonly Color ActiveHandleColor = Color.red;
 
-	static Color bezierColor = Color.white;
-	static Color tangentColor = Color.blue;
-	static Color activeHandleColor = Color.red;
+	static Rect _windowRect = new Rect(40, 40, 120, 120);
 
-	static bool isLock = false;
-
+	//アクティブが変更されない設定
+	static bool _isLock = false;
 
 	enum State {
 		Move, Pan, Add, Remove
 	}
-	State state = State.Move;
+	State _state = State.Move;
 
-	Bezier2D bezier;
+	Bezier2D _bezier;
+	SerializedProperty _points;
+	ReorderableList _reorderableList;
 
-	SerializedProperty points;
-
-	ReorderableList reorderableList;
-	bool listUpdateFlg = false;
-
-	bool isClick = false;
-
-	int focusControl = -1;
-	int windowID = 1234;
+	bool _listUpdateFlg;
+	bool _isClick;
+	int _focusControl = -1;
+	int _windowID = 1234;
 
 	void OnEnable() {
 
-		bezier = target as Bezier2D;
-		points = serializedObject.FindProperty("points");
+		_bezier = target as Bezier2D;
+		_points = serializedObject.FindProperty("points");
 
-		reorderableList = 
+		_reorderableList =
 			new ReorderableList(GetBezierPointsIndexOnLine(), typeof(int), true, true, false, true);
 
 		//ヘッダーの描画
-		reorderableList.drawHeaderCallback += (rect) => {
-			EditorGUI.LabelField(rect, "Points");
+		_reorderableList.drawHeaderCallback += rect => {
+			EditorGUI.LabelField(rect, "Anchor Points");
 		};
 
 		//要素の描画
-		reorderableList.drawElementCallback += (rect, index, isActive, isFocused) => {
+		_reorderableList.drawElementCallback += (rect, index, isActive, isFocused) => {
 
-			if(isFocused && listUpdateFlg) {
-				focusControl = index * 3 + 1 ;
-				listUpdateFlg = false;
+			if(isFocused && _listUpdateFlg) {
+				_focusControl = index * 3 + 1;
+				_listUpdateFlg = false;
 			}
-			
-			var id = (int)reorderableList.list[index];
-			if(reorderableList.count <= id) return;
-			EditorGUI.LabelField(rect, points.GetArrayElementAtIndex(id).vector2Value.ToString());
+
+			var id = (int)_reorderableList.list[index];
+			EditorGUI.LabelField(rect, _points.GetArrayElementAtIndex(id).vector2Value.ToString());
 		};
 
 		//背景の描画
-		reorderableList.drawElementBackgroundCallback = (rect, index, isActive, isFocused) => {
-			if(state == State.Move && focusControl == index * 3 + 1) {
-				var tex = new Texture2D(1, 1);
-				tex.SetPixel(0, 0, activeHandleColor);
-				tex.Apply();
-				GUI.DrawTexture(rect, tex);
-			}
+		_reorderableList.drawElementBackgroundCallback = (rect, index, isActive, isFocused) => {
+			if(_state != State.Move || _focusControl != index * 3 + 1) return;
+			var tex = new Texture2D(1, 1);
+			tex.SetPixel(0, 0, ActiveHandleColor);
+			tex.Apply();
+			GUI.DrawTexture(rect, tex);
 		};
 
 		//要素を選択したとき
-		reorderableList.onSelectCallback += (list) => {
-			if(state == State.Move)
-				listUpdateFlg = true;
+		_reorderableList.onSelectCallback += list => {
+			if(_state == State.Move)
+				_listUpdateFlg = true;
 		};
 
 		// - ボタンで削除できるかどうか
-		reorderableList.onCanRemoveCallback += (list) => {
-			return focusControl - 1 >= 0 && (focusControl - 1) / 3 < list.list.Count;
-		};
+		_reorderableList.onCanRemoveCallback += list =>
+			_focusControl - 1 >= 0 && (_focusControl - 1) / 3 < list.list.Count;
 
 		// - ボタンが押されたとき
-		reorderableList.onRemoveCallback += (list) => {
-			RemovePoint(focusControl);
+		_reorderableList.onRemoveCallback += list => {
+			RemovePoint(_focusControl);
 		};
 
 		//入れ替えが発生した場合
-		reorderableList.onReorderCallback += (list) => {
+		_reorderableList.onReorderCallback += list => {
 
-			Undo.RecordObject(bezier, "Replacement BezierPoint");
+			Undo.RecordObject(_bezier, "Replacement BezierPoint");
 			serializedObject.Update();
 
-			var poslist = (List<int>)list.list;
-			var arraySize = points.arraySize;
+			var posList = (List<int>)list.list;
+			var arraySize = _points.arraySize;
 			var nPoints = new Vector2[arraySize];
 
-			for(int i = 0;i < poslist.Count;i++) {
+			for(var i = 0;i < posList.Count;i++) {
 
 				var srcIndex = i * 3;
-				var destIndex = poslist[i] - 1;
+				var destIndex = posList[i] - 1;
 				Debug.Log(srcIndex + " " + destIndex);
 				for(int j = 0;j < 3;j++) {
-					nPoints[destIndex + j] = points.GetArrayElementAtIndex(srcIndex + j).vector2Value;
+					nPoints[destIndex + j] = _points.GetArrayElementAtIndex(srcIndex + j).vector2Value;
 
 				}
 
 			}
 
-			for(int i = 0;i < arraySize;i++) {
-				points.GetArrayElementAtIndex(i).vector2Value = nPoints[i];
+			for(var i = 0;i < arraySize;i++) {
+				_points.GetArrayElementAtIndex(i).vector2Value = nPoints[i];
 			}
 
-			poslist = GetBezierPointsIndexOnLine();
+			posList = GetBezierPointsIndexOnLine();
 			serializedObject.ApplyModifiedProperties();
 			Repaint();
 		};
 	}
 
 	public override void OnInspectorGUI() {
-		reorderableList.DoLayoutList();
+		//点のリストを表示
+		_reorderableList.DoLayoutList();
 	}
 
+	/// <summary>
+	/// ベジェ曲線のリストのうち、アンカーポイントのインデックスを抽出する
+	/// </summary>
+	/// <returns>アンカーポイントのインデックス</returns>
 	List<int> GetBezierPointsIndexOnLine() {
 
 		var list = new List<int>();
-		var arraySize = points.arraySize;
+		var arraySize = _points.arraySize;
 
 		for(int i = 1;i < arraySize;i++) {
+
+			//ハンドル : H
+			//アンカー : A とすると、
+			//HAHHAHHAHHAとなる
+
 			if((i - 1) % 3 != 0) continue;
 			list.Add(i);
 		}
@@ -141,28 +148,20 @@ public class Bezier2DInspector : Editor {
 
 		serializedObject.Update();
 
-		DrawGUI();
+		DrawWindow();
 		Tools.current = Tool.None;
 
-		switch(state) {
-			case State.Move:
-				MovePointState(bezier);
-				break;
-			case State.Pan:
-				PanState(bezier);
-				break;
-			case State.Add:
-				AddPointState(bezier);
-				break;
-			case State.Remove:
-				RemovePointState(bezier);
-				break;
-			default:
-				break;
+		switch(_state) {
+			case State.Move: MovePointState(); break;
+			case State.Pan: PanState(); break;
+			case State.Add: AddPointState(); break;
+			case State.Remove: RemovePointState(); break;
+			default: break;
 		}
 
-		//使わないクリック処理でLock状態を実現
-		if(isLock) {
+		//使わないクリック処理を追加することで
+		//フォーカスが変更されない状態を実現
+		if(_isLock) {
 			var e = Event.current;
 			var controlID = GUIUtility.GetControlID(FocusType.Passive);
 
@@ -173,177 +172,188 @@ public class Bezier2DInspector : Editor {
 			}
 		}
 
-		reorderableList.list = GetBezierPointsIndexOnLine();
+		_reorderableList.list = GetBezierPointsIndexOnLine();
 
 		serializedObject.ApplyModifiedProperties();
 	}
 
-	void MovePointState(Bezier2D bezier) {
+	/// <summary>
+	/// Moveモード時の動作
+	/// </summary>
+	void MovePointState() {
 
-		var arraySize = points.arraySize;
-
+		var arraySize = _points.arraySize;
 		if(arraySize == 0) return;
 
-		Undo.RecordObject(bezier, "Edit BezierLine");
+		Undo.RecordObject(_bezier, "Edit BezierLine");
 
-		for(int i = 1;i <= bezier.GetLastBezierPoint();i+=3) {
+		for(int i = 1;i <= _bezier.GetLastBezierPoint();i += 3) {
 
-			Vector2 newPoint = points.GetArrayElementAtIndex(i).vector2Value;
+			Vector2 newPoint = _points.GetArrayElementAtIndex(i).vector2Value;
 
-			if(i == focusControl) {
+			if(i == _focusControl) {
 
 				DrawTangentLine(
-					points.GetArrayElementAtIndex(i + 1).vector2Value,
-					points.GetArrayElementAtIndex(i).vector2Value,
-					points.GetArrayElementAtIndex(i - 1).vector2Value);
+					_points.GetArrayElementAtIndex(i + 1).vector2Value,
+					_points.GetArrayElementAtIndex(i).vector2Value,
+					_points.GetArrayElementAtIndex(i - 1).vector2Value);
 
-				newPoint = HandlePosition(newPoint, activeHandleColor);
+				newPoint = HandlePosition(newPoint, ActiveHandleColor);
 
 			}
 			else {
-				if(HandleButton(newPoint, bezierColor)) {
-					focusControl = i;
+				if(HandleButton(newPoint, BezierColor)) {
+					_focusControl = i;
 					Repaint();
 				}
 			}
 
-			var diff = newPoint - points.GetArrayElementAtIndex(i).vector2Value;
+			var diff = newPoint - _points.GetArrayElementAtIndex(i).vector2Value;
 			if(i + 1 < arraySize) {
-				points.GetArrayElementAtIndex(i + 1).vector2Value += diff;
+				_points.GetArrayElementAtIndex(i + 1).vector2Value += diff;
 			}
 			if(i > 0) {
-				points.GetArrayElementAtIndex(i - 1).vector2Value += diff;
+				_points.GetArrayElementAtIndex(i - 1).vector2Value += diff;
 			}
 
-			points.GetArrayElementAtIndex(i).vector2Value = newPoint;
+			_points.GetArrayElementAtIndex(i).vector2Value = newPoint;
 		}
 
-		if(focusControl < 0) return;
+		if(_focusControl < 0) return;
 
-		var left = focusControl - 1;
-		var right = focusControl + 1;
+		var left = _focusControl - 1;
+		var right = _focusControl + 1;
 
 		var hasLeft = left >= 0;
 		var hasRight = right < arraySize;
 
 		if(hasLeft) {
-			points.GetArrayElementAtIndex(left).vector2Value 
-				= HandlePosition(points.GetArrayElementAtIndex(left).vector2Value, tangentColor);
+			_points.GetArrayElementAtIndex(left).vector2Value
+				= HandlePosition(_points.GetArrayElementAtIndex(left).vector2Value, TangentColor);
 
 			if(Event.current.alt && hasRight) {
-				points.GetArrayElementAtIndex(right).vector2Value
-					= points.GetArrayElementAtIndex(focusControl).vector2Value * 2 - points.GetArrayElementAtIndex(left).vector2Value;
+				_points.GetArrayElementAtIndex(right).vector2Value
+					= _points.GetArrayElementAtIndex(_focusControl).vector2Value * 2 - _points.GetArrayElementAtIndex(left).vector2Value;
 			}
 
 		}
 		if(hasRight) {
-			points.GetArrayElementAtIndex(right).vector2Value
-				= HandlePosition(points.GetArrayElementAtIndex(right).vector2Value, tangentColor);
+			_points.GetArrayElementAtIndex(right).vector2Value
+				= HandlePosition(_points.GetArrayElementAtIndex(right).vector2Value, TangentColor);
 
 			if(Event.current.alt && hasLeft) {
-				points.GetArrayElementAtIndex(left).vector2Value
-					= points.GetArrayElementAtIndex(focusControl).vector2Value * 2 - points.GetArrayElementAtIndex(right).vector2Value;
+				_points.GetArrayElementAtIndex(left).vector2Value
+					= _points.GetArrayElementAtIndex(_focusControl).vector2Value * 2 - _points.GetArrayElementAtIndex(right).vector2Value;
 			}
 		}
 	}
 
-	void PanState(Bezier2D bezier) {
+	/// <summary>
+	/// Panモード時の動作
+	/// </summary>
+	void PanState() {
 
 		var centerPos = new Vector2();
-		for(int i = 0;i < bezier.Points.Count;i++) {
-			centerPos += points.GetArrayElementAtIndex(i).vector2Value;
+
+		//中心座標を求める
+		for(int i = 0;i < _bezier.Points.Count;i++) {
+			centerPos += _points.GetArrayElementAtIndex(i).vector2Value;
 		}
-		centerPos /= bezier.Points.Count();
+		centerPos /= _bezier.Points.Count();
 
-		Undo.RecordObject(bezier, "Pan Bezier");
+		Undo.RecordObject(_bezier, "Pan Bezier");
 
+
+		//ハンドルで移動した差分を加算
 		var newCenterPos = (Vector2)Handles.PositionHandle(centerPos, Quaternion.identity);
-
 		var diff = newCenterPos - centerPos;
-		for(int i = 0;i < bezier.Points.Count;i++) {
-			points.GetArrayElementAtIndex(i).vector2Value += diff;
+		for(int i = 0;i < _bezier.Points.Count;i++) {
+			_points.GetArrayElementAtIndex(i).vector2Value += diff;
 		}
 
 	}
 
-	void AddPointState(Bezier2D bezier) {
+	/// <summary>
+	/// AddPointモード時の動作
+	/// </summary>
+	/// <param name="bezier"></param>
+	void AddPointState() {
 
 		var e = Event.current;
 		var controlID = GUIUtility.GetControlID(FocusType.Passive);
-		var arraySize = points.arraySize;
+		var arraySize = _points.arraySize;
 
-		if(e.GetTypeForControl(controlID) == EventType.MouseDown) {
+		switch(e.GetTypeForControl(controlID)) {
+			case EventType.MouseDown:
+				if(e.button != 0) return;
 
-			if(e.button != 0) return;
+				GUIUtility.hotControl = controlID;
+				Undo.RecordObject(_bezier, "Add BezierPoint");
 
-			GUIUtility.hotControl = controlID;
+				_bezier.AddPoint(HandleUtility.GUIPointToWorldRay(e.mousePosition).origin);
+				_focusControl = _bezier.Points.Count - 2;
+				_isClick = true;
 
-			Undo.RecordObject(bezier, "Add BezierPoint");
+				e.Use();
+				break;
 
-			bezier.AddPoint(HandleUtility.GUIPointToWorldRay(e.mousePosition).origin);
-			focusControl = bezier.Points.Count - 2;
-			isClick = true;
+			case EventType.MouseDrag:
+				if(e.button != 0) return;
 
-			e.Use();
-		}
+				GUIUtility.hotControl = controlID;
+				var mousePoint = (Vector2)HandleUtility.GUIPointToWorldRay(e.mousePosition).origin;
+				_points.GetArrayElementAtIndex(arraySize - 3).vector2Value = mousePoint;
+				_points.GetArrayElementAtIndex(arraySize - 1).vector2Value = _points.GetArrayElementAtIndex(arraySize - 2).vector2Value * 2 - mousePoint;
 
-		if(e.GetTypeForControl(controlID) == EventType.MouseDrag) {
+				e.Use();
+				break;
 
-			if(e.button != 0) return;
-
-			GUIUtility.hotControl = controlID;
-
-			var mousePoint = (Vector2)HandleUtility.GUIPointToWorldRay(e.mousePosition).origin;
-			points.GetArrayElementAtIndex(arraySize - 3).vector2Value = mousePoint;
-			points.GetArrayElementAtIndex(arraySize - 1).vector2Value = points.GetArrayElementAtIndex(arraySize - 2).vector2Value * 2 - mousePoint;
-
-			e.Use();
-
-		}
-
-		if(e.GetTypeForControl(controlID) == EventType.MouseUp) {
-
-			if(e.button != 0) return;
-
-			isClick = false;
+			case EventType.MouseUp:
+				if(e.button != 0) return;
+				_isClick = false;
+				break;
+			default: break;
 		}
 
 		if(arraySize > 1)
 			DrawTangentLine(
-				points.GetArrayElementAtIndex(arraySize - 3).vector2Value,
-				points.GetArrayElementAtIndex(arraySize - 2).vector2Value,
-				points.GetArrayElementAtIndex(arraySize - 1).vector2Value);
+				_points.GetArrayElementAtIndex(arraySize - 3).vector2Value,
+				_points.GetArrayElementAtIndex(arraySize - 2).vector2Value,
+				_points.GetArrayElementAtIndex(arraySize - 1).vector2Value);
 
 
-		if(isClick && arraySize > 4) {
+		if(_isClick && arraySize > 4) {
 			DrawTangentLine(
-				points.GetArrayElementAtIndex(arraySize - 6).vector2Value,
-				points.GetArrayElementAtIndex(arraySize - 5).vector2Value,
-				points.GetArrayElementAtIndex(arraySize - 4).vector2Value);
+				_points.GetArrayElementAtIndex(arraySize - 6).vector2Value,
+				_points.GetArrayElementAtIndex(arraySize - 5).vector2Value,
+				_points.GetArrayElementAtIndex(arraySize - 4).vector2Value);
 		}
 	}
 
-	void RemovePointState(Bezier2D bezier) {
+	/// <summary>
+	/// RemovePointモード時の動作
+	/// </summary>
+	void RemovePointState() {
 
-		var arraySize = points.arraySize;
+		var arraySize = _points.arraySize;
 
-		for(int i = 1;i < arraySize;i+=3) {
-			if(HandleButton(points.GetArrayElementAtIndex(i).vector2Value, bezierColor)) {
+		for(int i = 1;i < arraySize;i += 3) {
+			if(HandleButton(_points.GetArrayElementAtIndex(i).vector2Value, BezierColor)) {
 				RemovePoint(i);
 			}
 		}
 	}
 
 	void RemovePoint(int index) {
-		Undo.RecordObject(bezier, "Remove BezierPoint");
-		bezier.RemovePoint(index);
-		focusControl = -1;
+		Undo.RecordObject(_bezier, "Remove BezierPoint");
+		_bezier.RemovePoint(index);
+		_focusControl = -1;
 		Repaint();
 	}
 
 	void DrawTangentLine(Vector2 p0, Vector2 p1, Vector2 p2) {
 
-		Handles.color = tangentColor;
+		Handles.color = TangentColor;
 		Handles.DrawLine(p0, p1);
 		Handles.DrawLine(p1, p2);
 	}
@@ -351,33 +361,34 @@ public class Bezier2DInspector : Editor {
 	Vector2 HandlePosition(Vector2 center, Color col) {
 
 		Handles.color = col;
-		return Handles.Slider2D(center, Vector3.forward, Vector3.right, Vector3.up, HandleUtility.GetHandleSize(center) * HANDLE_SIZE, Handles.CylinderHandleCap, 1f, false);
+		return Handles.Slider2D(center, Vector3.forward, Vector3.right, Vector3.up, HandleUtility.GetHandleSize(center) * HandleSize, Handles.CylinderHandleCap, 1f, false);
 	}
 
 	bool HandleButton(Vector2 center, Color col) {
 
 		Handles.color = col;
-		var size = HandleUtility.GetHandleSize(center) * HANDLE_SIZE;
+		var size = HandleUtility.GetHandleSize(center) * HandleSize;
 		return Handles.Button(center, Quaternion.identity, size, size, Handles.SphereHandleCap);
 	}
 
-	void DrawGUI() {
+
+	void DrawWindow() {
 
 		Handles.BeginGUI();
 
-		windowRect = GUILayout.Window(windowID, windowRect, (id) => {
+		//ウィンドウを描画
+		_windowRect = GUILayout.Window(_windowID, _windowRect, (id) => {
 
 			var buttonName = new string[] {
 				"MovePoint", "Pan", "AddPoint", "RemovePoint"
 			};
 
 			for(int i = 0;i < 4;i++) {
-				EditorGUI.BeginDisabledGroup(i == (int)state);
+				EditorGUI.BeginDisabledGroup(i == (int)_state);
 
 				var isClick = GUILayout.Button(buttonName[i]);
 				if(isClick) {
-					state = (State)i;
-					Debug.Log("State is " + state);
+					_state = (State)i;
 					Repaint();
 				}
 
@@ -393,7 +404,7 @@ public class Bezier2DInspector : Editor {
 			}
 			EditorGUI.EndDisabledGroup();
 
-			isLock = GUILayout.Toggle(isLock, "Lock");
+			_isLock = GUILayout.Toggle(_isLock, "Lock");
 
 			GUI.DragWindow();
 
@@ -420,7 +431,7 @@ public class Bezier2DInspector : Editor {
 
 		var pertition = 32;
 		var points = bezier.Points;
-		Gizmos.color = bezierColor;
+		Gizmos.color = BezierColor;
 
 		for(int i = 4;i < points.Count;i += 3) {
 

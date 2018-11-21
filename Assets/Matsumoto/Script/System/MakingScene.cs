@@ -4,22 +4,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// ステージエディターの
+/// 背景と実行部分を担うクラス
+/// </summary>
 [ExecuteInEditMode]
 public class MakingScene : MonoBehaviour {
 
-	public string loadStudioSet;
+	public string LoadStudioSet;
 
-	GameObject studioSet;
+	GameObject _studioSet;
 
 	// Use this for initialization
 	void Start () {
 		if(!Application.isPlaying) return;
 
+		//ゲーム開始
 		Camera.main.gameObject.SetActive(false);
 
 		DontDestroyOnLoad(gameObject);
 
-		GameMaster.LoadStudioName = loadStudioSet;
+		GameMaster.LoadStudioName = LoadStudioSet;
 		GameMaster.LoadPathName = FindObjectOfType<GimmickManager>().name;
 
 		SceneManager.LoadScene("GameScene");
@@ -32,37 +37,45 @@ public class MakingScene : MonoBehaviour {
 			CheckStudioSet();
 	}
 
+	/// <summary>
+	/// 背景が生成されているか確認する
+	/// </summary>
 	void CheckStudioSet() {
 
 		DestroyDuplicatetudioSet();
 
-		if(loadStudioSet == "") return;
+		if(LoadStudioSet == "") return;
 
-		if(studioSet) {
-			if(studioSet.name == loadStudioSet) return;
-			DestroyImmediate(studioSet.gameObject);
+		if(_studioSet) {
+			if(_studioSet.name == LoadStudioSet) return;
+			DestroyImmediate(_studioSet.gameObject);
 		}
 
 		SpawnStudioSet();
 
 	}
 
+	/// <summary>
+	/// 背景を一つにする
+	/// </summary>
 	void DestroyDuplicatetudioSet() {
 
-		while(!studioSet && transform.childCount > 0 
-			|| studioSet && transform.childCount > 1) {
+		while(!_studioSet && transform.childCount > 0 
+			|| _studioSet && transform.childCount > 1) {
 
 			var child = transform.GetChild(0).gameObject;
-			if(child != studioSet) DestroyImmediate(child);
+			if(child != _studioSet) DestroyImmediate(child);
 		}
 		
 	}
 
+	/// <summary>
+	/// 背景を生成する
+	/// </summary>
 	void SpawnStudioSet() {
-
-		var obj = Resources.Load<GameObject>(GameMaster.STUDIO_PREFAB_BASE_PATH + loadStudioSet);
+		var obj = Resources.Load<GameObject>(GameMaster.STUDIO_PREFAB_BASE_PATH + LoadStudioSet);
 		if(!obj) return;
-		studioSet = Instantiate(obj);
-		studioSet.transform.SetParent(transform);
+		_studioSet = Instantiate(obj);
+		_studioSet.transform.SetParent(transform);
 	}
 }

@@ -20,7 +20,7 @@ public class GimmickBaseInspector : Editor {
 	}
 	State state = State.Preview;
 
-	bool isLock = false;
+	bool isLock;
 
 	GimmickBase component;
 	GimmickBase[] gimmicks;
@@ -33,7 +33,7 @@ public class GimmickBaseInspector : Editor {
 
 	void OnEnable() {
 
-		component = target as GimmickBase;
+		component = (GimmickBase)target;
 
 		lineColor = serializedObject.FindProperty("gimmickColor");
 		startPoint = serializedObject.FindProperty("startPoint");
@@ -74,11 +74,9 @@ public class GimmickBaseInspector : Editor {
 		DrawDefaultInspector();
 	}
 
-	void OnSceneGUI() {
+	private void OnSceneGUI() {
 
 		if(!path) return;
-
-		serializedObject.Update();
 
 		if(CheckParentIsManager()) {
 
@@ -89,25 +87,27 @@ public class GimmickBaseInspector : Editor {
 					DrawPoint();
 					break;
 				case State.PointS:
-					DrawButton((index) => {
+					DrawButton(index => {
 						var point = (index - 1) / 3;
-						if(endPoint.floatValue >= point)
-							startPoint.floatValue = point;
+						if (component.endPoint < point) return;
+
+						Undo.RecordObject(component, "Change StartPoint");
+						component.startPoint = point;
 					});
 					break;
 				case State.PointE:
-					DrawButton((index) => {
+					DrawButton(index => {
 						var point = (index - 1) / 3;
-						if(startPoint.floatValue <= point)
-							endPoint.floatValue = point;
+						if (component.startPoint > point) return;
+
+						Undo.RecordObject(component, "Change EndPoint");
+						component.endPoint = point;
 					});
 					break;
 				default:
-					break;
+					throw new UnityException("");
 			}
 		}
-
-		serializedObject.ApplyModifiedProperties();
 
 		//使わないクリック処理でLock状態を実現
 		if(isLock) {

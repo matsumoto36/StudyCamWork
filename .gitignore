@@ -46,3 +46,6 @@ sysinfo.txt
 
 /Assets/PopcornFX/
 /Assets/PopcornFX.meta
+
+# Movie
+/Assets/Resources/Movie/*
