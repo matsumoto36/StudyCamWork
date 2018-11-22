@@ -9,16 +9,15 @@ using UnityEditor;
 public class GimmickManagerInspector : Editor {
 
 	private const string PrefabBasePath = "Prefab/Gimmick/";
+	private const int WindowId = 1235;
 
-	private static Rect _windowRect = new Rect(200, 40, 120, 90);
-
-
-	private readonly string[] _gimmickNames = new[] {
+	private static readonly string[] GimmickNames = {
 		"SpeedGimmick", "FocusGimmick", "TeleportGimmick"
 	};
 
+	private static Rect _windowRect = new Rect(200, 40, 120, 90);
+
 	private GimmickManager _gimmickManager;
-	private int _windowID = 1235;
 
 	private void OnEnable() {
 		_gimmickManager = (GimmickManager)target;
@@ -36,12 +35,12 @@ public class GimmickManagerInspector : Editor {
 		Handles.BeginGUI();
 
 		//ウィンドウを描画
-		_windowRect = GUILayout.Window(_windowID, _windowRect, (id) => {
+		_windowRect = GUILayout.Window(WindowId, _windowRect, (id) => {
 
 
 			for(var i = 0;i < 3;i++) {
-				if (GUILayout.Button("Add " + _gimmickNames[i]))
-					AddGimmick(_gimmickNames[i]);
+				if (GUILayout.Button("Add " + GimmickNames[i]))
+					AddGimmick(GimmickNames[i]);
 			}
 
 			if(GUILayout.Button("Clear All Gimmicks")) 

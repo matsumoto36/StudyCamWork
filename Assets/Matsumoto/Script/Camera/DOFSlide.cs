@@ -1,19 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
+/// <summary>
+/// 被写界深度エフェクトの焦点を操作する
+/// </summary>
 public class DOFSlide : MonoBehaviour {
 
-	public PostProcessVolume volume;
-	public AnimationCurve FocusCurve;
-
-	DepthOfField dof;
-
-	bool buttonPrev = false;
-
-	public float[] distanceList = new float[] {
+	private readonly float[] _distanceList = {
 		0.433f,
 		0.455f,
 		0.479f,
@@ -36,7 +29,11 @@ public class DOFSlide : MonoBehaviour {
 		4.950f,
 	};
 
-	float distance;
+	public PostProcessVolume Volume;
+
+	private DepthOfField _depthOfField;
+	private bool _isFocusPrev;
+	private float _distance;
 
 	public float Value {
 		get; set;
@@ -47,12 +44,12 @@ public class DOFSlide : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void Start () {
-		dof = volume.profile.GetSetting<DepthOfField>();
+	private void Start() {
+		_depthOfField = Volume.profile.GetSetting<DepthOfField>();
 	}
-	
+
 	// Update is called once per frame
-	void Update () {
+	private void Update() {
 
 		if(GameMaster.Instance.State != GameState.Playing) return;
 
@@ -62,19 +59,22 @@ public class DOFSlide : MonoBehaviour {
 		Value += focusAngle * Time.deltaTime / GameMaster.Instance.GameBalanceData.FocusDuration;
 		Value = Mathf.Clamp(Value, 0, 1);
 
-		var position = Value * (distanceList.Length - 1);
+		//配列上の位置を割合で取得
+		var position = Value * (_distanceList.Length - 1);
+		var positionFloor = (int)position;
 
-		distance = distanceList[(int)position];
+		//配列の中間の値は線形補完で求める
+		_distance = 
+			positionFloor + 1 < _distanceList.Length
+			? Mathf.Lerp(_distanceList[positionFloor], _distanceList[positionFloor + 1], position - positionFloor)
+			: _distanceList[positionFloor];
 
-		if(position != distanceList.Length - 1)
-			distance += (distanceList[(int)position + 1] - distanceList[(int)position]) * (position - (int)position);
+		_depthOfField.focusDistance.value = _distance;
 
-		dof.focusDistance.value = distance;
-
-		if(IsFocus != buttonPrev) {
+		if(IsFocus != _isFocusPrev) {
 			AudioManager.PlaySE("Focus2");
 		}
 
-		buttonPrev = IsFocus;
+		_isFocusPrev = IsFocus;
 	}
 }

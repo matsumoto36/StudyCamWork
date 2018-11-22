@@ -215,7 +215,7 @@ public class MouseCamera : MonoBehaviour
         if (!targetPlayer) return PlayerCaptureStatus.None;
 
         //フォーカスできているか調べる
-        var playerZRate = targetPlayer.Body.localPosition.z / GimmickManager.MOVE_Z;
+        var playerZRate = targetPlayer.Body.localPosition.z / GimmickManager.MoveZ;
         var focusRate = dofSlide.Value;
         var focusGrace = GameMaster.Instance.GameBalanceData.FocusGrace;
 		var isFocus = Mathf.Abs(playerZRate - focusRate) <= focusGrace;

@@ -1,45 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
-//プレイヤーを奥や手前に移動させる
+/// <summary>
+/// プレイヤーを奥や手前に移動させるギミック
+/// </summary>
 public class GimmickFocusIO : GimmickBase {
 
-	float moveZ;
-	public bool isToFar = true;
-	public Text text;
+	public bool IsToFar = true;
 
-	float playerSpeed;
-
-	DOFSlide slide;
+	private float _moveZ;
+	private float _playerSpeed;
+	private DOFSlide _slide;
 
 	public override void SpawnModel(Player player) {
-
-		if(isToFar) {
-			markModelName = "MarkFocusIN";
-		}
-		else {
-			markModelName = "MarkFocusOUT";
-		}
-
+		MarkModelName = IsToFar ? "MarkFocusIN" : "MarkFocusOUT";
 		base.SpawnModel(player);
-	}
-
-	public override void OnRemainingTime(Player player, float t) {
-		base.OnRemainingTime(player, t);
-
-		if(text)
-			text.text = "At. " + t;
-
 	}
 
 	public override void OnAttach(Player player) {
 		base.OnAttach(player);
 
-		playerSpeed = player.Speed;
+		_playerSpeed = player.Speed;
 
-		var baseLength = path.GetPointLength(startPoint, endPoint);
+		var baseLength = Path.GetPointLength(StartPoint, EndPoint);
 		var duration = GameMaster.Instance.GameBalanceData.FocusDuration;
 		player.Speed = baseLength / duration;
 	}
@@ -47,36 +29,35 @@ public class GimmickFocusIO : GimmickBase {
 	public override void OnApplyUpdate(Player player, float t) {
 		base.OnApplyUpdate(player, t);
 
-		if(!slide) slide = FindObjectOfType<DOFSlide>();
+		if(!_slide) _slide = FindObjectOfType<DOFSlide>();
 
-		var playerZRate = player.Body.localPosition.z / GimmickManager.MOVE_Z;
-		var focusRate = slide.Value;
+		var playerZRate = player.Body.localPosition.z / GimmickManager.MoveZ;
+		var focusRate = _slide.Value;
 		var focusGrace = GameMaster.Instance.GameBalanceData.FocusGrace;
 		var isFocus = Mathf.Abs(playerZRate - focusRate) <= focusGrace;
 
-		if(isToFar == Input.GetMouseButton(0) && isFocus) {
-			slide.Value = playerZRate;
+		if(IsToFar == Input.GetMouseButton(0) && isFocus) {
+			_slide.Value = playerZRate;
 		}
 
 		//プレイヤーのbodyのZを変更
 		var duration = GameMaster.Instance.GameBalanceData.FocusDuration;
 		var ratio = t / duration;
-		if(!isToFar) ratio = 1 - ratio;
-		player.Body.localPosition = new Vector3(0, 0, ratio * moveZ);
+
+		if(!IsToFar) ratio = 1 - ratio;
+		player.Body.localPosition = new Vector3(0, 0, ratio * _moveZ);
 		player.SetScaleFromRatio(1 - ratio);
 
-		if(text)
-			text.text = "Using. " + t;
 	}
 
 	public override void OnDetach(Player player) {
 		base.OnDetach(player);
 
-		var z = isToFar ? moveZ : 0;
+		var z = IsToFar ? _moveZ : 0;
 		player.Body.localPosition = new Vector3(0, 0, z);
-		player.SetScaleFromRatio(isToFar ? 0 : 1);
+		player.SetScaleFromRatio(IsToFar ? 0 : 1);
 
-		player.Speed = playerSpeed;
+		player.Speed = _playerSpeed;
 	}
 
 	public override float GetSectionTime(float speed) {
@@ -85,40 +66,39 @@ public class GimmickFocusIO : GimmickBase {
 
 	public override void EditGimmickLine(LineRenderer lineRenderer, ref float z) {
 
-		lineRenderer.material.SetColor("_Color", gimmickColor);
+		lineRenderer.material.SetColor("_Color", GimmickColor);
 
-		moveZ = GimmickManager.MOVE_Z;
-		markModelSpawnZ = z;
+		_moveZ = GimmickManager.MoveZ;
+		MarkModelSpawnZ = z;
 
-		var partition = (int)(256 * (endPoint - startPoint));
+		var partition = (int)(256 * (EndPoint - StartPoint));
 		if(partition == 0) partition = 1;
 
-		var diff = endPoint - startPoint;
+		var diff = EndPoint - StartPoint;
 		var dt =  partition == 0 ? 0 : 1.0f / partition;
 		var point = new Vector3[partition + 1];
 		var keyframe = new Keyframe[partition + 1];
 
-		for(int i = 0;i <= partition;i++) {
+		//奥もしくは手前に立体的に線を引く
+		for(var i = 0;i <= partition;i++) {
 
-			point[i] = path.GetPoint((startPoint + diff * dt * i) / path.LineCount);
-			point[i].z = moveZ * dt * i;
+			point[i] = Path.GetPoint((StartPoint + diff * dt * i) / Path.LineCount);
+			point[i].z = _moveZ * dt * i;
 
-			if(!isToFar) {
-				point[i].z = moveZ - point[i].z;
+			if(!IsToFar) {
+				point[i].z = _moveZ - point[i].z;
 			}
 
-			keyframe[i] = new Keyframe(i / (float)partition, Mathf.Lerp(GimmickManager.LINE_WIDTH_MIN, GimmickManager.LINE_WIDTH_MAX, 1 - point[i].z / GimmickManager.MOVE_Z));
+			var ratio = 1 - point[i].z / GimmickManager.MoveZ;
+			keyframe[i] = 
+				new Keyframe(i / (float)partition, Mathf.Lerp(GimmickManager.LineWidthMin, GimmickManager.LineWidthMax, ratio));
 		}
 
 		lineRenderer.positionCount = point.Length;
 		lineRenderer.SetPositions(point);
 		lineRenderer.widthCurve = new AnimationCurve(keyframe);
 
-		if(isToFar) {
-			z = moveZ;
-		}
-		else {
-			z = 0;
-		}
+		//線のz位置が変わったので通知
+		z = IsToFar ? _moveZ : 0.0f;
 	}
 }

@@ -293,12 +293,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ca9714357babcc419a5742d38b80a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 1, g: 0, b: 0, a: 1}
-  startPoint: 0
-  endPoint: 0.41
-  markModel: {fileID: 0}
-  text: {fileID: 0}
-  speedMul: 6
+  GimmickColor: {r: 1, g: 0, b: 0, a: 1}
+  StartPoint: 0
+  EndPoint: 0.41
+  SpeedMul: 6
 --- !u!114 &114385144139957048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -310,11 +308,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2a8e928250bc141b760c2e7cc82600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0.9843137, g: 0, b: 1, a: 1}
-  startPoint: 3
-  endPoint: 3.33
-  markModel: {fileID: 0}
-  isToFar: 1
+  GimmickColor: {r: 0.9843137, g: 0, b: 1, a: 1}
+  StartPoint: 3
+  EndPoint: 3.33
+  IsToFar: 1
   text: {fileID: 0}
 --- !u!114 &114462428266759072
 MonoBehaviour:
@@ -327,12 +324,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ca9714357babcc419a5742d38b80a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 1, g: 0, b: 0, a: 1}
-  startPoint: 1.35
-  endPoint: 1.72
-  markModel: {fileID: 0}
-  text: {fileID: 0}
-  speedMul: 6
+  GimmickColor: {r: 1, g: 0, b: 0, a: 1}
+  StartPoint: 1.35
+  EndPoint: 1.72
+  SpeedMul: 6
 --- !u!114 &114503445900111326
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -344,12 +339,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cada555ace83047499dd9a0f2e5ac2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0, g: 0.95862055, b: 1, a: 1}
-  startPoint: 0.58
-  endPoint: 0.98
-  markModel: {fileID: 0}
-  waitTime: 1
-  text: {fileID: 0}
+  GimmickColor: {r: 0, g: 0.95862055, b: 1, a: 1}
+  StartPoint: 0.58
+  EndPoint: 0.98
+  WaitTime: 1
 --- !u!114 &114553855097079462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -361,11 +354,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2a8e928250bc141b760c2e7cc82600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0.9843137, g: 0, b: 1, a: 1}
-  startPoint: 4
-  endPoint: 4.315
-  markModel: {fileID: 0}
-  isToFar: 0
+  GimmickColor: {r: 0.9843137, g: 0, b: 1, a: 1}
+  StartPoint: 4
+  EndPoint: 4.315
+  IsToFar: 0
   text: {fileID: 0}
 --- !u!114 &114633746559007524
 MonoBehaviour:
@@ -378,12 +370,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ca9714357babcc419a5742d38b80a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 1, g: 0, b: 0, a: 1}
-  startPoint: 2.49
-  endPoint: 2.99
-  markModel: {fileID: 0}
-  text: {fileID: 0}
-  speedMul: 6
+  GimmickColor: {r: 1, g: 0, b: 0, a: 1}
+  StartPoint: 2.49
+  EndPoint: 2.99
+  SpeedMul: 6
 --- !u!114 &114642543710322362
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -415,12 +405,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cada555ace83047499dd9a0f2e5ac2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0, g: 0.95862055, b: 1, a: 1}
-  startPoint: 1.72
-  endPoint: 2
-  markModel: {fileID: 0}
-  waitTime: 1
-  text: {fileID: 0}
+  GimmickColor: {r: 0, g: 0.95862055, b: 1, a: 1}
+  StartPoint: 1.72
+  EndPoint: 2
+  WaitTime: 1
 --- !u!114 &114716671665195574
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -432,11 +420,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2a8e928250bc141b760c2e7cc82600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0.9843137, g: 0, b: 1, a: 1}
-  startPoint: 5
-  endPoint: 5.33
-  markModel: {fileID: 0}
-  isToFar: 1
+  GimmickColor: {r: 0.9843137, g: 0, b: 1, a: 1}
+  StartPoint: 5
+  EndPoint: 5.33
+  IsToFar: 1
   text: {fileID: 0}
 --- !u!114 &114785449998378960
 MonoBehaviour:
@@ -449,7 +436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8db03c04aa8c2d4d91040e7781b7d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
+  LinePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
 --- !u!114 &114928620216152358
 MonoBehaviour:
   m_ObjectHideFlags: 1

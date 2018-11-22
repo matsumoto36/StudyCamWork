@@ -193,12 +193,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ca9714357babcc419a5742d38b80a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 1, g: 0, b: 0, a: 1}
-  startPoint: 5.5
-  endPoint: 6
-  markModel: {fileID: 0}
-  text: {fileID: 0}
-  speedMul: 4
+  GimmickColor: {r: 1, g: 0, b: 0, a: 1}
+  StartPoint: 5.5
+  EndPoint: 6
+  SpeedMul: 4
 --- !u!114 &114203727281823196
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -210,11 +208,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2a8e928250bc141b760c2e7cc82600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0.986207, g: 0, b: 1, a: 1}
-  startPoint: 4.5
-  endPoint: 5.4
-  markModel: {fileID: 0}
-  isToFar: 1
+  GimmickColor: {r: 0.986207, g: 0, b: 1, a: 1}
+  StartPoint: 4.5
+  EndPoint: 5.4
+  IsToFar: 1
   text: {fileID: 0}
 --- !u!114 &114314376320696926
 MonoBehaviour:
@@ -266,12 +263,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ca9714357babcc419a5742d38b80a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 1, g: 0, b: 0, a: 1}
-  startPoint: 2.4
-  endPoint: 3.9
-  markModel: {fileID: 0}
-  text: {fileID: 0}
-  speedMul: 5
+  GimmickColor: {r: 1, g: 0, b: 0, a: 1}
+  StartPoint: 2.4
+  EndPoint: 3.9
+  SpeedMul: 5
 --- !u!114 &114590906093322578
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -283,7 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8db03c04aa8c2d4d91040e7781b7d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
+  LinePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
 --- !u!114 &114675049452596714
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -295,9 +290,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2a8e928250bc141b760c2e7cc82600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0.986207, g: 0, b: 1, a: 1}
-  startPoint: 6.2
-  endPoint: 7
-  markModel: {fileID: 0}
-  isToFar: 0
+  GimmickColor: {r: 0.986207, g: 0, b: 1, a: 1}
+  StartPoint: 6.2
+  EndPoint: 7
+  IsToFar: 0
   text: {fileID: 0}

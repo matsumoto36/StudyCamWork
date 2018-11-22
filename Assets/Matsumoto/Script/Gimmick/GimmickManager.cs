@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,83 +9,84 @@ using UnityEngine;
 /// </summary>
 public class GimmickManager : MonoBehaviour {
 
-	public const float LINE_WIDTH_MIN = 0.05f;
-	public const float LINE_WIDTH_MAX = 0.2f;
-	public const float MOVE_Z = 18;
+	public const float LineWidthMin = 0.05f;
+	public const float LineWidthMax = 0.2f;
+	public const float MoveZ = 18;
 
-	public LineRenderer linePre;
+	public LineRenderer LinePre;
 
-	Player player;
-	GimmickInfo[] gimmicks;
-	List<LineInfo> lines;
+	private Player _player;
+	private GimmickInfo[] _gimmicks;
+	private List<LineInfo> _lines;
 
-	LineInfo currentLine;
-
-	float startTime;
+	private float _startTime;
 
 	public Bezier2D Path { get; private set; }
 
 	public void Init(Bezier2D path, Player player) {
 
 		Path = path;
-		this.player = player;
+		_player = player;
 
 		var g = GetComponentsInChildren<GimmickBase>();
-		gimmicks = new GimmickInfo[g.Length];
+		_gimmicks = new GimmickInfo[g.Length];
 
-		for(int i = 0;i < g.Length;i++) {
-			gimmicks[i] = new GimmickInfo(g[i]);
+		for(var i = 0;i < g.Length;i++) {
+			_gimmicks[i] = new GimmickInfo(g[i]);
 			g[i].Init();
 		}
 
 		//昇順にソート
-		gimmicks = gimmicks
-			.OrderBy((item) => item.gimmick.startPoint)
+		_gimmicks = _gimmicks
+			.OrderBy((item) => item.Gimmick.StartPoint)
 			.ToArray();
 
 		SetStartTime();
 		SetLine();
 
-		for(int i = g.Length - 1; i >= 0;i--) {
-			gimmicks[i].gimmick.SpawnModel(player);
+		for(var i = g.Length - 1; i >= 0;i--) {
+			_gimmicks[i].Gimmick.SpawnModel(player);
 		}
 
-		GameMaster.Instance.OnGameStart += () => startTime = Time.time;
+		GameMaster.Instance.OnGameStart += () => _startTime = Time.time;
 	}
 
+	/// <summary>
+	/// ステージ上のギミックの更新
+	/// </summary>
 	public void GimmickUpdate() {
 
-		foreach(var item in gimmicks) {
+		foreach(var item in _gimmicks) {
 
-			if(item.isUsed) continue;
+			if(item.IsUsed) continue;
 
-			var gimmickTime = Time.time - startTime;
+			var gimmickTime = Time.time - _startTime;
 
 			//発動前
-			if(!item.isActive && item.waitTime > gimmickTime) {
+			if(!item.IsActive && item.WaitTime > gimmickTime) {
 
-				item.gimmick.OnRemainingTime(player, item.waitTime - gimmickTime);
+				item.Gimmick.OnRemainingTime(_player, item.WaitTime - gimmickTime);
 			}
 
 			//発動した瞬間
-			if(!item.isActive && item.waitTime < gimmickTime) {
+			if(!item.IsActive && item.WaitTime < gimmickTime) {
 
-				item.isActive = true;
-				item.gimmick.OnAttach(player);
+				item.IsActive = true;
+				item.Gimmick.OnAttach(_player);
 			}
 
 			//発動中
-			if(item.isActive) {
+			if(item.IsActive) {
 
-				item.gimmick.OnApplyUpdate(player, gimmickTime - item.waitTime);
+				item.Gimmick.OnApplyUpdate(_player, gimmickTime - item.WaitTime);
 			}
 
 			//発動が終了した瞬間
-			if(item.isActive && item.waitTime + item.duration < gimmickTime) {
+			if(item.IsActive && item.WaitTime + item.Duration < gimmickTime) {
 
-				item.isActive = false;
-				item.isUsed = true;
-				item.gimmick.OnDetach(player);
+				item.IsActive = false;
+				item.IsUsed = true;
+				item.Gimmick.OnDetach(_player);
 			}
 		}
 
@@ -94,23 +94,19 @@ public class GimmickManager : MonoBehaviour {
 		SetLineVisible();
 	}
 
-	public void PlayerMove() {
-
-	}
-
 	/// <summary>
 	/// プレイヤーの位置で線の可視状態を設定
 	/// </summary>
-	void SetLineVisible() {
+	private void SetLineVisible() {
 
-		var moveLength = player.MovedLength;
+		var moveLength = _player.MovedLength;
 
-		foreach(var item in lines) {
-			if(!item.renderer) continue;
+		foreach(var item in _lines) {
+			if(!item.Renderer) continue;
 
 			var fillValue = 1.0f;
-			var startLength = item.pathStartLength;
-			var endLength = item.pathEndLength;
+			var startLength = item.PathStartLength;
+			var endLength = item.PathEndLength;
 
 			//通り過ぎた線の場合
 			if(moveLength >= endLength) {
@@ -122,7 +118,7 @@ public class GimmickManager : MonoBehaviour {
 				fillValue = 1 - (t / (endLength - startLength));
 			}
 			//可視範囲を設定
-			item.renderer.material.SetFloat("_Fill", fillValue);
+			item.Renderer.material.SetFloat("_Fill", fillValue);
 		}
 
 	}
@@ -130,95 +126,95 @@ public class GimmickManager : MonoBehaviour {
 	/// <summary>
 	/// 開始時間をあらかじめ計算する
 	/// </summary>
-	void SetStartTime() {
+	private void SetStartTime() {
 
-		var speed = player.Speed;
+		var speed = _player.Speed;
 		var sumTime = 0.0f;
 		var prevPoint = 0.0f;
-		for(int i = 0;i < gimmicks.Length;i++) {
+		foreach (var gimmickInfo in _gimmicks) {
 
-			var gimmick = gimmicks[i].gimmick;
+			var gimmick = gimmickInfo.Gimmick;
 
 			//通常ゾーン
-			var t = Path.GetPointLength(prevPoint, gimmick.startPoint) / speed;
+			var t = Path.GetPointLength(prevPoint, gimmick.StartPoint) / speed;
 
 			//ギミックのゾーン
 			sumTime += t;
-			gimmicks[i].waitTime = sumTime;
-			gimmicks[i].duration = gimmick.GetSectionTime(speed);
-			sumTime += gimmicks[i].duration;
-			prevPoint = gimmick.endPoint;
+			gimmickInfo.WaitTime = sumTime;
+			gimmickInfo.Duration = gimmick.GetSectionTime(speed);
+			sumTime += gimmickInfo.Duration;
+			prevPoint = gimmick.EndPoint;
 		}
 	}
 
 	/// <summary>
 	/// LineRendererを各ポイントに設置
 	/// </summary>
-	void SetLine() {
+	private void SetLine() {
 
 		//普通に引く線はあらかじめメソッドを作っておく
-		Func<Bezier2D, float, float, float, LineRenderer> DrawLine = (path, from, to, lineZ) => {
+		Func<Bezier2D, float, float, float, LineRenderer> drawLine = (path, from, to, lineZ) => {
+
 			var diff = to - from;
-			if(diff > 0) {
+			if (!(diff > 0)) return null;
 
-				var partition = (int)(256 * diff);
-				if(partition == 0) partition = 1;
+			var partition = (int)(256 * diff);
+			if(partition == 0) partition = 1;
 
-				var dt = diff / partition;
-				var point = new Vector3[partition + 1];
-				var keyframe = new Keyframe[partition + 1];
+			var dt = diff / partition;
+			var point = new Vector3[partition + 1];
+			var keyframe = new Keyframe[partition + 1];
 
-				for(int i = 0;i <= partition;i++) {
-					point[i] = path.GetPoint((from + dt * i) / path.LineCount);
-					point[i].z = lineZ;
+			for(var i = 0;i <= partition;i++) {
+				point[i] = path.GetPoint((from + (dt * i)) / path.LineCount);
+				point[i].z = lineZ;
 
-					keyframe[i] = new Keyframe(i / (float)partition, Mathf.Lerp(LINE_WIDTH_MIN, LINE_WIDTH_MAX, 1 - lineZ / MOVE_Z));
-				}
-
-				var l = Instantiate(linePre);
-				l.material = new Material(l.material);
-				l.positionCount = point.Length;
-				l.SetPositions(point);
-				l.widthCurve = new AnimationCurve(keyframe);
-				return l;
+				keyframe[i] = new Keyframe(i / (float)partition, Mathf.Lerp(LineWidthMin, LineWidthMax, 1 - lineZ / MoveZ));
 			}
 
-			return null;
+			//線を引く
+			var l = Instantiate(LinePre);
+			l.material = new Material(l.material);
+			l.positionCount = point.Length;
+			l.SetPositions(point);
+			l.widthCurve = new AnimationCurve(keyframe);
+			return l;
+
 		};
 
-		lines = new List<LineInfo>();
+		//ここから線を引く処理開始
+		_lines = new List<LineInfo>();
 		var prevPoint = 0.0f;
 		var z = 0.0f;
-		for(int i = 0;i < gimmicks.Length;i++) {
-
-			var gimmick = gimmicks[i].gimmick;
+		foreach (var gimmickInfo in _gimmicks) {
+			var gimmick = gimmickInfo.Gimmick;
 
 			//通常ゾーン
-			lines.Add(new LineInfo(
-				DrawLine(Path, prevPoint, gimmick.startPoint, z),
+			_lines.Add(new LineInfo(
+				drawLine(Path, prevPoint, gimmick.StartPoint, z),
 				Path.GetPointLength(0, prevPoint),
-				Path.GetPointLength(0, gimmick.startPoint)
-			 ));
+				Path.GetPointLength(0, gimmick.StartPoint)
+			));
 
 			//ギミックゾーン
-			var gimmickLine = Instantiate(linePre);
+			var gimmickLine = Instantiate(LinePre);
 			gimmickLine.material = new Material(gimmickLine.material);
 			gimmick.EditGimmickLine(gimmickLine, ref z);
 
 			var line = new LineInfo(
 				gimmickLine,
-				Path.GetPointLength(0, gimmick.startPoint),
-				Path.GetPointLength(0, gimmick.endPoint)
-			);
-			line.gimmickInfo = gimmicks[i];
-			lines.Add(line);
+				Path.GetPointLength(0, gimmick.StartPoint),
+				Path.GetPointLength(0, gimmick.EndPoint)
+			) {GimmickInfo = gimmickInfo};
 
-			prevPoint = gimmick.endPoint;
+			_lines.Add(line);
+
+			prevPoint = gimmick.EndPoint;
 		}
 
 		//最後の線を引く
-		lines.Add(new LineInfo(
-			DrawLine(Path, prevPoint, Path.LineCount, z),
+		_lines.Add(new LineInfo(
+			drawLine(Path, prevPoint, Path.LineCount, z),
 				Path.GetPointLength(0, prevPoint),
 				Path.Length
 		));
@@ -232,16 +228,16 @@ public class GimmickManager : MonoBehaviour {
 [Serializable]
 public class LineInfo {
 
-	public LineRenderer renderer;
-	public float pathStartLength;
-	public float pathEndLength;
+	public LineRenderer Renderer;
+	public float PathStartLength;
+	public float PathEndLength;
 
-	public GimmickInfo gimmickInfo;
+	public GimmickInfo GimmickInfo;
 
 	public LineInfo(LineRenderer renderer, float pathStartLength, float pathEndLength) {
-		this.renderer = renderer;
-		this.pathStartLength = pathStartLength;
-		this.pathEndLength = pathEndLength;
+		Renderer = renderer;
+		PathStartLength = pathStartLength;
+		PathEndLength = pathEndLength;
 	}
 }
 
@@ -250,13 +246,13 @@ public class LineInfo {
 /// </summary>
 public class GimmickInfo {
 
-	public GimmickBase gimmick;
-	public bool isActive;
-	public bool isUsed;
-	public float waitTime;
-	public float duration;
+	public GimmickBase Gimmick;
+	public bool IsActive;
+	public bool IsUsed;
+	public float WaitTime;
+	public float Duration;
 
 	public GimmickInfo(GimmickBase gimmick) {
-		this.gimmick = gimmick;
+		Gimmick = gimmick;
 	}
 }

@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8db03c04aa8c2d4d91040e7781b7d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
+  LinePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
 --- !u!114 &114350003057519390
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -115,12 +115,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ca9714357babcc419a5742d38b80a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 1, g: 0, b: 0, a: 1}
-  startPoint: 0.3
-  endPoint: 0.7
-  markModel: {fileID: 0}
-  text: {fileID: 0}
-  speedMul: 2
+  GimmickColor: {r: 1, g: 0, b: 0, a: 1}
+  StartPoint: 0.3
+  EndPoint: 0.7
+  SpeedMul: 2
 --- !u!114 &114778465055052908
 MonoBehaviour:
   m_ObjectHideFlags: 1

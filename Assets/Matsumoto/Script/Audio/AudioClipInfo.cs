@@ -1,37 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 class AudioClipInfo {
 
-	public const int MAX_PLAY_COUNT = 50;
-	const float INIT_VOLUME = 0.2f;
+	public const int MaxPlayCount = 50;
+	private const float DefaultVolume = 0.2f;
 
-	public AudioClip clip;
-	public SortedList<int, SEInfo> stockList = new SortedList<int, SEInfo>();
+	public AudioClip Clip;
+	public SortedList<int, SEInfo> StockList = new SortedList<int, SEInfo>();
 
-	public float attenuate = 0.0f;   // 合成時減衰率
+	public float Attenuate;   // 合成時減衰率
 
 	public AudioClipInfo(AudioClip clip) {
-		this.clip = clip;
-		attenuate = CalcAttenuateRate();
+		Clip = clip;
+		Attenuate = CalcAttenuateRate();
+
 		// create stock list
-		for(int i = 0;i < MAX_PLAY_COUNT;i++) {
-			SEInfo seInfo = new SEInfo(i, 0.0f, Mathf.Pow(attenuate, i));
-			stockList.Add(seInfo.index, seInfo);
+		for(var i = 0;i < MaxPlayCount;i++) {
+			var seInfo = new SEInfo(i, 0.0f, Mathf.Pow(Attenuate, i));
+			StockList.Add(seInfo.Index, seInfo);
 		}
 	}
 
-	float CalcAttenuateRate() {
-		return NewtonMethod((p) => {
-				return (1.0f - Mathf.Pow(p, MAX_PLAY_COUNT)) / (1.0f - p) - 1.0f / INIT_VOLUME;
-			},
-			(p) => {
-				float ip = 1.0f - p;
-				float t0 = -MAX_PLAY_COUNT * Mathf.Pow(p, MAX_PLAY_COUNT - 1.0f) / ip;
-				float t1 = (1.0f - Mathf.Pow(p, MAX_PLAY_COUNT)) / ip / ip;
+	/// <summary>
+	/// 音量の減衰率を求める
+	/// </summary>
+	/// <returns></returns>
+	private static float CalcAttenuateRate() {
+		return NewtonMethod(p => (1.0f - Mathf.Pow(p, MaxPlayCount)) / (1.0f - p) - 1.0f / DefaultVolume,
+			p => {
+				var ip = 1.0f - p;
+				var t0 = -MaxPlayCount * Mathf.Pow(p, MaxPlayCount - 1.0f) / ip;
+				var t1 = (1.0f - Mathf.Pow(p, MaxPlayCount)) / ip / ip;
 				return t0 + t1;
 			},
 			0.9f, 100
@@ -46,10 +47,10 @@ class AudioClipInfo {
 	/// <param name="initX"></param>
 	/// <param name="maxLoop"></param>
 	/// <returns></returns>
-	static float NewtonMethod(Func<float, float> func, Func<float, float> derive, float initX, int maxLoop) {
-		float x = initX;
-		for(int i = 0;i < maxLoop;i++) {
-			float curY = func(x);
+	private static float NewtonMethod(Func<float, float> func, Func<float, float> derive, float initX, int maxLoop) {
+		var x = initX;
+		for(var i = 0;i < maxLoop;i++) {
+			var curY = func(x);
 			if(curY < 0.00001f && curY > -0.00001f)
 				break;
 			x = x - curY / derive(x);

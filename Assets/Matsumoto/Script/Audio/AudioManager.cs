@@ -9,74 +9,81 @@ using System;
 /// </summary>
 public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 
-	const string MIXER_PATH = "Sound/MainAudioMixer";		//ミキサーのパス
-	const string BGM_PATH = "Sound/BGM/";					//BGMのフォルダーパス
-	const string SE_PATH = "Sound/SE/";                     //SEのフォルダーパス
+	// 各種パス
+	private const string MixerPath = "Sound/MainAudioMixer";
+	private const string BGMDirectory = "Sound/BGM/";
+	private const string SEDirectory = "Sound/SE/";
 
-	const string BGM_VOLUME_KEY = "BGMVolume";				//MixerからBGMの音量にアクセスするためのキー
-	const string SE_VOLUME_KEY = "SEVolume";				//MixerからBGMの音量にアクセスするためのキー
+	// Mixerの公開変数にアクセスするためのキー
+	private const string BGMVolumeKey = "BGMVolume";
+	private const string SEVolumeKey = "SEVolume";
 
-	const int MAX_PLAYING_SE_COUNT = 10;					//同時再生できるSEの数
+	private readonly AudioMixerGroup[] _mixerGroups = new AudioMixerGroup[2]; //ミキサーのグループ [0]SE [1]BGM
 
-	AudioMixerGroup[] mixerGroups = new AudioMixerGroup[2]; //ミキサーのグループ [0]SE [1]BGM
+	private ObjectPooler _poolSE;
 
-	ObjectPooler poolSE;
+	//再生用リスト
+	private Dictionary<string, AudioClipInfo> _SEClips;
+	private Dictionary<string, AudioClip> _BGMClips;
 
-	Dictionary<string, AudioClipInfo> SEclips;				//SE再生用リスト
-	Dictionary<string, AudioClip> BGMclips;					//BGM再生用リスト
+	private AudioSource _nowPlayingBGM;									//現在再生されているBGM
+	private string _latestPlayBGM;										//再生されているBGMの種類
 
-	AudioSource nowPlayingBGM;                              //現在再生されているBGM
-	string latestPlayBGM;									//再生されているBGMの種類
-
-	Coroutine fadeInCol;									//BGMフェードインのコルーチン
-	AudioSource fadeInAudio;                                //BGMフェードイン用のAudioSource
+	private Coroutine _fadeInCoroutine;									//BGMフェードインのコルーチン
+	private AudioSource _fadeInAudio;									//BGMフェードイン用のAudioSource
 
 	public AudioMixer Mixer { get; private set; }           //ミキサー
 
+	/// <summary>
+	/// MixerのSEの音量を変更する
+	/// </summary>
 	public static float SEVolume {
 		get {
-			float volume = 0.0f;
-			Instance.Mixer.GetFloat(SE_VOLUME_KEY, out volume);
+			float volume;
+			Instance.Mixer.GetFloat(SEVolumeKey, out volume);
 			return volume;
 		}
 		set {
-			Instance.Mixer.SetFloat(SE_VOLUME_KEY, value);
+			Instance.Mixer.SetFloat(SEVolumeKey, value);
 		}
 	}
 
+	/// <summary>
+	/// MixerのBGMの音量を変更する
+	/// </summary>
 	public static float BGMVolume {
 		get {
-			float volume = 0.0f;
-			Instance.Mixer.GetFloat(BGM_VOLUME_KEY, out volume);
+			float volume;
+			Instance.Mixer.GetFloat(BGMVolumeKey, out volume);
 			return volume;
 		}
 		set {
-			Instance.Mixer.SetFloat(BGM_VOLUME_KEY, value);
+			Instance.Mixer.SetFloat(BGMVolumeKey, value);
 		}
 	}
 
+	/// <summary>
+	/// 現在再生されているBGMの名前を取得
+	/// </summary>
 	public static string CurrentBGMName {
 		get {
-			if(!Instance.nowPlayingBGM) return "";
-			return Instance.latestPlayBGM;
+			return !Instance._nowPlayingBGM ? "" : Instance._latestPlayBGM;
 		}
 	}
 
 	protected override void Init() {
 		base.Init();
-
 		Load();
 	}
 
+	/// <summary>
+	/// SEを遅延させて止める
+	/// </summary>
+	/// <param name="delayTime">遅延する時間(秒)</param>
+	/// <param name="action">コールバック</param>
 	static IEnumerator StopSEDelay(float delayTime, Action action) {
 		yield return new WaitForSeconds(delayTime);
 		action();
-	}
-
-	public static void ReleaseRawSE(AudioSource src) {
-		src.name = "[Stopped]";
-		src.Stop();
-		ObjectPooler.ReleaseInstance(src.gameObject);
 	}
 
 	/// <summary>
@@ -85,83 +92,79 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	public static void Load() {
 
 		//LoadMixer
-		Instance.Mixer = Resources.Load<AudioMixer>(MIXER_PATH);
+		Instance.Mixer = Resources.Load<AudioMixer>(MixerPath);
 		if(Instance.Mixer) {
-			Instance.mixerGroups[0] = Instance.Mixer.FindMatchingGroups("SE")[0];
-			Instance.mixerGroups[1] = Instance.Mixer.FindMatchingGroups("BGM")[0];
+			Instance._mixerGroups[0] = Instance.Mixer.FindMatchingGroups("SE")[0];
+			Instance._mixerGroups[1] = Instance.Mixer.FindMatchingGroups("BGM")[0];
 		}
 		else {
-			Debug.LogError("Failed Load AudioMixer! Path=" + MIXER_PATH);
+			Debug.LogError("Failed Load AudioMixer! Setting Path=" + MixerPath);
 		}
 
 
 		//BGM読み込み
-		Instance.BGMclips = new Dictionary<string, AudioClip>();
-		foreach(var item in Resources.LoadAll<AudioClip>(BGM_PATH)) {
-			Instance.BGMclips.Add(item.name, item);
+		Instance._BGMClips = new Dictionary<string, AudioClip>();
+		foreach(var item in Resources.LoadAll<AudioClip>(BGMDirectory)) {
+			Instance._BGMClips.Add(item.name, item);
 		}
 
 		//SE読み込み
-		Instance.SEclips = new Dictionary<string, AudioClipInfo>();
-		foreach(var item in Resources.LoadAll<AudioClip>(SE_PATH)) {
-			Instance.SEclips.Add(item.name, new AudioClipInfo(item));
+		Instance._SEClips = new Dictionary<string, AudioClipInfo>();
+		foreach(var item in Resources.LoadAll<AudioClip>(SEDirectory)) {
+			Instance._SEClips.Add(item.name, new AudioClipInfo(item));
 		}
 
 		//プールの作成
-		Instance.poolSE = ObjectPooler.GetObjectPool(
-			new GameObject("[Stopped]")
+		Instance._poolSE = ObjectPooler.GetObjectPool(new GameObject("[Stopped]")
 			.AddComponent<AudioSource>()
 			.gameObject);
 
-		Instance.poolSE.maxCount = 20;
-		Instance.poolSE.prepareCount = 10;
-		Instance.poolSE.Generate(Instance.transform);
+		Instance._poolSE.maxCount = 20;
+		Instance._poolSE.prepareCount = 10;
+		Instance._poolSE.Generate(Instance.transform);
 	}
 
 	/// <summary>
 	/// SEを再生する
 	/// </summary>
-	/// <param name="type">SEの名前</param>
+	/// <param name="SEName">SEの名前</param>
 	/// <param name="vol">音量</param>
 	public static AudioSource PlaySE(string SEName, float vol = 1.0f) {
 
 		//SE取得
 		var info = GetSEInfo(SEName);
 		if(info == null) return null;
+		if (info.StockList.Count <= 0) return null;
 
-		if(info.stockList.Count > 0) {
-			//stockListから空で且つ番号が一番若いSEInfoを受け取る
-			var seInfo = info.stockList.Values[0];
+		//stockListから空で且つ番号が一番若いSEInfoを受け取る
+		var seInfo = info.StockList.Values[0];
 
-			//ストックを削除
-			info.stockList.Remove(seInfo.index);
+		//ストックを削除
+		info.StockList.Remove(seInfo.Index);
 
-			//情報を取り付ける
-			var obj = Instance.poolSE.GetInstance();
-			if(!obj) return null;
+		//情報を取り付ける
+		var obj = Instance._poolSE.GetInstance();
+		if(!obj) return null;
 
-			var src = obj.GetComponent<AudioSource>();
-			src.name = "[Audio SE - " + SEName + "]";
-			src.transform.SetParent(Instance.transform);
-			src.clip = info.clip;
-			src.volume = seInfo.volume * vol;
-			src.outputAudioMixerGroup = Instance.mixerGroups[0];
-			src.Play();
+		var src = obj.GetComponent<AudioSource>();
+		src.name = "[Audio SE - " + SEName + "]";
+		src.transform.SetParent(Instance.transform);
+		src.clip = info.Clip;
+		src.volume = seInfo.Volume * vol;
+		src.outputAudioMixerGroup = Instance._mixerGroups[0];
+		src.Play();
 
-			//遅延でストップする
-			Instance.StartCoroutine(StopSEDelay(src.clip.length + 0.1f, () => {
+		//遅延でストップする
+		Instance.StartCoroutine(StopSEDelay(src.clip.length + 0.1f, () => {
 
-				src.name = "[Stopped]";
-				src.Stop();
-				ObjectPooler.ReleaseInstance(src.gameObject);
+			src.name = "[Stopped]";
+			src.Stop();
+			ObjectPooler.ReleaseInstance(src.gameObject);
 
-				info.stockList.Add(seInfo.index, seInfo);
-			}));
+			info.StockList.Add(seInfo.Index, seInfo);
+		}));
 
-			return src;
-		}
-
-		return null;
+		return src;
 	}
 
 	/// <summary>
@@ -176,12 +179,12 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 		if(info == null) return null;
 
 		//情報を取り付ける
-		var src = Instance.poolSE.GetInstance().GetComponent<AudioSource>();
+		var src = Instance._poolSE.GetInstance().GetComponent<AudioSource>();
 		src.name = "[Audio SE - " + SEName + "]";
 		src.transform.SetParent(Instance.transform);
-		src.clip = info.clip;
+		src.clip = info.Clip;
 		src.volume = vol;
-		src.outputAudioMixerGroup = Instance.mixerGroups[0];
+		src.outputAudioMixerGroup = Instance._mixerGroups[0];
 		src.Play();
 
 		return src;
@@ -199,13 +202,13 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 		//BGM取得
 		var clip = GetBGM(BGMName);
 		if(!clip) return null;
-		if(Instance.nowPlayingBGM) Destroy(Instance.nowPlayingBGM.gameObject);
+		if(Instance._nowPlayingBGM) Destroy(Instance._nowPlayingBGM.gameObject);
 
 		var src = new GameObject("[Audio BGM - " + BGMName + "]").AddComponent<AudioSource>();
 		src.transform.SetParent(Instance.transform);
 		src.clip = clip;
 		src.volume = vol;
-		src.outputAudioMixerGroup = Instance.mixerGroups[1];
+		src.outputAudioMixerGroup = Instance._mixerGroups[1];
 		src.Play();
 
 		if(isLoop) {
@@ -215,8 +218,8 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 			Destroy(src.gameObject, clip.length + 0.1f);
 		}
 
-		Instance.nowPlayingBGM = src;
-		Instance.latestPlayBGM = BGMName;
+		Instance._nowPlayingBGM = src;
+		Instance._latestPlayBGM = BGMName;
 
 		return src;
 	}
@@ -225,11 +228,11 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	/// BGMをフェードインさせる
 	/// </summary>
 	/// <param name="fadeTime">フェードする時間</param>
-	/// <param name="type">新しいBGMのタイプ</param>
+	/// <param name="BGMName">新しいBGMのタイプ</param>
 	/// <param name="vol">新しいBGMの大きさ</param>
 	/// <param name="isLoop">新しいBGMがループするか</param>
 	public static void FadeIn(float fadeTime, string BGMName, float vol = 1.0f, bool isLoop = true) {
-		Instance.fadeInCol = Instance.StartCoroutine(Instance.FadeInAnim(fadeTime, BGMName, vol, isLoop));
+		Instance._fadeInCoroutine = Instance.StartCoroutine(Instance.FadeInCoroutine(fadeTime, BGMName, vol, isLoop));
 	}
 
 	/// <summary>
@@ -244,12 +247,12 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	/// BGMをクロスフェードする
 	/// </summary>
 	/// <param name="fadeTime">フェードする時間</param>
-	/// <param name="type">新しいBGMのタイプ</param>
+	/// <param name="fadeInBGMName">新しいBGMのタイプ</param>
 	/// <param name="vol">新しいBGMの大きさ</param>
 	/// <param name="isLoop">新しいBGMがループするか</param>
 	public static void CrossFade(float fadeTime, string fadeInBGMName, float vol = 1.0f, bool isLoop = true) {
 		Instance.StartCoroutine(Instance.FadeOutAnim(fadeTime));
-		Instance.fadeInCol = Instance.StartCoroutine(Instance.FadeInAnim(fadeTime, fadeInBGMName, vol, isLoop));
+		Instance._fadeInCoroutine = Instance.StartCoroutine(Instance.FadeInCoroutine(fadeTime, fadeInBGMName, vol, isLoop));
 	}
 
 	/// <summary>
@@ -257,13 +260,10 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	/// </summary>
 	/// <param name="SEName">SEの名前</param>
 	/// <returns>SE</returns>
-	static AudioClipInfo GetSEInfo(string SEName) {
-
-		if(!Instance.SEclips.ContainsKey(SEName)) {
-			Debug.LogWarning("SEName:" + SEName + " is not found.");
-			return null;
-		}
-		return Instance.SEclips[SEName];
+	private static AudioClipInfo GetSEInfo(string SEName) {
+		if (Instance._SEClips.ContainsKey(SEName)) return Instance._SEClips[SEName];
+		Debug.LogWarning("SEName:" + SEName + " is not found.");
+		return null;
 	}
 
 	/// <summary>
@@ -271,73 +271,83 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	/// </summary>
 	/// <param name="BGMName">BGMの名前</param>
 	/// <returns>BGM</returns>
-	static AudioClip GetBGM(string BGMName) {
-
-		if(!Instance.BGMclips.ContainsKey(BGMName)) {
-			Debug.LogError("BGMName:" + BGMName + " is not found.");
-			return null;
-		}
-		return Instance.BGMclips[BGMName];
+	private static AudioClip GetBGM(string BGMName) {
+		if (Instance._BGMClips.ContainsKey(BGMName)) return Instance._BGMClips[BGMName];
+		Debug.LogError("BGMName:" + BGMName + " is not found.");
+		return null;
 	}
 
-	IEnumerator FadeInAnim(float fadeTime, string BGMName, float vol, bool isLoop) {
+	/// <summary>
+	/// フェードインするためのコルーチン
+	/// </summary>
+	/// <param name="fadeTime"></param>
+	/// <param name="BGMName"></param>
+	/// <param name="vol"></param>
+	/// <param name="isLoop"></param>
+	/// <returns></returns>
+	private IEnumerator FadeInCoroutine(float fadeTime, string BGMName, float vol, bool isLoop) {
 
 		//BGM取得
 		var clip = GetBGM(BGMName);
 		if(!clip) yield break;
 
 		//初期設定
-		fadeInAudio = new GameObject("[Audio BGM - " + BGMName + " - FadeIn ]").AddComponent<AudioSource>();
-		fadeInAudio.transform.SetParent(Instance.transform);
-		fadeInAudio.clip = clip;
-		fadeInAudio.volume = 0;
-		fadeInAudio.outputAudioMixerGroup = mixerGroups[1];
-		fadeInAudio.Play();
+		_fadeInAudio = new GameObject("[Audio BGM - " + BGMName + " - FadeIn ]").AddComponent<AudioSource>();
+		_fadeInAudio.transform.SetParent(Instance.transform);
+		_fadeInAudio.clip = clip;
+		_fadeInAudio.volume = 0;
+		_fadeInAudio.outputAudioMixerGroup = _mixerGroups[1];
+		_fadeInAudio.Play();
 
-		latestPlayBGM = BGMName;
+		_latestPlayBGM = BGMName;
 
 		//フェードイン
 		var t = 0.0f;
 		while((t += Time.deltaTime / fadeTime) < 1.0f) {
-			fadeInAudio.volume = t * vol;
+			_fadeInAudio.volume = t * vol;
 			yield return null;
 		}
 
-		fadeInAudio.volume = vol;
-		fadeInAudio.name = "[Audio BGM - " + BGMName + "]";
+		_fadeInAudio.volume = vol;
+		_fadeInAudio.name = "[Audio BGM - " + BGMName + "]";
 
-		if(nowPlayingBGM) Destroy(nowPlayingBGM.gameObject);
+		if(_nowPlayingBGM) Destroy(_nowPlayingBGM.gameObject);
 
 		if(isLoop) {
-			fadeInAudio.loop = true;
+			_fadeInAudio.loop = true;
 		}
 		else {
-			Destroy(fadeInAudio.gameObject, clip.length + 0.1f);
+			Destroy(_fadeInAudio.gameObject, clip.length);
 		}
 
-		nowPlayingBGM = fadeInAudio;
+		_nowPlayingBGM = _fadeInAudio;
 	}
 
-	IEnumerator FadeOutAnim(float fadeTime) {
+	/// <summary>
+	/// フェードアウトするためのコルーチン
+	/// </summary>
+	/// <param name="fadeTime"></param>
+	/// <returns></returns>
+	private IEnumerator FadeOutAnim(float fadeTime) {
 
-		var src = nowPlayingBGM;
+		var src = _nowPlayingBGM;
 
 		//フェードイン中にフェードアウトが呼ばれた場合
 		if (!src) {
 			//フェードイン処理停止
-			if(fadeInCol == null) yield break;
-			Instance.StopCoroutine(fadeInCol);
-			src = fadeInAudio;
+			if(_fadeInCoroutine == null) yield break;
+			Instance.StopCoroutine(_fadeInCoroutine);
+			src = _fadeInAudio;
 
 			if(!src) yield break;
 		}
 
-		src.name = "[Audio BGM - " + latestPlayBGM + " - FadeOut ]";
-		nowPlayingBGM = null;
+		src.name = "[Audio BGM - " + _latestPlayBGM + " - FadeOut ]";
+		_nowPlayingBGM = null;
 
 		//フェードアウト
 		var t = 0.0f;
-		float vol = src.volume;
+		var vol = src.volume;
 		while((t += Time.deltaTime / fadeTime) < 1.0f) {
 			src.volume = (1 - t) * vol;
 			yield return null;

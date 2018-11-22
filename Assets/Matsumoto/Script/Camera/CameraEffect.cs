@@ -1,32 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// CRTのようなエフェクトをシェーダーで表現する
+/// </summary>
 public class CameraEffect : MonoBehaviour {
 
-	public Material mat;
-	public float fade;
-	public new float light;
-	public float wave;
-	public float animSpeed;
+	public Material Mat;
+	public float Fade;
+	public float Light;
+	public float Wave;
+	public float AnimSpeed;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	private void OnRenderImage(RenderTexture src, RenderTexture dest) {
 
-	void OnRenderImage(RenderTexture src, RenderTexture dest) {
+		Mat.SetFloat("_Fade", Fade);
+		Mat.SetFloat("_Light", Light);
+		Mat.SetFloat("_Wave", Wave);
+		Mat.SetFloat("_AnimSpeed", AnimSpeed);
 
-		mat.SetFloat("_Fade", fade);
-		mat.SetFloat("_Light", light);
-		mat.SetFloat("_Wave", wave);
-		mat.SetFloat("_AnimSpeed", animSpeed);
-
-		Graphics.Blit(src, dest, mat);
+		Graphics.Blit(src, dest, Mat);
 	}
 }

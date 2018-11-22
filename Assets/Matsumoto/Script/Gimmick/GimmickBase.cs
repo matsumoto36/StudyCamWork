@@ -1,150 +1,144 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// ギミックを構成するベースクラス
 /// </summary>
-public class GimmickBase : MonoBehaviour {
+public abstract class GimmickBase : MonoBehaviour {
 
-	const string MARK_MODEL_BASE_PATH = "Prefab/Mark/";
+	private const string MarkModelBase = "Prefab/Mark/";
 
+	//インスペクタ拡張で表示するため隠しておく
+	//派生クラスの表示は拡張で記述しなくてもできるようにするため
 	#region カスタムインスペクターで表示するプロパティ
 	[HideInInspector]
-	public Color gimmickColor = Color.red;	//ギミックの適用範囲の色
-	[HideInInspector]
-	public float startPoint;				//ギミックを適用する開始地点
-	[HideInInspector]
-	public float endPoint;                  //ギミックを終わらせる終了地点
-	[HideInInspector]
-	public GameObject markModel;			//生成されたマークのモデル
+	public Color GimmickColor;	//ギミックの適用範囲の色
+	 [HideInInspector]
+	public float StartPoint;	//ギミックを適用する開始地点
+	 [HideInInspector]
+	public float EndPoint;		//ギミックを終わらせる終了地点
 	#endregion
 
-	GameObject ringObj;
+	protected string MarkModelName;
+	protected float MarkModelSpawnZ;
 
-	protected string markModelName;         //ギミックのマークの名前
-	protected float markModelSpawnZ;
+	protected Bezier2D Path;
+	protected GimmickManager Manager;
 
-	protected Bezier2D path;
-	protected GimmickManager manager;
+	private GameObject _ringObj;
+
+	//生成されたマークのモデル
+	public GameObject MarkModel { get; private set; }
 
 	public virtual void Init() {
 
-		manager = GetComponentInParent<GimmickManager>();
-		path = manager.Path;
+		Manager = GetComponentInParent<GimmickManager>();
+		Path = Manager.Path;
 	}
 
 	public virtual void SpawnModel(Player player) {
 
 		//登録されたモデルのスポーン
-		var lineCount = path.LineCount;
-		var spawnPos = (Vector3)path.GetPoint(startPoint / lineCount);
-		spawnPos.z = markModelSpawnZ;
+		var lineCount = Path.LineCount;
+		var spawnPos = (Vector3)Path.GetPoint(StartPoint / lineCount);
+		spawnPos.z = MarkModelSpawnZ;
 
-		if(markModelName != "") {
-			var model = Resources.Load<GameObject>(MARK_MODEL_BASE_PATH + markModelName);
+		if(MarkModelName != "") {
+			var model = Resources.Load<GameObject>(MarkModelBase + MarkModelName);
 			if(model) {
-				markModel = Instantiate(model, spawnPos, Quaternion.identity);
-				markModel.transform.localScale = Vector3.one * player.GetScaleFromRatio(1 - markModelSpawnZ / GimmickManager.MOVE_Z);
+				MarkModel = Instantiate(model, spawnPos, Quaternion.identity);
+				MarkModel.transform.localScale = Vector3.one * player.GetScaleFromRatio(1 - MarkModelSpawnZ / GimmickManager.MoveZ);
 			}
 		}
 
 		//タイミングとるためのリングの生成
-		ringObj = Instantiate(Resources.Load<GameObject>("Prefab/Ring"), spawnPos, Quaternion.identity);
-		ringObj.transform.localScale = new Vector3();
+		_ringObj = Instantiate(Resources.Load<GameObject>("Prefab/Ring"), spawnPos, Quaternion.identity);
+		_ringObj.transform.localScale = new Vector3();
 
-		var rRender = ringObj.GetComponent<Renderer>();
+		var rRender = _ringObj.GetComponent<Renderer>();
 		rRender.material = new Material(rRender.material);
 		rRender.material.EnableKeyword("_EMISSION");
-		rRender.material.SetColor("_EmissionColor", gimmickColor);
+		rRender.material.SetColor("_EmissionColor", GimmickColor);
 
 	}
 
 	/// <summary>
 	/// 残り時間があるときに毎フレーム呼ばれる
 	/// </summary>
+	/// <param name="player"></param>
 	/// <param name="t"></param>
 	public virtual void OnRemainingTime(Player player, float t) {
 
 		if(t < 1.0f) {
-			var playerScale = player.GetScaleFromRatio(1 - markModelSpawnZ / GimmickManager.MOVE_Z);
+			var playerScale = player.GetScaleFromRatio(1 - MarkModelSpawnZ / GimmickManager.MoveZ);
 			var scale = playerScale + playerScale * 3 * t;
-			ringObj.transform.localScale = new Vector3(scale, scale, 1);
+			_ringObj.transform.localScale = new Vector3(scale, scale, 1);
 		}
 		else {
-			ringObj.transform.localScale = new Vector3();
+			_ringObj.transform.localScale = new Vector3();
 		}
 	}
 
 	/// <summary>
 	/// ギミックが発動しているときに毎フレーム呼ばれる
 	/// </summary>
-	public virtual void OnApplyUpdate(Player player, float t) {
-
-	}
+	public virtual void OnApplyUpdate(Player player, float t) { }
 
 	/// <summary>
 	/// ギミックが開始するとき呼ばれる
 	/// </summary>
 	public virtual void OnAttach(Player player) {
-		ringObj.transform.localScale = new Vector3();
-		markModel.SetActive(false);
+		_ringObj.transform.localScale = new Vector3();
+		MarkModel.SetActive(false);
 
-		var p = ParticleManager.Spawn("GimmickApplyEffect", markModel.transform.position, Quaternion.identity, 2);
-		p.GetAttribute("MainColor").ValueFloat4 = gimmickColor;
+		var p = ParticleManager.Spawn("GimmickApplyEffect", MarkModel.transform.position, Quaternion.identity, 2);
+		p.GetAttribute("MainColor").ValueFloat4 = GimmickColor;
 	}
 
 	/// <summary>
 	/// ギミックが終了するとき呼ばれる
 	/// </summary>
-	public virtual void OnDetach(Player player) {
-
-	}
+	public virtual void OnDetach(Player player) { }
 
 	/// <summary>
 	/// 始点から終点までかかる時間を返す(必ず実装すること)
 	/// </summary>
 	/// <returns></returns>
-	public virtual float GetSectionTime(float speed) {
-		return 0;
-	}
+	public abstract float GetSectionTime(float speed);
 
 	/// <summary>
 	/// ギミックの予測線を引く(必ず実装すること)
 	/// </summary>
-	/// <param name="t"></param>
+	/// <param name="lineRenderer"></param>
+	/// <param name="z">線のZ座標</param>
 	/// <returns></returns>
 	public virtual void EditGimmickLine(LineRenderer lineRenderer, ref float z) {
 
 		if(!CheckUsableManager()) return;
 
-		var partition = (int)(256 * (endPoint - startPoint));
+		var partition = (int)(256 * (EndPoint - StartPoint));
 		if(partition == 0) partition = 1;
 
-		var dt = (endPoint - startPoint) * (1.0f / partition);
+		var dt = (EndPoint - StartPoint) * (1.0f / partition);
 		var point = new Vector3[partition + 1];
 		var keyframe = new Keyframe[partition + 1];
 
-		for(int i = 0;i <= partition;i++) {
-			point[i] = path.GetPoint((startPoint + dt * i) / path.LineCount);
+		//Zの位置に従って線を引く
+		for(var i = 0;i <= partition;i++) {
+			point[i] = Path.GetPoint((StartPoint + dt * i) / Path.LineCount);
 			point[i].z = z;
 
-			keyframe[i] = new Keyframe(i / (float)partition, Mathf.Lerp(GimmickManager.LINE_WIDTH_MIN, GimmickManager.LINE_WIDTH_MAX, 1 - z / GimmickManager.MOVE_Z));
+			var ratio = 1 - z / GimmickManager.MoveZ;
+			keyframe[i] = new Keyframe(i / (float)partition, Mathf.Lerp(GimmickManager.LineWidthMin, GimmickManager.LineWidthMax, ratio));
 		}
 
 		lineRenderer.positionCount = point.Length;
 		lineRenderer.SetPositions(point);
 		lineRenderer.widthCurve = new AnimationCurve(keyframe);
 
-		markModelSpawnZ = z;
+		MarkModelSpawnZ = z;
 	}
 
-	bool CheckUsableManager() {
-
-		if(!manager) return false;
-		if(!manager.Path) return false;
-
-		return true;
+	private bool CheckUsableManager() {
+		return !Manager ? false : Manager.Path;
 	}
 }

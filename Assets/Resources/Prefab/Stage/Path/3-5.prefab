@@ -173,11 +173,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2a8e928250bc141b760c2e7cc82600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0.9843137, g: 0, b: 1, a: 1}
-  startPoint: 1.7
-  endPoint: 1.95
-  markModel: {fileID: 0}
-  isToFar: 0
+  GimmickColor: {r: 0.9843137, g: 0, b: 1, a: 1}
+  StartPoint: 1.7
+  EndPoint: 1.95
+  IsToFar: 0
   text: {fileID: 0}
 --- !u!114 &114262998448505062
 MonoBehaviour:
@@ -217,11 +216,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2a8e928250bc141b760c2e7cc82600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0.9843137, g: 0, b: 1, a: 1}
-  startPoint: 2.88
-  endPoint: 3
-  markModel: {fileID: 0}
-  isToFar: 0
+  GimmickColor: {r: 0.9843137, g: 0, b: 1, a: 1}
+  StartPoint: 2.88
+  EndPoint: 3
+  IsToFar: 0
   text: {fileID: 0}
 --- !u!114 &114648853133332402
 MonoBehaviour:
@@ -234,11 +232,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2a8e928250bc141b760c2e7cc82600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0.9843137, g: 0, b: 1, a: 1}
-  startPoint: 1
-  endPoint: 1.1
-  markModel: {fileID: 0}
-  isToFar: 1
+  GimmickColor: {r: 0.9843137, g: 0, b: 1, a: 1}
+  StartPoint: 1
+  EndPoint: 1.1
+  IsToFar: 1
   text: {fileID: 0}
 --- !u!114 &114703139800754524
 MonoBehaviour:
@@ -271,11 +268,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2a8e928250bc141b760c2e7cc82600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0.9843137, g: 0, b: 1, a: 1}
-  startPoint: 2.05
-  endPoint: 2.3
-  markModel: {fileID: 0}
-  isToFar: 1
+  GimmickColor: {r: 0.9843137, g: 0, b: 1, a: 1}
+  StartPoint: 2.05
+  EndPoint: 2.3
+  IsToFar: 1
   text: {fileID: 0}
 --- !u!114 &114859556584994332
 MonoBehaviour:
@@ -288,4 +284,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8db03c04aa8c2d4d91040e7781b7d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
+  LinePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}

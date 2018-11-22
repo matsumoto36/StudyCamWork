@@ -1,99 +1,75 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
+/// <summary>
+/// プレイヤーの速さを変更するギミック
+/// </summary>
 public class GimmickSpeed : GimmickBase {
 
-	public Text text;
-	public float speedMul;
+	public float SpeedMul;
 
-	Color playerCol;
-
-	PKFxFX particle;
-	Vector3 prevPlayerPos;
+	private Color _playerCol;
+	private PKFxFX _particle;
+	private Vector3 _prevPlayerPos;
 
 	public override void SpawnModel(Player player) {
 
-		if(speedMul >= 1) {
-			markModelName = "MarkSpeedUp";
-		}
-		else {
-			markModelName = "MarkSpeedDown";
-		}
-
+		MarkModelName = SpeedMul >= 1 ? "MarkSpeedUp" : "MarkSpeedDown";
 		base.SpawnModel(player);
-	}
-
-	public override void OnRemainingTime(Player player, float t) {
-		base.OnRemainingTime(player, t);
-
-		if(text)
-			text.text = "At. " + t;
 	}
 
 	public override void OnAttach(Player player) {
 		base.OnAttach(player);
 
 		var render = player.GetComponentInChildren<Renderer>();
-		playerCol = render.material.color;
-		render.material.color = gimmickColor;
+		_playerCol = render.material.color;
+		render.material.color = GimmickColor;
 
-		player.Speed *= speedMul;
+		player.Speed *= SpeedMul;
+
+		if (!(SpeedMul > 1)) return;
 
 		//加速のとき
-		if(speedMul > 1) {
-			particle = ParticleManager.Spawn("GimmickSpeedUpEffect", new Vector3(), Quaternion.identity, 0);
-			particle.transform.SetParent(player.Body);
-			particle.transform.localPosition = new Vector3();
-			prevPlayerPos = player.transform.position;
+		_particle = ParticleManager.Spawn("GimmickSpeedUpEffect", new Vector3(), Quaternion.identity, 0);
+		_particle.transform.SetParent(player.Body);
+		_particle.transform.localPosition = new Vector3();
+		_prevPlayerPos = player.transform.position;
 
-			AudioManager.PlaySE("SpeedUP");
-		}
-		else {
-
-		}
+		AudioManager.PlaySE("SpeedUP");
 	}
 
 	public override void OnApplyUpdate(Player player, float t) {
 		base.OnApplyUpdate(player, t);
 
-		if(text)
-			text.text = "Using. " + t;
+		if (!_particle) return;
 
-		if(particle) {
+		var pos = player.transform.position;
+		var vec = (pos - _prevPlayerPos).normalized;
 
-			var pos = player.transform.position;
-			var vec = (pos - prevPlayerPos).normalized;
+		_particle.GetAttribute("AccelDirection").ValueFloat3
+			= -vec;
 
-			particle.GetAttribute("AccelDirection").ValueFloat3
-				= -vec;
-
-			particle.transform.localPosition = vec * (player.Body.localScale.x / 2);
-
-			prevPlayerPos = pos;
-
-		}
+		_particle.transform.localPosition = vec * (player.Body.localScale.x / 2);
+		_prevPlayerPos = pos;
 	}
 
 	public override void OnDetach(Player player) {
 		base.OnDetach(player);
 
 		var render = player.GetComponentInChildren<Renderer>();
-		render.material.color = playerCol;
+		render.material.color = _playerCol;
 
-		player.Speed /= speedMul;
+		player.Speed /= SpeedMul;
 
-		if(particle) ParticleManager.StopParticle(particle);
+		if(_particle) ParticleManager.StopParticle(_particle);
 	}
 
 	public override float GetSectionTime(float speed) {
-		return path.GetPointLength(startPoint, endPoint) / speed / speedMul;
+		return Path.GetPointLength(StartPoint, EndPoint) / speed / SpeedMul;
 	}
 
 	public override void EditGimmickLine(LineRenderer lineRenderer, ref float z) {
 
-		lineRenderer.material.SetColor("_Color", gimmickColor);
+		lineRenderer.material.SetColor("_Color", GimmickColor);
 		base.EditGimmickLine(lineRenderer, ref z);
 	}
 }

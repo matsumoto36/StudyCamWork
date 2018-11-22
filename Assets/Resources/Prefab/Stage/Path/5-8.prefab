@@ -413,7 +413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8db03c04aa8c2d4d91040e7781b7d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
+  LinePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
 --- !u!114 &114107395491267090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -425,12 +425,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cada555ace83047499dd9a0f2e5ac2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
-  startPoint: 4
-  endPoint: 5
-  markModel: {fileID: 0}
-  waitTime: 0.4
-  text: {fileID: 0}
+  GimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
+  StartPoint: 4
+  EndPoint: 5
+  WaitTime: 0.4
 --- !u!114 &114157586339394256
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -442,12 +440,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cada555ace83047499dd9a0f2e5ac2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
-  startPoint: 2
-  endPoint: 3
-  markModel: {fileID: 0}
-  waitTime: 0.4
-  text: {fileID: 0}
+  GimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
+  StartPoint: 2
+  EndPoint: 3
+  WaitTime: 0.4
 --- !u!114 &114176489809058650
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -459,12 +455,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ca9714357babcc419a5742d38b80a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0.034482475, g: 0, b: 1, a: 1}
-  startPoint: 0.9
-  endPoint: 1
-  markModel: {fileID: 0}
-  text: {fileID: 0}
-  speedMul: 0.5
+  GimmickColor: {r: 0.034482475, g: 0, b: 1, a: 1}
+  StartPoint: 0.9
+  EndPoint: 1
+  SpeedMul: 0.5
 --- !u!114 &114214364924346998
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -476,12 +470,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cada555ace83047499dd9a0f2e5ac2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
-  startPoint: 3
-  endPoint: 4
-  markModel: {fileID: 0}
-  waitTime: 0.4
-  text: {fileID: 0}
+  GimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
+  StartPoint: 3
+  EndPoint: 4
+  WaitTime: 0.4
 --- !u!114 &114214995575926696
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -538,12 +530,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ca9714357babcc419a5742d38b80a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 1, g: 0, b: 0, a: 1}
-  startPoint: 9.14
-  endPoint: 9.78
-  markModel: {fileID: 0}
-  text: {fileID: 0}
-  speedMul: 10
+  GimmickColor: {r: 1, g: 0, b: 0, a: 1}
+  StartPoint: 9.14
+  EndPoint: 9.78
+  SpeedMul: 10
 --- !u!114 &114423669894027048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -555,11 +545,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2a8e928250bc141b760c2e7cc82600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0.986207, g: 0, b: 1, a: 1}
-  startPoint: 1
-  endPoint: 2
-  markModel: {fileID: 0}
-  isToFar: 1
+  GimmickColor: {r: 0.986207, g: 0, b: 1, a: 1}
+  StartPoint: 1
+  EndPoint: 2
+  IsToFar: 1
   text: {fileID: 0}
 --- !u!114 &114515962788710598
 MonoBehaviour:
@@ -572,12 +561,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cada555ace83047499dd9a0f2e5ac2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
-  startPoint: 5
-  endPoint: 6
-  markModel: {fileID: 0}
-  waitTime: 0.4
-  text: {fileID: 0}
+  GimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
+  StartPoint: 5
+  EndPoint: 6
+  WaitTime: 0.4
 --- !u!114 &114541336002029378
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -589,12 +576,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cada555ace83047499dd9a0f2e5ac2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
-  startPoint: 7
-  endPoint: 8
-  markModel: {fileID: 0}
-  waitTime: 0.4
-  text: {fileID: 0}
+  GimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
+  StartPoint: 7
+  EndPoint: 8
+  WaitTime: 0.4
 --- !u!114 &114552174005791840
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -606,11 +591,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2a8e928250bc141b760c2e7cc82600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0.986207, g: 0, b: 1, a: 1}
-  startPoint: 8
-  endPoint: 9
-  markModel: {fileID: 0}
-  isToFar: 0
+  GimmickColor: {r: 0.986207, g: 0, b: 1, a: 1}
+  StartPoint: 8
+  EndPoint: 9
+  IsToFar: 0
   text: {fileID: 0}
 --- !u!114 &114620329455694888
 MonoBehaviour:
@@ -623,12 +607,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ca9714357babcc419a5742d38b80a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0.034482475, g: 0, b: 1, a: 1}
-  startPoint: 9
-  endPoint: 9.14
-  markModel: {fileID: 0}
-  text: {fileID: 0}
-  speedMul: 0.5
+  GimmickColor: {r: 0.034482475, g: 0, b: 1, a: 1}
+  StartPoint: 9
+  EndPoint: 9.14
+  SpeedMul: 0.5
 --- !u!114 &114756976284444806
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -660,12 +642,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cada555ace83047499dd9a0f2e5ac2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
-  startPoint: 6
-  endPoint: 7
-  markModel: {fileID: 0}
-  waitTime: 0.4
-  text: {fileID: 0}
+  GimmickColor: {r: 0, g: 0.83448267, b: 1, a: 1}
+  StartPoint: 6
+  EndPoint: 7
+  WaitTime: 0.4
 --- !u!114 &114963526797603598
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -677,9 +657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ca9714357babcc419a5742d38b80a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 1, g: 0, b: 0, a: 1}
-  startPoint: 0.23
-  endPoint: 0.9
-  markModel: {fileID: 0}
-  text: {fileID: 0}
-  speedMul: 5
+  GimmickColor: {r: 1, g: 0, b: 0, a: 1}
+  StartPoint: 0.23
+  EndPoint: 0.9
+  SpeedMul: 5

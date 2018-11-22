@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8db03c04aa8c2d4d91040e7781b7d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
+  LinePre: {fileID: 120292460609403510, guid: 2f488af76dd90c642827980b963b5e29, type: 2}
 --- !u!114 &114236973289490540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -323,11 +323,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2a8e928250bc141b760c2e7cc82600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 1, g: 0, b: 0.8896551, a: 1}
-  startPoint: 4.5
-  endPoint: 5.5
-  markModel: {fileID: 0}
-  isToFar: 0
+  GimmickColor: {r: 1, g: 0, b: 0.8896551, a: 1}
+  StartPoint: 4.5
+  EndPoint: 5.5
+  IsToFar: 0
   text: {fileID: 0}
 --- !u!114 &114312574934638038
 MonoBehaviour:
@@ -340,11 +339,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2a8e928250bc141b760c2e7cc82600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 1, g: 0, b: 0.8896551, a: 1}
-  startPoint: 3
-  endPoint: 4
-  markModel: {fileID: 0}
-  isToFar: 1
+  GimmickColor: {r: 1, g: 0, b: 0.8896551, a: 1}
+  StartPoint: 3
+  EndPoint: 4
+  IsToFar: 1
   text: {fileID: 0}
 --- !u!114 &114643747016714668
 MonoBehaviour:
@@ -357,11 +355,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2a8e928250bc141b760c2e7cc82600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 1, g: 0, b: 0.8896551, a: 1}
-  startPoint: 1.29
-  endPoint: 1.75
-  markModel: {fileID: 0}
-  isToFar: 0
+  GimmickColor: {r: 1, g: 0, b: 0.8896551, a: 1}
+  StartPoint: 1.29
+  EndPoint: 1.75
+  IsToFar: 0
   text: {fileID: 0}
 --- !u!114 &114885312703031910
 MonoBehaviour:
@@ -374,11 +371,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2a8e928250bc141b760c2e7cc82600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 1, g: 0, b: 0.8896551, a: 1}
-  startPoint: 0.24
-  endPoint: 0.59
-  markModel: {fileID: 0}
-  isToFar: 1
+  GimmickColor: {r: 1, g: 0, b: 0.8896551, a: 1}
+  StartPoint: 0.24
+  EndPoint: 0.59
+  IsToFar: 1
   text: {fileID: 0}
 --- !u!114 &114995203248025308
 MonoBehaviour:

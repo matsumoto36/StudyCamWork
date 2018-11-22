@@ -865,52 +865,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b7497eeee037ec459ce24228dc9bda1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volume: {fileID: 303159758}
-  FocusCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 0.081849486
-      value: 0.04689221
-      inSlope: 1.10358
-      outSlope: 1.10358
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 1
-      inSlope: 3.4166684
-      outSlope: 3.4166684
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  distanceList:
-  - 0.433
-  - 0.455
-  - 0.479
-  - 0.506
-  - 0.536
-  - 0.57
-  - 0.609
-  - 0.653
-  - 0.704
-  - 0.765
-  - 0.835
-  - 0.915
-  - 1.03
-  - 1.16
-  - 1.325
-  - 1.55
-  - 1.89
-  - 2.38
-  - 3.19
-  - 4.95
+  Volume: {fileID: 303159758}
 --- !u!114 &303159758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3870,11 +3825,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c148fbb101e9c4297ebe7fa520f379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mat: {fileID: 2100000, guid: 83d86780f2ca6d7458f27360b59096cb, type: 2}
-  fade: 0
-  light: 0.15
-  wave: 1000
-  animSpeed: 10
+  Mat: {fileID: 2100000, guid: 83d86780f2ca6d7458f27360b59096cb, type: 2}
+  Fade: 0
+  Light: 0.15
+  Wave: 1000
+  AnimSpeed: 10
 --- !u!124 &1430958180
 Behaviour:
   m_ObjectHideFlags: 0
@@ -5197,16 +5152,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd4770598019624a9382ac2ed3efe91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraUI: {fileID: 999855260}
-  startMessage: {fileID: 1765291658}
-  cameraImage: {fileID: 1705118843}
-  SmalCameraImage: {fileID: 886559164}
-  failImage: {fileID: 1366087340}
-  damageFlashImage: {fileID: 642979071}
-  recImage: {fileID: 1353576794}
-  cameraRenderImage: {fileID: 0}
-  debugRenderImage: {fileID: 1124996969}
-  renderTexture: {fileID: 8400000, guid: 198ff19ea8ccc8943a492acdd89c4b9a, type: 2}
+  CameraUi: {fileID: 999855260}
+  StartMessage: {fileID: 1765291658}
+  CameraImage: {fileID: 1705118843}
+  SmallCameraImage: {fileID: 886559164}
+  FailImage: {fileID: 1366087340}
+  DamageFlashImage: {fileID: 642979071}
+  RectImage: {fileID: 1353576794}
 --- !u!1 &1920936542
 GameObject:
   m_ObjectHideFlags: 0
@@ -5315,7 +5267,6 @@ GameObject:
   - component: {fileID: 1962024626}
   - component: {fileID: 1962024625}
   - component: {fileID: 1962024624}
-  - component: {fileID: 1962024623}
   - component: {fileID: 1962024629}
   m_Layer: 0
   m_Name: Main Camera
@@ -5324,18 +5275,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1962024623
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1962024622}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e838c02fb1f2a484c92337c27ab92015, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mat: {fileID: 2100000, guid: 6662915e25898aa4787911835385eaa3, type: 2}
 --- !u!114 &1962024624
 MonoBehaviour:
   m_ObjectHideFlags: 0
