@@ -32,14 +32,14 @@ public class StageMoveButton : MonoBehaviour {
 		GetComponentInChildren<Text>().text = Title;
 
 		//達成状況によってフレームの色を変える
-		var data = GameData.stageData[LoadPathName];
+		var data = GameData.StageData[LoadPathName];
 
 		//未クリア
-		if(data.score == 0) {
+		if(data.Score == 0) {
 			FrameImage.color = new Color(0, 0, 0, 0);
 		}
 		//とりあえずクリア
-		else if(data.accuracy < 1.0f) {
+		else if(data.Accuracy < 1.0f) {
 			FrameImage.sprite = Resources.Load<Sprite>("Texture/ClearFrame");
 		}
 		//パーフェクト

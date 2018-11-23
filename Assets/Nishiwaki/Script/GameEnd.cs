@@ -92,12 +92,12 @@ public class GameEnd : MonoBehaviour
 		    BestCombo.text = "x0";
 	    }
 	    else {
-		    StageData Data = GameData.stageData[GameMaster.LoadPathName];
+		    StageData Data = GameData.StageData[GameMaster.LoadPathName];
 
-		    BestScore.text = Data.score.ToString();
-		    if(Data.accuracy >= 1.0f) BestAccuracy.text = "100%";
-		    else BestAccuracy.text = Data.accuracy.ToString("p");
-		    BestCombo.text = "x" + Data.maxCombo.ToString();
+		    BestScore.text = Data.Score.ToString();
+		    if(Data.Accuracy >= 1.0f) BestAccuracy.text = "100%";
+		    else BestAccuracy.text = Data.Accuracy.ToString("p");
+		    BestCombo.text = "x" + Data.MaxCombo.ToString();
 		}
 
 

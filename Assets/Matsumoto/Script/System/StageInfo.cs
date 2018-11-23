@@ -2,13 +2,14 @@
 
 [Serializable]
 public class StageInfo {
-	public string pathName;
-	public string studioName;
-	public int windowIndex;
+
+	public string PathName;
+	public string StudioName;
+	public int WindowIndex;
 
 	public StageInfo(string pathName, string studioName, int windowIndex) {
-		this.pathName = pathName;
-		this.studioName = studioName;
-		this.windowIndex = windowIndex;
+		PathName = pathName;
+		StudioName = studioName;
+		WindowIndex = windowIndex;
 	}
 }

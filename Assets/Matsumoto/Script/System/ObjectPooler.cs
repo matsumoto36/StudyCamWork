@@ -2,24 +2,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.Serialization;
 
+/// <summary>
+/// オブジェクトプールパターンを実現する
+/// </summary>
 public class ObjectPooler : MonoBehaviour {
 
-	public GameObject prefab;
-	public Transform parent;
-	public int maxCount = 100;
-	public int prepareCount = 0;
+	private static GameObject _poolAttachedObject;
+
+	private readonly List<GameObject> _pooledObjectList = new List<GameObject>();
+
+	public GameObject Prefab;
+	public Transform Parent;
+	public int MaxCount = 100;
+	public int PrepareCount;
+
 	[SerializeField]
-	private int interval = 1;
-	private List<GameObject> pooledObjectList = new List<GameObject>();
-	private static GameObject poolAttachedObject = null;
+	private int _interval = 1;
 
-	void OnEnable() {
-		//if(interval > 0)
-			//StartCoroutine(RemoveObjectCheck());
-	}
-
-	void OnDisable() {
+	private void OnDisable() {
 		StopAllCoroutines();
 	}
 
@@ -28,42 +30,40 @@ public class ObjectPooler : MonoBehaviour {
 	/// </summary>
 	public void Generate(Transform parent) {
 
-		if(!prefab) return;
+		if(!Prefab) return;
 
-		this.parent = parent;
+		Parent = parent;
 
-		var count = prepareCount - pooledObjectList.Count;
-		for(int i = 0;i < count;i++) {
-			var g = Instantiate(prefab);
+		var count = PrepareCount - _pooledObjectList.Count;
+		for(var i = 0;i < count;i++) {
+			var g = Instantiate(Prefab);
 			g.transform.SetParent(parent);
 			g.SetActive(false);
-			pooledObjectList.Add(g);
+			_pooledObjectList.Add(g);
 		}
 	}
 
 	public void OnDestroy() {
-		if(poolAttachedObject == null)
+		if(_poolAttachedObject == null)
 			return;
 
-		if(poolAttachedObject.GetComponents<ObjectPooler>().Length == 1) {
-			poolAttachedObject = null;
+		if(_poolAttachedObject.GetComponents<ObjectPooler>().Length == 1) {
+			_poolAttachedObject = null;
 		}
-		foreach(var obj in pooledObjectList) {
+		foreach(var obj in _pooledObjectList) {
 			Destroy(obj);
 		}
-		pooledObjectList.Clear();
+		_pooledObjectList.Clear();
 	}
 
 	public int Interval {
-		get { return interval; }
+		get { return _interval; }
 		set {
-			if(interval != value) {
-				interval = value;
+			if(_interval == value) return;
 
-				StopAllCoroutines();
-				//if(interval > 0)
-					//StartCoroutine(RemoveObjectCheck());
-			}
+			_interval = value;
+
+			StopAllCoroutines();
 		}
 	}
 
@@ -72,9 +72,8 @@ public class ObjectPooler : MonoBehaviour {
 	}
 
 	public GameObject GetInstance(Transform parent) {
-		//pooledObjectList.RemoveAll((obj) => obj == null);
 
-		var retObj = pooledObjectList
+		var retObj = _pooledObjectList
 			.Where(item => item)
 			.FirstOrDefault(item => !item.activeSelf);
 
@@ -83,83 +82,70 @@ public class ObjectPooler : MonoBehaviour {
 			return retObj;
 		}
 
-		if(pooledObjectList.Count < maxCount) {
-			GameObject obj = Instantiate(prefab);
+		if(_pooledObjectList.Count < MaxCount) {
+			var obj = Instantiate(Prefab);
 			obj.SetActive(true);
 			obj.transform.parent = parent;
-			pooledObjectList.Add(obj);
+			_pooledObjectList.Add(obj);
 			return obj;
 		}
 
-		Debug.LogWarning(prefab.name + " pool is Empty.");
+		Debug.LogWarning(Prefab.name + " pool is Empty.");
 		return null;
 	}
 
 	public static void ReleaseInstance(GameObject obj) {
 
-		obj.transform.SetParent(poolAttachedObject.transform);
+		obj.transform.SetParent(_poolAttachedObject.transform);
 		obj.SetActive(false);
-		obj = null;
 	}
 
-	IEnumerator RemoveObjectCheck() {
+	private IEnumerator RemoveObjectCheck() {
 		while(true) {
-			RemoveObject(prepareCount);
-			yield return new WaitForSeconds(interval);
+			RemoveObject(PrepareCount);
+			yield return new WaitForSeconds(_interval);
 		}
 	}
 
 	public void RemoveObject(int max) {
-		if(pooledObjectList.Count > max) {
-			int needRemoveCount = pooledObjectList.Count - max;
-			foreach(GameObject obj in pooledObjectList.ToArray()) {
-				if(needRemoveCount == 0) {
-					break;
-				}
-				if(obj.activeSelf == false) {
-					pooledObjectList.Remove(obj);
-					Destroy(obj);
-					needRemoveCount--;
-				}
-			}
+		if(_pooledObjectList.Count <= max) return;
+
+		var needRemoveCount = _pooledObjectList.Count - max;
+		foreach(var obj in _pooledObjectList.ToArray()) {
+
+			if(needRemoveCount == 0) break;
+			if(obj.activeSelf) continue;
+
+			_pooledObjectList.Remove(obj);
+			Destroy(obj);
+			needRemoveCount--;
 		}
 	}
 
 	public static ObjectPooler GetObjectPool(GameObject obj) {
-		if(poolAttachedObject == null) {
-			poolAttachedObject = GameObject.Find("ObjectPool");
-			if(poolAttachedObject == null) {
-				poolAttachedObject = new GameObject("ObjectPool");
-				DontDestroyOnLoad(poolAttachedObject);
+
+		if(_poolAttachedObject == null) {
+			_poolAttachedObject = GameObject.Find("ObjectPool");
+			if(_poolAttachedObject == null) {
+				_poolAttachedObject = new GameObject("ObjectPool");
+				DontDestroyOnLoad(_poolAttachedObject);
 			}
 		}
 
-		foreach(var pool in poolAttachedObject.GetComponents<ObjectPooler>()) {
-			if(pool.prefab == obj) {
+		foreach(var pool in _poolAttachedObject.GetComponents<ObjectPooler>()) {
+			if(pool.Prefab == obj) {
 				return pool;
 			}
 		}
 
 		foreach(var pool in FindObjectsOfType<ObjectPooler>()) {
-			if(pool.prefab == obj) {
+			if(pool.Prefab == obj) {
 				return pool;
 			}
 		}
 
-		var newPool = poolAttachedObject.AddComponent<ObjectPooler>();
-		newPool.prefab = obj;
-
-		//FadeManager.onSceneChanged += () => {
-
-		//	//使っているものがあればしまう
-		//	foreach(var item in newPool.pooledObjectList) {
-		//		if(item && item.activeSelf) item.SetActive(false);
-		//	}
-
-		//	//シーン移動時に削除されたオブジェクトを補てんする
-		//	newPool.Generate(newPool.parent);
-		//};
-
+		var newPool = _poolAttachedObject.AddComponent<ObjectPooler>();
+		newPool.Prefab = obj;
 		return newPool;
 	}
 }

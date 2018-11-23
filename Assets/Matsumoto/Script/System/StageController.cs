@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 /// <summary>
@@ -7,42 +6,51 @@ using UnityEngine;
 /// </summary>
 public class StageController : MonoBehaviour {
 
-	public MouseCamera mouseCamera;
-	Player player;
-	GimmickManager gimmickManager;
+	public MouseCamera MouseCamera;
 
-	float pathLength;
+	private Player _player;
+	private GimmickManager _gimmickManager;
+	private float _pathLength;
 
 	public void InitStage(Player player, Bezier2D path, GimmickManager manager) {
 
-		this.player = player;
-		gimmickManager = manager;
-		pathLength = path.Length;
+		_player = player;
+		_gimmickManager = manager;
+		_pathLength = path.Length;
 
 		player.Init(path);
-		gimmickManager.Init(path, player);
-		mouseCamera.Init(player);
+		_gimmickManager.Init(path, player);
+		MouseCamera.Init(player);
 	}
 
 	// Update is called once per frame
-	public void StageUpdate () {
+	public void StageUpdate() {
 
 		var state = GameMaster.Instance.State;
 
-		if(state == GameState.AfterEnd) return;
-
-		if(state == GameState.Playing) {
-			player.Move();
-			gimmickManager.GimmickUpdate();
+		switch(state) {
+			case GameState.AfterEnd:
+				return;
+			case GameState.Playing:
+				_player.Move();
+				_gimmickManager.GimmickUpdate();
+				break;
+			case GameState.BeforeStart:
+				break;
+			case GameState.Starting:
+				break;
+			case GameState.Ending:
+				break;
+			default:
+				throw new ArgumentOutOfRangeException();
 		}
 
-		mouseCamera.CameraUpdate();
+		MouseCamera.CameraUpdate();
 
 		//クリアチェック
-		if(state == GameState.Playing) {
-			if(player.MovedLength / pathLength >= 1.0f) {
-				GameMaster.Instance.GameClear();
-			}
+		if(state != GameState.Playing) return;
+		if(_player.MovedLength / _pathLength >= 1.0f) {
+			GameMaster.Instance.GameClear();
 		}
 	}
 }

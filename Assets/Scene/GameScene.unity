@@ -3087,7 +3087,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21fddcd3d1902b741a62fb3aeb58f1ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseCamera: {fileID: 1962024629}
+  MouseCamera: {fileID: 1962024629}
 --- !u!4 &1154809498
 Transform:
   m_ObjectHideFlags: 0

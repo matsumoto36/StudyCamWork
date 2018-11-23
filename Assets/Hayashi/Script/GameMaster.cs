@@ -131,13 +131,13 @@ public class GameMaster : MonoBehaviour {
 			Debug.Log("Combo " + MouseCamera.ComboMax);
 
 			//データのセーブ
-			if(GameData.stageData != null) {
-				var data = GameData.stageData[loadPathName];
-				if(data.score < MouseCamera.Score) {
-					data.score = MouseCamera.Score;
-					data.accuracy = MouseCamera.Accuracy;
-					data.maxCombo = MouseCamera.ComboMax;
-					GameData.stageData[loadPathName] = data;
+			if(GameData.StageData != null) {
+				var data = GameData.StageData[loadPathName];
+				if(data.Score < MouseCamera.Score) {
+					data.Score = MouseCamera.Score;
+					data.Accuracy = MouseCamera.Accuracy;
+					data.MaxCombo = MouseCamera.ComboMax;
+					GameData.StageData[loadPathName] = data;
 					GameData.Save();
 				}
 			}
@@ -198,8 +198,8 @@ public class GameMaster : MonoBehaviour {
 		if(isSceneMoving) return;
 		isSceneMoving = true;
 
-		LoadPathName = nextStageInfo.pathName;
-		LoadStudioName = nextStageInfo.studioName;
+		LoadPathName = nextStageInfo.PathName;
+		LoadStudioName = nextStageInfo.StudioName;
 
 		counter++;
 
@@ -222,7 +222,7 @@ public class GameMaster : MonoBehaviour {
 		StageSelectController.MovieSkip = true;
 
 		if(counter > 0) {
-			SelectWindowActive.ActiveWindowIndex = nextStageList[counter - 1].windowIndex;
+			SelectWindowActive.ActiveWindowIndex = nextStageList[counter - 1].WindowIndex;
 		}
 
 		FindObjectOfType<TimerController>()

@@ -215,15 +215,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02ad5f365adb6504f8cd34ed077cebe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 6
-  damage: 30
-  checkWait: 1
-  focusGrace: 0.3
-  focusDuration: 1
-  cameraWideSizeRatio: 0.2
-  cameraSmallSizeRatio: 0.5
-  baseScore: 100
-  cameraInsideScore: 200
+  _playerSpeed: 6
+  _damage: 30
+  _checkWait: 1
+  _focusGrace: 0.3
+  _focusDuration: 1
+  _cameraWideSizeRatio: 0.2
+  _cameraSmallSizeRatio: 0.5
+  _baseScore: 100
+  _cameraInsideScore: 200
 --- !u!114 &114468058405619926
 MonoBehaviour:
   m_ObjectHideFlags: 1

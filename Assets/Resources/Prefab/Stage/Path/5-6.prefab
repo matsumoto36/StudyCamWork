@@ -837,7 +837,6 @@ MonoBehaviour:
   StartPoint: 12
   EndPoint: 13
   IsToFar: 0
-  text: {fileID: 0}
 --- !u!114 &114101603783254798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -868,7 +867,6 @@ MonoBehaviour:
   StartPoint: 7.5
   EndPoint: 8
   IsToFar: 0
-  text: {fileID: 0}
 --- !u!114 &114110522048032278
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -910,15 +908,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02ad5f365adb6504f8cd34ed077cebe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 3
-  damage: 15
-  checkWait: 0.5
-  focusGrace: 0.15
-  focusDuration: 1
-  cameraWideSizeRatio: 0.2
-  cameraSmallSizeRatio: 0.5
-  baseScore: 100
-  cameraInsideScore: 200
+  _playerSpeed: 3
+  _damage: 15
+  _checkWait: 0.5
+  _focusGrace: 0.15
+  _focusDuration: 1
+  _cameraWideSizeRatio: 0.2
+  _cameraSmallSizeRatio: 0.5
+  _baseScore: 100
+  _cameraInsideScore: 200
 --- !u!114 &114312223299205034
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1114,7 +1112,6 @@ MonoBehaviour:
   StartPoint: 3
   EndPoint: 3.4
   IsToFar: 0
-  text: {fileID: 0}
 --- !u!114 &114640102715656306
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1205,7 +1202,6 @@ MonoBehaviour:
   StartPoint: 5
   EndPoint: 5.5
   IsToFar: 1
-  text: {fileID: 0}
 --- !u!114 &114843579259946118
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1221,7 +1217,6 @@ MonoBehaviour:
   StartPoint: 11
   EndPoint: 12
   IsToFar: 1
-  text: {fileID: 0}
 --- !u!114 &114897833827296534
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1252,7 +1247,6 @@ MonoBehaviour:
   StartPoint: 1.4
   EndPoint: 2
   IsToFar: 1
-  text: {fileID: 0}
 --- !u!114 &114921217682278130
 MonoBehaviour:
   m_ObjectHideFlags: 1

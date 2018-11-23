@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public enum PlayerCaptureStatus {
 	None,
@@ -12,46 +12,51 @@ public enum PlayerCaptureStatus {
 
 }
 
+/// <summary>
+/// ゲーム内でパスに従って動くキャラクター
+/// </summary>
 public class Player : MonoBehaviour {
 
-	public const float SCALE_MIN = 0.8f;
-	public const float SCALE_MAX = 1.2f;
+	public const float ScaleMin = 0.8f;
+	public const float ScaleMax = 1.2f;
 
-	public Renderer centerLight;
-	public Renderer ring1;
-	public Renderer ring2;
+	[FormerlySerializedAs("centerLight")] public Renderer CenterLight;
+	[FormerlySerializedAs("ring1")] public Renderer Ring1;
+	[FormerlySerializedAs("ring2")] public Renderer Ring2;
 
 	public Color CaptureLightColor;
 	public Color NearLightColor;
 	public Color FailLightColor;
 
-	public float intencity;
+	[FormerlySerializedAs("intencity")] public float Intensity;
 
-	PlayerCaptureStatus status = PlayerCaptureStatus.None;
+	private PlayerCaptureStatus _status = PlayerCaptureStatus.None;
 
-	Bezier2D path;
-	PKFxFX particle;
-	float sumSpeed;
-	bool isSceneMoved;
+	private Bezier2D _path;
+	private PKFxFX _particle;
+	private bool _isSceneMoved;
 
 	public Transform Body {
 		get; private set;
 	}
 
 
+	[FormerlySerializedAs("speed")]
 	[SerializeField]
-	float speed;
+	private float _speed;
 	public float Speed {
-		get { return speed; }
-		set { speed = value; }
+		get { return _speed; }
+		set { _speed = value; }
 	}
 
-	float movedLength;
+	private float _movedLength;
 	public float MovedLength {
-		get { return movedLength; }
+		get { return _movedLength; }
 		set {
-			movedLength = value;
-			ApplyMove();
+			//パスに沿って移動する
+			_movedLength = Mathf.Clamp(value, 0, _path.Length);
+			var t = _movedLength / _path.Length;
+			transform.position = _path.GetPointNormalize(t);
 		}
 	}
 
@@ -63,21 +68,21 @@ public class Player : MonoBehaviour {
 		//最初は一番大きくする
 		SetScaleFromRatio(1);
 
-		this.path = path;
+		_path = path;
 		Speed = GameMaster.Instance.GameBalanceData.PlayerSpeed;
 
 		MovedLength = 0;
 
-		centerLight.material = new Material(centerLight.material);
-		centerLight.material.EnableKeyword("_EMISSION");
-		ring1.material = new Material(ring1.material);
-		ring1.material.EnableKeyword("_EMISSION");
-		ring2.material = new Material(ring2.material);
-		ring2.material.EnableKeyword("_EMISSION");
+		CenterLight.material = new Material(CenterLight.material);
+		CenterLight.material.EnableKeyword("_EMISSION");
+		Ring1.material = new Material(Ring1.material);
+		Ring1.material.EnableKeyword("_EMISSION");
+		Ring2.material = new Material(Ring2.material);
+		Ring2.material.EnableKeyword("_EMISSION");
 
 		//パーティクルのスポーン
-		particle = ParticleManager.Spawn("ActorMoveEffect", transform.position, Quaternion.identity, 0);
-		particle.transform.SetParent(transform);
+		_particle = ParticleManager.Spawn("ActorMoveEffect", transform.position, Quaternion.identity, 0);
+		_particle.transform.SetParent(transform);
 
 		SetLight(PlayerCaptureStatus.All);
 
@@ -86,68 +91,68 @@ public class Player : MonoBehaviour {
 
 	public void SetLight(PlayerCaptureStatus status) {
 
-		if(this.status == status) return;
-		this.status = status;
+		if(_status == status) return;
+		_status = status;
 
 		switch(status) {
 			case PlayerCaptureStatus.None:
-				particle.GetAttribute("MainColor").ValueFloat4 = FailLightColor;
-				centerLight.material.SetColor("_EmissionColor", FailLightColor);
-				ring2.material.SetColor("_EmissionColor", FailLightColor);
-				ring1.material.SetColor("_EmissionColor", FailLightColor);
+				_particle.GetAttribute("MainColor").ValueFloat4 = FailLightColor;
+				CenterLight.material.SetColor("_EmissionColor", FailLightColor);
+				Ring2.material.SetColor("_EmissionColor", FailLightColor);
+				Ring1.material.SetColor("_EmissionColor", FailLightColor);
 				break;
 			case PlayerCaptureStatus.FocusOnly:
-				particle.GetAttribute("MainColor").ValueFloat4 = FailLightColor;
-				centerLight.material.SetColor("_EmissionColor", FailLightColor * intencity);
-				ring2.material.SetColor("_EmissionColor", FailLightColor * intencity);
-				ring1.material.SetColor("_EmissionColor", CaptureLightColor * intencity);
+				_particle.GetAttribute("MainColor").ValueFloat4 = FailLightColor;
+				CenterLight.material.SetColor("_EmissionColor", FailLightColor * Intensity);
+				Ring2.material.SetColor("_EmissionColor", FailLightColor * Intensity);
+				Ring1.material.SetColor("_EmissionColor", CaptureLightColor * Intensity);
 				break;
 			case PlayerCaptureStatus.ContainOnly:
-				particle.GetAttribute("MainColor").ValueFloat4 = FailLightColor;
-				centerLight.material.SetColor("_EmissionColor", FailLightColor * intencity);
-				ring2.material.SetColor("_EmissionColor", CaptureLightColor * intencity);
-				ring1.material.SetColor("_EmissionColor", FailLightColor * intencity);
+				_particle.GetAttribute("MainColor").ValueFloat4 = FailLightColor;
+				CenterLight.material.SetColor("_EmissionColor", FailLightColor * Intensity);
+				Ring2.material.SetColor("_EmissionColor", CaptureLightColor * Intensity);
+				Ring1.material.SetColor("_EmissionColor", FailLightColor * Intensity);
 				break;
 			case PlayerCaptureStatus.Near:
-				particle.GetAttribute("MainColor").ValueFloat4 = NearLightColor;
-				centerLight.material.SetColor("_EmissionColor", NearLightColor * intencity);
-				ring2.material.SetColor("_EmissionColor", CaptureLightColor * intencity);
-				ring1.material.SetColor("_EmissionColor", CaptureLightColor * intencity);
+				_particle.GetAttribute("MainColor").ValueFloat4 = NearLightColor;
+				CenterLight.material.SetColor("_EmissionColor", NearLightColor * Intensity);
+				Ring2.material.SetColor("_EmissionColor", CaptureLightColor * Intensity);
+				Ring1.material.SetColor("_EmissionColor", CaptureLightColor * Intensity);
 				break;
 			case PlayerCaptureStatus.All:
-				particle.GetAttribute("MainColor").ValueFloat4 = CaptureLightColor;
-				centerLight.material.SetColor("_EmissionColor", CaptureLightColor * intencity);
-				ring2.material.SetColor("_EmissionColor", CaptureLightColor * intencity);
-				ring1.material.SetColor("_EmissionColor", CaptureLightColor * intencity);
+				_particle.GetAttribute("MainColor").ValueFloat4 = CaptureLightColor;
+				CenterLight.material.SetColor("_EmissionColor", CaptureLightColor * Intensity);
+				Ring2.material.SetColor("_EmissionColor", CaptureLightColor * Intensity);
+				Ring1.material.SetColor("_EmissionColor", CaptureLightColor * Intensity);
 				break;
 			default:
-				break;
+				throw new ArgumentOutOfRangeException("status", status, null);
 		}
 	}
 
 	public float GetScaleFromRatio(float t) {
-		return Mathf.Lerp(SCALE_MIN, SCALE_MAX, t);
+		return Mathf.Lerp(ScaleMin, ScaleMax, t);
 	}
 
 	public void SetScaleFromRatio(float t) {
-		var scale = new Vector3(1, 1, 0) * Mathf.Lerp(SCALE_MIN, SCALE_MAX, t);
+		var scale = new Vector3(1, 1, 0) * Mathf.Lerp(ScaleMin, ScaleMax, t);
 		scale.z = 1;
 		Body.localScale = scale;
 	}
 
-	void Update() {
+	private void Update() {
 
 		//リトライ
-		if(Input.GetKeyDown(KeyCode.R) && !isSceneMoved) {
-			isSceneMoved = true;
+		if(Input.GetKeyDown(KeyCode.R) && !_isSceneMoved) {
+			_isSceneMoved = true;
 
 			AudioManager.PlaySE("Button3");
 			GameMaster.Instance.Retry();
 		}
 
 		//セレクト
-		if(Input.GetKeyDown(KeyCode.T) && !isSceneMoved) {
-			isSceneMoved = true;
+		if(Input.GetKeyDown(KeyCode.T) && !_isSceneMoved) {
+			_isSceneMoved = true;
 
 			AudioManager.PlaySE("Button3");
 			StageSelectController.MovieSkip = true;
@@ -155,36 +160,32 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	// Update is called once per frame
-	public void Move () {
-
+	/// <summary>
+	/// 移動する
+	/// </summary>
+	public void Move() {
 		MovedLength += Speed * Time.deltaTime;
 	}
 
-	void ApplyMove() {
-
-		movedLength = Mathf.Clamp(movedLength, 0, path.Length);
-		var t = movedLength / path.Length;
-		transform.position = path.GetPointNormalize(t);
-	}
-
-	IEnumerator MoveAudioUpdate() {
+	/// <summary>
+	/// 移動音の調整を行う
+	/// </summary>
+	/// <returns></returns>
+	private IEnumerator MoveAudioUpdate() {
 
 		var moveSound = AudioManager.PlaySERaw("PlayerMoveLoop");
 		moveSound.transform.SetParent(transform);
 		moveSound.loop = true;
 
 		var volume = 0.0f;
-		var fadeSpeed = 1.0f;
+		const float fadeSpeed = 1.0f;
 
 		while(true) {
 
-			var canPlay = false;
-			if(Speed != 0) canPlay = true;
-			if(GameMaster.Instance.State == GameState.Playing) canPlay = true;
-			else canPlay = false;
-
+			//ゲームプレイ中に動いていたら再生
+			var canPlay = Speed > 0.0f && GameMaster.Instance.State == GameState.Playing;
 			var volumeVec = canPlay ? 1 : -1;
+
 			volume = Mathf.Clamp(volume + volumeVec * fadeSpeed * Time.deltaTime, 0, 1);
 
 			moveSound.volume = volume;

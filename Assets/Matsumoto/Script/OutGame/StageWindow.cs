@@ -80,13 +80,13 @@ public class StageWindow : MonoBehaviour {
 		LoadStudioName = button.LoadStudioName;
 		Title.text = button.Title;
 
-		var data = GameData.stageData[LoadPathName];
-		Score.text = data.score.ToString();
+		var data = GameData.StageData[LoadPathName];
+		Score.text = data.Score.ToString();
 
 		Accuracy.text = 
-			data.accuracy <= 1.0f ? "100" : (data.accuracy * 100).ToString("00.00");
+			data.Accuracy <= 1.0f ? "100" : (data.Accuracy * 100).ToString("00.00");
 
-		MaxCombo.text = data.maxCombo.ToString();
+		MaxCombo.text = data.MaxCombo.ToString();
 
 		Body.SetActive(true);
 	}

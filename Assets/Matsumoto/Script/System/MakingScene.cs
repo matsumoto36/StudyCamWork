@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 #if UNITY_EDITOR
@@ -19,7 +16,7 @@ public class MakingScene : MonoBehaviour {
 
 	private GameObject _studioSet;
 
-	private void Start () {
+	private void Start() {
 		if(!Application.isPlaying) return;
 
 		//ゲーム開始
@@ -31,7 +28,7 @@ public class MakingScene : MonoBehaviour {
 		GameMaster.LoadStudioName = LoadStudioSet;
 		var stage = FindObjectOfType<GimmickManager>();
 
-		if (!stage) {
+		if(!stage) {
 			Debug.LogError("テストするステージが見つかりませんでした");
 			Debug.Break();
 		}
@@ -41,7 +38,7 @@ public class MakingScene : MonoBehaviour {
 		//生成できるかチェック
 		var prefabPath = GameMaster.PATH_PREFAB_BASE_PATH + GameMaster.LoadPathName;
 		var prefab = Resources.Load(prefabPath);
-		if (!prefab) {
+		if(!prefab) {
 #if UNITY_EDITOR
 			//読み込めるようにプレハブを作成
 			var savePath = "Assets/Resources/" + prefabPath + ".prefab";
@@ -58,11 +55,11 @@ public class MakingScene : MonoBehaviour {
 		SceneManager.LoadScene("GameScene");
 		Destroy(gameObject);
 	}
-	
+
 	// Update is called once per frame
-	private void Update () {
+	private void Update() {
 		if(Application.isPlaying) return;
-			CheckStudioSet();
+		CheckStudioSet();
 	}
 
 	/// <summary>
@@ -88,19 +85,19 @@ public class MakingScene : MonoBehaviour {
 	/// </summary>
 	private void DestroyDuplicateStudioSet() {
 
-		while(!_studioSet && transform.childCount > 0 
+		while(!_studioSet && transform.childCount > 0
 			|| _studioSet && transform.childCount > 1) {
 
 			var child = transform.GetChild(0).gameObject;
 			if(child != _studioSet) DestroyImmediate(child);
 		}
-		
+
 	}
 
 	/// <summary>
 	/// 背景を生成する
 	/// </summary>
-	void SpawnStudioSet() {
+	private void SpawnStudioSet() {
 		var obj = Resources.Load<GameObject>(GameMaster.STUDIO_PREFAB_BASE_PATH + LoadStudioSet);
 		if(!obj) return;
 		_studioSet = Instantiate(obj);

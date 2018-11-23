@@ -1,29 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 /// <summary>
 /// PopcornFXのパーティクルを出したり消したりする
 /// </summary>
 public sealed class ParticleManager : SingletonMonoBehaviour<ParticleManager> {
 
-	const string PARTICLE_DATA_PATH = "Particle";
+	private const string ParticleDataPath = "Particle";
 
-	PKFxRenderingPlugin _renderer;
-	Dictionary<string, ObjectPooler> poolTable;
-	Dictionary<string, PKFxFX> particleTable;
+	private PKFxRenderingPlugin _renderer;
+	private Dictionary<string, ObjectPooler> _poolTable;
+	private Dictionary<string, PKFxFX> _particleTable;
 
 	public static bool IsRenderingParticle {
 		get {
 			if(!Instance._renderer)
-				Instance._renderer = Camera.main.GetComponent<PKFxRenderingPlugin>();
+				Instance._renderer = 
+					Camera.main.GetComponent<PKFxRenderingPlugin>();
 
 			return Instance._renderer.enabled;
 		}
 		set {
 			if(!Instance._renderer)
-				Instance._renderer = Camera.main.GetComponent<PKFxRenderingPlugin>();
+				Instance._renderer = 
+					Camera.main.GetComponent<PKFxRenderingPlugin>();
 
 			Instance._renderer.enabled = value;
 
@@ -37,7 +38,7 @@ public sealed class ParticleManager : SingletonMonoBehaviour<ParticleManager> {
 	//外部からのnew禁止
 	private ParticleManager() { }
 
-	static IEnumerator StopParticleDelay(PKFxFX particle, float delayTime) {
+	private static IEnumerator StopParticleDelay(PKFxFX particle, float delayTime) {
 		yield return new WaitForSeconds(delayTime);
 		StopParticle(particle);
 	}
@@ -52,20 +53,20 @@ public sealed class ParticleManager : SingletonMonoBehaviour<ParticleManager> {
 	/// </summary>
 	public static void Load() {
 
-		Instance.particleTable = new Dictionary<string, PKFxFX>();
-		Instance.poolTable = new Dictionary<string, ObjectPooler>();
+		Instance._particleTable = new Dictionary<string, PKFxFX>();
+		Instance._poolTable = new Dictionary<string, ObjectPooler>();
 
-		var data = Resources.LoadAll<PKFxFX>(PARTICLE_DATA_PATH);
+		var data = Resources.LoadAll<PKFxFX>(ParticleDataPath);
 
 		foreach(var item in data) {
 
-			Instance.particleTable.Add(item.name, item);
+			Instance._particleTable.Add(item.name, item);
 
 			var pool = ObjectPooler.GetObjectPool(item.gameObject);
-			pool.maxCount = 200;
-			pool.prepareCount = 100;
+			pool.MaxCount = 200;
+			pool.PrepareCount = 100;
 			pool.Generate(Instance.transform);
-			Instance.poolTable.Add(item.name, pool);
+			Instance._poolTable.Add(item.name, pool);
 		}
 	}
 
@@ -88,16 +89,16 @@ public sealed class ParticleManager : SingletonMonoBehaviour<ParticleManager> {
 	/// <param name="particleName"></param>
 	/// <param name="position"></param>
 	/// <param name="rotation"></param>
+	/// <param name="deleteTime"></param>
 	/// <returns></returns>
 	public static PKFxFX Spawn(string particleName, Vector3 position, Quaternion rotation, float deleteTime) {
 
-		if(!Instance.particleTable.ContainsKey(particleName)) {
+		if(!Instance._particleTable.ContainsKey(particleName)) {
 			Debug.LogWarning(particleName + " is not found.");
 			return null;
 		}
 
-		var pData = Instance.particleTable[particleName];
-		var pObj = Instance.poolTable[particleName].GetInstance().GetComponent<PKFxFX>();
+		var pObj = Instance._poolTable[particleName].GetInstance().GetComponent<PKFxFX>();
 		pObj.transform.SetPositionAndRotation(position, rotation);
 		pObj.StartEffect();
 
@@ -114,7 +115,6 @@ public sealed class ParticleManager : SingletonMonoBehaviour<ParticleManager> {
 	/// </summary>
 	/// <param name="particle"></param>
 	public static void StopParticle(PKFxFX particle) {
-		//particle.m_IsPlaying = false;
 		particle.TerminateEffect();
 		ObjectPooler.ReleaseInstance(particle.gameObject);
 	}

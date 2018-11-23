@@ -119,8 +119,8 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 			.AddComponent<AudioSource>()
 			.gameObject);
 
-		Instance._poolSE.maxCount = 20;
-		Instance._poolSE.prepareCount = 10;
+		Instance._poolSE.MaxCount = 20;
+		Instance._poolSE.PrepareCount = 10;
 		Instance._poolSE.Generate(Instance.transform);
 	}
 

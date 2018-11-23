@@ -1,45 +1,52 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// ステージごとのゲームバランスを定義
 /// </summary>
-public class GameBalanceData : MonoBehaviour{
+public class GameBalanceData : MonoBehaviour {
 
+	//プレイヤーのスピード
 	[SerializeField]
-	float playerSpeed = 3f;					//プレイヤーのスピード
-	public float PlayerSpeed { get { return playerSpeed; } }
+	private float _playerSpeed = 3f;
+	public float PlayerSpeed { get { return _playerSpeed; } }
 
+	//失敗したときのダメージ
 	[SerializeField]
-	int damage = 10;						//失敗したときのダメージ
-	public int Damage { get { return damage; } }
+	private int _damage = 10;
+	public int Damage { get { return _damage; } }
 
+	//何秒に一回収まっているか調べるか
 	[SerializeField]
-	float checkWait = 1;                    //何秒に一回収まっているか調べるか
-	public float CheckWait { get { return checkWait; } }
+	private float _checkWait = 1;
+	public float CheckWait { get { return _checkWait; } }
 
+	//フォーカスの猶予時間
 	[SerializeField]
-	float focusGrace = 0.1f;				//フォーカスの猶予時間
-	public float FocusGrace { get { return focusGrace; }}
+	private float _focusGrace = 0.1f;
+	public float FocusGrace { get { return _focusGrace; } }
 
+	//フォーカスにかかる時間
 	[SerializeField]
-	float focusDuration = 1.0f;				//フォーカスにかかる時間
-	public float FocusDuration { get { return focusDuration; }}
+	private float _focusDuration = 1.0f;
+	public float FocusDuration { get { return _focusDuration; } }
 
+	//画面サイズを基にしたカメラのワイドサイズの割合
 	[SerializeField]
-	float cameraWideSizeRatio = 0.2f;		//画面サイズを基にしたカメラのワイドサイズの割合
-	public float CameraWideSizeRatio { get { return cameraWideSizeRatio; } }
+	private float _cameraWideSizeRatio = 0.2f;
+	public float CameraWideSizeRatio { get { return _cameraWideSizeRatio; } }
 
+	//カメラのワイドサイズを基にしたカメラの中のサイズの割合
 	[SerializeField]
-	float cameraSmallSizeRatio = 0.5f;		//カメラのワイドサイズ基にしたカメラの中のサイズの割合
-	public float CameraSmallSizeRatio { get { return cameraSmallSizeRatio; } }
+	private float _cameraSmallSizeRatio = 0.5f;
+	public float CameraSmallSizeRatio { get { return _cameraSmallSizeRatio; } }
 
+	//カメラの中に入れると加算されるスコアの量
 	[SerializeField]
-	int baseScore = 100;					//カメラの中に入れると加算されるスコアの量
-	public int BaseScore { get { return baseScore; } }
+	private int _baseScore = 100;
+	public int BaseScore { get { return _baseScore; } }
 
+	//カメラの中心に入れると加算されるスコアの量
 	[SerializeField]
-	int cameraInsideScore = 200;			//カメラの中心に入れると加算されるスコアの量
-	public int CameraInsideScore { get { return cameraInsideScore; } }
+	private int _cameraInsideScore = 200;
+	public int CameraInsideScore { get { return _cameraInsideScore; } }
 }

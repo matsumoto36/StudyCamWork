@@ -183,7 +183,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: setFadeTitleBGM
+    attribute: SetFadeTitleBgm
     path: 
     classID: 114
     script: {fileID: 11500000, guid: f23ca6521be378d4c95185d4291f3a0d, type: 3}
@@ -205,7 +205,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: setPlaySelectStageBGM
+    attribute: SetPlaySelectStageBgm
     path: 
     classID: 114
     script: {fileID: 11500000, guid: f23ca6521be378d4c95185d4291f3a0d, type: 3}
@@ -227,7 +227,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: setEnableButton
+    attribute: SetEnableButton
     path: 
     classID: 114
     script: {fileID: 11500000, guid: f23ca6521be378d4c95185d4291f3a0d, type: 3}
@@ -241,21 +241,21 @@ AnimationClip:
     genericBindings:
     - serializedVersion: 2
       path: 0
-      attribute: 4189971596
+      attribute: 3750944376
       script: {fileID: 11500000, guid: f23ca6521be378d4c95185d4291f3a0d, type: 3}
       typeID: 114
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
       path: 0
-      attribute: 576589588
+      attribute: 461123238
       script: {fileID: 11500000, guid: f23ca6521be378d4c95185d4291f3a0d, type: 3}
       typeID: 114
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
       path: 0
-      attribute: 2259755464
+      attribute: 242491222
       script: {fileID: 11500000, guid: f23ca6521be378d4c95185d4291f3a0d, type: 3}
       typeID: 114
       customType: 0
@@ -300,7 +300,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: setFadeTitleBGM
+    attribute: SetFadeTitleBgm
     path: 
     classID: 114
     script: {fileID: 11500000, guid: f23ca6521be378d4c95185d4291f3a0d, type: 3}
@@ -322,7 +322,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: setPlaySelectStageBGM
+    attribute: SetPlaySelectStageBgm
     path: 
     classID: 114
     script: {fileID: 11500000, guid: f23ca6521be378d4c95185d4291f3a0d, type: 3}
@@ -344,7 +344,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: setEnableButton
+    attribute: SetEnableButton
     path: 
     classID: 114
     script: {fileID: 11500000, guid: f23ca6521be378d4c95185d4291f3a0d, type: 3}

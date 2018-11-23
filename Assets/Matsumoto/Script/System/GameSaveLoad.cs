@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System;
@@ -29,73 +28,66 @@ public static class GameSaveLoad {
 	//
 	public class SaveData {
 
-		public enum DataKey {ALL = -1, INT = 0, FLOAT, STRING}
+		public enum DataKey { All = -1, Int = 0, Float, String }
 
-		int[] count = new int[3];// 0:int 1:float 2:string
+		private readonly int[] _count = new int[3];// 0:int 1:float 2:string
 
 		//DataSet(int, float, string)
-		Dictionary<string, int> dataI = new Dictionary<string, int>();
-		Dictionary<string, float> dataF = new Dictionary<string, float>();
-		Dictionary<string, string> dataS = new Dictionary<string, string>();
+		private readonly Dictionary<string, int> _dataI = new Dictionary<string, int>();
+		private readonly Dictionary<string, float> _dataF = new Dictionary<string, float>();
+		private readonly Dictionary<string, string> _dataS = new Dictionary<string, string>();
 
 		//SetData-Start--------------------------------------
 		public int SetData(string key, int data) {
-			if(dataI.ContainsKey(key)) {
-				dataI[key] = data;
+			if(_dataI.ContainsKey(key)) {
+				_dataI[key] = data;
 			}
 			else {
-				dataI.Add(key, data);
-				count[0]++;
+				_dataI.Add(key, data);
+				_count[0]++;
 			}
-			return count[0];
+			return _count[0];
 		}
 		public int SetData(string key, float data) {
-			if(dataF.ContainsKey(key)) {
-				dataF[key] = data;
+			if(_dataF.ContainsKey(key)) {
+				_dataF[key] = data;
 			}
 			else {
-				dataF.Add(key, data);
-				count[1]++;
+				_dataF.Add(key, data);
+				_count[1]++;
 			}
-			return count[1];
+			return _count[1];
 		}
 		public int SetData(string key, string data) {
-			if(dataS.ContainsKey(key)) {
-				dataS[key] = data;
+			if(_dataS.ContainsKey(key)) {
+				_dataS[key] = data;
 			}
 			else {
-				dataS.Add(key, data);
-				count[2]++;
+				_dataS.Add(key, data);
+				_count[2]++;
 			}
-			return count[2];
-		}
-
-		public void AddDataAll(Dictionary<string, int> dI, Dictionary<string, float> dF, Dictionary<string, string> dS) {
-
-			dataI = dI;
-			dataF = dF;
-			dataS = dS;
+			return _count[2];
 		}
 
 		//GetData-Start--------------------------------------
 		public int GetIntData(string key, int defaultValue) {
 
-			int d = defaultValue;
+			var d = defaultValue;
 
 			try {
-				d = dataI[key];
+				d = _dataI[key];
 			}
-			catch(Exception e){
+			catch(Exception e) {
 				Debug.Log("Key(" + key + ") is not found");
 			}
 			return d;
 		}
 		public float GetFloatData(string key, float defaultValue) {
 
-			float d = defaultValue;
+			var d = defaultValue;
 
 			try {
-				d = dataF[key];
+				d = _dataF[key];
 			}
 			catch(Exception e) {
 				Debug.Log("Key(" + key + ") is not found");
@@ -104,10 +96,10 @@ public static class GameSaveLoad {
 		}
 		public string GetSrtingData(string key, string defaultValue) {
 
-			string d = defaultValue;
+			var d = defaultValue;
 
 			try {
-				d = dataS[key];
+				d = _dataS[key];
 			}
 			catch(Exception e) {
 				Debug.Log("Key(" + key + ") is not found");
@@ -117,15 +109,15 @@ public static class GameSaveLoad {
 
 		public Dictionary<string, int> GetIntDataAll() {
 
-			return dataI;
+			return _dataI;
 		}
 		public Dictionary<string, float> GetFloatDataAll() {
 
-			return dataF;
+			return _dataF;
 		}
 		public Dictionary<string, string> GetStringDataAll() {
 
-			return dataS;
+			return _dataS;
 		}
 
 		//System-Start---------------------------------------
@@ -134,19 +126,19 @@ public static class GameSaveLoad {
 			int retC;
 
 			switch(key) {
-				case DataKey.ALL:
-					retC = count[(int)DataKey.INT] + count[(int)DataKey.FLOAT] + count[(int)DataKey.STRING];
+				case DataKey.All:
+					retC = _count[(int)DataKey.Int] + _count[(int)DataKey.Float] + _count[(int)DataKey.String];
 					break;
-				case DataKey.INT:
-					retC = count[(int)DataKey.INT];
+				case DataKey.Int:
+					retC = _count[(int)DataKey.Int];
 					break;
-				case DataKey.FLOAT:
-					retC = count[(int)DataKey.FLOAT];
+				case DataKey.Float:
+					retC = _count[(int)DataKey.Float];
 					break;
-				case DataKey.STRING:
-					retC = count[(int)DataKey.STRING];
+				case DataKey.String:
+					retC = _count[(int)DataKey.String];
 					break;
-				default :
+				default:
 					Debug.Log("The value is out of range : Return 0");
 					retC = 0;
 					break;
@@ -156,7 +148,7 @@ public static class GameSaveLoad {
 		}
 
 		public void SetCount(int[] c) {
-			c.CopyTo(count, 0);
+			c.CopyTo(_count, 0);
 		}
 	}
 
@@ -168,25 +160,25 @@ public static class GameSaveLoad {
 	/// <param name="data"></param>
 	public static void SaveGameFile(string fileName, int slot, SaveData data) {
 
-		string path = Application.dataPath;//Dynamic
-		string name = fileName + slot + ".sav";//SaveSlot
+		var path = Application.dataPath;//Dynamic
+		var name = fileName + slot + ".sav";//SaveSlot
 		Debug.Log("[path] " + path + "/" + name);
 
-		FileInfo info = new FileInfo(path + "/" + name);
+		var info = new FileInfo(path + "/" + name);
 
-		using(StreamWriter sw = info.CreateText()) {
+		using(var sw = info.CreateText()) {
 
-			string strData = "";
-			foreach(KeyValuePair<string, int> pair in data.GetIntDataAll()) {
+			var strData = "";
+			foreach(var pair in data.GetIntDataAll()) {
 
 				strData += pair.Key + "|" + pair.Value + ",";
-				
+
 			}
 			sw.WriteLine(strData);
 			Debug.Log("[int] " + strData);
 
 			strData = "";
-			foreach(KeyValuePair<string, float> pair in data.GetFloatDataAll()) {
+			foreach(var pair in data.GetFloatDataAll()) {
 
 				strData += pair.Key + "|" + pair.Value + ",";
 
@@ -195,7 +187,7 @@ public static class GameSaveLoad {
 			Debug.Log("[float] " + strData);
 
 			strData = "";
-			foreach(KeyValuePair<string, string> pair in data.GetStringDataAll()) {
+			foreach(var pair in data.GetStringDataAll()) {
 
 				strData += pair.Key + "|" + pair.Value + ",";
 
@@ -214,29 +206,29 @@ public static class GameSaveLoad {
 	/// <returns></returns>
 	public static SaveData LoadGameFile(string fileName, int slot) {
 
-		SaveData data = new SaveData();
+		var data = new SaveData();
 
-		string path = Application.dataPath;//Dynamic
-		string name = fileName + slot + ".sav";//SaveSlot
+		var path = Application.dataPath;//Dynamic
+		var name = fileName + slot + ".sav";//SaveSlot
 		Debug.Log("[path] " + path + "/" + name);
 
-		FileInfo info = new FileInfo(path + "/" + name);
+		var info = new FileInfo(path + "/" + name);
 
 		if(!File.Exists(path + "/" + name)) return data;
 
-		using(StreamReader sr = new StreamReader(info.OpenRead(), Encoding.UTF8)) {
+		using(var sr = new StreamReader(info.OpenRead(), Encoding.UTF8)) {
 
-			int target = 0;//int > float > string target
-			int[] c = new int[3];//count
-			string buff = "";//buffer
+			var target = 0;//int > float > string target
+			var c = new int[3];//count
+			var buff = "";//buffer
 
 			//int-load--------------------------------------
 			buff = sr.ReadLine();
 			Debug.Log("[int] " + buff);
-			string[] spBaff = DataSplit(buff, ',');
-			for(c[target] = 0;c[target] < spBaff.Length - 1;c[target]++) {
+			var dataSplit = DataSplit(buff, ',');
+			for(c[target] = 0;c[target] < dataSplit.Length - 1;c[target]++) {
 
-				string[] dataInt = spBaff[c[target]].Split('|');
+				var dataInt = dataSplit[c[target]].Split('|');
 				data.SetData(dataInt[0], int.Parse(dataInt[1]));
 			}
 			target++;
@@ -244,21 +236,21 @@ public static class GameSaveLoad {
 			//float-load------------------------------------
 			buff = sr.ReadLine();
 			Debug.Log("[float] " + buff);
-			 spBaff = DataSplit(buff, ',');
-			for(c[target] = 0;c[target] < spBaff.Length - 1;c[target]++) {
+			dataSplit = DataSplit(buff, ',');
+			for(c[target] = 0;c[target] < dataSplit.Length - 1;c[target]++) {
 
-					string[] dataFloat = spBaff[c[target]].Split('|');
-					data.SetData(dataFloat[0], float.Parse(dataFloat[1]));
+				var dataFloat = dataSplit[c[target]].Split('|');
+				data.SetData(dataFloat[0], float.Parse(dataFloat[1]));
 			}
 			target++;
 
 			//string-load-----------------------------------
 			buff = sr.ReadLine();
 			Debug.Log("[string] " + buff);
-			spBaff = DataSplit(buff, ',');
-			for(c[target] = 0;c[target] < spBaff.Length - 1;c[target]++) {
+			dataSplit = DataSplit(buff, ',');
+			for(c[target] = 0;c[target] < dataSplit.Length - 1;c[target]++) {
 
-				string[] dataString = spBaff[c[target]].Split('|');
+				var dataString = dataSplit[c[target]].Split('|');
 				data.SetData(dataString[0], dataString[1]);
 			}
 			data.SetCount(c);
@@ -273,7 +265,7 @@ public static class GameSaveLoad {
 	/// <param name="rawData"></param>
 	/// <param name="splitC"></param>
 	/// <returns></returns>
-	static string[] DataSplit(string rawData, char splitC) {
+	private static string[] DataSplit(string rawData, char splitC) {
 
 		return rawData.Split(splitC);
 	}

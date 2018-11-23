@@ -1,53 +1,56 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
+/// <summary>
+/// ゲームのセーブデータを持つクラス
+/// </summary>
 public static class GameData {
 
-	const string SAVE_DATA_KEY = "SaveData";
-	
-	public static Dictionary<string, StageData> stageData;
+	private const string SaveDataKey = "SaveData";
 
-	static GameSaveLoad.SaveData saveData;
-	static string[] pathNames;
+	public static Dictionary<string, StageData> StageData;
+
+	private static GameSaveLoad.SaveData _saveData;
+	private static string[] _pathNames;
 
 	public static void Load(string[] pathNames) {
 
-		stageData = new Dictionary<string, StageData>();
-		saveData = GameSaveLoad.LoadGameFile(SAVE_DATA_KEY, 0);
+		StageData = new Dictionary<string, StageData>();
+		_saveData = GameSaveLoad.LoadGameFile(SaveDataKey, 0);
+		_pathNames = pathNames;
 
-		GameData.pathNames = pathNames;
 		foreach(var item in pathNames) {
 
-			if(stageData.ContainsKey(item)) continue;
+			if(StageData.ContainsKey(item)) continue;
 
-			var data = new StageData();
-			data.score = saveData.GetIntData(item + "_Score", 0);
-			data.accuracy = saveData.GetFloatData(item + "_Accuracy", 0.0f);
-			data.maxCombo = saveData.GetIntData(item + "_MaxCombo", 0);
-			stageData.Add(item, data);
+			var data = new StageData {
+				Score = _saveData.GetIntData(item + "_Score", 0),
+				Accuracy = _saveData.GetFloatData(item + "_Accuracy", 0.0f),
+				MaxCombo = _saveData.GetIntData(item + "_MaxCombo", 0)
+			};
+
+			StageData.Add(item, data);
 		}
 	}
 
 	public static void Save() {
 
-		saveData = new GameSaveLoad.SaveData();
+		_saveData = new GameSaveLoad.SaveData();
 
-		foreach(var item in pathNames) {
+		foreach(var item in _pathNames) {
 
-			var data = stageData[item];
-			saveData.SetData(item + "_Score", data.score);
-			saveData.SetData(item + "_Accuracy", data.accuracy);
-			saveData.SetData(item + "_MaxCombo", data.maxCombo);
+			var data = StageData[item];
+			_saveData.SetData(item + "_Score", data.Score);
+			_saveData.SetData(item + "_Accuracy", data.Accuracy);
+			_saveData.SetData(item + "_MaxCombo", data.MaxCombo);
 		}
 
-		GameSaveLoad.SaveGameFile(SAVE_DATA_KEY, 0, saveData);
-		Load(pathNames);
+		GameSaveLoad.SaveGameFile(SaveDataKey, 0, _saveData);
+		Load(_pathNames);
 	}
 }
 
 public struct StageData {
-	public int score;
-	public float accuracy;
-	public int maxCombo;
+	public int Score;
+	public float Accuracy;
+	public int MaxCombo;
 }

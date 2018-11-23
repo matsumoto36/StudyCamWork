@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// シングルトンの親クラス
@@ -10,32 +6,32 @@ using UnityEngine;
 /// <typeparam name="T"></typeparam>
 public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour {
 
-	static T instance;
-
+	private static T _instance;
 	public static T Instance {
-		get
-		{
-			if (!instance) Create();
-			return instance;
+		get {
+			if(!_instance) Create();
+			return _instance;
 		}
 	}
 
-	static void Create()
-	{
-		instance = new GameObject(string.Format("[Singleton - {0}]", typeof(T).ToString()))
+	/// <summary>
+	/// 自身を生成する
+	/// </summary>
+	private static void Create() {
+		_instance = new GameObject(string.Format("[Singleton - {0}]", typeof(T)))
 			.AddComponent<T>();
 
-		DontDestroyOnLoad(instance.gameObject);
+		DontDestroyOnLoad(_instance.gameObject);
 
-		instance.GetComponent<SingletonMonoBehaviour<T>>().Init();
+		_instance.GetComponent<SingletonMonoBehaviour<T>>().Init();
 	}
 
 	/// <summary>
-	/// 初期化用
+	/// 生成されたときに一回だけ呼ばれる
 	/// </summary>
 	protected virtual void Init() { }
 
-	void Awake() {
-		if(instance) Destroy(gameObject);
+	private void Awake() {
+		if(_instance) Destroy(gameObject);
 	}
 }

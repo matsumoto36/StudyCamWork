@@ -1,10 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Bezier2D : MonoBehaviour {
 
-	const int PARTIRION = 64;
+	private const int Partition = 64;
+
+	//線ごとの長さ
+	float[] _lengthAtLine;
 
 	//ベジエ曲線を構成する頂点群
 	[SerializeField] List<Vector2> points = new List<Vector2>();
@@ -12,22 +14,18 @@ public class Bezier2D : MonoBehaviour {
 		get { return points; }
 		set {
 			points = value;
-			pointsChangeFlg = true;
+			_pointsChangeFlg = true;
 		}
 	}
 
-	//ベジエ曲線の長さ
-	float length = 0;
-	//線ごとの長さ
-	float[] lengthAtLine;
+	private float _length;
 	public float Length {
 		get {
-			if(pointsChangeFlg) {
-				length = GetLength();
-				pointsChangeFlg = false;
-			}
+			//計算負荷がかかるため、線に変更がなければ結果を流用する
+			if(!_pointsChangeFlg) return _length;
 
-			return length;
+			_pointsChangeFlg = false;
+			return _length = GetLength();
 		}
 	}
 
@@ -39,7 +37,7 @@ public class Bezier2D : MonoBehaviour {
 	}
 
 	//頂点が変更されたかを検知するフラグ
-	bool pointsChangeFlg = true;
+	private bool _pointsChangeFlg = true;
 
 	/// <summary>
 	/// 頂点を追加
@@ -77,17 +75,17 @@ public class Bezier2D : MonoBehaviour {
 	/// </summary>
 	/// <param name="partition">分割(精度)</param>
 	/// <returns></returns>
-	public float GetLength(int partition = PARTIRION) {
+	public float GetLength(int partition = Partition) {
 
 		var length = 0.0f;
-		var tempLength = 0.0f;
 
-		lengthAtLine = new float[LineCount];
+		_lengthAtLine = new float[LineCount];
 
-		for(int i = 1;i < Points.Count - 3;i+=3) {
+		for(var i = 1;i < Points.Count - 3;i += 3) {
+
 			var prevPos = GetPoint(Points[i], Points[i + 1], Points[i + 2], Points[i + 3], 0);
-			tempLength = 0;
-			for(int j = 1;j <= partition;j++) {
+			var tempLength = 0.0f;
+			for(var j = 1;j <= partition;j++) {
 
 				var pos = GetPoint(Points[i], Points[i + 1], Points[i + 2], Points[i + 3], (float)j / partition);
 				tempLength += (pos - prevPos).magnitude;
@@ -95,7 +93,7 @@ public class Bezier2D : MonoBehaviour {
 			}
 
 			var n = (i - 1) / 3;
-			lengthAtLine[n] = tempLength;
+			_lengthAtLine[n] = tempLength;
 			length += tempLength;
 		}
 
@@ -109,7 +107,7 @@ public class Bezier2D : MonoBehaviour {
 	/// <param name="endPoint"></param>
 	/// <param name="partition"></param>
 	/// <returns></returns>
-	public float GetPointLength(float startPoint, float endPoint, int partition = PARTIRION) {
+	public float GetPointLength(float startPoint, float endPoint, int partition = Partition) {
 
 		var diff = endPoint - startPoint;
 		var part = (int)(partition * diff);
@@ -119,33 +117,8 @@ public class Bezier2D : MonoBehaviour {
 		var prevLinePoint = GetPoint(startPoint / LineCount);
 
 		var l = 0.0f;
-		for(int i = 0;i <= part;i++) {
+		for(var i = 0;i <= part;i++) {
 			var p = GetPoint((startPoint + dt * i) / LineCount);
-			l += (prevLinePoint - p).magnitude;
-			prevLinePoint = p;
-		}
-		return l;
-	}
-
-	/// <summary>
-	/// 2点間の距離を返す
-	/// </summary>
-	/// <param name="startPoint"></param>
-	/// <param name="endPoint"></param>
-	/// <param name="partition"></param>
-	/// <returns></returns>
-	public float GetPointNormalizeLength(float startPoint, float endPoint, int partition = PARTIRION) {
-
-		var diff = endPoint - startPoint;
-		var part = (int)(partition * diff);
-		if(part <= 0) part = 1;
-
-		var dt = diff / part;
-		var prevLinePoint = GetPoint(startPoint / LineCount);
-
-		var l = 0.0f;
-		for(int i = 0;i <= part;i++) {
-			var p = GetPointNormalize((startPoint + dt * i) / LineCount);
 			l += (prevLinePoint - p).magnitude;
 			prevLinePoint = p;
 		}
@@ -166,10 +139,10 @@ public class Bezier2D : MonoBehaviour {
 
 		var length = GetLength() * t;
 		var sumLength = 0.0f;
-		var section = 0;
 
+		int section;
 		for(section = 0;section < lineCount;section++) {
-			sumLength += lengthAtLine[section];
+			sumLength += _lengthAtLine[section];
 			if(length < sumLength) {
 				break;
 			}
@@ -177,7 +150,7 @@ public class Bezier2D : MonoBehaviour {
 
 		var startPoint = section * 3 + 1;
 		var ratio =
-			(length - (sumLength - lengthAtLine[section])) / lengthAtLine[section];
+			(length - (sumLength - _lengthAtLine[section])) / _lengthAtLine[section];
 
 		return GetPointNormalize(
 			points[startPoint],
@@ -217,7 +190,7 @@ public class Bezier2D : MonoBehaviour {
 	/// <param name="t"></param>
 	/// <param name="partition"></param>
 	/// <returns></returns>
-	public static Vector2 GetPointNormalize(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3, float t, int partition = PARTIRION) {
+	public static Vector2 GetPointNormalize(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3, float t, int partition = Partition) {
 
 		if(t <= 0.0f) return p0;
 		if(t >= 1.0f) return p3;
@@ -227,18 +200,17 @@ public class Bezier2D : MonoBehaviour {
 		}
 
 		var partArray = new float[partition + 1];
-		var part_i = 1.0f / partition;
+		var partI = 1.0f / partition;
 
 		var p = p0;
-		var q = new Vector2();
 		var tt = 0.0f;
 		var i = 0;
 
 		partArray[0] = 0.0f;
 
 		for(i = 1;i <= partition;i++) {
-			tt += part_i;
-			q = GetPoint(p0, p1, p2, p3, tt);
+			tt += partI;
+			var q = GetPoint(p0, p1, p2, p3, tt);
 
 			var diff = q - p;
 			partArray[i] = partArray[i - 1]
@@ -260,7 +232,7 @@ public class Bezier2D : MonoBehaviour {
 
 		//区画内は線形補間で算出
 		var x = (t - partArray[i]) / (partArray[i + 1] - partArray[i]);
-		x = (i * (1 - x) + (1 + i) * x) * part_i;
+		x = (i * (1 - x) + (1 + i) * x) * partI;
 		return GetPoint(p0, p1, p2, p3, x);
 	}
 
@@ -278,6 +250,7 @@ public class Bezier2D : MonoBehaviour {
 		if(t <= 0.0f) return p0;
 		if(t >= 1.0f) return p3;
 
+		//最適化済み
 		var oneMinusT = 1f - t;
 		return oneMinusT * oneMinusT * oneMinusT * p0 +
 			3f * oneMinusT * oneMinusT * t * p1 +
