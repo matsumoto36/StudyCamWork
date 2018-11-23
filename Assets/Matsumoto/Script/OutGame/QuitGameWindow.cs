@@ -1,23 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 using UnityEngine;
 
+/// <summary>
+/// ゲームを終了するときに表示されるウィンドウ
+/// </summary>
 public class QuitGameWindow : MonoBehaviour {
 
-	public Button quitButton;
-	public Button titleButton;
-	public GameObject body;
+	public Button QuitButton;
+	public Button TitleButton;
+	public GameObject Body;
 
-	void Start() {
-		quitButton.onClick.AddListener(() => {
+	private void Start() {
+
+		QuitButton.onClick.AddListener(() => {
 			AudioManager.PlaySE("click03");
 			Application.Quit();
-			});
+		});
 
-		titleButton.onClick.AddListener(() => {
+		TitleButton.onClick.AddListener(() => {
 			AudioManager.PlaySE("click03");
-			StageSelectController.movieSkip = false;
+			StageSelectController.MovieSkip = false;
 			FindObjectOfType<TimerController>().SceneMove("TitleScene");
 
 		});
@@ -25,7 +27,7 @@ public class QuitGameWindow : MonoBehaviour {
 	}
 
 	public void IsActive(bool enable) {
-		body.SetActive(enable);
+		Body.SetActive(enable);
 	}
 
 }

@@ -150,7 +150,7 @@ public class Player : MonoBehaviour {
 			isSceneMoved = true;
 
 			AudioManager.PlaySE("Button3");
-			StageSelectController.movieSkip = true;
+			StageSelectController.MovieSkip = true;
 			GameMaster.Instance.MoveSelectScene();
 		}
 	}

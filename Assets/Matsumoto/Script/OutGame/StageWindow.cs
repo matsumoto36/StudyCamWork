@@ -1,99 +1,100 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
+/// <summary>
+/// ステージ選択からステージを選んだ時に表示される
+/// ステージの詳細のウィンドウ
+/// </summary>
 public class StageWindow : MonoBehaviour {
 
-	public GameObject body;
+	public GameObject Body;
 
-	public Image frameImage;
-	public Image stageImage;
+	public Image FrameImage;
+	public Image StageImage;
 
-	public Text score;
-	public Text accuracy;
-	public Text maxCombo;
+	public Text Score;
+	public Text Accuracy;
+	public Text MaxCombo;
 
-	public Text title;
+	public Text Title;
 
-	public string loadPathName;
-	public string loadStudioName;
+	public string LoadPathName;
+	public string LoadStudioName;
 
-	public Button startButton;
+	public Button StartButton;
 
-	StageMoveButton button;
-	bool isSceneMove = false;
+	private StageMoveButton _button;
+	private bool _isSceneMove;
 
-	void Start() {
-		startButton.onClick
+	private void Start() {
+		StartButton.onClick
 			.AddListener(MoveStage);
 	}
 
-	void MoveStage() {
+	/// <summary>
+	/// 各ステージに挑戦するとき
+	/// </summary>
+	private void MoveStage() {
 
-		if(isSceneMove) return;
-		isSceneMove = true;
+		if(_isSceneMove) return;
+		_isSceneMove = true;
 
 		//ボタンをロック
-		startButton.interactable = false;
+		StartButton.interactable = false;
 
-		SelectWindowActive.activeWindowIndex = button.windowIndex;
+		SelectWindowActive.ActiveWindowIndex = _button.WindowIndex;
 
 		//先のステージをすべて登録
 		var nextStageList = new List<StageInfo>();
-		while(button.nextStage) {
-			button = button.nextStage;
+		while(_button.NextStage) {
+			_button = _button.NextStage;
 
 			nextStageList.Add(
 				new StageInfo(
-					button.loadPathName,button.loadStudioName, button.windowIndex
+					_button.LoadPathName,_button.LoadStudioName, _button.WindowIndex
 					));
 		}
 		nextStageList.Add(null);
 
 		GameMaster.SetNextStage(nextStageList);
-
-		//debug
-		foreach(var item in GameMaster.nextStageList) {
-			if(item != null)
-				Debug.Log(item.pathName);
-			else
-				Debug.Log("null");
-		}
-
-		GameMaster.LoadPathName = loadPathName;
-		GameMaster.LoadStudioName = loadStudioName;
+		GameMaster.LoadPathName = LoadPathName;
+		GameMaster.LoadStudioName = LoadStudioName;
 
 		AudioManager.PlaySE("Button3");
 		FindObjectOfType<TimerController>().SceneMove("GameScene");
 	}
 
+	/// <summary>
+	/// ウィンドウを表示する
+	/// </summary>
+	/// <param name="button"></param>
 	public void Show(StageMoveButton button) {
 
-		this.button = button;
+		_button = button;
 
-		frameImage.sprite = button.frameImage.sprite;
-		frameImage.color = button.frameImage.color;
-		stageImage.sprite = button.stageImage.sprite;
-		loadPathName = button.loadPathName;
-		loadStudioName = button.loadStudioName;
-		title.text = button.title;
+		FrameImage.sprite = button.FrameImage.sprite;
+		FrameImage.color = button.FrameImage.color;
+		StageImage.sprite = button.StageImage.sprite;
+		LoadPathName = button.LoadPathName;
+		LoadStudioName = button.LoadStudioName;
+		Title.text = button.Title;
 
-		var data = GameData.stageData[loadPathName];
-		score.text = data.score.ToString();
+		var data = GameData.stageData[LoadPathName];
+		Score.text = data.score.ToString();
 
-		if(data.accuracy == 1.0f) 
-			accuracy.text = "100";
-		else
-			accuracy.text = (data.accuracy * 100).ToString("00.00");
+		Accuracy.text = 
+			data.accuracy <= 1.0f ? "100" : (data.accuracy * 100).ToString("00.00");
 
-		maxCombo.text = data.maxCombo.ToString();
+		MaxCombo.text = data.maxCombo.ToString();
 
-		body.SetActive(true);
+		Body.SetActive(true);
 	}
 
+	/// <summary>
+	/// ウィンドウを隠す
+	/// </summary>
 	public void Hide() {
-		body.SetActive(false);
+		Body.SetActive(false);
 	}
 }

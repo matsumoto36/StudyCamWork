@@ -1,12 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using UnityEngine.Playables;
 using UnityEngine;
 
-public enum StageSelectState {
+enum StageSelectState {
 	Title,
 	Opening,
 	ListView,
@@ -14,75 +14,79 @@ public enum StageSelectState {
 	QuitGameView,
 }
 
+/// <summary>
+/// タイトル画面からステージ選択画面に
+/// 切り替えるまでを管理する
+/// </summary>
 public class StageSelectController : MonoBehaviour {
 
-	public static bool movieSkip;
+	public static bool MovieSkip;
 
-	public CanvasGroup selectStageGroup;
-	public Button backButton;
-    public Button endWindowBack;
+	public CanvasGroup SelectStageGroup;
+	[HideInInspector] public Button BackButton;
+	public Button EndWindowBack;
 
-    public StageWindow stageContentView;
-	public QuitGameWindow quitWindow;
+    public StageWindow StageContentView;
+	public QuitGameWindow QuitWindow;
 
-	public TextMesh clickStartText;
-	public Image monitorEffect;
+	public TextMesh ClickStartText;
+	public Image MonitorEffect;
 
-	public Transform directionalLight;
-	public float lightMoveSpeed = 1;
+	public Transform DirectionalLight;
+	public float LightMoveSpeed = 1;
 
-	public bool setFadeTitleBGM;
-	bool changeSetFadeTitleBGM;
-	public bool setPlaySelectStageBGM;
-	bool changeSetPlaySelectStageBGM;
-	public bool setEnableButton;
-	bool changeSetEnableButton;
+	public bool SetFadeTitleBgm;
 
-	public VideoPlayer videoPlayer;
-	public Text movieText;
-	Color movieTextColor;
-	public float movieStartTime = 10.0f;
+	private bool _changeSetFadeTitleBgm;
+	public bool SetPlaySelectStageBgm;
+	private bool _changeSetPlaySelectStageBgm;
+	public bool SetEnableButton;
+	private bool _changeSetEnableButton;
 
-	PlayableDirector titleAnimation;
+	public VideoPlayer VideoPlayer;
+	public Text MovieText;
+	private Color _movieTextColor;
+	public float MovieStartTime = 10.0f;
 
-	Coroutine clickClickAnimationCoroutine;
+	private PlayableDirector _titleAnimation;
 
-	StageSelectState state;
-	
-	void Awake() {
+	private Coroutine _clickClickAnimationCoroutine;
 
-		titleAnimation = Camera.main.GetComponent<PlayableDirector>();
+	private StageSelectState _state;
 
-		selectStageGroup.interactable = false;
-		state = StageSelectState.Title;
+	private void Awake() {
 
-		if(movieSkip) {
+		_titleAnimation = Camera.main.GetComponent<PlayableDirector>();
+
+		SelectStageGroup.interactable = false;
+		_state = StageSelectState.Title;
+
+		if(MovieSkip) {
 			var cam = Camera.main;
-			monitorEffect.color = new Color(0, 0, 0, 0);
+			MonitorEffect.color = new Color(0, 0, 0, 0);
 			cam.transform.position = new Vector3(0, 0, 20);
 			cam.transform.rotation = Quaternion.identity;
 			cam.orthographic = true;
-			state = StageSelectState.ListView;
-			selectStageGroup.interactable = true;
+			_state = StageSelectState.ListView;
+			SelectStageGroup.interactable = true;
 		}
 
 		//ムービー待機開始
 		StartCoroutine(GameMovieLoop());
 	}
-	void Start () {
+	private void Start () {
 
-		backButton.onClick.AddListener(BackButton);
-        endWindowBack.onClick.AddListener(BackButton);
+		BackButton.onClick.AddListener(OnPressBackButton);
+        EndWindowBack.onClick.AddListener(OnPressBackButton);
 
-
-		stageContentView.Hide();
-		quitWindow.IsActive(false);
+		StageContentView.Hide();
+		QuitWindow.IsActive(false);
 
 		var stages = FindObjectsOfType<StageMoveButton>();
 
 		//データをロードする
 		GameData.Load(stages
-			.Select(item => item.loadPathName)
+			.Select(item => item.LoadPathName)
 			.ToArray()
 		);
 
@@ -92,7 +96,7 @@ public class StageSelectController : MonoBehaviour {
 		}
 
 		//アニメーション再生
-		clickClickAnimationCoroutine = StartCoroutine(ClickAnimation());
+		_clickClickAnimationCoroutine = StartCoroutine(ClickAnimation());
 		StartCoroutine(TimeAnimation());
 
 		//BGM再生
@@ -100,112 +104,125 @@ public class StageSelectController : MonoBehaviour {
 			AudioManager.FadeOut(1.0f);
 		}
 
-		if(movieSkip) {
-			AudioManager.FadeIn(1.0f, "bgm_maoudamashii_cyber29");
-		}
-		else {
-			AudioManager.FadeIn(1.0f, "town1");
-		}
+		AudioManager.FadeIn(1.0f, MovieSkip ? "bgm_maoudamashii_cyber29" : "town1");
 	}
 
-	void Update() {
+	private void Update() {
 
 		//アニメーション制御用
-		if(setFadeTitleBGM && !changeSetFadeTitleBGM) {
-			changeSetFadeTitleBGM = true;
+		if(SetFadeTitleBgm && !_changeSetFadeTitleBgm) {
+			_changeSetFadeTitleBgm = true;
 			Debug.Log("FadeTitleBGM");
 			AudioManager.FadeOut(5.0f);
 		}
 
-		if(setPlaySelectStageBGM && !changeSetPlaySelectStageBGM) {
-			changeSetPlaySelectStageBGM = true;
+		if(SetPlaySelectStageBgm && !_changeSetPlaySelectStageBgm) {
+			_changeSetPlaySelectStageBgm = true;
 			Debug.Log("FadeStageSelectBGM");
 			AudioManager.FadeIn(3.0f, "bgm_maoudamashii_cyber29");
 		}
 
-		if(state == StageSelectState.Title && Input.GetMouseButtonDown(0)) {
-			titleAnimation.Play();
-			state = StageSelectState.Opening;
+		if(_state == StageSelectState.Title && Input.GetMouseButtonDown(0)) {
+			_titleAnimation.Play();
+			_state = StageSelectState.Opening;
 
 			//アニメーションを止める
-			StopCoroutine(clickClickAnimationCoroutine);
-			clickStartText.color = new Color(0, 0, 0, 0);
+			StopCoroutine(_clickClickAnimationCoroutine);
+			ClickStartText.color = new Color(0, 0, 0, 0);
 		}
 
-		if(setEnableButton && !changeSetEnableButton) {
-			changeSetEnableButton = true;
-			state = StageSelectState.ListView;
-			selectStageGroup.interactable = true;
-		}
+		if (!SetEnableButton || _changeSetEnableButton) return;
+
+		_changeSetEnableButton = true;
+		_state = StageSelectState.ListView;
+		SelectStageGroup.interactable = true;
 	}
 
-	void BackButton() {
+	/// <summary>
+	/// 戻るボタンが押されたときの動作
+	/// </summary>
+	private void OnPressBackButton() {
 
-
-		switch(state) {
+		switch(_state) {
+			case StageSelectState.Title:
+				break;
+			case StageSelectState.Opening:
+				break;
 			case StageSelectState.ListView:
 				//ゲームを終了するかきく
 				AudioManager.PlaySE("cancel5");
-				quitWindow.IsActive(true);
-				state = StageSelectState.QuitGameView;
+				QuitWindow.IsActive(true);
+				_state = StageSelectState.QuitGameView;
 				break;
 			case StageSelectState.StageContentView:
 				//一覧に戻る
 				AudioManager.PlaySE("click03");
-				stageContentView.Hide();
-				state = StageSelectState.ListView;
+				StageContentView.Hide();
+				_state = StageSelectState.ListView;
 				break;
 			case StageSelectState.QuitGameView:
 				//ゲームを終了するのをやめる
 				AudioManager.PlaySE("click03");
-				quitWindow.IsActive(false);
-				state = StageSelectState.ListView;
+				QuitWindow.IsActive(false);
+				_state = StageSelectState.ListView;
 				break;
 			default:
-				break;
+				throw new ArgumentOutOfRangeException();
 		}
 	}
 
-	IEnumerator ClickAnimation() {
+	/// <summary>
+	/// クリックを促すアニメーション
+	/// </summary>
+	/// <returns></returns>
+	private IEnumerator ClickAnimation() {
 
-		var textColor = clickStartText.color;
-		var speed = 1;
+		const int speed = 1;
+		var textColor = ClickStartText.color;
 
 		while(true) {
 
 			textColor.a = Mathf.Abs(Mathf.Sin(Time.time * speed));
-			clickStartText.color = textColor;
+			ClickStartText.color = textColor;
 			yield return null;
 		}
 
 	}
 
-	IEnumerator TimeAnimation() {
+	/// <summary>
+	/// タイトル画面の昼夜を切り替える
+	/// </summary>
+	/// <returns></returns>
+	private IEnumerator TimeAnimation() {
 
-		var speed = lightMoveSpeed;
+		var speed = LightMoveSpeed;
 
 		while(true) {
 
-			directionalLight.rotation *= Quaternion.Euler(new Vector3(1 * speed * Time.deltaTime, 0, 0));
+			DirectionalLight.rotation *= Quaternion.Euler(new Vector3(1 * speed * Time.deltaTime, 0, 0));
 
 			yield return null;
 		}
 
 	}
 
-	IEnumerator GameMovieLoop() {
+	/// <summary>
+	/// 動画を再生してマウスを待機する
+	/// </summary>
+	/// <returns></returns>
+	private IEnumerator GameMovieLoop() {
 
 		var t = 0.0f;
 		var prevMousePosition = Input.mousePosition;
 		var isPlayingMovie = false;
-		var videoImage = videoPlayer.GetComponent<RawImage>();
+		var videoImage = VideoPlayer.GetComponent<RawImage>();
 
-		movieTextColor = movieText.color;
+		_movieTextColor = MovieText.color;
 		Coroutine textAnimCol = null;
 
 		//ちらつきを抑えるための動作
-		videoPlayer.Play();
-		videoPlayer.Pause();
+		VideoPlayer.Play();
+		VideoPlayer.Pause();
 
 		while(true) {
 			yield return null;
@@ -215,58 +232,66 @@ public class StageSelectController : MonoBehaviour {
 
 			if(isPlayingMovie) {
 				//ムービー再生中にマウスをいじった場合
-				if((mouseDelta.magnitude > 0.01f || Input.GetMouseButtonDown(0))) {
-					isPlayingMovie = false;
+				if ((!(mouseDelta.magnitude > 0.01f) && !Input.GetMouseButtonDown(0))) continue;
 
-					if(textAnimCol != null) StopCoroutine(textAnimCol);
-					movieText.gameObject.SetActive(false);
+				isPlayingMovie = false;
 
-					videoImage.color = new Color(1, 1, 1, 0);
-					videoPlayer.Pause();
+				if(textAnimCol != null) StopCoroutine(textAnimCol);
+				MovieText.gameObject.SetActive(false);
 
-					Cursor.visible = true;
-					AudioManager.BGMVolume = 0;
-				}
+				videoImage.color = new Color(1, 1, 1, 0);
+				VideoPlayer.Pause();
+
+				Cursor.visible = true;
+				AudioManager.BGMVolume = 0;
 			}
 			else {
 
-				if(state != StageSelectState.Title) yield break;
+				if(_state != StageSelectState.Title) yield break;
 
 				//再生待ち時間が超えた場合
-				if((t += Time.deltaTime) > movieStartTime && !isPlayingMovie) {
-					t = 0;
-					isPlayingMovie = true;
-					videoPlayer.time = 0;
-					videoPlayer.Play();
-					yield return new WaitForSeconds(1.0f);
-					videoImage.color = new Color(1, 1, 1, 1);
+				if (!((t += Time.deltaTime) > MovieStartTime)) continue;
 
-					movieText.gameObject.SetActive(true);
-					textAnimCol = StartCoroutine(MovieTextAnimation());
+				t = 0;
+				isPlayingMovie = true;
+				VideoPlayer.time = 0;
+				VideoPlayer.Play();
+				yield return new WaitForSeconds(1.0f);
+				videoImage.color = new Color(1, 1, 1, 1);
 
-					Cursor.visible = false;
-					AudioManager.BGMVolume = -80;
-				}
+				MovieText.gameObject.SetActive(true);
+				textAnimCol = StartCoroutine(MovieTextAnimation());
+
+				Cursor.visible = false;
+				AudioManager.BGMVolume = -80;
 			}
 		}
 	}
 
-	IEnumerator MovieTextAnimation() {
+	/// <summary>
+	/// ムービー中に表示するテキスト
+	/// </summary>
+	/// <returns></returns>
+	private IEnumerator MovieTextAnimation() {
 
-		var textColor = movieTextColor;
-		var speed = 1;
+		const int speed = 1;
+		var textColor = _movieTextColor;
 
 		while(true) {
 
 			textColor.a = Mathf.Abs(Mathf.Sin(Time.time * speed));
-			movieText.color = textColor;
+			MovieText.color = textColor;
 			yield return null;
 		}
 
 	}
 
+	/// <summary>
+	/// ステージ選択のウィンドウを表示する
+	/// </summary>
+	/// <param name="button"></param>
 	public void ShowStageWindow(StageMoveButton button) {
-		stageContentView.Show(button);
-		state = StageSelectState.StageContentView;
+		StageContentView.Show(button);
+		_state = StageSelectState.StageContentView;
 	}
 }

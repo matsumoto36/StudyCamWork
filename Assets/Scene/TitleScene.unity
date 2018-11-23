@@ -234,13 +234,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: Murata6
-  loadStudioName: SFStage
-  title: Murata6
-  windowIndex: 0
-  nextStage: {fileID: 0}
-  stageImage: {fileID: 381099442}
-  frameImage: {fileID: 501771999}
+  LoadPathName: Murata6
+  LoadStudioName: SFStage
+  Title: Murata6
+  WindowIndex: 0
+  NextStage: {fileID: 0}
+  StageImage: {fileID: 381099442}
+  FrameImage: {fileID: 501771999}
 --- !u!1 &3691191
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,13 +876,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 5-3
-  loadStudioName: SFStage
-  title: 5-3
-  windowIndex: 4
-  nextStage: {fileID: 2090979048}
-  stageImage: {fileID: 210084332}
-  frameImage: {fileID: 2006014062}
+  LoadPathName: 5-3
+  LoadStudioName: SFStage
+  Title: 5-3
+  WindowIndex: 4
+  NextStage: {fileID: 2090979048}
+  StageImage: {fileID: 210084332}
+  FrameImage: {fileID: 2006014062}
 --- !u!1 &96947359
 GameObject:
   m_ObjectHideFlags: 0
@@ -1190,13 +1190,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 1-3
-  loadStudioName: SFStage
-  title: 1-3
-  windowIndex: 0
-  nextStage: {fileID: 350888358}
-  stageImage: {fileID: 197811476}
-  frameImage: {fileID: 1295770856}
+  LoadPathName: 1-3
+  LoadStudioName: SFStage
+  Title: 1-3
+  WindowIndex: 0
+  NextStage: {fileID: 350888358}
+  StageImage: {fileID: 197811476}
+  FrameImage: {fileID: 1295770856}
 --- !u!1 &140008488
 GameObject:
   m_ObjectHideFlags: 0
@@ -1504,13 +1504,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 5-1
-  loadStudioName: SFStage
-  title: 5-1
-  windowIndex: 4
-  nextStage: {fileID: 583688738}
-  stageImage: {fileID: 1481884566}
-  frameImage: {fileID: 2067137131}
+  LoadPathName: 5-1
+  LoadStudioName: SFStage
+  Title: 5-1
+  WindowIndex: 4
+  NextStage: {fileID: 583688738}
+  StageImage: {fileID: 1481884566}
+  FrameImage: {fileID: 2067137131}
 --- !u!1 &177812593
 GameObject:
   m_ObjectHideFlags: 0
@@ -1676,13 +1676,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 3-3
-  loadStudioName: SFStage
-  title: 3-3
-  windowIndex: 2
-  nextStage: {fileID: 1263599687}
-  stageImage: {fileID: 1599378567}
-  frameImage: {fileID: 1220640296}
+  LoadPathName: 3-3
+  LoadStudioName: SFStage
+  Title: 3-3
+  WindowIndex: 2
+  NextStage: {fileID: 1263599687}
+  StageImage: {fileID: 1599378567}
+  FrameImage: {fileID: 1220640296}
 --- !u!1 &197811473
 GameObject:
   m_ObjectHideFlags: 0
@@ -2248,13 +2248,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 4-3
-  loadStudioName: SFStage
-  title: 4-3
-  windowIndex: 3
-  nextStage: {fileID: 790803027}
-  stageImage: {fileID: 1664515039}
-  frameImage: {fileID: 934617855}
+  LoadPathName: 4-3
+  LoadStudioName: SFStage
+  Title: 4-3
+  WindowIndex: 3
+  NextStage: {fileID: 790803027}
+  StageImage: {fileID: 1664515039}
+  FrameImage: {fileID: 934617855}
 --- !u!1 &234520595
 GameObject:
   m_ObjectHideFlags: 0
@@ -2557,13 +2557,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 2-8
-  loadStudioName: SFStage
-  title: 2-8
-  windowIndex: 1
-  nextStage: {fileID: 1450550221}
-  stageImage: {fileID: 1716442435}
-  frameImage: {fileID: 1799938103}
+  LoadPathName: 2-8
+  LoadStudioName: SFStage
+  Title: 2-8
+  WindowIndex: 1
+  NextStage: {fileID: 1450550221}
+  StageImage: {fileID: 1716442435}
+  FrameImage: {fileID: 1799938103}
 --- !u!1 &280900686
 GameObject:
   m_ObjectHideFlags: 0
@@ -2803,13 +2803,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: Murata4
-  loadStudioName: SFStage
-  title: Murata4
-  windowIndex: 0
-  nextStage: {fileID: 965753912}
-  stageImage: {fileID: 918270914}
-  frameImage: {fileID: 713595027}
+  LoadPathName: Murata4
+  LoadStudioName: SFStage
+  Title: Murata4
+  WindowIndex: 0
+  NextStage: {fileID: 965753912}
+  StageImage: {fileID: 918270914}
+  FrameImage: {fileID: 713595027}
 --- !u!1 &309770068 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1885272064427746, guid: 17a7205c2c5d33e47ad960d370f977c6,
@@ -3146,13 +3146,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 1-4
-  loadStudioName: SFStage
-  title: 1-4
-  windowIndex: 0
-  nextStage: {fileID: 1530571440}
-  stageImage: {fileID: 934158798}
-  frameImage: {fileID: 436967315}
+  LoadPathName: 1-4
+  LoadStudioName: SFStage
+  Title: 1-4
+  WindowIndex: 0
+  NextStage: {fileID: 1530571440}
+  StageImage: {fileID: 934158798}
+  FrameImage: {fileID: 436967315}
 --- !u!1 &352878797
 GameObject:
   m_ObjectHideFlags: 0
@@ -3625,13 +3625,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 4-7
-  loadStudioName: SFStage
-  title: 4-7
-  windowIndex: 3
-  nextStage: {fileID: 2008941165}
-  stageImage: {fileID: 2030759034}
-  frameImage: {fileID: 513656956}
+  LoadPathName: 4-7
+  LoadStudioName: SFStage
+  Title: 4-7
+  WindowIndex: 3
+  NextStage: {fileID: 2008941165}
+  StageImage: {fileID: 2030759034}
+  FrameImage: {fileID: 513656956}
 --- !u!1 &436967313
 GameObject:
   m_ObjectHideFlags: 0
@@ -4310,13 +4310,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: Murata2
-  loadStudioName: SFStage
-  title: Murata2
-  windowIndex: 0
-  nextStage: {fileID: 1570838843}
-  stageImage: {fileID: 1564652237}
-  frameImage: {fileID: 1244941087}
+  LoadPathName: Murata2
+  LoadStudioName: SFStage
+  Title: Murata2
+  WindowIndex: 0
+  NextStage: {fileID: 1570838843}
+  StageImage: {fileID: 1564652237}
+  FrameImage: {fileID: 1244941087}
 --- !u!1 &528900799
 GameObject:
   m_ObjectHideFlags: 0
@@ -4363,13 +4363,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 5-8
-  loadStudioName: SFStage
-  title: 5-8
-  windowIndex: 4
-  nextStage: {fileID: 0}
-  stageImage: {fileID: 2083204526}
-  frameImage: {fileID: 501781174}
+  LoadPathName: 5-8
+  LoadStudioName: SFStage
+  Title: 5-8
+  WindowIndex: 4
+  NextStage: {fileID: 0}
+  StageImage: {fileID: 2083204526}
+  FrameImage: {fileID: 501781174}
 --- !u!1 &542130760
 GameObject:
   m_ObjectHideFlags: 0
@@ -4416,13 +4416,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: Matsu2
-  loadStudioName: SFStage
-  title: Matsu2
-  windowIndex: 0
-  nextStage: {fileID: 2025792643}
-  stageImage: {fileID: 1370707101}
-  frameImage: {fileID: 558555598}
+  LoadPathName: Matsu2
+  LoadStudioName: SFStage
+  Title: Matsu2
+  WindowIndex: 0
+  NextStage: {fileID: 2025792643}
+  StageImage: {fileID: 1370707101}
+  FrameImage: {fileID: 558555598}
 --- !u!1 &542278161
 GameObject:
   m_ObjectHideFlags: 0
@@ -4580,13 +4580,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 3-7
-  loadStudioName: SFStage
-  title: 3-7
-  windowIndex: 2
-  nextStage: {fileID: 948834259}
-  stageImage: {fileID: 1497314765}
-  frameImage: {fileID: 1758476383}
+  LoadPathName: 3-7
+  LoadStudioName: SFStage
+  Title: 3-7
+  WindowIndex: 2
+  NextStage: {fileID: 948834259}
+  StageImage: {fileID: 1497314765}
+  FrameImage: {fileID: 1758476383}
 --- !u!1 &545155621
 GameObject:
   m_ObjectHideFlags: 0
@@ -4918,13 +4918,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 5-2
-  loadStudioName: SFStage
-  title: 5-2
-  windowIndex: 4
-  nextStage: {fileID: 95776392}
-  stageImage: {fileID: 1904908300}
-  frameImage: {fileID: 212204654}
+  LoadPathName: 5-2
+  LoadStudioName: SFStage
+  Title: 5-2
+  WindowIndex: 4
+  NextStage: {fileID: 95776392}
+  StageImage: {fileID: 1904908300}
+  FrameImage: {fileID: 212204654}
 --- !u!1 &593786304
 GameObject:
   m_ObjectHideFlags: 0
@@ -4971,13 +4971,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 2-6
-  loadStudioName: SFStage
-  title: 2-6
-  windowIndex: 1
-  nextStage: {fileID: 1154784442}
-  stageImage: {fileID: 1966502678}
-  frameImage: {fileID: 1135939668}
+  LoadPathName: 2-6
+  LoadStudioName: SFStage
+  Title: 2-6
+  WindowIndex: 1
+  NextStage: {fileID: 1154784442}
+  StageImage: {fileID: 1966502678}
+  FrameImage: {fileID: 1135939668}
 --- !u!1 &595018900
 GameObject:
   m_ObjectHideFlags: 0
@@ -5319,13 +5319,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 3-6
-  loadStudioName: SFStage
-  title: 3-6
-  windowIndex: 2
-  nextStage: {fileID: 543707667}
-  stageImage: {fileID: 759915782}
-  frameImage: {fileID: 1144042025}
+  LoadPathName: 3-6
+  LoadStudioName: SFStage
+  Title: 3-6
+  WindowIndex: 2
+  NextStage: {fileID: 543707667}
+  StageImage: {fileID: 759915782}
+  FrameImage: {fileID: 1144042025}
 --- !u!1 &652343993
 GameObject:
   m_ObjectHideFlags: 0
@@ -5938,13 +5938,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 1-2
-  loadStudioName: SFStage
-  title: 1-2
-  windowIndex: 0
-  nextStage: {fileID: 135863270}
-  stageImage: {fileID: 2022674601}
-  frameImage: {fileID: 1786861447}
+  LoadPathName: 1-2
+  LoadStudioName: SFStage
+  Title: 1-2
+  WindowIndex: 0
+  NextStage: {fileID: 135863270}
+  StageImage: {fileID: 2022674601}
+  FrameImage: {fileID: 1786861447}
 --- !u!1 &713595025
 GameObject:
   m_ObjectHideFlags: 0
@@ -6303,7 +6303,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 740166101}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.0019367, y: -4.1429253, z: 1.4459169}
+  m_LocalPosition: {x: 3, y: -4.1429253, z: 1.4459169}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6720,13 +6720,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 4-4
-  loadStudioName: SFStage
-  title: 4-4
-  windowIndex: 3
-  nextStage: {fileID: 1692554980}
-  stageImage: {fileID: 1230194539}
-  frameImage: {fileID: 1501670087}
+  LoadPathName: 4-4
+  LoadStudioName: SFStage
+  Title: 4-4
+  WindowIndex: 3
+  NextStage: {fileID: 1692554980}
+  StageImage: {fileID: 1230194539}
+  FrameImage: {fileID: 1501670087}
 --- !u!1 &800235122
 GameObject:
   m_ObjectHideFlags: 0
@@ -8260,13 +8260,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 3-8
-  loadStudioName: SFStage
-  title: 3-8
-  windowIndex: 2
-  nextStage: {fileID: 1803636342}
-  stageImage: {fileID: 884786361}
-  frameImage: {fileID: 1503463546}
+  LoadPathName: 3-8
+  LoadStudioName: SFStage
+  Title: 3-8
+  WindowIndex: 2
+  NextStage: {fileID: 1803636342}
+  StageImage: {fileID: 884786361}
+  FrameImage: {fileID: 1503463546}
 --- !u!1 &949860955
 GameObject:
   m_ObjectHideFlags: 0
@@ -8370,20 +8370,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb2a8ce84ea39c24782b9ee04b286af6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageWindows:
+  StageWindows:
   - {fileID: 1723668588}
   - {fileID: 1613523615}
   - {fileID: 240482437}
   - {fileID: 1983184020}
   - {fileID: 69500562}
-  stageSelectButtons:
+  StageSelectButtons:
   - {fileID: 1707534041}
   - {fileID: 1167633395}
   - {fileID: 1607784331}
   - {fileID: 1371783374}
   - {fileID: 1994183858}
-  activeColor: {r: 1, g: 1, b: 1, a: 1}
-  inActiveColor: {r: 0.5808823, g: 0.5808823, b: 0.5808823, a: 1}
+  ActiveColor: {r: 1, g: 1, b: 1, a: 1}
+  InActiveColor: {r: 0.5808823, g: 0.5808823, b: 0.5808823, a: 1}
 --- !u!4 &953140668
 Transform:
   m_ObjectHideFlags: 0
@@ -8408,21 +8408,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23ca6521be378d4c95185d4291f3a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectStageGroup: {fileID: 1160275373}
-  backButton: {fileID: 1766301011}
-  endWindowBack: {fileID: 1711144793}
-  stageContentView: {fileID: 986986700}
-  quitWindow: {fileID: 1950783029}
-  clickStartText: {fileID: 597793399}
-  monitorEffect: {fileID: 1621385352}
-  directionalLight: {fileID: 1153637309}
-  lightMoveSpeed: 1
-  setFadeTitleBGM: 0
-  setPlaySelectStageBGM: 0
-  setEnableButton: 0
-  videoPlayer: {fileID: 933051094}
-  movieText: {fileID: 280900689}
-  movieStartTime: 10
+  SelectStageGroup: {fileID: 1160275373}
+  BackButton: {fileID: 1766301011}
+  EndWindowBack: {fileID: 1711144793}
+  StageContentView: {fileID: 986986700}
+  QuitWindow: {fileID: 1950783029}
+  ClickStartText: {fileID: 597793399}
+  MonitorEffect: {fileID: 1621385352}
+  DirectionalLight: {fileID: 1153637309}
+  LightMoveSpeed: 1
+  SetFadeTitleBgm: 0
+  SetPlaySelectStageBgm: 0
+  SetEnableButton: 0
+  VideoPlayer: {fileID: 933051094}
+  MovieText: {fileID: 280900689}
+  MovieStartTime: 10
 --- !u!95 &953140670
 Animator:
   serializedVersion: 3
@@ -8486,13 +8486,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: Murata5
-  loadStudioName: SFStage
-  title: Murata5
-  windowIndex: 0
-  nextStage: {fileID: 1892978}
-  stageImage: {fileID: 3691194}
-  frameImage: {fileID: 1584941805}
+  LoadPathName: Murata5
+  LoadStudioName: SFStage
+  Title: Murata5
+  WindowIndex: 0
+  NextStage: {fileID: 1892978}
+  StageImage: {fileID: 3691194}
+  FrameImage: {fileID: 1584941805}
 --- !u!1 &976940751
 GameObject:
   m_ObjectHideFlags: 0
@@ -8615,16 +8615,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 016c4790a454a6a4d919de28131f0ed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 219353614}
-  frameImage: {fileID: 601705449}
-  stageImage: {fileID: 343320327}
-  score: {fileID: 1529918935}
-  accuracy: {fileID: 2093815176}
-  maxCombo: {fileID: 1440370518}
-  title: {fileID: 873749728}
-  loadPathName: 
-  loadStudioName: 
-  startButton: {fileID: 1719481592}
+  Body: {fileID: 219353614}
+  FrameImage: {fileID: 601705449}
+  StageImage: {fileID: 343320327}
+  Score: {fileID: 1529918935}
+  Accuracy: {fileID: 2093815176}
+  MaxCombo: {fileID: 1440370518}
+  Title: {fileID: 873749728}
+  LoadPathName: 
+  LoadStudioName: 
+  StartButton: {fileID: 1719481592}
 --- !u!1 &988015235
 GameObject:
   m_ObjectHideFlags: 0
@@ -8671,13 +8671,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: Matsu1
-  loadStudioName: SFStage
-  title: Matsu1
-  windowIndex: 0
-  nextStage: {fileID: 542130762}
-  stageImage: {fileID: 1857122645}
-  frameImage: {fileID: 402897355}
+  LoadPathName: Matsu1
+  LoadStudioName: SFStage
+  Title: Matsu1
+  WindowIndex: 0
+  NextStage: {fileID: 542130762}
+  StageImage: {fileID: 1857122645}
+  FrameImage: {fileID: 402897355}
 --- !u!1 &988278024
 GameObject:
   m_ObjectHideFlags: 0
@@ -8724,13 +8724,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 3-5
-  loadStudioName: SFStage
-  title: 3-5
-  windowIndex: 2
-  nextStage: {fileID: 640321644}
-  stageImage: {fileID: 152862510}
-  frameImage: {fileID: 1224492455}
+  LoadPathName: 3-5
+  LoadStudioName: SFStage
+  Title: 3-5
+  WindowIndex: 2
+  NextStage: {fileID: 640321644}
+  StageImage: {fileID: 152862510}
+  FrameImage: {fileID: 1224492455}
 --- !u!1 &993723726
 GameObject:
   m_ObjectHideFlags: 0
@@ -9378,13 +9378,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 5-6
-  loadStudioName: SFStage
-  title: 5-6
-  windowIndex: 4
-  nextStage: {fileID: 1430900632}
-  stageImage: {fileID: 1762481422}
-  frameImage: {fileID: 653841288}
+  LoadPathName: 5-6
+  LoadStudioName: SFStage
+  Title: 5-6
+  WindowIndex: 4
+  NextStage: {fileID: 1430900632}
+  StageImage: {fileID: 1762481422}
+  FrameImage: {fileID: 653841288}
 --- !u!1001 &1041700752
 Prefab:
   m_ObjectHideFlags: 0
@@ -9536,13 +9536,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 2-4
-  loadStudioName: SFStage
-  title: 2-4
-  windowIndex: 1
-  nextStage: {fileID: 1861697919}
-  stageImage: {fileID: 1794588939}
-  frameImage: {fileID: 1800659540}
+  LoadPathName: 2-4
+  LoadStudioName: SFStage
+  Title: 2-4
+  WindowIndex: 1
+  NextStage: {fileID: 1861697919}
+  StageImage: {fileID: 1794588939}
+  FrameImage: {fileID: 1800659540}
 --- !u!1 &1070586665
 GameObject:
   m_ObjectHideFlags: 0
@@ -10623,13 +10623,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 2-7
-  loadStudioName: SFStage
-  title: 2-7
-  windowIndex: 1
-  nextStage: {fileID: 274234734}
-  stageImage: {fileID: 1003566651}
-  frameImage: {fileID: 397680705}
+  LoadPathName: 2-7
+  LoadStudioName: SFStage
+  Title: 2-7
+  WindowIndex: 1
+  NextStage: {fileID: 274234734}
+  StageImage: {fileID: 1003566651}
+  FrameImage: {fileID: 397680705}
 --- !u!1 &1160275368
 GameObject:
   m_ObjectHideFlags: 0
@@ -10896,13 +10896,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 2-1
-  loadStudioName: SFStage_Tutorial2-1
-  title: 2-1
-  windowIndex: 1
-  nextStage: {fileID: 1879349966}
-  stageImage: {fileID: 1381655199}
-  frameImage: {fileID: 333832672}
+  LoadPathName: 2-1
+  LoadStudioName: SFStage_Tutorial2-1
+  Title: 2-1
+  WindowIndex: 1
+  NextStage: {fileID: 1879349966}
+  StageImage: {fileID: 1381655199}
+  FrameImage: {fileID: 333832672}
 --- !u!1 &1197796657
 GameObject:
   m_ObjectHideFlags: 0
@@ -11666,13 +11666,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 2-3
-  loadStudioName: SFStage
-  title: 2-3
-  windowIndex: 1
-  nextStage: {fileID: 1065069294}
-  stageImage: {fileID: 1556162377}
-  frameImage: {fileID: 687087616}
+  LoadPathName: 2-3
+  LoadStudioName: SFStage
+  Title: 2-3
+  WindowIndex: 1
+  NextStage: {fileID: 1065069294}
+  StageImage: {fileID: 1556162377}
+  FrameImage: {fileID: 687087616}
 --- !u!1 &1250334851
 GameObject:
   m_ObjectHideFlags: 0
@@ -11793,13 +11793,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 3-4
-  loadStudioName: SFStage
-  title: 3-4
-  windowIndex: 2
-  nextStage: {fileID: 988278026}
-  stageImage: {fileID: 1688247162}
-  frameImage: {fileID: 1314601773}
+  LoadPathName: 3-4
+  LoadStudioName: SFStage
+  Title: 3-4
+  WindowIndex: 2
+  NextStage: {fileID: 988278026}
+  StageImage: {fileID: 1688247162}
+  FrameImage: {fileID: 1314601773}
 --- !u!1 &1276956110
 GameObject:
   m_ObjectHideFlags: 0
@@ -12354,13 +12354,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 4-6
-  loadStudioName: SFStage
-  title: 4-6
-  windowIndex: 3
-  nextStage: {fileID: 423046298}
-  stageImage: {fileID: 510460422}
-  frameImage: {fileID: 1858328494}
+  LoadPathName: 4-6
+  LoadStudioName: SFStage
+  Title: 4-6
+  WindowIndex: 3
+  NextStage: {fileID: 423046298}
+  StageImage: {fileID: 510460422}
+  FrameImage: {fileID: 1858328494}
 --- !u!1 &1320730001
 GameObject:
   m_ObjectHideFlags: 0
@@ -13343,13 +13343,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 5-5
-  loadStudioName: SFStage
-  title: 5-5
-  windowIndex: 4
-  nextStage: {fileID: 1037475250}
-  stageImage: {fileID: 993723729}
-  frameImage: {fileID: 1539282254}
+  LoadPathName: 5-5
+  LoadStudioName: SFStage
+  Title: 5-5
+  WindowIndex: 4
+  NextStage: {fileID: 1037475250}
+  StageImage: {fileID: 993723729}
+  FrameImage: {fileID: 1539282254}
 --- !u!1 &1381655196
 GameObject:
   m_ObjectHideFlags: 0
@@ -14050,13 +14050,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 5-7
-  loadStudioName: SFStage
-  title: 5-7
-  windowIndex: 4
-  nextStage: {fileID: 528900801}
-  stageImage: {fileID: 542278164}
-  frameImage: {fileID: 2037832095}
+  LoadPathName: 5-7
+  LoadStudioName: SFStage
+  Title: 5-7
+  WindowIndex: 4
+  NextStage: {fileID: 528900801}
+  StageImage: {fileID: 542278164}
+  FrameImage: {fileID: 2037832095}
 --- !u!1 &1431895951
 GameObject:
   m_ObjectHideFlags: 0
@@ -14103,13 +14103,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 1-6
-  loadStudioName: SFStage
-  title: 1-6
-  windowIndex: 0
-  nextStage: {fileID: 1844180311}
-  stageImage: {fileID: 1276956113}
-  frameImage: {fileID: 1730936676}
+  LoadPathName: 1-6
+  LoadStudioName: SFStage
+  Title: 1-6
+  WindowIndex: 0
+  NextStage: {fileID: 1844180311}
+  StageImage: {fileID: 1276956113}
+  FrameImage: {fileID: 1730936676}
 --- !u!1 &1440370516
 GameObject:
   m_ObjectHideFlags: 0
@@ -14304,13 +14304,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 3-1
-  loadStudioName: SFStage_Tutorial3-1
-  title: 3-1
-  windowIndex: 2
-  nextStage: {fileID: 1909326884}
-  stageImage: {fileID: 1343170251}
-  frameImage: {fileID: 1461408288}
+  LoadPathName: 3-1
+  LoadStudioName: SFStage_Tutorial3-1
+  Title: 3-1
+  WindowIndex: 2
+  NextStage: {fileID: 1909326884}
+  StageImage: {fileID: 1343170251}
+  FrameImage: {fileID: 1461408288}
 --- !u!1 &1457018813 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1046328762684308, guid: 17a7205c2c5d33e47ad960d370f977c6,
@@ -15155,13 +15155,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 1-1
-  loadStudioName: SFStage_Tutorial1-1
-  title: 1-1
-  windowIndex: 0
-  nextStage: {fileID: 713533196}
-  stageImage: {fileID: 744878097}
-  frameImage: {fileID: 1278781306}
+  LoadPathName: 1-1
+  LoadStudioName: SFStage_Tutorial1-1
+  Title: 1-1
+  WindowIndex: 0
+  NextStage: {fileID: 713533196}
+  StageImage: {fileID: 744878097}
+  FrameImage: {fileID: 1278781306}
 --- !u!1 &1529918933
 GameObject:
   m_ObjectHideFlags: 0
@@ -15282,13 +15282,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 1-5
-  loadStudioName: SFStage
-  title: 1-5
-  windowIndex: 0
-  nextStage: {fileID: 1431895953}
-  stageImage: {fileID: 1910808873}
-  frameImage: {fileID: 1233944729}
+  LoadPathName: 1-5
+  LoadStudioName: SFStage
+  Title: 1-5
+  WindowIndex: 0
+  NextStage: {fileID: 1431895953}
+  StageImage: {fileID: 1910808873}
+  FrameImage: {fileID: 1233944729}
 --- !u!1 &1530684722
 GameObject:
   m_ObjectHideFlags: 0
@@ -15885,13 +15885,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: Murata3
-  loadStudioName: SFStage
-  title: Murata3
-  windowIndex: 0
-  nextStage: {fileID: 306278524}
-  stageImage: {fileID: 718813881}
-  frameImage: {fileID: 1148875630}
+  LoadPathName: Murata3
+  LoadStudioName: SFStage
+  Title: Murata3
+  WindowIndex: 0
+  NextStage: {fileID: 306278524}
+  StageImage: {fileID: 718813881}
+  FrameImage: {fileID: 1148875630}
 --- !u!1 &1584941803
 GameObject:
   m_ObjectHideFlags: 0
@@ -16904,13 +16904,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 4-5
-  loadStudioName: SFStage
-  title: 4-5
-  windowIndex: 3
-  nextStage: {fileID: 1320187138}
-  stageImage: {fileID: 1496968352}
-  frameImage: {fileID: 699870883}
+  LoadPathName: 4-5
+  LoadStudioName: SFStage
+  Title: 4-5
+  WindowIndex: 3
+  NextStage: {fileID: 1320187138}
+  StageImage: {fileID: 1496968352}
+  FrameImage: {fileID: 699870883}
 --- !u!1 &1692708292
 GameObject:
   m_ObjectHideFlags: 0
@@ -16957,13 +16957,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 1-8
-  loadStudioName: SFStage
-  title: 1-8
-  windowIndex: 0
-  nextStage: {fileID: 1197722518}
-  stageImage: {fileID: 1536523754}
-  frameImage: {fileID: 15707945}
+  LoadPathName: 1-8
+  LoadStudioName: SFStage
+  Title: 1-8
+  WindowIndex: 0
+  NextStage: {fileID: 1197722518}
+  StageImage: {fileID: 1536523754}
+  FrameImage: {fileID: 15707945}
 --- !u!1 &1698349970
 GameObject:
   m_ObjectHideFlags: 0
@@ -18361,13 +18361,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 4-2
-  loadStudioName: SFStage
-  title: 4-2
-  windowIndex: 3
-  nextStage: {fileID: 230665826}
-  stageImage: {fileID: 96947362}
-  frameImage: {fileID: 469447698}
+  LoadPathName: 4-2
+  LoadStudioName: SFStage
+  Title: 4-2
+  WindowIndex: 3
+  NextStage: {fileID: 230665826}
+  StageImage: {fileID: 96947362}
+  FrameImage: {fileID: 469447698}
 --- !u!1 &1799938101
 GameObject:
   m_ObjectHideFlags: 0
@@ -18663,13 +18663,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 4-1
-  loadStudioName: SFStage_Tutorial4-1
-  title: 4-1
-  windowIndex: 3
-  nextStage: {fileID: 1799837091}
-  stageImage: {fileID: 2023952002}
-  frameImage: {fileID: 976940753}
+  LoadPathName: 4-1
+  LoadStudioName: SFStage_Tutorial4-1
+  Title: 4-1
+  WindowIndex: 3
+  NextStage: {fileID: 1799837091}
+  StageImage: {fileID: 2023952002}
+  FrameImage: {fileID: 976940753}
 --- !u!1 &1841661822
 GameObject:
   m_ObjectHideFlags: 0
@@ -18785,13 +18785,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 1-7
-  loadStudioName: SFStage
-  title: 1-7
-  windowIndex: 0
-  nextStage: {fileID: 1692708294}
-  stageImage: {fileID: 1372318724}
-  frameImage: {fileID: 748742538}
+  LoadPathName: 1-7
+  LoadStudioName: SFStage
+  Title: 1-7
+  WindowIndex: 0
+  NextStage: {fileID: 1692708294}
+  StageImage: {fileID: 1372318724}
+  FrameImage: {fileID: 748742538}
 --- !u!1 &1857122642
 GameObject:
   m_ObjectHideFlags: 0
@@ -19087,13 +19087,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 2-5
-  loadStudioName: SFStage
-  title: 2-5
-  windowIndex: 1
-  nextStage: {fileID: 593786306}
-  stageImage: {fileID: 90264676}
-  frameImage: {fileID: 1857938209}
+  LoadPathName: 2-5
+  LoadStudioName: SFStage
+  Title: 2-5
+  WindowIndex: 1
+  NextStage: {fileID: 593786306}
+  StageImage: {fileID: 90264676}
+  FrameImage: {fileID: 1857938209}
 --- !u!1 &1872962592
 GameObject:
   m_ObjectHideFlags: 0
@@ -19285,13 +19285,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 2-2
-  loadStudioName: SFStage
-  title: 2-2
-  windowIndex: 1
-  nextStage: {fileID: 1245379784}
-  stageImage: {fileID: 1699119050}
-  frameImage: {fileID: 1841661824}
+  LoadPathName: 2-2
+  LoadStudioName: SFStage
+  Title: 2-2
+  WindowIndex: 1
+  NextStage: {fileID: 1245379784}
+  StageImage: {fileID: 1699119050}
+  FrameImage: {fileID: 1841661824}
 --- !u!1 &1886607680
 GameObject:
   m_ObjectHideFlags: 0
@@ -19525,13 +19525,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 3-2
-  loadStudioName: SFStage
-  title: 3-2
-  windowIndex: 2
-  nextStage: {fileID: 189860949}
-  stageImage: {fileID: 831378918}
-  frameImage: {fileID: 1929297340}
+  LoadPathName: 3-2
+  LoadStudioName: SFStage
+  Title: 3-2
+  WindowIndex: 2
+  NextStage: {fileID: 189860949}
+  StageImage: {fileID: 831378918}
+  FrameImage: {fileID: 1929297340}
 --- !u!1 &1910808870
 GameObject:
   m_ObjectHideFlags: 0
@@ -19758,9 +19758,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0205974eb7255f469c3820460b5f39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quitButton: {fileID: 1028248543}
-  titleButton: {fileID: 505583726}
-  body: {fileID: 1356053532}
+  QuitButton: {fileID: 1028248543}
+  TitleButton: {fileID: 505583726}
+  Body: {fileID: 1356053532}
 --- !u!1 &1960114808
 GameObject:
   m_ObjectHideFlags: 0
@@ -20206,13 +20206,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 4-8
-  loadStudioName: SFStage
-  title: 4-8
-  windowIndex: 3
-  nextStage: {fileID: 169649231}
-  stageImage: {fileID: 1392613031}
-  frameImage: {fileID: 409990121}
+  LoadPathName: 4-8
+  LoadStudioName: SFStage
+  Title: 4-8
+  WindowIndex: 3
+  NextStage: {fileID: 169649231}
+  StageImage: {fileID: 1392613031}
+  FrameImage: {fileID: 409990121}
 --- !u!1 &2022674598
 GameObject:
   m_ObjectHideFlags: 0
@@ -20481,13 +20481,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: Murata1
-  loadStudioName: SFStage
-  title: Murata1
-  windowIndex: 0
-  nextStage: {fileID: 520743861}
-  stageImage: {fileID: 1077920258}
-  frameImage: {fileID: 674960968}
+  LoadPathName: Murata1
+  LoadStudioName: SFStage
+  Title: Murata1
+  WindowIndex: 0
+  NextStage: {fileID: 520743861}
+  StageImage: {fileID: 1077920258}
+  FrameImage: {fileID: 674960968}
 --- !u!1 &2030759031
 GameObject:
   m_ObjectHideFlags: 0
@@ -21096,13 +21096,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601b0948a3249046aaf50be7fbceaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadPathName: 5-4
-  loadStudioName: SFStage
-  title: 5-4
-  windowIndex: 4
-  nextStage: {fileID: 1376630936}
-  stageImage: {fileID: 1684405050}
-  frameImage: {fileID: 1138165508}
+  LoadPathName: 5-4
+  LoadStudioName: SFStage
+  Title: 5-4
+  WindowIndex: 4
+  NextStage: {fileID: 1376630936}
+  StageImage: {fileID: 1684405050}
+  FrameImage: {fileID: 1138165508}
 --- !u!1 &2093815174
 GameObject:
   m_ObjectHideFlags: 0

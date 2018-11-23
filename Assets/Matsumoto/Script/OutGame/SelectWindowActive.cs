@@ -1,57 +1,61 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 各ステージのウィンドウを切り替える
+/// </summary>
 public class SelectWindowActive : MonoBehaviour {
 
-	public static int activeWindowIndex = 0;
+	public static int ActiveWindowIndex;
 
-	public RectTransform[] stageWindows;
-	public Button[] stageSelectButtons;
+	public RectTransform[] StageWindows;
+	public Button[] StageSelectButtons;
 
-	public Color activeColor;
-	public Color inActiveColor;
+	public Color ActiveColor;
+	public Color InActiveColor;
 
-	Image[] buttonImages;
+	private Image[] _buttonImages;
 
-	// Use this for initialization
-	void Start () {
+	private void Start() {
 
-		buttonImages = new Image[stageSelectButtons.Length];
+		_buttonImages = new Image[StageSelectButtons.Length];
 
-		for(int i = 0;i < stageWindows.Length;i++) {
+		for(var i = 0;i < StageWindows.Length;i++) {
 
-			var button = stageSelectButtons[i];
-			var capture_i = i;
+			var button = StageSelectButtons[i];
+			var captureI = i;
 
 			button.onClick.AddListener(() => {
 				AudioManager.PlaySE("click03");
-				SetActiveWindow(capture_i);
+				SetActiveWindow(captureI);
 			});
 
-			buttonImages[i] = button.GetComponent<Image>();
+			_buttonImages[i] = button.GetComponent<Image>();
 		}
 
-		SetActiveWindow(activeWindowIndex);
+		SetActiveWindow(ActiveWindowIndex);
 	}
-	
-	void SetActiveWindow(int windowIndex) {
 
-		activeWindowIndex = windowIndex;
+	/// <summary>
+	/// ウィンドウタブを切り替える
+	/// </summary>
+	/// <param name="windowIndex"></param>
+	private void SetActiveWindow(int windowIndex) {
 
-		for(int i = 0;i < buttonImages.Length;i++) {
+		ActiveWindowIndex = windowIndex;
+
+		for(var i = 0;i < _buttonImages.Length;i++) {
 
 			Color col;
 			if(windowIndex == i) {
-				col = activeColor;
-				stageWindows[i].SetAsLastSibling();
+				col = ActiveColor;
+				StageWindows[i].SetAsLastSibling();
 			}
 			else {
-				col = inActiveColor;
+				col = InActiveColor;
 			}
 
-			buttonImages[i].color = col;
+			_buttonImages[i].color = col;
 
 		}
 	}

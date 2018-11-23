@@ -1,52 +1,50 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 using UnityEngine;
 
+/// <summary>
+/// ステージ選択ウィンドウに現れるステージのボタン
+/// </summary>
 public class StageMoveButton : MonoBehaviour {
 
-	public string loadPathName;
-	public string loadStudioName;
-	public string title;
+	public string LoadPathName;
+	public string LoadStudioName;
+	public string Title;
 
-	public int windowIndex;
-	public StageMoveButton nextStage;
-	public Image stageImage;
-	public Image frameImage;
+	public int WindowIndex;
+	public StageMoveButton NextStage;
+	public Image StageImage;
+	public Image FrameImage;
 
-	StageSelectController owner;
+	private StageSelectController _owner;
 
-	// Use this for initialization
+	/// <summary>
+	/// 最初に呼ばれる
+	/// </summary>
+	/// <param name="owner"></param>
 	public void Init (StageSelectController owner) {
-		this.owner = owner;
+		_owner = owner;
 
-		GetComponentInChildren<Button>().onClick.AddListener(OnClick);
-		GetComponentInChildren<Text>().text = title;
+		GetComponentInChildren<Button>().onClick.AddListener(() => {
+			AudioManager.PlaySE("click03");
+			_owner.ShowStageWindow(this);
+		});
+
+		GetComponentInChildren<Text>().text = Title;
 
 		//達成状況によってフレームの色を変える
-		var data = GameData.stageData[loadPathName];
+		var data = GameData.stageData[LoadPathName];
 
 		//未クリア
 		if(data.score == 0) {
-			frameImage.color = new Color(0, 0, 0, 0);
+			FrameImage.color = new Color(0, 0, 0, 0);
 		}
 		//とりあえずクリア
 		else if(data.accuracy < 1.0f) {
-			frameImage.sprite = Resources.Load<Sprite>("Texture/ClearFrame");
+			FrameImage.sprite = Resources.Load<Sprite>("Texture/ClearFrame");
 		}
 		//パーフェクト
 		else {
-			frameImage.sprite = Resources.Load<Sprite>("Texture/ClearParfectFrame");
+			FrameImage.sprite = Resources.Load<Sprite>("Texture/ClearParfectFrame");
 		}
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-	void OnClick() {
-		AudioManager.PlaySE("click03");
-		owner.ShowStageWindow(this);
 	}
 }

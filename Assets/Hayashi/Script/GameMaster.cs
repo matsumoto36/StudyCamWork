@@ -219,10 +219,10 @@ public class GameMaster : MonoBehaviour {
 
 		Cursor.visible = true;
 
-		StageSelectController.movieSkip = true;
+		StageSelectController.MovieSkip = true;
 
 		if(counter > 0) {
-			SelectWindowActive.activeWindowIndex = nextStageList[counter - 1].windowIndex;
+			SelectWindowActive.ActiveWindowIndex = nextStageList[counter - 1].windowIndex;
 		}
 
 		FindObjectOfType<TimerController>()
