@@ -1,32 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+
+/// <summary>
+/// リザルト画面に表示されるウィンドウ
+/// </summary>
 public class ResultUI : MonoBehaviour {
-    public Text ResultScoreText;
-    public Text ResultaccText;
-    public Text ResultcomboText;
 
-    public int ResultScore;
-    public float ResultAccuracy;
-    public int ResultCombo;
+	public Text ResultScoreText;
+	public Text ResultAccText;
+	public Text ResultComboText;
 
-    // Use this for initialization
-    void Start ()
-    {
-       
-    }
-	
+	public int ResultScore;
+	public float ResultAccuracy;
+	public int ResultCombo;
+
+	private MouseCamera _mouseCamera;
+
+	// Use this for initialization
+	private void Start() {
+		_mouseCamera = FindObjectOfType<MouseCamera>();
+	}
+
 	// Update is called once per frame
-	void Update ()
-    {
-        ResultScore = MouseCamera.Score;
-        ResultCombo = MouseCamera.ComboMax;
-        ResultAccuracy = MouseCamera.Accuracy;
+	private void Update() {
+		ResultScore = _mouseCamera.Score;
+		ResultCombo = _mouseCamera.ComboMax;
+		ResultAccuracy = _mouseCamera.Accuracy;
 
-        ResultScoreText.text = ResultScore.ToString();
-        if (ResultAccuracy == 1.0f) ResultaccText.text = "100%";
-        else ResultaccText.text = ResultAccuracy.ToString("P");
-        ResultcomboText.text = "x" + ResultCombo.ToString("");
-    }
+		ResultScoreText.text = ResultScore.ToString();
+		ResultAccText.text =
+			ResultAccuracy >= 1.0f ? "100%" : ResultAccuracy.ToString("P");
+
+		ResultComboText.text = "x" + ResultCombo.ToString("");
+	}
 }

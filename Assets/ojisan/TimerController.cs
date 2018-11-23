@@ -1,59 +1,46 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class TimerController : MonoBehaviour
-{
-    public static string Next_Scene;//シーン名
+/// <summary>
+/// シーン遷移を行う
+/// </summary>
+public class TimerController : MonoBehaviour {
 
-    PostEffect effect;
+	public static string NextScene;//シーン名
 
-	bool isSceneMoving = false;
+	private PostEffect _effect;
+	private bool _isSceneMoving;
 
-    void Start()
-    {
-        effect = GetComponent<PostEffect>();
+	private void Start() {
+		_effect = GetComponent<PostEffect>();
+		DontDestroyOnLoad(gameObject);
+	}
 
-        DontDestroyOnLoad(gameObject);
-    }
+	/// <summary>
+	/// シーン遷移
+	/// </summary>
+	/// <param name="nextSceneName"></param>
+	public void StageSelect(string nextSceneName) {
+		NextScene = nextSceneName;//Next_Sceneに名前を入れる
+		SceneManager.LoadScene(NextScene);//飛びますよ。
+	}
 
+	//フェードアウト->シーン移動->フェードイン
+	IEnumerator SceneMoveCoroutine(string nextSceneName) {
 
-    void Update()
-    {
+		yield return StartCoroutine(_effect.FadeOut());
 
-    }
+		NextScene = nextSceneName;
+		SceneManager.LoadScene(NextScene);
 
+		yield return new WaitForSeconds(1);
+		yield return StartCoroutine(_effect.FadeIn());
 
-    /// <summary>
-    /// シーン遷移
-    /// </summary>
-    /// <param name="NextSceneName"></param>
-    public void stageSelect(string NextSceneName)
-    {
-        Next_Scene = NextSceneName;//Next_Sceneに名前を入れる
-        SceneManager.LoadScene(Next_Scene);//飛びますよ。
-    }
-
-    //フェードアウト→シーン移動→フェードイン
-    IEnumerator SM(string NextSceneName)
-    {
- 
-        yield return StartCoroutine(effect.FadeOut());
-        
-        Next_Scene = NextSceneName;
-        SceneManager.LoadScene(Next_Scene);
-
-        yield return new WaitForSeconds(1);
-
-        yield return StartCoroutine(effect.FadeIn());
-
-        Destroy(this.gameObject);
-    }
-    public void SceneMove(string SceneName)
-    {
-		if(isSceneMoving) {
+		Destroy(gameObject);
+	}
+	public void SceneMove(string SceneName) {
+		if(_isSceneMoving) {
 			foreach(var item in FindObjectsOfType<TimerController>()) {
 				if(item == this) continue;
 				item.SceneMove(SceneName);
@@ -61,7 +48,7 @@ public class TimerController : MonoBehaviour
 			}
 		}
 
-		isSceneMoving = true;
-		StartCoroutine(SM(SceneName));
-    }
+		_isSceneMoving = true;
+		StartCoroutine(SceneMoveCoroutine(SceneName));
+	}
 }

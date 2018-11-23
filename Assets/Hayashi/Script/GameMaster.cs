@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public enum GameState {
@@ -12,28 +13,32 @@ public enum GameState {
 	AfterEnd,
 }
 
+/// <summary>
+/// ゲームの進行管理をする
+/// </summary>
 public class GameMaster : MonoBehaviour {
 
-	public const string STUDIO_PREFAB_BASE_PATH = "Prefab/Stage/StudioSet/";
-	public const string PATH_PREFAB_BASE_PATH = "Prefab/Stage/Path/";
-	const string PLAYER_PREFAB_PATH = "Prefab/Player";
+	public const string StudioPrefabBasePath = "Prefab/Stage/StudioSet/";
+	public const string PathPrefabBasePath = "Prefab/Stage/Path/";
+
+	private const string PlayerPrefabPath = "Prefab/Player";
 
 	public static bool IsTestPlayMode;
 
 	public static string LoadPathName = "";
-	public string loadPathName;
+	private string _loadPathName;
 	public static string LoadStudioName = "";
-	public string loadStudioName;
+	private string _loadStudioName;
 
-	public static List<StageInfo> nextStageList;
-	static int counter = 0;
+	public static List<StageInfo> NextStageList;
+	private static int _counter = 0;
 
-	public Text countDownText;
-   
-    public StageController stageController;
-    public MouseCamera mouseCamera;
+	public Text CountDownText;
 
-	bool isSceneMoving;
+	public StageController StageController;
+	public MouseCamera MouseCamera;
+
+	private bool _isSceneMoving;
 
 	public event Action OnGameStart;
 	public event Action OnGameStartCountDown;
@@ -42,29 +47,29 @@ public class GameMaster : MonoBehaviour {
 
 	public GameState State { get; private set; }
 
-	static GameMaster instance;
+	private static GameMaster _instance;
 	public static GameMaster Instance {
 		get {
-			if(!instance) {
-				instance = FindObjectOfType<GameMaster>();
+			if(!_instance) {
+				_instance = FindObjectOfType<GameMaster>();
 			}
-			return instance;
+			return _instance;
 		}
 	}
 
 	public GameBalanceData GameBalanceData { get; private set; }
 
 	// Use this for initialization
-	void Awake () {
+	private void Awake() {
 		if(Instance != this) Destroy(gameObject);
-		instance = this;
+		_instance = this;
 
 		//サウンドの読み込み
 		AudioManager.Load();
 		//パーティクルの読み込み
 		ParticleManager.Load();
 
-		countDownText.text = "";
+		CountDownText.text = "";
 
 		//BGM再生
 		if(AudioManager.CurrentBGMName != "StageBGM1") {
@@ -72,37 +77,37 @@ public class GameMaster : MonoBehaviour {
 		}
 	}
 
-	void Start() {
+	private void Start() {
 
-		if(LoadPathName != "") loadPathName = LoadPathName;
-		if(LoadStudioName != "") loadStudioName = LoadStudioName;
+		if(LoadPathName != "") _loadPathName = LoadPathName;
+		if(LoadStudioName != "") _loadStudioName = LoadStudioName;
 
 		//スタジオの生成
-		Instantiate(Resources.Load<GameObject>(STUDIO_PREFAB_BASE_PATH + loadStudioName));
+		Instantiate(Resources.Load<GameObject>(StudioPrefabBasePath + _loadStudioName));
 
 		//ステージの生成
-		var stage = Instantiate(Resources.Load<GameObject>(PATH_PREFAB_BASE_PATH + loadPathName));
+		var stage = Instantiate(Resources.Load<GameObject>(PathPrefabBasePath + _loadPathName));
 		var path = stage.GetComponent<Bezier2D>();
 		var gimmickManager = stage.GetComponent<GimmickManager>();
 
 		GameBalanceData = stage.GetComponent<GameBalanceData>();
 
 		//プレイヤーの生成
-		var player = Instantiate(Resources.Load<Player>(PLAYER_PREFAB_PATH));
+		var player = Instantiate(Resources.Load<Player>(PlayerPrefabPath));
 
-		stageController.InitStage(player, path, gimmickManager);
+		StageController.InitStage(player, path, gimmickManager);
 	}
 
 	// Update is called once per frame
-	void Update () {
+	private void Update() {
 
 		if(State == GameState.BeforeStart) {
 			if(Input.GetMouseButtonDown(0)) GameStart();
 		}
 
-		stageController.StageUpdate();
-    }
-    
+		StageController.StageUpdate();
+	}
+
 	public void GameStart() {
 
 		State = GameState.Starting;
@@ -125,26 +130,29 @@ public class GameMaster : MonoBehaviour {
 
 		if(OnGameClear != null) OnGameClear();
 
-		if (!IsTestPlayMode) {
+		if(!IsTestPlayMode) {
 
-			Debug.Log("DataSave");
-			Debug.Log("Combo " + MouseCamera.ComboMax);
+			var mouseCamera = FindObjectOfType<MouseCamera>();
+			if(mouseCamera) {
 
-			//データのセーブ
-			if(GameData.StageData != null) {
-				var data = GameData.StageData[loadPathName];
-				if(data.Score < MouseCamera.Score) {
-					data.Score = MouseCamera.Score;
-					data.Accuracy = MouseCamera.Accuracy;
-					data.MaxCombo = MouseCamera.ComboMax;
-					GameData.StageData[loadPathName] = data;
-					GameData.Save();
+				Debug.Log("DataSave");
+				Debug.Log("Combo " + mouseCamera.ComboMax);
+
+				//データのセーブ
+				if(GameData.StageData != null) {
+					var data = GameData.StageData[_loadPathName];
+					if(data.Score < mouseCamera.Score) {
+						data.Score = mouseCamera.Score;
+						data.Accuracy = mouseCamera.Accuracy;
+						data.MaxCombo = mouseCamera.ComboMax;
+						GameData.StageData[_loadPathName] = data;
+						GameData.Save();
+					}
 				}
 			}
-
 		}
 
-		countDownText.text = "GameClear";
+		CountDownText.text = "GameClear";
 
 		State = GameState.AfterEnd;
 	}
@@ -154,75 +162,74 @@ public class GameMaster : MonoBehaviour {
 		State = GameState.Ending;
 
 		if(OnGameOver != null) OnGameOver();
-		countDownText.text = "GameOver";
+		CountDownText.text = "GameOver";
 
 		State = GameState.AfterEnd;
 	}
 
-	IEnumerator CountDown() {
+	private IEnumerator CountDown() {
 
 		if(OnGameStartCountDown != null)
 			OnGameStartCountDown();
 
 		yield return new WaitForSeconds(1);
 		AudioManager.PlaySE("CountDown");
-		countDownText.text = "3";
+		CountDownText.text = "3";
 		yield return new WaitForSeconds(1);
-		countDownText.text = "2";
+		CountDownText.text = "2";
 		yield return new WaitForSeconds(1);
-		countDownText.text = "1";
+		CountDownText.text = "1";
 		yield return new WaitForSeconds(1);
-		countDownText.text = "Queue";
+		CountDownText.text = "Queue";
 		yield return new WaitForSeconds(1);
 
-		countDownText.text = "";
-		if(OnGameStart != null)
-        {
+		CountDownText.text = "";
+		if(OnGameStart != null) {
 
-            OnGameStart();
-        }
+			OnGameStart();
+		}
 
 		State = GameState.Playing;
 	}
 
 	public static void SetNextStage(List<StageInfo> stageInfo) {
-		nextStageList = stageInfo;
-		counter = 0;
+		NextStageList = stageInfo;
+		_counter = 0;
 	}
 
 	public void NextScene() {
 
-		var nextStageInfo = nextStageList[counter];
+		var nextStageInfo = NextStageList[_counter];
 		if(nextStageInfo == null) return;
 
-		if(isSceneMoving) return;
-		isSceneMoving = true;
+		if(_isSceneMoving) return;
+		_isSceneMoving = true;
 
 		LoadPathName = nextStageInfo.PathName;
 		LoadStudioName = nextStageInfo.StudioName;
 
-		counter++;
+		_counter++;
 
 		FindObjectOfType<TimerController>()
 			.SceneMove("GameScene");
 	}
 
 	public bool CanMoveNextStage() {
-		if(nextStageList == null) return false;
-		return nextStageList[counter] != null;
+		if(NextStageList == null) return false;
+		return NextStageList[_counter] != null;
 	}
 
 	public void MoveSelectScene() {
 
-		if(isSceneMoving) return;
-		isSceneMoving = true;
+		if(_isSceneMoving) return;
+		_isSceneMoving = true;
 
 		Cursor.visible = true;
 
 		StageSelectController.MovieSkip = true;
 
-		if(counter > 0) {
-			SelectWindowActive.ActiveWindowIndex = nextStageList[counter - 1].WindowIndex;
+		if(_counter > 0) {
+			SelectWindowActive.ActiveWindowIndex = NextStageList[_counter - 1].WindowIndex;
 		}
 
 		FindObjectOfType<TimerController>()
@@ -232,8 +239,8 @@ public class GameMaster : MonoBehaviour {
 
 	public void Retry() {
 
-		if(isSceneMoving) return;
-		isSceneMoving = true;
+		if(_isSceneMoving) return;
+		_isSceneMoving = true;
 
 		FindObjectOfType<TimerController>()
 			.SceneMove("GameScene");

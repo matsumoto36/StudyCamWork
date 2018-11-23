@@ -36,7 +36,7 @@ public class MakingScene : MonoBehaviour {
 		GameMaster.LoadPathName = stage.name;
 
 		//生成できるかチェック
-		var prefabPath = GameMaster.PATH_PREFAB_BASE_PATH + GameMaster.LoadPathName;
+		var prefabPath = GameMaster.PathPrefabBasePath + GameMaster.LoadPathName;
 		var prefab = Resources.Load(prefabPath);
 		if(!prefab) {
 #if UNITY_EDITOR
@@ -98,7 +98,7 @@ public class MakingScene : MonoBehaviour {
 	/// 背景を生成する
 	/// </summary>
 	private void SpawnStudioSet() {
-		var obj = Resources.Load<GameObject>(GameMaster.STUDIO_PREFAB_BASE_PATH + LoadStudioSet);
+		var obj = Resources.Load<GameObject>(GameMaster.StudioPrefabBasePath + LoadStudioSet);
 		if(!obj) return;
 		_studioSet = Instantiate(obj);
 		_studioSet.transform.SetParent(transform);

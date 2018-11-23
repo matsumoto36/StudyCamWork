@@ -1,10 +1,6 @@
 ﻿#if UNITY_EDITOR
-
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using System.IO;
 
 /// <summary>
 /// スクリーンショットを撮るエディタ拡張。
@@ -14,24 +10,23 @@ using System.IO;
 public class ScreenshotPrinter : Editor {
 
 	[MenuItem("Tools/SaveScreenshot #F2")]
-	private static void CaptureScreenshot() {
+	private static void CaptureScreenShot() {
 
 		// ファイルダイアログの表示.
-		string filePath = EditorUtility.SaveFilePanel("Save Texture", "", System.DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".png", "png");
-		if(filePath.Length > 0) {
+		var filePath = EditorUtility.SaveFilePanel("Save Texture", "", System.DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".png", "png");
+		if(filePath.Length <= 0) return;
 
-			// キャプチャを撮る
-			ScreenCapture.CaptureScreenshot(filePath); // GameViewにフォーカスがない場合、この時点では撮られない
-			
-			// GameViewを取得してくる
-			var assembly = typeof(UnityEditor.EditorWindow).Assembly;
-			var type = assembly.GetType("UnityEditor.GameView");
-			var gameview = EditorWindow.GetWindow(type);
-			// GameViewを再描画
-			gameview.Repaint();
+		// キャプチャを撮る
+		ScreenCapture.CaptureScreenshot(filePath); // GameViewにフォーカスがない場合、この時点では撮られない
 
-			Debug.Log("SaveScreenShot: " + filePath);
-		}
+		// GameViewを取得してくる
+		var assembly = typeof(EditorWindow).Assembly;
+		var type = assembly.GetType("UnityEditor.GameView");
+		var gameView = EditorWindow.GetWindow(type);
+
+		// GameViewを再描画
+		gameView.Repaint();
+		Debug.Log("SaveScreenShot: " + filePath);
 	}
 }
 

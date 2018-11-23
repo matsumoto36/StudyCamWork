@@ -1,234 +1,207 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class GameEnd : MonoBehaviour
-{
-    //リザルトの背景、枠、文字
-    public CanvasGroup ResultBackFrame;
-    //リザルトのもろもろ
-    public CanvasGroup ResultGroup;
-    //スコア
-    public Text Score;
-    //コンボ
-    public Text Combo;
-    //正確さ
-    public Text Accuracy;
+public class GameEnd : MonoBehaviour {
+	//リザルトの背景、枠、文字
+	public CanvasGroup ResultBackFrame;
+	//リザルトのもろもろ
+	public CanvasGroup ResultGroup;
+	//スコア
+	public Text Score;
+	//コンボ
+	public Text Combo;
+	//正確さ
+	public Text Accuracy;
 
-    //ベストスコア
-    public Text BestScore;
-    //ベスト正確さ
-    public Text BestAccuracy;
-    //ベストコンボ
-    public Text BestCombo;
+	//ベストスコア
+	public Text BestScore;
+	//ベスト正確さ
+	public Text BestAccuracy;
+	//ベストコンボ
+	public Text BestCombo;
 
-    //リザルト用キャンバス
-    public GameObject canvas;
+	//リザルト用キャンバス
+	public GameObject Canvas;
 
-    Text[] text = new Text[3];
+	private readonly Text[] _texts = new Text[3];
 
-    //リトライボタン
-    public CanvasGroup Retry;
-    //ステージセレクトボタン
-    public CanvasGroup Back;
-    //ネクストステージボタン
-    public CanvasGroup Next;
-    //リザルトのスキップ
-    bool skip;
+	//リトライボタン
+	public CanvasGroup Retry;
+	//ステージセレクトボタン
+	public CanvasGroup Back;
+	//ネクストステージボタン
+	public CanvasGroup Next;
+
 	//どれかのボタンが選択されたかどうか
-	bool isButtonSelected;
+	private bool _isButtonSelected;
 
-    Color startColor = new Color(0, 0, 0, 0);
-    Color endColor = new Color(0, 0, 0, 0.8f);
+	private readonly Color _textStartColor = new Color(1, 1, 1, 0);
+	private readonly Color _textEndColor = new Color(1, 1, 1, 1);
 
-    Color TextstartColor = new Color(1, 1, 1, 0);
-    Color TextendColor = new Color(1, 1, 1, 1);
+	// Use this for initialization
+	private void Start() {
+		_texts[0] = Score;
+		_texts[1] = Accuracy;
+		_texts[2] = Combo;
 
-    // Use this for initialization
-    void Start ()
-    {
-        text[0] = Score;
-        text[1] = Accuracy;
-        text[2] = Combo;
+		//グループ内のUI要素が入力を受け付けるかどうか
+		Retry.interactable = false;
+		Back.interactable = false;
+		Next.interactable = false;
 
-        //グループ内のUI要素が入力を受け付けるかどうか
-        Retry.interactable = false;
-        Back.interactable = false;
-        Next.interactable = false;
+		ResultBackFrame.alpha = 0;
+		ResultGroup.alpha = 0;
+		Score.color = _textStartColor;
+		Combo.color = _textStartColor;
+		Accuracy.color = _textStartColor;
 
-        ResultBackFrame.alpha = 0;
-        ResultGroup.alpha = 0;
-        Score.color = TextstartColor;
-        Combo.color = TextstartColor;
-        Accuracy.color = TextstartColor;
+		Retry.alpha = 0;
+		Back.alpha = 0;
+		Next.alpha = 0;
 
-        Retry.alpha = 0;
-        Back.alpha = 0;
-        Next.alpha = 0;
+		GameMaster.Instance.OnGameClear += () => {
+			StartCoroutine(GameClearResult());
+		};
 
-        GameMaster.Instance.OnGameClear += () =>
-        {
-            StartCoroutine(GameClearResult());
-        };
+		GameMaster.Instance.OnGameOver += () => {
+			StartCoroutine(GameOverResult());
+		};
+	}
 
-        GameMaster.Instance.OnGameOver += () =>
-        {
-            StartCoroutine(GameOverResult());
-        };
-    }
-	
-	// Update is called once per frame
-	void Update () {
+	//ゲームクリア時のコルーチン
+	private IEnumerator GameClearResult() {
+		if(GameMaster.IsTestPlayMode) {
+			BestScore.text = "0";
+			BestAccuracy.text = "0%";
+			BestCombo.text = "x0";
+		}
+		else {
+			var data = GameData.StageData[GameMaster.LoadPathName];
 
-    }
-
-    //ゲームクリア時のコルーチン
-    IEnumerator GameClearResult()
-    {
-	    if (GameMaster.IsTestPlayMode) {
-		    BestScore.text = "0";
-		    BestAccuracy.text = "0%";
-		    BestCombo.text = "x0";
-	    }
-	    else {
-		    StageData Data = GameData.StageData[GameMaster.LoadPathName];
-
-		    BestScore.text = Data.Score.ToString();
-		    if(Data.Accuracy >= 1.0f) BestAccuracy.text = "100%";
-		    else BestAccuracy.text = Data.Accuracy.ToString("p");
-		    BestCombo.text = "x" + Data.MaxCombo.ToString();
+			BestScore.text = data.Score.ToString();
+			BestAccuracy.text = data.Accuracy >= 1.0f ? "100%" : data.Accuracy.ToString("p");
+			BestCombo.text = "x" + data.MaxCombo.ToString();
 		}
 
+		//リザルトのスキップ
+		var skip = false;
 
-        //α値を変更する時間
-        float time = 0;
+		//α値を変更する時間
+		float time = 0;
 
-        yield return new WaitForSeconds(2);
+		yield return new WaitForSeconds(2);
 
-        canvas.SetActive(false);
+		Canvas.SetActive(false);
 
-        while (time < 1.0f)
-        {
-            if (Input.GetMouseButton(0))
-            {
-                skip = true;
-            }
-            if (skip)
-            {
-                time = 1;
-            }
+		while(time < 1.0f) {
+			if(Input.GetMouseButton(0)) {
+				skip = true;
+			}
+			if(skip) {
+				time = 1;
+			}
 
-            time += Time.deltaTime;
-            ResultGroup.alpha = Mathf.Lerp(0, 1, time);
-            ResultBackFrame.alpha = Mathf.Lerp(0, 1, time);
+			time += Time.deltaTime;
+			ResultGroup.alpha = Mathf.Lerp(0, 1, time);
+			ResultBackFrame.alpha = Mathf.Lerp(0, 1, time);
 
 			yield return null;
-        }
+		}
 
-        for (int i = 0; i < text.Length; i++)
-        {
-            time = 0;
+		foreach(var text in _texts) {
+			time = 0;
 
-            while (time < 1.0f)
-            {
-                if (Input.GetMouseButton(0))
-                {
-                    skip = true;
-                }
-                if (skip)
-                {
-                    time = 1;
-                }
+			while(time < 1.0f) {
+				if(Input.GetMouseButton(0)) {
+					skip = true;
+				}
+				if(skip) {
+					time = 1;
+				}
 
-                time += Time.deltaTime;
+				time += Time.deltaTime;
 
-                text[i].color = Color.Lerp(TextstartColor, TextendColor, time);
-                
-                yield return null;
-            }
-        }
+				text.color = Color.Lerp(_textStartColor, _textEndColor, time);
 
-        time = 0;
+				yield return null;
+			}
+		}
 
-	    if (GameMaster.IsTestPlayMode) {
+		time = 0;
+
+		if(GameMaster.IsTestPlayMode) {
 			Next.gameObject.SetActive(false);
-		    Back.gameObject.SetActive(false);
+			Back.gameObject.SetActive(false);
 		}
 
 		//グループ内のUI要素が入力を受け付けるかどうか
 		Retry.interactable = true;
-        Back.interactable = true;
+		Back.interactable = true;
 
 		if(GameMaster.Instance.CanMoveNextStage())
 			Next.interactable = true;
 
-		while (time < 1.0)
-        {
-            if (Input.GetMouseButton(0))
-            {
-                skip = true;
-            }
-            if (skip)
-            {
-                time = 1;
-            }
+		while(time < 1.0) {
+			if(Input.GetMouseButton(0)) {
+				skip = true;
+			}
+			if(skip) {
+				time = 1;
+			}
 
-            time += Time.deltaTime;
+			time += Time.deltaTime;
 
-            Retry.alpha = Mathf.Lerp(0, 1, time);
-            Back.alpha = Mathf.Lerp(0, 1, time);
+			Retry.alpha = Mathf.Lerp(0, 1, time);
+			Back.alpha = Mathf.Lerp(0, 1, time);
 
 			if(GameMaster.Instance.CanMoveNextStage())
 				Next.alpha = Mathf.Lerp(0, 1, time);
-            
-            yield return null;
-        }
-        //yield return new WaitForSeconds(1);
-    }
 
-    //ゲームオーバー時のコルーチン
-    IEnumerator GameOverResult()
-    {
-		//Retry.gameObject.SetActive(true);
+			yield return null;
+		}
+	}
+
+	//ゲームオーバー時のコルーチン
+	private IEnumerator GameOverResult() {
 
 		if(GameMaster.IsTestPlayMode)
 			Back.gameObject.SetActive(false);
 
 		//グループ内のUI要素が入力を受け付けるかどうか
 		Retry.interactable = true;
-        Back.interactable = true;
+		Back.interactable = true;
 
-        //α値を変更する時間
-        float time = 0;
+		var skip = false;
 
-        yield return new WaitForSeconds(2);
+		//α値を変更する時間
+		float time = 0;
 
-        while (time < 1.0f)
-        {
-            if (Input.GetMouseButton(0))
-            {
-                skip = true;
-            }
-            if (skip)
-            {
-                time = 1;
-            }
+		yield return new WaitForSeconds(2);
 
-            time += Time.deltaTime * 3;
+		while(time < 1.0f) {
+			if(Input.GetMouseButton(0)) {
+				skip = true;
+			}
+			if(skip) {
+				time = 1;
+			}
+
+			time += Time.deltaTime * 3;
 			Retry.alpha = Mathf.Lerp(0, 1, time);
-            Back.alpha = Mathf.Lerp(0, 1, time);
+			Back.alpha = Mathf.Lerp(0, 1, time);
 
-            yield return null;
-        }
+			yield return null;
+		}
 
-        yield return new WaitForSeconds(1);
-    }
+		yield return new WaitForSeconds(1);
+	}
 
 	public void OnRetryClick() {
 
-		if(isButtonSelected) return;
-		isButtonSelected = true;
+		if(_isButtonSelected) return;
+		_isButtonSelected = true;
 
 		AudioManager.PlaySE("click03");
 		Retry.GetComponentInChildren<Button>().interactable = false;
@@ -238,8 +211,8 @@ public class GameEnd : MonoBehaviour
 
 	public void OnStageSelectClick() {
 
-		if(isButtonSelected) return;
-		isButtonSelected = true;
+		if(_isButtonSelected) return;
+		_isButtonSelected = true;
 
 		AudioManager.PlaySE("click03");
 		Back.GetComponentInChildren<Button>().interactable = false;
@@ -249,8 +222,8 @@ public class GameEnd : MonoBehaviour
 
 	public void OnNextStageClick() {
 
-		if(isButtonSelected) return;
-		isButtonSelected = true;
+		if(_isButtonSelected) return;
+		_isButtonSelected = true;
 
 		AudioManager.PlaySE("click03");
 		Next.GetComponentInChildren<Button>().interactable = false;
