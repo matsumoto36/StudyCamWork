@@ -51,11 +51,12 @@ public class Bezier2D : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// 指定した頂点を削除
+	/// 指定したアンカーポイントを削除
 	/// </summary>
-	/// <param name="index"></param>
-	public void RemovePoint(int index) {
+	/// <param name="index">アンカーポイントとなる点</param>
+	public void RemoveAnchorPoint(int index) {
 
+		//アンカーポイントか調べる
 		if((index - 1) % 3 != 0) return;
 
 		Points.RemoveRange(index - 1, 3);

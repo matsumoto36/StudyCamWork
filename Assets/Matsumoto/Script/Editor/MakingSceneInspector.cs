@@ -8,10 +8,10 @@ using System.Collections;
 [CustomEditor(typeof(MakingScene), true)]
 public class MakingSceneInspector : Editor {
 
-	const string _templatePath = "Prefab/Stage/Path/Template";
-	SerializedProperty _loadStudioSet;
+	private const string TemplatePath = "Prefab/Stage/Path/Template";
+	private SerializedProperty _loadStudioSet;
 
-	void OnEnable() {
+	private void OnEnable() {
 
 		_loadStudioSet = serializedObject.FindProperty("LoadStudioSet");
 		
@@ -25,7 +25,7 @@ public class MakingSceneInspector : Editor {
 		EditorGUILayout.PropertyField(_loadStudioSet);
 
 		if(GUILayout.Button("Create Stage Template")) {
-			CreateTemplete();
+			CreateTemplate();
 		}
 
 		serializedObject.ApplyModifiedProperties();
@@ -35,8 +35,8 @@ public class MakingSceneInspector : Editor {
 	/// <summary>
 	/// テンプレートの作成
 	/// </summary>
-	void CreateTemplete() {
-		var p = Instantiate(Resources.Load(_templatePath));
+	private static void CreateTemplate() {
+		var p = Instantiate(Resources.Load(TemplatePath));
 		Undo.RegisterCreatedObjectUndo(p, "Create Template");
 		p.name = "NewStage";
 		Selection.activeGameObject = (GameObject)p;
