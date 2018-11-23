@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 /// <summary>
 /// ステージエディターの
 /// 背景と実行部分を担うクラス
@@ -13,26 +17,50 @@ public class MakingScene : MonoBehaviour {
 
 	public string LoadStudioSet;
 
-	GameObject _studioSet;
+	private GameObject _studioSet;
 
-	// Use this for initialization
-	void Start () {
+	private void Start () {
 		if(!Application.isPlaying) return;
 
 		//ゲーム開始
+		GameMaster.IsTestPlayMode = true;
 		Camera.main.gameObject.SetActive(false);
 
 		DontDestroyOnLoad(gameObject);
 
 		GameMaster.LoadStudioName = LoadStudioSet;
-		GameMaster.LoadPathName = FindObjectOfType<GimmickManager>().name;
+		var stage = FindObjectOfType<GimmickManager>();
+
+		if (!stage) {
+			Debug.LogError("テストするステージが見つかりませんでした");
+			Debug.Break();
+		}
+
+		GameMaster.LoadPathName = stage.name;
+
+		//生成できるかチェック
+		var prefabPath = GameMaster.PATH_PREFAB_BASE_PATH + GameMaster.LoadPathName;
+		var prefab = Resources.Load(prefabPath);
+		if (!prefab) {
+#if UNITY_EDITOR
+			//読み込めるようにプレハブを作成
+			var savePath = "Assets/Resources/" + prefabPath + ".prefab";
+			PrefabUtility.CreatePrefab(savePath, stage.gameObject);
+			AssetDatabase.SaveAssets();
+			Debug.Log("Create Stage path=" + savePath);
+#endif
+		}
+		else {
+			//更新しておく
+			PrefabUtility.ReplacePrefab(stage.gameObject, prefab);
+		}
 
 		SceneManager.LoadScene("GameScene");
 		Destroy(gameObject);
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	private void Update () {
 		if(Application.isPlaying) return;
 			CheckStudioSet();
 	}
@@ -40,9 +68,9 @@ public class MakingScene : MonoBehaviour {
 	/// <summary>
 	/// 背景が生成されているか確認する
 	/// </summary>
-	void CheckStudioSet() {
+	private void CheckStudioSet() {
 
-		DestroyDuplicatetudioSet();
+		DestroyDuplicateStudioSet();
 
 		if(LoadStudioSet == "") return;
 
@@ -58,7 +86,7 @@ public class MakingScene : MonoBehaviour {
 	/// <summary>
 	/// 背景を一つにする
 	/// </summary>
-	void DestroyDuplicatetudioSet() {
+	private void DestroyDuplicateStudioSet() {
 
 		while(!_studioSet && transform.childCount > 0 
 			|| _studioSet && transform.childCount > 1) {

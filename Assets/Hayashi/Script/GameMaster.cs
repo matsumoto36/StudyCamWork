@@ -18,8 +18,7 @@ public class GameMaster : MonoBehaviour {
 	public const string PATH_PREFAB_BASE_PATH = "Prefab/Stage/Path/";
 	const string PLAYER_PREFAB_PATH = "Prefab/Player";
 
-
-	public GameBalanceData GameBalanceData { get; private set; }
+	public static bool IsTestPlayMode;
 
 	public static string LoadPathName = "";
 	public string loadPathName;
@@ -34,12 +33,12 @@ public class GameMaster : MonoBehaviour {
     public StageController stageController;
     public MouseCamera mouseCamera;
 
+	bool isSceneMoving;
+
 	public event Action OnGameStart;
 	public event Action OnGameStartCountDown;
 	public event Action OnGameOver;
 	public event Action OnGameClear;
-
-	bool isSceneMoving;
 
 	public GameState State { get; private set; }
 
@@ -52,6 +51,8 @@ public class GameMaster : MonoBehaviour {
 			return instance;
 		}
 	}
+
+	public GameBalanceData GameBalanceData { get; private set; }
 
 	// Use this for initialization
 	void Awake () {
@@ -124,19 +125,23 @@ public class GameMaster : MonoBehaviour {
 
 		if(OnGameClear != null) OnGameClear();
 
-		Debug.Log("DataSave");
-		Debug.Log("Combo " + MouseCamera.ComboMax);
+		if (!IsTestPlayMode) {
 
-		//データのセーブ
-		if(GameData.stageData != null) {
-			var data = GameData.stageData[loadPathName];
-			if(data.score < MouseCamera.Score) {
-				data.score = MouseCamera.Score;
-				data.accuracy = MouseCamera.Accuracy;
-				data.maxCombo = MouseCamera.ComboMax;
-				GameData.stageData[loadPathName] = data;
-				GameData.Save();
+			Debug.Log("DataSave");
+			Debug.Log("Combo " + MouseCamera.ComboMax);
+
+			//データのセーブ
+			if(GameData.stageData != null) {
+				var data = GameData.stageData[loadPathName];
+				if(data.score < MouseCamera.Score) {
+					data.score = MouseCamera.Score;
+					data.accuracy = MouseCamera.Accuracy;
+					data.maxCombo = MouseCamera.ComboMax;
+					GameData.stageData[loadPathName] = data;
+					GameData.Save();
+				}
 			}
+
 		}
 
 		countDownText.text = "GameClear";

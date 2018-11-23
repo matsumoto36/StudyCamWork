@@ -86,12 +86,20 @@ public class GameEnd : MonoBehaviour
     //ゲームクリア時のコルーチン
     IEnumerator GameClearResult()
     {
-        StageData Data = GameData.stageData[GameMaster.LoadPathName];
+	    if (GameMaster.IsTestPlayMode) {
+		    BestScore.text = "0";
+		    BestAccuracy.text = "0%";
+		    BestCombo.text = "x0";
+	    }
+	    else {
+		    StageData Data = GameData.stageData[GameMaster.LoadPathName];
 
-        BestScore.text = Data.score.ToString();
-		if(Data.accuracy >= 1.0f) BestAccuracy.text = "100%";
-		else BestAccuracy.text = Data.accuracy.ToString("p");
-        BestCombo.text = "x" + Data.maxCombo.ToString();
+		    BestScore.text = Data.score.ToString();
+		    if(Data.accuracy >= 1.0f) BestAccuracy.text = "100%";
+		    else BestAccuracy.text = Data.accuracy.ToString("p");
+		    BestCombo.text = "x" + Data.maxCombo.ToString();
+		}
+
 
         //α値を変更する時間
         float time = 0;
@@ -143,11 +151,13 @@ public class GameEnd : MonoBehaviour
 
         time = 0;
 
-        //Retry.gameObject.SetActive(true);
-        //StageSelect.gameObject.SetActive(true);
+	    if (GameMaster.IsTestPlayMode) {
+			Next.gameObject.SetActive(false);
+		    Back.gameObject.SetActive(false);
+		}
 
-        //グループ内のUI要素が入力を受け付けるかどうか
-        Retry.interactable = true;
+		//グループ内のUI要素が入力を受け付けるかどうか
+		Retry.interactable = true;
         Back.interactable = true;
 
 		if(GameMaster.Instance.CanMoveNextStage())
@@ -180,11 +190,13 @@ public class GameEnd : MonoBehaviour
     //ゲームオーバー時のコルーチン
     IEnumerator GameOverResult()
     {
-        //Retry.gameObject.SetActive(true);
-        //Back.gameObject.SetActive(true);
+		//Retry.gameObject.SetActive(true);
 
-        //グループ内のUI要素が入力を受け付けるかどうか
-        Retry.interactable = true;
+		if(GameMaster.IsTestPlayMode)
+			Back.gameObject.SetActive(false);
+
+		//グループ内のUI要素が入力を受け付けるかどうか
+		Retry.interactable = true;
         Back.interactable = true;
 
         //α値を変更する時間
