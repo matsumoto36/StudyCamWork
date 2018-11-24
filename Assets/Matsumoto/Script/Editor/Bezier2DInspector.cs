@@ -275,7 +275,6 @@ public class Bezier2DInspector : Editor {
 	/// <summary>
 	/// AddPointモード時の動作
 	/// </summary>
-	/// <param name="bezier"></param>
 	private void AddPointState() {
 
 		var e = Event.current;
