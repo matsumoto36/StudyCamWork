@@ -6,14 +6,14 @@ public class Bezier2D : MonoBehaviour {
 	private const int Partition = 64;
 
 	//線ごとの長さ
-	float[] _lengthAtLine;
+	private float[] _lengthAtLine;
 
 	//ベジエ曲線を構成する頂点群
-	[SerializeField] List<Vector2> points = new List<Vector2>();
+	[SerializeField] List<Vector2> _points = new List<Vector2>();
 	public List<Vector2> Points {
-		get { return points; }
+		get { return _points; }
 		set {
-			points = value;
+			_points = value;
 			_pointsChangeFlg = true;
 		}
 	}
@@ -33,7 +33,7 @@ public class Bezier2D : MonoBehaviour {
 	/// ベジエ曲線の数
 	/// </summary>
 	public int LineCount {
-		get { return Mathf.Max(0, points.Count / 3 - 1); }
+		get { return Mathf.Max(0, _points.Count / 3 - 1); }
 	}
 
 	//頂点が変更されたかを検知するフラグ
@@ -135,8 +135,8 @@ public class Bezier2D : MonoBehaviour {
 
 		var lineCount = LineCount;
 		if(lineCount <= 0) return new Vector2();
-		if(t <= 0.0f) return points[1];
-		if(t >= 1.0f) return points[GetLastBezierPoint()];
+		if(t <= 0.0f) return _points[1];
+		if(t >= 1.0f) return _points[GetLastBezierPoint()];
 
 		var length = GetLength() * t;
 		var sumLength = 0.0f;
@@ -154,10 +154,10 @@ public class Bezier2D : MonoBehaviour {
 			(length - (sumLength - _lengthAtLine[section])) / _lengthAtLine[section];
 
 		return GetPointNormalize(
-			points[startPoint],
-			points[startPoint + 1],
-			points[startPoint + 2],
-			points[startPoint + 3],
+			_points[startPoint],
+			_points[startPoint + 1],
+			_points[startPoint + 2],
+			_points[startPoint + 3],
 			ratio);
 	}
 
@@ -165,8 +165,8 @@ public class Bezier2D : MonoBehaviour {
 
 		var lineCount = LineCount;
 		if(lineCount <= 0) return new Vector2();
-		if(t <= 0.0f) return points[1];
-		if(t >= 1.0f) return points[GetLastBezierPoint()];
+		if(t <= 0.0f) return _points[1];
+		if(t >= 1.0f) return _points[GetLastBezierPoint()];
 
 		var section = (int)(lineCount * t);
 
@@ -174,10 +174,10 @@ public class Bezier2D : MonoBehaviour {
 		var ratio = lineCount * t - section;
 
 		return GetPoint(
-			points[startPoint],
-			points[startPoint + 1],
-			points[startPoint + 2],
-			points[startPoint + 3],
+			_points[startPoint],
+			_points[startPoint + 1],
+			_points[startPoint + 2],
+			_points[startPoint + 3],
 			ratio);
 	}
 

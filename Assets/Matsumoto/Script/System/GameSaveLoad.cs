@@ -94,7 +94,7 @@ public static class GameSaveLoad {
 			}
 			return d;
 		}
-		public string GetSrtingData(string key, string defaultValue) {
+		public string GetStringData(string key, string defaultValue) {
 
 			var d = defaultValue;
 
@@ -220,10 +220,9 @@ public static class GameSaveLoad {
 
 			var target = 0;//int > float > string target
 			var c = new int[3];//count
-			var buff = "";//buffer
 
 			//int-load--------------------------------------
-			buff = sr.ReadLine();
+			var buff = sr.ReadLine();
 			Debug.Log("[int] " + buff);
 			var dataSplit = DataSplit(buff, ',');
 			for(c[target] = 0;c[target] < dataSplit.Length - 1;c[target]++) {
