@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4035364414709280}
   - component: {fileID: 114851042789237630}
   m_Layer: 0
-  m_Name: GimmickTeleport
+  m_Name: TeleportGimmick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,9 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cada555ace83047499dd9a0f2e5ac2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0, g: 1, b: 1, a: 1}
-  startPoint: 0
-  endPoint: 1
-  markModel: {fileID: 0}
-  waitTime: 1
-  text: {fileID: 0}
+  GimmickColor: {r: 0, g: 0.8758622, b: 1, a: 1}
+  StartPoint: 0
+  EndPoint: 1
+  WaitTime: 1

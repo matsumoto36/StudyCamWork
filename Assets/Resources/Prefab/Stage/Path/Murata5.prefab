@@ -355,7 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae51255a7339ca54c9b8bf5bb1996e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points:
+  _points:
   - {x: 0.5738393, y: 8.752283}
   - {x: -0.030882835, y: 8.008011}
   - {x: -0.82167107, y: 7.3102565}

@@ -1,9 +1,8 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
 
 /// <summary>
 /// ステージエディターの
@@ -39,13 +38,11 @@ public class MakingScene : MonoBehaviour {
 		var prefabPath = GameMaster.PathPrefabBasePath + GameMaster.LoadPathName;
 		var prefab = Resources.Load(prefabPath);
 		if(!prefab) {
-#if UNITY_EDITOR
 			//読み込めるようにプレハブを作成
 			var savePath = "Assets/Resources/" + prefabPath + ".prefab";
 			PrefabUtility.CreatePrefab(savePath, stage.gameObject);
 			AssetDatabase.SaveAssets();
 			Debug.Log("Create Stage path=" + savePath);
-#endif
 		}
 		else {
 			//更新しておく
@@ -104,3 +101,4 @@ public class MakingScene : MonoBehaviour {
 		_studioSet.transform.SetParent(transform);
 	}
 }
+#endif

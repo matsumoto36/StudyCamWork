@@ -40,7 +40,7 @@ public class Bezier2DInspector : Editor {
 	private void OnEnable() {
 
 		_bezier = target as Bezier2D;
-		_points = serializedObject.FindProperty("points");
+		_points = serializedObject.FindProperty("_points");
 
 		_reorderableList =
 			new ReorderableList(GetBezierPointsIndexOnLine(), typeof(int), true, true, false, true);
@@ -59,7 +59,8 @@ public class Bezier2DInspector : Editor {
 			}
 
 			var id = (int)_reorderableList.list[index];
-			EditorGUI.LabelField(rect, _points.GetArrayElementAtIndex(id).vector2Value.ToString());
+			if(id < _points.arraySize)
+				EditorGUI.LabelField(rect, _points.GetArrayElementAtIndex(id).vector2Value.ToString());
 		};
 
 		//背景の描画
@@ -100,7 +101,6 @@ public class Bezier2DInspector : Editor {
 
 				var srcIndex = i * 3;
 				var destIndex = posList[i] - 1;
-				Debug.Log(srcIndex + " " + destIndex);
 				for(var j = 0;j < 3;j++) {
 					nPoints[destIndex + j] = _points.GetArrayElementAtIndex(srcIndex + j).vector2Value;
 				}

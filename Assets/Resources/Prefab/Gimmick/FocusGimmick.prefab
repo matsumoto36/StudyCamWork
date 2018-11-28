@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4583000335266674}
   - component: {fileID: 114872136707216652}
   m_Layer: 0
-  m_Name: GimmickFocus
+  m_Name: FocusGimmick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,9 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2a8e928250bc141b760c2e7cc82600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gimmickColor: {r: 0.986207, g: 0, b: 1, a: 1}
-  startPoint: 0
-  endPoint: 1
-  markModel: {fileID: 0}
-  isToFar: 1
-  text: {fileID: 0}
+  GimmickColor: {r: 0.9843137, g: 0, b: 1, a: 1}
+  StartPoint: 0
+  EndPoint: 1
+  IsToFar: 1

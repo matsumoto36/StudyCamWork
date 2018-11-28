@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Bezier2D : MonoBehaviour {
 
@@ -9,7 +10,8 @@ public class Bezier2D : MonoBehaviour {
 	private float[] _lengthAtLine;
 
 	//ベジエ曲線を構成する頂点群
-	[SerializeField] List<Vector2> _points = new List<Vector2>();
+	[SerializeField]
+	private List<Vector2> _points = new List<Vector2>();
 	public List<Vector2> Points {
 		get { return _points; }
 		set {

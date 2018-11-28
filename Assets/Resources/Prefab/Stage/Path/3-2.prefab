@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae51255a7339ca54c9b8bf5bb1996e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points:
+  _points:
   - {x: 12.711506, y: -6.1865907}
   - {x: 9.441177, y: -6.782516}
   - {x: 2.1944866, y: 4.012189}
